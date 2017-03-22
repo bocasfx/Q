@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import Stream from './Stream';
+import Stream from '../elements/Stream';
 
 class App extends Component {
 

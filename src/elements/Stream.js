@@ -1,4 +1,4 @@
-import config from './config';
+import config from '../config/config';
 import Particle from './Particle';
 
 class Stream {
