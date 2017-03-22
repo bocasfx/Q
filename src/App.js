@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import './App.css';
 
 const easingFactor = 0.1;
+const streamSize = 100;
 
 class App extends Component {
   constructor(props) {
     super(props);
 
-    let streamSize = 100;
     let queue = [];
     for (let i=0; i<streamSize; i++) {
       queue.push([0, 0]);
@@ -21,10 +21,10 @@ class App extends Component {
       },
       stream: {
         queue,
-        position: [0, 0],
-        easing: [0, 0],
+        position: [],
+        easing: [],
         path: [],
-        leader: 'mouse',
+        leader: 'path',
         pathIdx: 0,
         streamSize,
         streamStep: 10,
@@ -34,7 +34,14 @@ class App extends Component {
       }
     };
 
-    this.onDrag = this.onDrag.bind(this);
+    this.updatePosition = this.updatePosition.bind(this);
+    this.advancePathIdx = this.advancePathIdx.bind(this);
+    this.reset = this.reset.bind(this);
+    this.draw = this.draw.bind(this);
+    this.calculateEasing = this.calculateEasing.bind(this);
+    this.onMouseDown = this.onMouseDown.bind(this);
+    this.onMouseMove = this.onMouseMove.bind(this);
+    this.onMouseUp = this.onMouseUp.bind(this);
   }
 
   componentDidMount() {
@@ -46,20 +53,14 @@ class App extends Component {
 
   updatePosition(position) {
     let state = this.state;
-    if (state.stream.leader === 'mouse') {
+    if (state.stream.leader === 'mouse' && position.length) {
       state.stream.position = position;
       state.stream.path.push(position);
-      this.setState(state);
-    }
-  }
-
-  update() {
-    let state = this.state;
-    if (state.stream.leader === 'path') {
+    } else {
       state.stream.position = state.stream.path[state.stream.pathIdx];
       this.advancePathIdx();
-      this.setState(state);
     }
+    this.setState(state);
   }
 
   advancePathIdx() {
@@ -78,20 +79,60 @@ class App extends Component {
     this.setState(state);
   }
 
-  draw(context) {
+  draw2(context) {
     let state = this.state;
-    // Rotate the queue;
+    if (!state.stream.position) {
+      if (state.stream.leader === 'path') {
+        if (state.stream.path.length) {
+          state.stream.position = state.stream.path[state.stream.path_index];
+          this.advance_path_index();
+        }
+      } else {
+        state.stream.path.push(self.position);
+        if (state.stream.queue.length < streamSize) {
+          state.stream.queue.push(state.stream.position);
+        }
+      }
+      if (!state.stream.easing.length) {
+        state.stream.easing = state.stream.position;
+      }
+      state.stream.easing = this.calculateEasing();
+      state.stream.queue[0] = state.strea.easing;
+    }
+    
     state.stream.queue.push(state.stream.queue.shift());
-    state.stream.easing = this.calculateEasing();
-    state.stream.queue[state.stream.streamSize - 1] = state.stream.easing;
 
     let queue = state.stream.queue;
+    this.initContext(context);
 
-    context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
-  
-    context.strokeStyle = '#df4b26';
-    context.lineJoin = 'round';
-    context.lineWidth = 2;
+    for (let i=1; i<queue.length; i++) {
+      context.beginPath();
+      context.moveTo(queue[i-1][0], queue[i-1][1]);
+      context.lineTo(queue[i][0], queue[i][1]);
+      context.closePath();
+      context.stroke();
+    }
+    requestAnimationFrame(() => {
+      this.draw(context);
+    });
+
+    this.setState(state);
+  }
+
+  draw(context) {
+    let state = this.state;
+
+    // Rotate the queue;
+    state.stream.queue.push(state.stream.queue.shift());
+    
+    if (state.stream.leader === 'mouse' && state.stream.easing.length) {
+      state.stream.easing = this.calculateEasing();
+      state.stream.queue[state.stream.streamSize - 1] = state.stream.easing;
+    }
+    state.stream.position = state.stream.queue[state.stream.pathIdx];
+
+    let queue = state.stream.queue;
+    this.initContext(context);
 
     for (let i=1; i<queue.length; i++) {
       context.beginPath();
@@ -105,6 +146,16 @@ class App extends Component {
     });
   }
 
+  initContext(context) {
+    context.fillStyle='papayawhip';
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+    context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+  
+    context.strokeStyle = 'lightseagreen';
+    context.lineJoin = 'round';
+    context.lineWidth = 5;
+  }
+
   calculateEasing() {
     let stream = this.state.stream;
     let dx = stream.position[0] - stream.easing[0];
@@ -113,8 +164,45 @@ class App extends Component {
     return easing;
   }
 
-  onDrag(event) {
+  onMouseDown(event) {
+    let state = this.state;
+
+    if (state.stream.leader === 'mouse') {
+      return;
+    }
+
+    var x = event.pageX;
+    var y = event.pageY;
+
+    state.stream.leader = 'mouse';
+    
+    // for (let i=0; i<streamSize; i++) {
+    //   state.stream.queue.push([x, y]);
+    // }
+
+    state.stream.easing = [x, y];
+    state.stream.position = [x, y];
+
+    // this.updatePosition([x, y]);
+    this.setState(state);
+  }
+
+  onMouseMove(event) {
     event.preventDefault();
+
+    if (this.state.stream.leader === 'mouse') {
+
+      var x = event.pageX;
+      var y = event.pageY;
+
+      this.updatePosition([x, y]);
+    }
+  }
+
+  onMouseUp(event) {
+    let state = this.state;
+    state.stream.leader = 'path';
+    this.setState(state);
     var x = event.pageX;
     var y = event.pageY;
 
@@ -129,7 +217,9 @@ class App extends Component {
           ref="canvas"
           width={this.state.screen.width * this.state.screen.ratio}
           height={this.state.screen.height * this.state.screen.ratio}
-          onDrag={this.onDrag}
+          onMouseMove={this.onMouseMove}
+          onMouseDown={this.onMouseDown}
+          onMouseUp={this.onMouseUp}
         />
       </div>
     );
