@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import Stream from '../elements/Stream';
+import Menu from './Menu';
+import config from '../config/config';
 
 class App extends Component {
 
@@ -17,6 +19,7 @@ class App extends Component {
   }
   
   componentDidMount() {
+    this.context = this.refs.canvas.getContext('2d');
     requestAnimationFrame(() => {
       this.draw();
     });
@@ -46,13 +49,13 @@ class App extends Component {
   }
 
   draw() {
-    const context = this.refs.canvas.getContext('2d');
+    
     let state = this.state;
-    context.fillStyle='papayawhip';
-    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+    this.context.fillStyle = config.app.backgroundColor;
+    this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+    this.context.fillRect(0, 0, this.context.canvas.width, this.context.canvas.height);
     state.streams.forEach((stream) => {
-      stream.render(context);
+      stream.render(this.context);
     });
     requestAnimationFrame(() => {
       this.draw();
@@ -66,11 +69,12 @@ class App extends Component {
           draggable="true"
           ref="canvas"
           width={window.innerWidth}
-          height={window.innerHeight}
+          height={window.innerHeight - 46}
           onMouseMove={this.onMouseMove}
           onMouseDown={this.onMouseDown}
           onMouseUp={this.onMouseUp}
         />
+        <Menu/>
       </div>
     );
   }

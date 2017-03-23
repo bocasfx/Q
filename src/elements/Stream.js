@@ -28,12 +28,6 @@ class Stream {
     this.onMouseUp = this.onMouseUp.bind(this);
   }
 
-  initContext(context) {
-    context.strokeStyle = 'lightseagreen';
-    context.lineJoin = 'round';
-    context.lineWidth = 2;
-  }
-
   advancePathIndex() {
 
     this.pathIndex++;
@@ -54,8 +48,8 @@ class Stream {
 
   onMouseDown(event) {
     event.preventDefault();
-    var x = event.pageX;
-    var y = event.pageY;
+    let x = event.pageX;
+    let y = event.pageY;
 
     this.headPosition = [x, y];
     this.path = [];
@@ -71,8 +65,8 @@ class Stream {
 
   onMouseMove(event) {
     event.preventDefault();
-    var x = event.pageX;
-    var y = event.pageY;
+    let x = event.pageX;
+    let y = event.pageY;
     this.headPosition = [x, y];
   }
 
@@ -96,26 +90,29 @@ class Stream {
       this.queue[0] = this.easing;
       this.queue.push(this.queue.shift());
 
-      this.initContext(context);
-
-      let i = 1;
+      let i = 0;
       let j = 0;
+      let step = (config.stream.size / config.particle.count);
+
+      // Render stream
+      for (let i=1; i<this.queue.length; i++) {
+        context.beginPath();
+        context.strokeStyle = config.stream.strokeStyle;
+        context.lineWidth = config.stream.lineWidth;
+        context.setLineDash(config.stream.lineDash);
+        context.moveTo(this.queue[i-1][0], this.queue[i-1][1]);
+        context.lineTo(this.queue[i][0], this.queue[i][1]);
+        context.stroke();
+      }
 
       while (i < this.queue.length) {
         this.particles[j].render(context, this.queue[i]);
-        i += (config.stream.size / config.particle.count);
+        i += step;
         j += 1;
       }
     }
 
-    // Render stream
-    // for (let i=1; i<this.queue.length; i++) {
-    //   context.beginPath();
-    //   context.moveTo(this.queue[i-1][0], this.queue[i-1][1]);
-    //   context.lineTo(this.queue[i][0], this.queue[i][1]);
-    //   context.closePath();
-    //   context.stroke();
-    // }
+    
   }
 }
 

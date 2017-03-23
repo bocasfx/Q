@@ -1,11 +1,21 @@
 export default {
+  app: {
+    backgroundColor: 'papayawhip'
+  },
   particle: {
-    radius: 5,
-    color: 'lightseagreen',
-    count: 10
+    radius: 7,
+    strokeStyle: 'teal',
+    fillStyle: 'lightseagreen',
+    lineJoin: 'round',
+    lineWidth: 2,
+    lineDash: [],
+    count: 1
   },
   stream: {
     easingFactor: 0.08,
-    size: 100
+    size: 100,
+    strokeStyle: 'darkgray',
+    lineWidth: 2,
+    lineDash: [3, 30]
   }
 };

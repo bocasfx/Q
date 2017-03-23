@@ -1,0 +1,15 @@
+.menu-button-container {
+  width: 30px;
+  height: 30px;
+  border: 3px solid teal;
+  background-color: lightseagreen;
+  border-radius: 50%;
+  cursor: pointer;
+  text-align: center;
+  color: papayawhip;
+  opacity: 0.5;
+}
+
+.menu-button-active {
+  opacity: 1;
+}
