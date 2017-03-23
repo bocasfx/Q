@@ -1,12 +1,14 @@
 import React from 'react';
 import './Menu.css';
-import MenuButton from './MenuButton';
+import StreamButton from './StreamButton';
+import NodeButton from './NodeButton';
 
 class Menu extends React.Component {
   render() {
     return (
       <div className="menu-container">
-        <MenuButton/>
+        <StreamButton/>
+        <NodeButton/>
       </div>
     );
   }

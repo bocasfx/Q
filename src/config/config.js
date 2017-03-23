@@ -1,6 +1,6 @@
 export default {
-  app: {
-    backgroundColor: 'papayawhip'
+  canvas: {
+    backgroundColor: 'rgba(0, 0, 0, 0.0)'
   },
   particle: {
     radius: 7,
@@ -10,6 +10,13 @@ export default {
     lineWidth: 2,
     lineDash: [],
     count: 1
+  },
+  node: {
+    radius: 15,
+    strokeStyle: 'rebeccapurple', 
+    lineDash: [],
+    lineWidth: 3,
+    fillStyle: 'mediumorchid', 
   },
   stream: {
     easingFactor: 0.08,
