@@ -1,0 +1,20 @@
+.settings-container {
+  width: 500px;
+  height: 400px;
+  background-color: rgba(105, 105, 105, 0.3);
+  border: 2px solid darkgray;
+  padding: 40px;
+  color: dimgray;
+  font-size: 0.9em;
+}
+
+.settings-container label {
+  margin-right: 10px;
+}
+
+.settings-container input {
+  background-color: white;
+  border: none;
+  padding: 4px;
+  outline: none;
+}

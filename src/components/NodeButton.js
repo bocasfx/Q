@@ -15,7 +15,7 @@ class NodeButton extends React.Component {
 
     return (
       <Button device="nodes">
-        <div className="node-button-container" style={style} onClick={this.onClick}></div>
+        <div className="button-item node-button-container" style={style}></div>
       </Button>
     );
   }

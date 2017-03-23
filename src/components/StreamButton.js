@@ -15,7 +15,7 @@ class StreamButton extends React.Component {
 
     return (
       <Button device="streams">
-        <div className="stream-button-container" style={style} onClick={this.onClick}></div>
+        <div className="button-item stream-button-container" style={style}></div>
       </Button>
     );
   }

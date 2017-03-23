@@ -13,3 +13,11 @@ body {
   width:100%;
   background-size:50px 50px;
 }
+
+.settings {
+  position: absolute;
+  top: 80px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

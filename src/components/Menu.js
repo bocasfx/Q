@@ -2,6 +2,7 @@ import React from 'react';
 import './Menu.css';
 import StreamButton from './StreamButton';
 import NodeButton from './NodeButton';
+import SettingsButton from './SettingsButton';
 
 class Menu extends React.Component {
   render() {
@@ -9,6 +10,7 @@ class Menu extends React.Component {
       <div className="menu-container">
         <StreamButton/>
         <NodeButton/>
+        <SettingsButton/>
       </div>
     );
   }

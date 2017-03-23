@@ -1,6 +1,7 @@
 const initialState = {
   streams: false,
-  nodes: false
+  nodes: false,
+  settings: false
 };
 
 const toggleDevice = (state, device) => {

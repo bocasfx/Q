@@ -75,7 +75,7 @@ class Canvas extends Component {
         draggable="true"
         ref="canvas"
         width={window.innerWidth}
-        height={window.innerHeight - 50}
+        height={window.innerHeight - 53}
         onMouseMove={this.onMouseMove}
         onMouseDown={this.onMouseDown}
         onMouseUp={this.onMouseUp}
