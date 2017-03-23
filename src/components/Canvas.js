@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import './Canvas.css';
-import Stream from '../elements/Stream';
-import Node from '../elements/Node';
 import config from '../config/config';
 import { connect } from 'react-redux';
+import { addNode } from '../actions/Nodes';
+import { addStream } from '../actions/Streams';
+import { bindActionCreators } from 'redux';
 
 class Canvas extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      streamList: [],
-      nodeList: []
-    };
 
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
@@ -30,7 +27,7 @@ class Canvas extends Component {
   onMouseMove(event) {
     event.preventDefault();
     if (this.props.devices.streams) {
-      let streams = this.state.streamList;
+      let streams = this.props.streams.list;
       if (!streams.length) {
         return;
       }
@@ -41,41 +38,30 @@ class Canvas extends Component {
 
   onMouseDown(event) {
     event.preventDefault();
-    let state = this.state;
-
     if (this.props.devices.streams) {
-
-      let stream = new Stream();
-      stream.onMouseDown(event);
-      state.streamList.push(stream);
-
+      this.props.addStream([event.pageX, event.pageY], event);
     } else if (this.props.devices.nodes) {
-
-      let node = new Node([event.pageX, event.pageY]);
-      state.nodeList.push(node);
+      this.props.addNode([event.pageX, event.pageY]);
     }
-
-    this.setState(state);
   }
 
   onMouseUp(event) {
     event.preventDefault();
     if (this.props.devices.streams) {
-      let streams = this.state.streamList;
+      let streams = this.props.streams.list;
       let stream = streams[streams.length - 1];
       stream.onMouseUp(event);
     }
   }
 
   draw() {
-    let state = this.state;
     this.ctx.fillStyle = config.canvas.backgroundColor;
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-    state.streamList.forEach((stream) => {
+    this.props.streams.list.forEach((stream) => {
       stream.render(this.ctx);
     });
-    state.nodeList.forEach((node) => {
+    this.props.nodes.list.forEach((node) => {
       node.render(this.ctx);
     });
     requestAnimationFrame(() => {
@@ -100,8 +86,18 @@ class Canvas extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    devices: state.Devices
+    devices: state.Devices,
+    nodes: state.Nodes,
+    streams: state.Streams
   };
 };
 
-module.exports = connect(mapStateToProps)(Canvas);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addNode: bindActionCreators(addNode, dispatch),
+    addStream: bindActionCreators(addStream, dispatch)
+
+  };
+};
+
+module.exports = connect(mapStateToProps, mapDispatchToProps)(Canvas);

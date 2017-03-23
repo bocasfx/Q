@@ -2,7 +2,10 @@ import config from '../config/config';
 import Particle from './Particle';
 
 class Stream {
-  constructor(x, y) {
+  constructor(position) {
+
+    let x = position[0];
+    let y = position[1];
 
     let particles = [];
     for (let i = 0; i < config.particle.count; i++) {
@@ -90,10 +93,6 @@ class Stream {
       this.queue[0] = this.easing;
       this.queue.push(this.queue.shift());
 
-      let i = 0;
-      let j = 0;
-      let step = (config.stream.size / config.particle.count);
-
       // Render stream
       for (let i=1; i<this.queue.length; i++) {
         context.beginPath();
@@ -104,6 +103,10 @@ class Stream {
         context.lineTo(this.queue[i][0], this.queue[i][1]);
         context.stroke();
       }
+
+      let i = 0;
+      let j = 0;
+      let step = (config.stream.size / config.particle.count);
 
       while (i < this.queue.length) {
         this.particles[j].render(context, this.queue[i]);

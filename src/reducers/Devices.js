@@ -1,4 +1,3 @@
-
 const initialState = {
   streams: false,
   nodes: false
