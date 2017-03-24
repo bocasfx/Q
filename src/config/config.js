@@ -1,6 +1,7 @@
 export default {
   app: {
-    collisionDistance: 22
+    collisionDistance: 22,
+    doubleClickDistance: 15
   },
   canvas: {
     backgroundColor: 'rgba(0, 0, 0, 0.0)'
@@ -12,7 +13,7 @@ export default {
     lineJoin: 'round',
     lineWidth: 2,
     lineDash: [],
-    count: 1
+    count: 5
   },
   node: {
     radius: 15,

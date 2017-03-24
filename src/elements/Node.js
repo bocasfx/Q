@@ -1,9 +1,11 @@
 import config from '../config/config';
 import { normalizeFrequency, normalizeVelocity } from '../utils/utils';
+import uuidv1 from 'uuid/v1';
 
 class Node {
 
   constructor(position, audioContext) {
+    this.id = uuidv1();
     this.position = position;
     this.sustain = config.node.sustain;
     this.playing = false;

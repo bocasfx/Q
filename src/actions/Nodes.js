@@ -12,3 +12,10 @@ export const detectCollisions = (streams) => {
     streams
   };
 };
+
+export const detectDoubleClick = (position) => {
+  return {
+    type: 'DETECT_DOUBLE_CLICK',
+    position
+  };
+};

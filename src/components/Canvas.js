@@ -3,8 +3,10 @@ import './Canvas.css';
 import config from '../config/config';
 import { connect } from 'react-redux';
 import { addNode, detectCollisions } from '../actions/Nodes';
+import { showNodeSettings } from '../actions/Devices';
 import { addStream } from '../actions/Streams';
 import { bindActionCreators } from 'redux';
+import { calculateDistance } from '../utils/utils';
 
 class Canvas extends Component {
 
@@ -15,6 +17,7 @@ class Canvas extends Component {
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.draw = this.draw.bind(this);
+    this.onDoubleClick = this.onDoubleClick.bind(this);
   }
   
   componentDidMount() {
@@ -55,6 +58,15 @@ class Canvas extends Component {
     }
   }
 
+  onDoubleClick(event) {
+    this.props.nodes.forEach((node) => {
+      let distance = calculateDistance(node.position, [event.pageX, event.pageY]);
+      if (distance <= config.app.doubleClickDistance) {
+        this.props.showNodeSettings(node.id);
+      }
+    });
+  }
+
   draw() {
     this.canvasContext.fillStyle = config.canvas.backgroundColor;
     this.canvasContext.clearRect(0, 0, this.canvasContext.canvas.width, this.canvasContext.canvas.height);
@@ -81,6 +93,7 @@ class Canvas extends Component {
         onMouseMove={this.onMouseMove}
         onMouseDown={this.onMouseDown}
         onMouseUp={this.onMouseUp}
+        onDoubleClick={this.onDoubleClick}
       />
     );
   }
@@ -98,7 +111,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addNode: bindActionCreators(addNode, dispatch),
     addStream: bindActionCreators(addStream, dispatch),
-    detectCollisions: bindActionCreators(detectCollisions, dispatch)
+    detectCollisions: bindActionCreators(detectCollisions, dispatch),
+    showNodeSettings: bindActionCreators(showNodeSettings, dispatch)
   };
 };
 

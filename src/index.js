@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import reducer from './reducers';
 import Menu from './components/Menu';
 import Settings from './components/Settings';
+import NodeSettings from './components/NodeSettings';
 
 const store = createStore(reducer);
 
@@ -15,6 +16,7 @@ ReactDOM.render(
     <div className="grid">
       <div className="settings">
         <Settings/>
+        <NodeSettings/>
       </div>
       <Canvas/>
       <Menu/>

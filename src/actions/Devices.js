@@ -4,3 +4,16 @@ export const toggleDevice = (device) => {
     device
   };
 };
+
+export const showNodeSettings = (id) => {
+  return {
+    type: 'SHOW_NODE_SETTINGS',
+    id
+  };
+};
+
+export const hideNodeSettings = () => {
+  return {
+    type: 'HIDE_NODE_SETTINGS'
+  };
+};
