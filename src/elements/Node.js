@@ -5,7 +5,7 @@ class Node {
 
   constructor(position, audioContext) {
     this.position = position;
-    this.sustain = 500;
+    this.sustain = config.node.sustain;
     this.playing = false;
     this.oscillator = audioContext.createOscillator();
     this.gainNode = audioContext.createGain();
@@ -31,10 +31,10 @@ class Node {
   }
 
   render(canvasContext) {
-    let strokeStyle = this.playing ? 'gold' : config.node.strokeStyle;
+    let extraRadius = this.playing ? 2 : 0;
     canvasContext.beginPath();
-    canvasContext.arc(this.position[0], this.position[1], config.node.radius, 0, 2 * Math.PI, false);
-    canvasContext.strokeStyle = strokeStyle;
+    canvasContext.arc(this.position[0], this.position[1], config.node.radius + extraRadius, 0, 2 * Math.PI, false);
+    canvasContext.strokeStyle = config.node.strokeStyle;
     canvasContext.lineWidth = config.node.lineWidth;
     canvasContext.setLineDash(config.node.lineDash);
     canvasContext.fillStyle = config.node.fillStyle;

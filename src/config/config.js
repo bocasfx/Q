@@ -16,10 +16,11 @@ export default {
   },
   node: {
     radius: 15,
-    strokeStyle: 'rebeccapurple', 
+    strokeStyle: 'rgba(102, 51, 153, 0.7)', 
     lineDash: [],
     lineWidth: 3,
-    fillStyle: 'mediumorchid', 
+    fillStyle: 'rgba(186, 85, 211, 0.7)',
+    sustain: 50
   },
   stream: {
     easingFactor: 0.08,

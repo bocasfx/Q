@@ -61,7 +61,7 @@ class Stream {
     this.mouseState = 'down';
   }
 
-  onMouseUp() {
+  onMouseUp(event) {
     event.preventDefault();
     this.mouseState = 'up';
   }
