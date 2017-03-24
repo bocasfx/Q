@@ -8,7 +8,7 @@ class Stream {
     let y = position[1];
 
     let particles = [];
-    for (let i = 0; i < config.particle.count; i++) {
+    for (let i = 0; i <= config.particle.count; i++) {
       particles.push(new Particle([x, y]));
     }
 
@@ -113,6 +113,9 @@ class Stream {
         i += step;
         j += 1;
       }
+
+      this.particles[this.particles.length - 1].render(canvasContext, this.queue[this.queue.length - 1]);
+
     }
   }
 }

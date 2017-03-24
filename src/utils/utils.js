@@ -1,12 +1,12 @@
 
 export const normalizeFrequency = (value) => {
-  let maxValue = window.innerWidth;
-  return ((maxValue - value) / maxValue) * 2000;
+  let maxValue = window.innerHeight;
+  return (value / maxValue) * 2000;
 };
 
 export const normalizeVelocity = (value) => {
-  let maxValue = window.innerHeight;
-  return (value / maxValue);
+  let maxValue = window.innerWidth;
+  return ((maxValue - value) / maxValue);
 };
 
 export const calculateDistance = (a, b) => {

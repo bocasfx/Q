@@ -12,9 +12,9 @@ class Node {
     this.oscillator.connect(this.gainNode);
     this.gainNode.connect(audioContext.destination);
     this.gainNode.gain.value = 0;
-    this.velocity = normalizeVelocity(position[0]);
+    this.velocity = normalizeVelocity(position[1]);
     this.oscillator.type = 'sine';
-    this.oscillator.frequency.value = normalizeFrequency(position[1]);
+    this.oscillator.frequency.value = normalizeFrequency(position[0]);
     this.oscillator.start();
   }
 
@@ -31,9 +31,10 @@ class Node {
   }
 
   render(canvasContext) {
+    let strokeStyle = this.playing ? 'gold' : config.node.strokeStyle;
     canvasContext.beginPath();
     canvasContext.arc(this.position[0], this.position[1], config.node.radius, 0, 2 * Math.PI, false);
-    canvasContext.strokeStyle = config.node.strokeStyle;
+    canvasContext.strokeStyle = strokeStyle;
     canvasContext.lineWidth = config.node.lineWidth;
     canvasContext.setLineDash(config.node.lineDash);
     canvasContext.fillStyle = config.node.fillStyle;

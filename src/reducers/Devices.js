@@ -1,5 +1,5 @@
 const initialState = {
-  streams: false,
+  streams: true,
   nodes: false,
   settings: false
 };

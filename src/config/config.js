@@ -12,7 +12,7 @@ export default {
     lineJoin: 'round',
     lineWidth: 2,
     lineDash: [],
-    count: 5
+    count: 1
   },
   node: {
     radius: 15,
