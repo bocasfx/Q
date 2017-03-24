@@ -1,15 +1,13 @@
 import Stream from '../elements/Stream';
 
-const initialState = {
-  list: []
-};
+const initialState = [];
 
 const addStream = (state, position, event) => {
   let stream = new Stream(position);
-  let streamList = state.list;
+  let streamList = state.splice(0);
   streamList.push(stream);
   stream.onMouseDown(event);
-  return Object.assign({}, state, {list: streamList});
+  return streamList;
 };
 
 export default (state = initialState, action) => {

@@ -1,14 +1,19 @@
 import config from '../config/config';
 
 class Particle {
-  render(context, position) {
-    context.beginPath();
-    context.arc(position[0], position[1], config.particle.radius, 0, 2 * Math.PI, false);
-    context.strokeStyle = config.particle.strokeStyle;
-    context.setLineDash(config.particle.lineDash);
-    context.fillStyle = config.particle.fillStyle;
-    context.fill();
-    context.stroke();
+  constructor(position) {
+    this.position = position;
+  }
+
+  render(canvasContext, position) {
+    this.position = position;
+    canvasContext.beginPath();
+    canvasContext.arc(position[0], position[1], config.particle.radius, 0, 2 * Math.PI, false);
+    canvasContext.strokeStyle = config.particle.strokeStyle;
+    canvasContext.setLineDash(config.particle.lineDash);
+    canvasContext.fillStyle = config.particle.fillStyle;
+    canvasContext.fill();
+    canvasContext.stroke();
   }
 }
 

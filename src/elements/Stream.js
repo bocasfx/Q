@@ -9,7 +9,7 @@ class Stream {
 
     let particles = [];
     for (let i = 0; i < config.particle.count; i++) {
-      particles.push(new Particle([0, 0]));
+      particles.push(new Particle([x, y]));
     }
 
     let queue = [];
@@ -73,7 +73,7 @@ class Stream {
     this.headPosition = [x, y];
   }
 
-  render(context) {
+  render(canvasContext) {
     if (this.headPosition !== '') {
       if (this.mouseState === 'up') {
         if (this.path.length) {
@@ -95,13 +95,13 @@ class Stream {
 
       // Render stream
       for (let i=1; i<this.queue.length; i++) {
-        context.beginPath();
-        context.strokeStyle = config.stream.strokeStyle;
-        context.lineWidth = config.stream.lineWidth;
-        context.setLineDash(config.stream.lineDash);
-        context.moveTo(this.queue[i-1][0], this.queue[i-1][1]);
-        context.lineTo(this.queue[i][0], this.queue[i][1]);
-        context.stroke();
+        canvasContext.beginPath();
+        canvasContext.strokeStyle = config.stream.strokeStyle;
+        canvasContext.lineWidth = config.stream.lineWidth;
+        canvasContext.setLineDash(config.stream.lineDash);
+        canvasContext.moveTo(this.queue[i-1][0], this.queue[i-1][1]);
+        canvasContext.lineTo(this.queue[i][0], this.queue[i][1]);
+        canvasContext.stroke();
       }
 
       let i = 0;
@@ -109,13 +109,11 @@ class Stream {
       let step = (config.stream.size / config.particle.count);
 
       while (i < this.queue.length) {
-        this.particles[j].render(context, this.queue[i]);
+        this.particles[j].render(canvasContext, this.queue[i]);
         i += step;
         j += 1;
       }
     }
-
-    
   }
 }
 
