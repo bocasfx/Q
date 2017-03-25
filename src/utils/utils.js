@@ -1,7 +1,8 @@
+import config from '../config/config';
 
 export const normalizeFrequency = (value) => {
   let maxValue = window.innerHeight;
-  return (value / maxValue) * 2000;
+  return value / maxValue * config.app.maxFrequency;
 };
 
 export const normalizeVelocity = (value) => {

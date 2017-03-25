@@ -8,7 +8,7 @@ class Stream {
     let y = position[1];
 
     let particles = [];
-    for (let i = 0; i <= config.particle.count; i++) {
+    for (let i = 0; i < config.particle.count; i++) {
       particles.push(new Particle([x, y]));
     }
 
@@ -104,17 +104,24 @@ class Stream {
         canvasContext.stroke();
       }
 
-      let i = 0;
-      let j = 0;
-      let step = (config.stream.size / config.particle.count);
+      if (this.particles.length) {
 
-      while (i < this.queue.length) {
-        this.particles[j].render(canvasContext, this.queue[i]);
-        i += step;
-        j += 1;
+        let pointInRope = 0;
+        let particleIdx = 0;
+        let step = Math.floor(this.queue.length / (this.particles.length - 1));
+
+        while (pointInRope <= this.queue.length - step) {
+          this.particles[particleIdx].render(canvasContext, this.queue[pointInRope]);
+          if ((pointInRope + step * 2) > this.queue.length) {
+            pointInRope = this.queue.length - 1;
+          } else {
+            pointInRope += (step - 1);
+          }
+          particleIdx++;
+        }
+
+        this.particles[this.particles.length - 1].render(canvasContext, this.queue[this.queue.length - 1]);
       }
-
-      this.particles[this.particles.length - 1].render(canvasContext, this.queue[this.queue.length - 1]);
 
     }
   }

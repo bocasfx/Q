@@ -1,7 +1,8 @@
 export default {
   app: {
     collisionDistance: 22,
-    doubleClickDistance: 15
+    doubleClickDistance: 15,
+    maxFrequency: 200
   },
   canvas: {
     backgroundColor: 'rgba(0, 0, 0, 0.0)'
@@ -21,7 +22,7 @@ export default {
     lineDash: [],
     lineWidth: 3,
     fillStyle: 'rgba(186, 85, 211, 0.7)',
-    sustain: 50
+    sustain: 500
   },
   stream: {
     easingFactor: 0.08,
