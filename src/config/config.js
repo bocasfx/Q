@@ -24,6 +24,14 @@ export default {
     fillStyle: 'rgba(186, 85, 211, 0.7)',
     sustain: 500
   },
+  midiNode: {
+    radius: 15,
+    strokeStyle: 'rgba(107, 142, 35, 0.7)', 
+    lineDash: [],
+    lineWidth: 3,
+    fillStyle: 'rgba(154, 205, 50, 0.7)',
+    sustain: 500
+  },
   stream: {
     easingFactor: 0.08,
     size: 100,

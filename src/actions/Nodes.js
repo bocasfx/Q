@@ -6,6 +6,13 @@ export const addNode = (position, audioContext) => {
   };
 };
 
+export const addMidiNode = (position) => {
+  return {
+    type: 'ADD_MIDI_NODE',
+    position
+  };
+};
+
 export const detectCollisions = (streams) => {
   return {
     type: 'DETECT_COLLISIONS',

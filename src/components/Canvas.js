@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Canvas.css';
 import config from '../config/config';
 import { connect } from 'react-redux';
-import { addNode, detectCollisions } from '../actions/Nodes';
+import { addNode, addMidiNode, detectCollisions } from '../actions/Nodes';
 import { showNodeSettings } from '../actions/Devices';
 import { addStream } from '../actions/Streams';
 import { bindActionCreators } from 'redux';
@@ -46,6 +46,8 @@ class Canvas extends Component {
       this.props.addStream([event.pageX, event.pageY], event);
     } else if (this.props.devices.nodes) {
       this.props.addNode([event.pageX, event.pageY], this.audioContext);
+    } else if (this.props.devices.midiNodes) {
+      this.props.addMidiNode([event.pageX, event.pageY], this.audioContext);
     }
   }
 
@@ -110,6 +112,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addNode: bindActionCreators(addNode, dispatch),
+    addMidiNode: bindActionCreators(addMidiNode, dispatch),
     addStream: bindActionCreators(addStream, dispatch),
     detectCollisions: bindActionCreators(detectCollisions, dispatch),
     showNodeSettings: bindActionCreators(showNodeSettings, dispatch)
