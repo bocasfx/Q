@@ -12,8 +12,8 @@ const addNode = (state, position, audioContext) => {
   return nodeList;
 };
 
-const addMidiNode = (state, position) => {
-  let midiNode = new MidiNode(position);
+const addMidiNode = (state, position, midiContext) => {
+  let midiNode = new MidiNode(position, midiContext);
   let nodeList = state.splice(0);
   nodeList.push(midiNode);
   return nodeList;
@@ -43,7 +43,7 @@ export default (state = initialState, action) => {
       return addNode(state, action.position, action.audioContext);
 
     case 'ADD_MIDI_NODE':
-      return addMidiNode(state, action.position);
+      return addMidiNode(state, action.position, action.midiContext);
 
     case 'DETECT_COLLISIONS':
       return detectCollisions(state, action.streams);

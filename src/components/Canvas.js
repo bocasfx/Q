@@ -22,7 +22,6 @@ class Canvas extends Component {
   
   componentDidMount() {
     this.canvasContext = this.refs.canvas.getContext('2d');
-    this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
     requestAnimationFrame(() => {
       this.draw();
     });
@@ -45,9 +44,9 @@ class Canvas extends Component {
     if (this.props.devices.streams) {
       this.props.addStream([event.pageX, event.pageY], event);
     } else if (this.props.devices.nodes) {
-      this.props.addNode([event.pageX, event.pageY], this.audioContext);
+      this.props.addNode([event.pageX, event.pageY], this.props.audioContext);
     } else if (this.props.devices.midiNodes) {
-      this.props.addMidiNode([event.pageX, event.pageY], this.audioContext);
+      this.props.addMidiNode([event.pageX, event.pageY], this.props.midiContext);
     }
   }
 

@@ -3,11 +3,15 @@ import uuidv1 from 'uuid/v1';
 
 class MidiNode {
 
-  constructor(position) {
+  constructor(position, midiContext) {
     this.id = uuidv1();
     this.position = position;
+    this.midiContext = midiContext;
     this.sustain = config.midiNode.sustain;
     this.playing = false;
+    let outputs = midiContext.outputs;
+    let output = outputs.values().next();
+    this.midiOut = output.value;
   }
 
   play() {
@@ -15,6 +19,7 @@ class MidiNode {
       return;
     }
     this.playing = true;
+    this.midiOut.send([0x90, 3, 32]);
     setTimeout(() => {
       this.playing = false;
     }, this.sustain);

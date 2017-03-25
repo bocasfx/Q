@@ -6,10 +6,11 @@ export const addNode = (position, audioContext) => {
   };
 };
 
-export const addMidiNode = (position) => {
+export const addMidiNode = (position, midiContext) => {
   return {
     type: 'ADD_MIDI_NODE',
-    position
+    position,
+    midiContext
   };
 };
 

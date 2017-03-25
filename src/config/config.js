@@ -2,7 +2,7 @@ export default {
   app: {
     collisionDistance: 22,
     doubleClickDistance: 15,
-    maxFrequency: 200
+    maxFrequency: 1500
   },
   canvas: {
     backgroundColor: 'rgba(0, 0, 0, 0.0)'

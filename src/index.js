@@ -10,17 +10,30 @@ import Settings from './components/Settings';
 import NodeSettings from './components/NodeSettings';
 
 const store = createStore(reducer);
+const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+const renderDom = (midiContext) => {
+  ReactDOM.render(
+      <Provider store={store}>
+        <div className="grid">
+          <div className="settings">
+            <Settings/>
+            <NodeSettings/>
+          </div>
+          <Canvas audioContext={audioContext} midiContext={midiContext}/>
+          <Menu midi={midiContext !== null}/>
+        </div>
+      </Provider>,
+      document.getElementById('root')
+    );
+};
 
-ReactDOM.render(
-  <Provider store={store}>
-    <div className="grid">
-      <div className="settings">
-        <Settings/>
-        <NodeSettings/>
-      </div>
-      <Canvas/>
-      <Menu/>
-    </div>
-  </Provider>,
-  document.getElementById('root')
-);
+if (navigator.requestMIDIAccess) {
+  navigator.requestMIDIAccess({sysex: false})
+    .then((midiContext) => {
+      renderDom(midiContext);
+    }, () => {
+      renderDom(null);
+    });
+} else {
+  renderDom(null);
+}
