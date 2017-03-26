@@ -1,11 +1,16 @@
 .settings-container {
-  width: 500px;
-  height: 400px;
-  background-color: rgba(105, 105, 105, 0.3);
-  border: 2px solid darkgray;
+  position: absolute;
+  width: 350px;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid dimgray;
+  border-right: none;
   padding: 40px;
-  color: dimgray;
+  color: silver;
   font-size: 0.9em;
+  right: -430px;
+  top: 0;
+  transition: .1s ease-in-out;
 }
 
 .settings-container label {
@@ -13,8 +18,9 @@
 }
 
 .settings-container input {
-  background-color: white;
-  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  border: 1px solid dimgray;
   padding: 4px;
   outline: none;
+  color: silver;
 }

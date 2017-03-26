@@ -9,33 +9,36 @@ export default {
   },
   particle: {
     radius: 7,
-    strokeStyle: 'teal',
-    fillStyle: 'lightseagreen',
+    fillStyle: 'teal',
+    strokeStyle: 'lightseagreen',
     lineJoin: 'round',
     lineWidth: 2,
     lineDash: [],
-    count: 5
+    count: 1,
+    shadow: 'rgba(0, 0, 0, 0.3)'
   },
   node: {
     radius: 15,
-    strokeStyle: 'rgba(102, 51, 153, 0.7)', 
+    fillStyle: 'rgba(102, 51, 153, 0.7)', 
     lineDash: [],
-    lineWidth: 3,
-    fillStyle: 'rgba(186, 85, 211, 0.7)',
-    sustain: 500
+    lineWidth: 2,
+    strokeStyle: 'rgba(186, 85, 211, 0.7)',
+    sustain: 500,
+    shadow: 'rgba(0, 0, 0, 0.3)'
   },
   midiNode: {
     radius: 15,
-    strokeStyle: 'rgba(107, 142, 35, 0.7)', 
+    strokeStyle: 'rgba(124, 252, 0, 0.7)', 
     lineDash: [],
-    lineWidth: 3,
+    lineWidth: 2,
     fillStyle: 'rgba(154, 205, 50, 0.7)',
-    sustain: 500
+    sustain: 500,
+    shadow: 'rgba(0, 0, 0, 0.3)'
   },
   stream: {
     easingFactor: 0.08,
     size: 100,
-    strokeStyle: 'darkgray',
+    strokeStyle: 'gray',
     lineWidth: 2,
     lineDash: [3, 30]
   }

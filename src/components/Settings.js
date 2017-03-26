@@ -4,18 +4,20 @@ import { connect } from 'react-redux';
 
 class Settings extends React.Component {
   render() {
-    let style = {};
+    let style = {
+      right: 0
+    };
 
     if (!this.props.devices.settings) {
       style = {
-        display: 'none'
+        right: '-440px'
       };
     }
 
     return (
       <div className="settings-container" style={style}>
         <label htmlFor="particle-count">Particle count</label>
-        <input name="particle-count" type="text"/>
+        <input name="particle-count" type="number"/>
       </div>
     );
   }

@@ -34,6 +34,12 @@ class Node {
 
   render(canvasContext) {
     let extraRadius = this.playing ? 2 : 0;
+
+    canvasContext.beginPath();
+    canvasContext.arc(this.position[0] + 3, this.position[1] + 3, config.midiNode.radius + extraRadius, 0, 2 * Math.PI, false);
+    canvasContext.fillStyle = config.node.shadow;
+    canvasContext.fill();
+
     canvasContext.beginPath();
     canvasContext.arc(this.position[0], this.position[1], config.node.radius + extraRadius, 0, 2 * Math.PI, false);
     canvasContext.strokeStyle = config.node.strokeStyle;

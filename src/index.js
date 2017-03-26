@@ -14,7 +14,7 @@ const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 const renderDom = (midiContext) => {
   ReactDOM.render(
       <Provider store={store}>
-        <div className="grid">
+        <div>
           <div className="settings">
             <Settings/>
             <NodeSettings/>

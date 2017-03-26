@@ -22,11 +22,18 @@ class MidiNode {
     this.midiOut.send([0x90, 3, 32]);
     setTimeout(() => {
       this.playing = false;
+      this.midiOut.send([0x90, 3, 0]);
     }, this.sustain);
   }
 
   render(canvasContext) {
     let extraRadius = this.playing ? 2 : 0;
+
+    canvasContext.beginPath();
+    canvasContext.arc(this.position[0] + 3, this.position[1] + 3, config.midiNode.radius + extraRadius, 0, 2 * Math.PI, false);
+    canvasContext.fillStyle = config.midiNode.shadow;
+    canvasContext.fill();
+
     canvasContext.beginPath();
     canvasContext.arc(this.position[0], this.position[1], config.midiNode.radius + extraRadius, 0, 2 * Math.PI, false);
     canvasContext.strokeStyle = config.midiNode.strokeStyle;
@@ -35,6 +42,7 @@ class MidiNode {
     canvasContext.fillStyle = config.midiNode.fillStyle;
     canvasContext.fill();
     canvasContext.stroke();
+
   }
 }
 
