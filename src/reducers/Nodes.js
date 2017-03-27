@@ -36,6 +36,24 @@ const detectCollisions = (state, streams) => {
   return state;
 };
 
+const setNodePosition = (state, id, position) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.position = position;
+    }
+    return node;
+  });
+};
+
+const setNodeFrequency = (state, id, frequency) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.frequency = frequency;
+    }
+    return node;
+  });
+};
+
 export default (state = initialState, action) => {
   switch (action.type) {
 
@@ -47,6 +65,12 @@ export default (state = initialState, action) => {
 
     case 'DETECT_COLLISIONS':
       return detectCollisions(state, action.streams);
+
+    case 'SET_NODE_POSITION':
+      return setNodePosition(state, action.id, action.position);
+
+    case 'SET_NODE_FREQUENCY':
+      return setNodeFrequency(state, action.id, action.frequency);
 
     default:
       return state;

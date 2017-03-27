@@ -18,11 +18,3 @@ canvas {
   /*background-image: url('/backgrounds/carbon_fibre_v2.png');*/
   /*background-image: url('/backgrounds/black_linen_v2.png');*/
 }
-
-.settings {
-  position: absolute;
-  top: 80px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}

@@ -27,3 +27,19 @@ export const detectDoubleClick = (position) => {
     position
   };
 };
+
+export const setNodePosition = (id, position) => {
+  return {
+    type: 'SET_NODE_POSITION',
+    id,
+    position
+  };
+};
+
+export const setNodeFrequency = (id, frequency) => {
+  return {
+    type: 'SET_NODE_FREQUENCY',
+    id,
+    frequency
+  };
+};

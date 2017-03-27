@@ -1,5 +1,5 @@
 import config from '../config/config';
-import { normalizeFrequency, normalizeVelocity } from '../utils/utils';
+import { normalizeVelocity } from '../utils/utils';
 import uuidv1 from 'uuid/v1';
 
 class Node {
@@ -16,8 +16,12 @@ class Node {
     this.gainNode.gain.value = 0;
     this.velocity = normalizeVelocity(position[1]);
     this.oscillator.type = 'sine';
-    this.oscillator.frequency.value = normalizeFrequency(position[0]);
+    this.frequency = 440;
     this.oscillator.start();
+  }
+
+  set frequency(freq) {
+    this.oscillator.frequency.value = freq;
   }
 
   play() {

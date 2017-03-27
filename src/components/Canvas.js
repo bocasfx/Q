@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Canvas.css';
 import config from '../config/config';
 import { connect } from 'react-redux';
-import { addNode, addMidiNode, detectCollisions } from '../actions/Nodes';
+import { addNode, addMidiNode, detectCollisions, setNodePosition } from '../actions/Nodes';
 import { showNodeSettings } from '../actions/Devices';
 import { addStream } from '../actions/Streams';
 import { bindActionCreators } from 'redux';
@@ -18,6 +18,8 @@ class Canvas extends Component {
     this.onMouseUp = this.onMouseUp.bind(this);
     this.draw = this.draw.bind(this);
     this.onDoubleClick = this.onDoubleClick.bind(this);
+    this.mouseDown = false;
+    this.selectedNodeId = null;
   }
   
   componentDidMount() {
@@ -29,6 +31,9 @@ class Canvas extends Component {
 
   onMouseMove(event) {
     event.preventDefault();
+    if (!this.mouseDown) {
+      return;
+    }
     if (this.props.devices.streams) {
       let streams = this.props.streams;
       if (!streams.length) {
@@ -36,22 +41,34 @@ class Canvas extends Component {
       }
       let stream = streams[streams.length - 1];
       stream.onMouseMove(event);
+    } else if (!this.props.devices.nodes && !this.props.devices.midiNodes) {
+      this.props.setNodePosition(this.selectedNodeId, [event.pageX, event.pageY]);
     }
   }
 
   onMouseDown(event) {
     event.preventDefault();
+    this.mouseDown = true;
     if (this.props.devices.streams) {
       this.props.addStream([event.pageX, event.pageY], event);
     } else if (this.props.devices.nodes) {
       this.props.addNode([event.pageX, event.pageY], this.props.audioContext);
     } else if (this.props.devices.midiNodes) {
       this.props.addMidiNode([event.pageX, event.pageY], this.props.midiContext);
+    } else {
+      this.props.nodes.forEach((node) => {
+        let distance = calculateDistance(node.position, [event.pageX, event.pageY]);
+        if (distance <= config.app.doubleClickDistance) {
+          this.selectedNodeId = node.id;
+        }
+      });
     }
   }
 
   onMouseUp(event) {
     event.preventDefault();
+    this.mouseDown = false;
+    this.selectedNodeId = null;
     if (this.props.devices.streams) {
       let streams = this.props.streams;
       let stream = streams[streams.length - 1];
@@ -114,7 +131,8 @@ const mapDispatchToProps = (dispatch) => {
     addMidiNode: bindActionCreators(addMidiNode, dispatch),
     addStream: bindActionCreators(addStream, dispatch),
     detectCollisions: bindActionCreators(detectCollisions, dispatch),
-    showNodeSettings: bindActionCreators(showNodeSettings, dispatch)
+    showNodeSettings: bindActionCreators(showNodeSettings, dispatch),
+    setNodePosition: bindActionCreators(setNodePosition, dispatch)
   };
 };
 

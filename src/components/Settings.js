@@ -1,14 +1,27 @@
 import React from 'react';
 import './Settings.css';
 import { connect } from 'react-redux';
+import { hideNodeSettings } from '../actions/Devices';
+import { bindActionCreators } from 'redux';
 
 class Settings extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.hideSettings = this.hideSettings.bind(this);
+  }
+
+  hideSettings(event) {
+    event.preventDefault();
+    this.props.hideNodeSettings();
+  }
+
   render() {
     let style = {
       right: 0
     };
 
-    if (!this.props.devices.settings) {
+    if (!this.props.devices.nodeSettings) {
       style = {
         right: '-440px'
       };
@@ -16,8 +29,8 @@ class Settings extends React.Component {
 
     return (
       <div className="settings-container" style={style}>
-        <label htmlFor="particle-count">Particle count</label>
-        <input name="particle-count" type="number"/>
+        <button className="close" onClick={this.hideSettings}>&times;</button>
+        {this.props.children}
       </div>
     );
   }
@@ -29,9 +42,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-// const mapDispatchToProps = () => {
-//   return {
-//   };
-// };
+const mapDispatchToProps = (dispatch) => {
+  return {
+    hideNodeSettings: bindActionCreators(hideNodeSettings, dispatch)
+  };
+};
 
-module.exports = connect(mapStateToProps, null)(Settings);
+module.exports = connect(mapStateToProps, mapDispatchToProps)(Settings);
