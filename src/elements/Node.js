@@ -24,6 +24,10 @@ class Node {
     this.oscillator.frequency.value = freq;
   }
 
+  get frequency() {
+    return this.oscillator.frequency.value;
+  }
+
   play() {
     if (this.playing) {
       return;

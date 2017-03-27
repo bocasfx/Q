@@ -2,7 +2,7 @@ import React from 'react';
 import './NodeSettings.css';
 import { connect } from 'react-redux';
 import Settings from './Settings';
-import frequencies from '../config/frequencies';
+import noteConfig from '../config/frequencies';
 import { setNodeFrequency } from '../actions/Nodes';
 import { bindActionCreators } from 'redux';
 import _ from 'lodash';
@@ -19,16 +19,41 @@ class NodeSettings extends React.Component {
 
     this.setNodeNote = this.setNodeNote.bind(this);
     this.setNodeOctave = this.setNodeOctave.bind(this);
+    this.loadNodeSettings = this.loadNodeSettings.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.props = nextProps;
+    this.loadNodeSettings();
+  }
+
+  loadNodeSettings() {
+    if (!this.props.nodes.length || !this.props.devices.nodeSettingsId) {
+      return;
+    }
+
+    let currentNode = _.find(this.props.nodes, (node) => {
+      return node.id === this.props.devices.nodeSettingsId;
+    });
+
+    let freqObj = _.find(noteConfig.frequencies, (freq) => {
+      return (Math.abs(freq.frequency - currentNode.frequency) < 0.001);
+    });
+
+    this.setState({
+      selectedNote: freqObj.note,
+      selectedOctave: freqObj.octave
+    });
   }
 
   renderNoteSelect() {
-    return frequencies.notes.map((note, idx) => {
+    return noteConfig.notes.map((note, idx) => {
       return <option key={idx} value={note}>{note}</option>;
     });
   }
 
   renderOctaveSelect() {
-    return frequencies.octaves.map((octave, idx) => {
+    return noteConfig.octaves.map((octave, idx) => {
       return <option key={idx} value={octave}>{octave}</option>;
     });
   }
@@ -52,7 +77,7 @@ class NodeSettings extends React.Component {
   }
 
   setNodeFrequency(note, octave) {
-    let frequency = _.find(frequencies.frequencies, (freq) => {
+    let frequency = _.find(noteConfig.frequencies, (freq) => {
       return freq.note === note && freq.octave === octave;
     });
 
@@ -85,7 +110,8 @@ class NodeSettings extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    devices: state.Devices
+    devices: state.Devices,
+    nodes: state.Nodes
   };
 };
 
