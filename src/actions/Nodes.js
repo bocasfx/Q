@@ -43,11 +43,3 @@ export const setNodeFrequency = (id, frequency) => {
     frequency
   };
 };
-
-export const setNodeStatus = (id, status) => {
-  return {
-    type: 'SET_NODE_STATUS',
-    id,
-    status
-  };
-};

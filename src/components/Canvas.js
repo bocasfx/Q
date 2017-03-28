@@ -49,12 +49,20 @@ class Canvas extends Component {
   onMouseDown(event) {
     event.preventDefault();
     this.mouseDown = true;
+
+    // Streams
     if (this.props.devices.streams) {
       this.props.addStream([event.pageX, event.pageY], event);
+
+    // Nodes
     } else if (this.props.devices.nodes) {
       this.props.addNode([event.pageX, event.pageY], this.props.audioContext);
+
+    // MIDI Nodes
     } else if (this.props.devices.midiNodes) {
       this.props.addMidiNode([event.pageX, event.pageY], this.props.midiContext);
+
+    // Select Node
     } else {
       this.props.nodes.forEach((node) => {
         let distance = calculateDistance(node.position, [event.pageX, event.pageY]);

@@ -27,10 +27,4 @@ const matchStateToProps = (state) => {
   };
 };
 
-const matchDispatchToProps = () => {
-  return {
-
-  };
-};
-
-module.exports = connect(matchStateToProps, matchDispatchToProps)(MixerButton);
+module.exports = connect(matchStateToProps)(MixerButton);
