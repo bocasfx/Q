@@ -1,0 +1,15 @@
+.mixer-container {
+  position: absolute;
+  width: 100%;
+  max-width: calc(100% - 80px);
+  height: calc(100% - 133px);
+  max-height: calc(100% - 133px);
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  transition: 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  padding: 40px;
+  overflow-x: scroll;
+}

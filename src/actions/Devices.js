@@ -17,3 +17,9 @@ export const hideNodeSettings = () => {
     type: 'HIDE_NODE_SETTINGS'
   };
 };
+
+export const hideMixer = () => {
+  return {
+    type: 'HIDE_MIXER'
+  };
+};

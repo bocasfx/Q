@@ -1,21 +1,21 @@
 import React from 'react';
-import './SettingsButton.css';
+import './MixerButton.css';
 import { connect } from 'react-redux';
 import Button from './Button';
 
-class SettingsButton extends React.Component {
+class MixerButton extends React.Component {
   render() {
     let style = {};
 
-    if (this.props.devices.settings) {
+    if (this.props.devices.mixer) {
       style = {
         opacity: 1
       };
     }
 
     return (
-      <Button device="settings">
-        <div className="button-item settings-button-container" style={style}></div>
+      <Button device="mixer">
+        <div className="button-item mixer-button-container" style={style}></div>
       </Button>
     );
   }
@@ -33,4 +33,4 @@ const matchDispatchToProps = () => {
   };
 };
 
-module.exports = connect(matchStateToProps, matchDispatchToProps)(SettingsButton);
+module.exports = connect(matchStateToProps, matchDispatchToProps)(MixerButton);

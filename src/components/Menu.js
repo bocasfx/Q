@@ -3,7 +3,7 @@ import './Menu.css';
 import StreamButton from './StreamButton';
 import NodeButton from './NodeButton';
 import MidiNodeButton from './MidiNodeButton';
-import SettingsButton from './SettingsButton';
+import MixerButton from './MixerButton';
 
 class Menu extends React.Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class Menu extends React.Component {
         <StreamButton/>
         <NodeButton/>
         {this.renderMidiButton()}
-        <SettingsButton/>
+        <MixerButton/>
       </div>
     );
   }

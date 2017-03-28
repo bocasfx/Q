@@ -21,7 +21,7 @@ const addMidiNode = (state, position, midiContext) => {
 
 const detectCollisions = (state, streams) => {
   state.forEach((node) => {
-    if (!node.isPlaying) {
+    if (!node.active) {
       streams.forEach((stream) => {
         stream.particles.forEach((particle) => {
           let distance = calculateDistance(node.position, particle.position);

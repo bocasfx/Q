@@ -1,0 +1,7 @@
+.led-container {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2px solid rgb(186, 85, 211);
+  background-color: rgb(102, 51, 153);
+}

@@ -4,7 +4,8 @@ const initialState = {
   midiNodes: false,
   settings: false,
   nodeSettings: false,
-  nodeSettingsId: null
+  nodeSettingsId: null,
+  mixer: false
 };
 
 const toggleDevice = (state, device) => {
