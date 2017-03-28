@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './Canvas.css';
 import config from '../config/config';
 import { connect } from 'react-redux';
@@ -8,7 +8,7 @@ import { addStream } from '../actions/Streams';
 import { bindActionCreators } from 'redux';
 import { calculateDistance } from '../utils/utils';
 
-class Canvas extends Component {
+class Canvas extends React.Component {
 
   constructor(props) {
     super(props);

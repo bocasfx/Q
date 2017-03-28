@@ -32,12 +32,20 @@ class Node {
     if (this.active) {
       return;
     }
+    this.activate();
     this.gainNode.gain.value = this.velocity;
-    this.active = true;
     setTimeout(() => {
-      this.gainNode.gain.value = 0;
-      this.active = false;
+      this.deactivate();
     }, this.sustain);
+  }
+
+  activate() {
+    this.active = true;
+  }
+
+  deactivate() {
+    this.gainNode.gain.value = 0;
+    this.active = false;
   }
 
   render(canvasContext) {

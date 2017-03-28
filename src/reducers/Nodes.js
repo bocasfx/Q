@@ -20,7 +20,7 @@ const addMidiNode = (state, position, midiContext) => {
 };
 
 const detectCollisions = (state, streams) => {
-  state.forEach((node) => {
+  return state.map((node) => {
     if (!node.active) {
       streams.forEach((stream) => {
         stream.particles.forEach((particle) => {
@@ -31,9 +31,8 @@ const detectCollisions = (state, streams) => {
         });
       });
     }
+    return node;
   });
-
-  return state;
 };
 
 const setNodePosition = (state, id, position) => {
