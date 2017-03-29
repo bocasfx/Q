@@ -20,6 +20,9 @@ const addMidiNode = (state, position, midiContext) => {
 };
 
 const detectCollisions = (state, streams) => {
+  if (!streams.length || !state.length) {
+    return state;
+  }
   return state.map((node) => {
     if (!node.active) {
       streams.forEach((stream) => {

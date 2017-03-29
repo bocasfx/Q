@@ -20,6 +20,20 @@ class Fader extends React.Component {
   }
 
   render() {
+    const marks ={
+      0: '-0',
+      0.1: '-1',
+      0.2: '-2',
+      0.3: '-3',
+      0.4: '-4',
+      0.5: '-5',
+      0.6: '-6',
+      0.7: '-7',
+      0.8: '-8',
+      0.9: '-9',
+      1: '-10'
+    };
+
     return (
       <div className="fader-container">
         <input type="text" readOnly value={this.state.value}/>
@@ -28,6 +42,7 @@ class Fader extends React.Component {
           min={0}
           step={0.01}
           max={1}
+          marks={marks}
           defaultValue={this.state.value}
           onChange={this.onChange}/>
       </div>

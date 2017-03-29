@@ -5,8 +5,8 @@
   align-items: center;
   height: 300px;
   width: 20px;
-  border: 1px solid rgba(127, 127, 127, 0.2);
-  margin-top: 20px;
+  /*border: 1px solid rgba(127, 127, 127, 0.2);*/
+  margin-top: 40px;
   padding: 10px;
 }
 
@@ -17,8 +17,9 @@
   border: 1px solid rgba(127, 127, 127, 0.2);
   background-color: transparent;
   color: dimgray;
-  border: none;
+  padding: 7px;
   outline: none;
+  user-select: none;
 }
 
 .fader-container .rc-slider-rail {
@@ -31,19 +32,23 @@
   border: 1px solid rgba(127, 127, 127, 0.2);
 }
 
-.fader-container .rc-slider-handle {
+.fader-container .rc-slider-vertical .rc-slider-handle,
+.fader-container .rc-slider-vertical .rc-slider-handle:hover {
   width: 14px;
   height: 30px;
   border-radius: 0;
   background-image: url('/backgrounds/fake_brick.png');
-  border: 1px solid rgba(60, 60, 60, 0.4);
-  box-shadow: 3px 3px 3px 0px rgba(0,0,0,0.75);
+  border: 1px solid rgba(127, 127, 127, 0.2);
+  box-shadow: 3px 3px 3px 0px rgba(7, 7, 7, 0.8);
+  margin-bottom: -15px;
+  background-color: rgba(255, 255, 255, 0.05);
+  background-blend-mode: difference;
 }
 
-.fader-container .rc-slider-handle:hover {
-  width: 14px;
-  height: 30px;
-  border-radius: 0;
-  background-color: #333;
-  border: 1px solid rgba(127, 127, 127, 0.2);
+.fader-container .rc-slider-dot {
+  display: none;
+}
+
+.fader-container .rc-slider-mark-text {
+  color: rgba(127, 127, 127, 0.4);
 }
