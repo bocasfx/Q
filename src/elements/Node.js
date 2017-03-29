@@ -18,6 +18,7 @@ class Node {
     this.oscillator.type = 'sine';
     this.frequency = 440;
     this.oscillator.start();
+    this.type = 'audio';
   }
 
   set frequency(freq) {

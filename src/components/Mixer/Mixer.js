@@ -14,7 +14,7 @@ class Mixer extends React.Component {
 
   renderChannels() {
     return this.props.nodes.map((node, idx) => {
-      return <Channel node={node} key={idx}/>;
+      return <Channel node={node} key={idx} type={node.type}/>;
     });
   }
 

@@ -10,8 +10,10 @@ class LED extends React.Component {
         opacity: 0.3
       };
     }
+
+    let ledClass = 'led-' + this.props.type + ' led-container';
     return (
-      <div className="led-container" style={style}></div>
+      <div className={ledClass} style={style}></div>
     );
   }
 }

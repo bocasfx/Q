@@ -12,6 +12,7 @@ class MidiNode {
     let outputs = midiContext.outputs;
     let output = outputs.values().next();
     this.midiOut = output.value;
+    this.type = 'midi';
   }
 
   play() {
