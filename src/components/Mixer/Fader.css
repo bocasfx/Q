@@ -36,7 +36,7 @@
 .fader-container .rc-slider-vertical .rc-slider-handle:hover {
   width: 14px;
   height: 30px;
-  border-radius: 0;
+  border-radius: 3px;
   background-image: url('/backgrounds/fake_brick.png');
   border: 1px solid rgba(127, 127, 127, 0.2);
   box-shadow: 3px 3px 3px 0px rgba(7, 7, 7, 0.8);

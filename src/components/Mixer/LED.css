@@ -2,6 +2,7 @@
   width: 15px;
   height: 15px;
   border-radius: 50%;
+  transition: 0.15s ease-in-out;
 }
 
 .led-audio {
