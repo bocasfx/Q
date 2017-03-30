@@ -1,13 +1,21 @@
 .mixer-container {
   position: absolute;
   width: 100%;
-  max-width: calc(100% - 80px);
-  height: calc(100% - 133px);
-  max-height: calc(100% - 133px);
-  background-color: rgba(15, 15, 15, 0.95);
-  transition: top 0.5s ease-in-out;
+  height: calc(100% - 53px);
+  max-height: calc(100% - 53px);
+  background-color: rgb(15, 15, 15);
+  transition: 1s ease-in-out;
   display: flex;
   align-items: center;
-  padding: 40px;
   overflow-x: scroll;
+}
+
+.mixer-inner-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-right: 40px solid transparent;
+  border-left: 40px solid transparent;
+  transition: 1s ease-in-out;
 }

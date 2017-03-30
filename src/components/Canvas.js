@@ -7,6 +7,7 @@ import { showNodeSettings } from '../actions/Devices';
 import { addStream } from '../actions/Streams';
 import { bindActionCreators } from 'redux';
 import { calculateDistance } from '../utils/utils';
+import { setDetectionStatus } from '../actions/Collisions';
 
 class Canvas extends React.Component {
 
@@ -97,13 +98,23 @@ class Canvas extends React.Component {
     this.canvasContext.fillStyle = config.canvas.backgroundColor;
     this.canvasContext.clearRect(0, 0, this.canvasContext.canvas.width, this.canvasContext.canvas.height);
     this.canvasContext.fillRect(0, 0, this.canvasContext.canvas.width, this.canvasContext.canvas.height);
+
     this.props.streams.forEach((stream) => {
       stream.render(this.canvasContext);
     });
+
     this.props.nodes.forEach((node) => {
       node.render(this.canvasContext);
     });
-    this.props.detectCollisions(this.props.streams);
+
+    if (!this.props.collisions.calculating) {
+      this.props.setDetectionStatus(true);
+      setTimeout(() => {
+        this.props.detectCollisions(this.props.streams);
+        this.props.setDetectionStatus(false);
+      }, 0);
+    }
+
     requestAnimationFrame(() => {
       this.draw();
     });
@@ -129,7 +140,8 @@ const mapStateToProps = (state) => {
   return {
     devices: state.Devices,
     nodes: state.Nodes,
-    streams: state.Streams
+    streams: state.Streams,
+    collisions: state.Collisions
   };
 };
 
@@ -140,7 +152,8 @@ const mapDispatchToProps = (dispatch) => {
     addStream: bindActionCreators(addStream, dispatch),
     detectCollisions: bindActionCreators(detectCollisions, dispatch),
     showNodeSettings: bindActionCreators(showNodeSettings, dispatch),
-    setNodePosition: bindActionCreators(setNodePosition, dispatch)
+    setNodePosition: bindActionCreators(setNodePosition, dispatch),
+    setDetectionStatus: bindActionCreators(setDetectionStatus, dispatch)
   };
 };
 

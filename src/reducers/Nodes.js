@@ -20,6 +20,7 @@ const addMidiNode = (state, position, midiContext) => {
 };
 
 const detectCollisions = (state, streams) => {
+  // console.log('detecting');
   if (!streams.length || !state.length) {
     return state;
   }
@@ -29,7 +30,7 @@ const detectCollisions = (state, streams) => {
         stream.particles.forEach((particle) => {
           let distance = calculateDistance(node.position, particle.position);
           if (distance <= config.app.collisionDistance) {
-            node.play();
+            setTimeout(() => { node.play(); }, 0);
           }
         });
       });

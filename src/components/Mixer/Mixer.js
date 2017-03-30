@@ -20,19 +20,19 @@ class Mixer extends React.Component {
 
   render() {
 
-    let style = {
-      top: 0
-    };
+    let style = {};
 
     if (!this.props.devices.mixer) {
       style = {
-        top: 'calc(-1 * (100% - 53px))'
+        display: 'none'
       };
     }
 
     return (
       <div className="mixer-container" style={style}>
-        {this.renderChannels()}
+        <div className="mixer-inner-container" style={style}>
+          {this.renderChannels()}
+        </div>
       </div>
     );
   }
