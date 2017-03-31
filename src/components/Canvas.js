@@ -18,6 +18,7 @@ class Canvas extends React.Component {
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
     this.draw = this.draw.bind(this);
+    this.flow = this.flow.bind(this);
     this.onDoubleClick = this.onDoubleClick.bind(this);
     this.mouseDown = false;
     this.selectedNodeId = null;
@@ -26,7 +27,7 @@ class Canvas extends React.Component {
   componentDidMount() {
     this.canvasContext = this.refs.canvas.getContext('2d');
     requestAnimationFrame(() => {
-      this.draw();
+      this.flow();
     });
   }
 
@@ -94,6 +95,30 @@ class Canvas extends React.Component {
     });
   }
 
+  flow() {
+    this.props.streams.forEach((stream) => {
+      stream.flow();
+    });
+    if (!this.props.collisions.calculating) {
+      this.props.setDetectionStatus(true);
+      setTimeout(() => {
+        this.props.detectCollisions(this.props.streams);
+        this.props.setDetectionStatus(false);
+      }, 0);
+    } else {
+      console.log('no');
+    }
+
+    // No need to render when the mixer is visible.
+    if (!this.props.devices.mixer) {
+      this.draw();
+    } else {
+      requestAnimationFrame(() => {
+        this.flow();
+      });
+    }
+  }
+
   draw() {
     this.canvasContext.fillStyle = config.canvas.backgroundColor;
     this.canvasContext.clearRect(0, 0, this.canvasContext.canvas.width, this.canvasContext.canvas.height);
@@ -107,16 +132,8 @@ class Canvas extends React.Component {
       node.render(this.canvasContext);
     });
 
-    if (!this.props.collisions.calculating) {
-      this.props.setDetectionStatus(true);
-      setTimeout(() => {
-        this.props.detectCollisions(this.props.streams);
-        this.props.setDetectionStatus(false);
-      }, 0);
-    }
-
     requestAnimationFrame(() => {
-      this.draw();
+      this.flow();
     });
   }
 
