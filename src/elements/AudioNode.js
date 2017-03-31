@@ -1,33 +1,44 @@
 import config from '../config/config';
 import uuidv1 from 'uuid/v1';
+import Node from './Node';
 
-class AudioNode {
+class AudioNode extends Node {
 
   constructor(position) {
+    super();
     this.id = uuidv1();
     this.position = position;
     this.sustain = config.audioNode.sustain;
     this.active = false;
     this.type = 'audio';
-    this.src = null;
     this.onFinishedPlaying = this.onFinishedPlaying.bind(this);
   }
 
-  setAudioSource(filePath) {
-    this.src = new Audio(filePath);
-    this.src.addEventListener('ended', this.onFinishedPlaying);
+  set src(filePath) {
+    debugger;
+    console.log(filePath);
+    this.audio = new Audio(filePath);
+    this.audio.addEventListener('ended', this.onFinishedPlaying);
+  }
+
+  set volume(value) {
+    this.audio.volume = value;
+  }
+
+  get volume() {
+    return this.audio.volume;
   }
 
   play() {
-    if (this.active || !this.src) {
+    if (this.active || !this.audio) {
       return;
     }
     this.active = true;
-    this.src.play();
+    this.audio.play();
   }
 
   onFinishedPlaying() {
-    this.src.currentTime = 0;
+    this.audio.currentTime = 0;
     this.active = false;
   }
 

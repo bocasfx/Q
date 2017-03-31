@@ -1,10 +1,11 @@
 import config from '../config/config';
-import { normalizeVelocity } from '../utils/utils';
 import uuidv1 from 'uuid/v1';
+import Node from './Node';
 
-class Node {
+class SynthNode extends Node {
 
   constructor(position, audioContext) {
+    super();
     this.id = uuidv1();
     this.position = position;
     this.sustain = config.synthNode.sustain;
@@ -14,11 +15,12 @@ class Node {
     this.oscillator.connect(this.gainNode);
     this.gainNode.connect(audioContext.destination);
     this.gainNode.gain.value = 0;
-    this.velocity = normalizeVelocity(position[1]);
+    this.velocity = 1.0;
     this.oscillator.type = 'sine';
     this.frequency = 440;
     this.oscillator.start();
     this.type = 'synth';
+    this.gainValue = 1;
   }
 
   set frequency(freq) {
@@ -29,12 +31,19 @@ class Node {
     return this.oscillator.frequency.value;
   }
 
+  set volume(value) {
+    this.gainValue = value;
+  }
+
+  get volume() {
+    return this.gainNode.gain.value;
+  }
+
   play() {
     if (this.active) {
       return;
     }
     this.activate();
-    this.gainNode.gain.value = this.velocity;
     setTimeout(() => {
       this.deactivate();
     }, this.sustain);
@@ -42,6 +51,7 @@ class Node {
 
   activate() {
     this.active = true;
+    this.gainNode.gain.value = this.gainValue;
   }
 
   deactivate() {
@@ -68,4 +78,4 @@ class Node {
   }
 }
 
-export default Node;
+export default SynthNode;

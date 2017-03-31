@@ -28,7 +28,6 @@ const addAudioNode = (state, position) => {
 };
 
 const detectCollisions = (state, streams) => {
-  // console.log('detecting');
   if (!streams.length || !state.length) {
     return state;
   }
@@ -65,6 +64,25 @@ const setNodeFrequency = (state, id, frequency) => {
   });
 };
 
+const setNodeVolume = (state, id, volume) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.volume = volume;
+    }
+    return node;
+  });
+};
+
+const setNodeSource = (state, id, path) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      console.log('setting');
+      node.src = path;
+    }
+    return node;
+  });
+};
+
 export default (state = initialState, action) => {
   switch (action.type) {
 
@@ -85,6 +103,12 @@ export default (state = initialState, action) => {
 
     case 'SET_NODE_FREQUENCY':
       return setNodeFrequency(state, action.id, action.frequency);
+
+    case 'SET_NODE_VOLUME':
+      return setNodeVolume(state, action.id, action.volume);
+
+    case 'SET_NODE_SOURCE':
+      return setNodeSource(state, action.id, action.path);
 
     default:
       return state;

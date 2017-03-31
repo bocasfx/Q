@@ -50,3 +50,19 @@ export const setNodeFrequency = (id, frequency) => {
     frequency
   };
 };
+
+export const setNodeVolume = (id, volume) => {
+  return {
+    type: 'SET_NODE_VOLUME',
+    id,
+    volume
+  };
+};
+
+export const setNodeSource = (id, path) => {
+  return {
+    type: 'SET_NODE_SOURCE',
+    id,
+    path
+  };
+};

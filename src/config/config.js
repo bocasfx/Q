@@ -17,15 +17,6 @@ export default {
     count: 1,
     shadow: 'rgba(0, 0, 0, 0.3)'
   },
-  audioNode: {
-    radius: 15,
-    fillStyle: 'rgba(255, 255, 0, 0.7)', 
-    lineDash: [],
-    lineWidth: 2,
-    strokeStyle: 'rgba(255, 215, 0, 0.7)',
-    sustain: 500,
-    shadow: 'rgba(0, 0, 0, 0.3)'
-  },
   synthNode: {
     radius: 15,
     fillStyle: 'rgba(102, 51, 153, 0.7)', 
@@ -44,11 +35,35 @@ export default {
     sustain: 500,
     shadow: 'rgba(0, 0, 0, 0.3)'
   },
+  audioNode: {
+    radius: 15,
+    fillStyle: 'rgba(255, 255, 0, 0.7)', 
+    lineDash: [],
+    lineWidth: 2,
+    strokeStyle: 'rgba(255, 215, 0, 0.7)',
+    sustain: 500,
+    shadow: 'rgba(0, 0, 0, 0.3)'
+  },
   stream: {
     easingFactor: 0.08,
     size: 100,
     strokeStyle: 'gray',
     lineWidth: 2,
     lineDash: [3, 30]
+  },
+  fader: {
+    marks: {
+      0: '-0',
+      0.1: '-1',
+      0.2: '-2',
+      0.3: '-3',
+      0.4: '-4',
+      0.5: '-5',
+      0.6: '-6',
+      0.7: '-7',
+      0.8: '-8',
+      0.9: '-9',
+      1: '-10'
+    }
   }
 };

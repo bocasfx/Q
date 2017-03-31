@@ -3,6 +3,7 @@ import './Channel.css';
 import LED from './LED';
 import Fader from './Fader';
 import Knob from './Knob';
+import FileButton from './FileButton';
 
 class Channel extends React.Component {
   constructor(props) {
@@ -19,6 +20,8 @@ class Channel extends React.Component {
           <Knob label="Attack"/>
         </div>
       );
+    } else if (this.props.type === 'audio') {
+      return <FileButton node={this.props.node}/>;
     }
   }
   render() {
@@ -26,7 +29,7 @@ class Channel extends React.Component {
       <div className="channel-container">
         <LED on={this.props.node.active} type={this.props.type}/>
         {this.renderKnobs()}
-        <Fader/>
+        <Fader node={this.props.node}/>
       </div>
     );
   }

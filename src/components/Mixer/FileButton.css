@@ -1,0 +1,29 @@
+.file-button-container {
+  border-radius: 3px;
+  border: 1px solid rgba(127, 127, 127, 0.5);
+  color: rgba(127, 127, 127, 0.5);
+}
+
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.inputfile + label {
+  display: inline-block;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inputfile:focus + label {
+  outline: 0;
+  outline: -webkit-focus-ring-color auto 0;
+}

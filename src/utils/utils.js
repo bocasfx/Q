@@ -1,14 +1,3 @@
-import config from '../config/config';
-
-export const normalizeFrequency = (value) => {
-  let maxValue = window.innerHeight;
-  return value / maxValue * config.app.maxFrequency;
-};
-
-export const normalizeVelocity = (value) => {
-  let maxValue = window.innerWidth;
-  return ((maxValue - value) / maxValue);
-};
 
 export const calculateDistance = (a, b) => {
   let x0 = a[0];

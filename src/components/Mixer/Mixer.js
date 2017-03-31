@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { hideMixer } from '../../actions/Devices';
 import { bindActionCreators } from 'redux';
 import Channel from './Channel';
+import _ from 'lodash';
 
 class Mixer extends React.Component {
   constructor(props) {
@@ -12,8 +13,12 @@ class Mixer extends React.Component {
     this.renderChannels = this.renderChannels.bind(this);
   }
 
-  renderChannels() {
-    return this.props.nodes.map((node, idx) => {
+  renderChannels(type) {
+    let nodes = _.filter(this.props.nodes, (node) => {
+      return node.type === type;
+    });
+
+    return nodes.map((node, idx) => {
       return <Channel node={node} key={idx} type={node.type}/>;
     });
   }
@@ -31,7 +36,9 @@ class Mixer extends React.Component {
     return (
       <div className="mixer-container" style={style}>
         <div className="mixer-inner-container" style={style}>
-          {this.renderChannels()}
+          {this.renderChannels('audio')}
+          {this.renderChannels('synth')}
+          {this.renderChannels('midi')}
         </div>
       </div>
     );

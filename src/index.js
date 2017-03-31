@@ -5,7 +5,7 @@ import './index.css';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducer from './reducers';
-import Menu from './components/Menu';
+import Menu from './components/Menu/Menu';
 import Mixer from './components/Mixer/Mixer';
 
 const store = createStore(reducer);

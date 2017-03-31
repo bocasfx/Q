@@ -2,6 +2,10 @@ import React from 'react';
 import './Fader.css';
 import Slider from 'rc-slider/lib/Slider';
 import 'rc-slider/assets/index.css';
+import config from '../../config/config';
+import { setNodeVolume } from '../../actions/Nodes';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 class Fader extends React.Component {
 
@@ -17,23 +21,10 @@ class Fader extends React.Component {
     this.setState({ 
       value: parseFloat((value * 10).toFixed(1), 10)
     });
+    this.props.setNodeVolume(this.props.node.id, value);
   }
 
   render() {
-    const marks ={
-      0: '-0',
-      0.1: '-1',
-      0.2: '-2',
-      0.3: '-3',
-      0.4: '-4',
-      0.5: '-5',
-      0.6: '-6',
-      0.7: '-7',
-      0.8: '-8',
-      0.9: '-9',
-      1: '-10'
-    };
-
     return (
       <div className="fader-container">
         <input type="text" readOnly value={this.state.value}/>
@@ -42,12 +33,22 @@ class Fader extends React.Component {
           min={0}
           step={0.01}
           max={1}
-          marks={marks}
-          defaultValue={this.state.value}
+          marks={config.fader.marks}
+          defaultValue={1}
           onChange={this.onChange}/>
       </div>
     );
   }
 }
 
-module.exports = Fader;
+const mapStateToProps = (state) => {
+  return state;
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setNodeVolume: bindActionCreators(setNodeVolume, dispatch)
+  };
+};
+
+module.exports = connect(mapStateToProps, mapDispatchToProps)(Fader);
