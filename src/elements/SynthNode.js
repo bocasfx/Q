@@ -7,7 +7,7 @@ class Node {
   constructor(position, audioContext) {
     this.id = uuidv1();
     this.position = position;
-    this.sustain = config.node.sustain;
+    this.sustain = config.synthNode.sustain;
     this.active = false;
     this.oscillator = audioContext.createOscillator();
     this.gainNode = audioContext.createGain();
@@ -18,7 +18,7 @@ class Node {
     this.oscillator.type = 'sine';
     this.frequency = 440;
     this.oscillator.start();
-    this.type = 'audio';
+    this.type = 'synth';
   }
 
   set frequency(freq) {
@@ -54,15 +54,15 @@ class Node {
 
     canvasContext.beginPath();
     canvasContext.arc(this.position[0] + 3, this.position[1] + 3, config.midiNode.radius + extraRadius, 0, 2 * Math.PI, false);
-    canvasContext.fillStyle = config.node.shadow;
+    canvasContext.fillStyle = config.synthNode.shadow;
     canvasContext.fill();
 
     canvasContext.beginPath();
-    canvasContext.arc(this.position[0], this.position[1], config.node.radius + extraRadius, 0, 2 * Math.PI, false);
-    canvasContext.strokeStyle = config.node.strokeStyle;
-    canvasContext.lineWidth = config.node.lineWidth;
-    canvasContext.setLineDash(config.node.lineDash);
-    canvasContext.fillStyle = config.node.fillStyle;
+    canvasContext.arc(this.position[0], this.position[1], config.synthNode.radius + extraRadius, 0, 2 * Math.PI, false);
+    canvasContext.strokeStyle = config.synthNode.strokeStyle;
+    canvasContext.lineWidth = config.synthNode.lineWidth;
+    canvasContext.setLineDash(config.synthNode.lineDash);
+    canvasContext.fillStyle = config.synthNode.fillStyle;
     canvasContext.fill();
     canvasContext.stroke();
   }

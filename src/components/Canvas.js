@@ -2,7 +2,7 @@ import React from 'react';
 import './Canvas.css';
 import config from '../config/config';
 import { connect } from 'react-redux';
-import { addNode, addMidiNode, detectCollisions, setNodePosition } from '../actions/Nodes';
+import { addSynthNode, addMidiNode, addAudioNode, detectCollisions, setNodePosition } from '../actions/Nodes';
 import { showNodeSettings } from '../actions/Devices';
 import { addStream } from '../actions/Streams';
 import { bindActionCreators } from 'redux';
@@ -43,7 +43,7 @@ class Canvas extends React.Component {
       }
       let stream = streams[streams.length - 1];
       stream.onMouseMove(event);
-    } else if (!this.props.devices.nodes && !this.props.devices.midiNodes) {
+    } else if (!this.props.devices.synthNodes && !this.props.devices.midiNodes && !this.props.devices.audioNodes) {
       this.props.setNodePosition(this.selectedNodeId, [event.pageX, event.pageY]);
     }
   }
@@ -57,12 +57,16 @@ class Canvas extends React.Component {
       this.props.addStream([event.pageX, event.pageY], event);
 
     // Nodes
-    } else if (this.props.devices.nodes) {
-      this.props.addNode([event.pageX, event.pageY], this.props.audioContext);
+    } else if (this.props.devices.synthNodes) {
+      this.props.addSynthNode([event.pageX, event.pageY], this.props.audioContext);
 
     // MIDI Nodes
     } else if (this.props.devices.midiNodes) {
       this.props.addMidiNode([event.pageX, event.pageY], this.props.midiContext);
+
+    // Audio Nodes
+    } else if (this.props.devices.audioNodes) {
+      this.props.addAudioNode([event.pageX, event.pageY]);
 
     // Select Node
     } else {
@@ -105,8 +109,6 @@ class Canvas extends React.Component {
         this.props.detectCollisions(this.props.streams);
         this.props.setDetectionStatus(false);
       }, 0);
-    } else {
-      console.log('no');
     }
 
     // No need to render when the mixer is visible.
@@ -164,8 +166,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addNode: bindActionCreators(addNode, dispatch),
+    addSynthNode: bindActionCreators(addSynthNode, dispatch),
     addMidiNode: bindActionCreators(addMidiNode, dispatch),
+    addAudioNode: bindActionCreators(addAudioNode, dispatch),
     addStream: bindActionCreators(addStream, dispatch),
     detectCollisions: bindActionCreators(detectCollisions, dispatch),
     showNodeSettings: bindActionCreators(showNodeSettings, dispatch),

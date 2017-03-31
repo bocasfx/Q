@@ -1,6 +1,6 @@
-export const addNode = (position, audioContext) => {
+export const addSynthNode = (position, audioContext) => {
   return {
-    type: 'ADD_NODE',
+    type: 'ADD_SYNTH_NODE',
     position,
     audioContext
   };
@@ -11,6 +11,13 @@ export const addMidiNode = (position, midiContext) => {
     type: 'ADD_MIDI_NODE',
     position,
     midiContext
+  };
+};
+
+export const addAudioNode = (position) => {
+  return {
+    type: 'ADD_AUDIO_NODE',
+    position
   };
 };
 

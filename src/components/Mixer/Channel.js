@@ -11,7 +11,7 @@ class Channel extends React.Component {
   }
 
   renderKnobs() {
-    if (this.props.type === 'audio') {
+    if (this.props.type === 'synth') {
       return (
         <div>
           <Knob label="Distortion"/>

@@ -1,8 +1,9 @@
 import React from 'react';
 import './Menu.css';
 import StreamButton from './StreamButton';
-import NodeButton from './NodeButton';
+import SynthNodeButton from './SynthNodeButton';
 import MidiNodeButton from './MidiNodeButton';
+import AudioNodeButton from './AudioNodeButton';
 import MixerButton from './MixerButton';
 
 class Menu extends React.Component {
@@ -23,8 +24,9 @@ class Menu extends React.Component {
     return (
       <div className="menu-container">
         <StreamButton/>
-        <NodeButton/>
+        <SynthNodeButton/>
         {this.renderMidiButton()}
+        <AudioNodeButton/>
         <MixerButton/>
       </div>
     );

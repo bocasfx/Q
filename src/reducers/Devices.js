@@ -1,7 +1,8 @@
 const initialState = {
   streams: true,
-  nodes: false,
+  synthNodes: false,
   midiNodes: false,
+  audioNodes: false,
   settings: false,
   nodeSettings: false,
   nodeSettingsId: null,

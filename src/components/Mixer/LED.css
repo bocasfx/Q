@@ -4,7 +4,7 @@
   border-radius: 50%;
 }
 
-.led-audio {
+.led-synth {
   border: 2px solid rgb(186, 85, 211);
   background-color: rgb(102, 51, 153);
 }
@@ -12,4 +12,9 @@
 .led-midi {
   border: 2px solid rgb(124, 252, 0);
   background-color: rgb(154, 205, 50);
+}
+
+.led-audio {
+  border: 2px solid rgb(255, 215, 0);
+  background-color: rgb(255, 255, 0);
 }

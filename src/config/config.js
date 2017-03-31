@@ -17,7 +17,16 @@ export default {
     count: 1,
     shadow: 'rgba(0, 0, 0, 0.3)'
   },
-  node: {
+  audioNode: {
+    radius: 15,
+    fillStyle: 'rgba(255, 255, 0, 0.7)', 
+    lineDash: [],
+    lineWidth: 2,
+    strokeStyle: 'rgba(255, 215, 0, 0.7)',
+    sustain: 500,
+    shadow: 'rgba(0, 0, 0, 0.3)'
+  },
+  synthNode: {
     radius: 15,
     fillStyle: 'rgba(102, 51, 153, 0.7)', 
     lineDash: [],
