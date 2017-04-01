@@ -22,6 +22,7 @@ class Canvas extends React.Component {
     this.onDoubleClick = this.onDoubleClick.bind(this);
     this.mouseDown = false;
     this.selectedNodeId = null;
+    this.calculating = false;
   }
   
   componentDidMount() {
@@ -103,11 +104,11 @@ class Canvas extends React.Component {
     this.props.streams.forEach((stream) => {
       stream.flow();
     });
-    if (!this.props.collisions.calculating) {
-      this.props.setDetectionStatus(true);
+    if (!this.calculating) {
+      this.calculating = true;
       setTimeout(() => {
         this.props.detectCollisions(this.props.streams);
-        this.props.setDetectionStatus(false);
+        this.calculating = false;
       }, 0);
     }
 

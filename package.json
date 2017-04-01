@@ -9,12 +9,17 @@
     "uuid": "^3.0.1"
   },
   "devDependencies": {
+    "electron": "^1.6.2",
     "react-scripts": "0.9.5"
   },
+  "homepage": "./",
+  "main": "src/electron-starter.js",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "electron": "electron .",
+    "electron-dev": "ELECTRON_START_URL=http://localhost:3000 electron ."
   }
 }
