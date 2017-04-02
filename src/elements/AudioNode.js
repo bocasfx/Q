@@ -15,8 +15,6 @@ class AudioNode extends Node {
   }
 
   set src(filePath) {
-    debugger;
-    console.log(filePath);
     this.audio = new Audio(filePath);
     this.audio.addEventListener('ended', this.onFinishedPlaying);
   }
