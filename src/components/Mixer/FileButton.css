@@ -4,26 +4,20 @@
   color: rgba(127, 127, 127, 0.5);
 }
 
-.inputfile {
-  width: 0.1px;
-  height: 0.1px;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: -1;
-}
-
-.inputfile + label {
-  display: inline-block;
+.file-button-container button {
   cursor: pointer;
   width: 30px;
   height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: transparent;
+  border: none;
+  color: rgba(127, 127, 127, 0.5);
+  font-size: 1em;
 }
 
-.inputfile:focus + label {
+.file-button-container button:focus {
   outline: 0;
   outline: -webkit-focus-ring-color auto 0;
 }

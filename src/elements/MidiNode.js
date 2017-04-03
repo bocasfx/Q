@@ -22,10 +22,10 @@ class MidiNode extends Node {
       return;
     }
     this.active = true;
-    this.midiOut.send([0x90, 3, 32]);
+    this.midiOut.send([0x92, 60, 127]);
     setTimeout(() => {
       this.active = false;
-      this.midiOut.send([0x90, 3, 0]);
+      this.midiOut.send([0x82, 60, 127]);
     }, this.sustain);
   }
 

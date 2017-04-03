@@ -9,29 +9,23 @@ const dialog = electron.remote.dialog;
 class FileButton extends React.Component {
   constructor(props) {
     super(props);
-    this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
-  }
-
-  onChange(event) {
-    console.log(this.props.node.id);
-    this.props.setNodeSource(this.props.node.id, event.target.files[0].name);
   }
 
   onClick() {
     dialog.showOpenDialog((files) => {
-      this.props.setNodeSource(this.props.node.id, files[0]);
+      if (files && files.length) {
+        this.props.setNodeSource(this.props.node.id, files[0]);
+      }
     });
   }
 
   render() {
     return (
       <div className="file-button-container">
-        <button onClick={this.onClick}>open</button>
-        <input type="file" name="file" id="file" className="inputfile" onChange={this.onChange}/>
-        <label htmlFor="file">
+        <button onClick={this.onClick}>
           <i className="fa fa-folder-o"></i>
-        </label>
+        </button>
       </div>
     );
   }
