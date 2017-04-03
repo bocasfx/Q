@@ -5,3 +5,10 @@ export const addStream = (position, event) => {
     event
   };
 };
+
+export const deleteStream = (id) => {
+  return {
+    type: 'DELETE_STREAM',
+    id
+  };
+};

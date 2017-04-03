@@ -1,6 +1,7 @@
 import React from 'react';
 import Panel from './Panel';
 import { connect } from 'react-redux';
+import StreamListItem from './StreamListItem';
 
 class StreamsPanel extends React.Component {
   constructor(props) {
@@ -10,14 +11,17 @@ class StreamsPanel extends React.Component {
 
   renderStreams() {
     return this.props.streams.map((stream, idx) => {
-      return <div key={idx}>{idx}</div>;
+      return <StreamListItem key={idx} id={stream.id}/>;
     });
   }
 
   render() {
     return (
       <Panel>
-        {this.renderStreams()}
+        <div className="panel-title">Streams</div>
+        <div className="panel-list">
+          {this.renderStreams()}
+        </div>
       </Panel>
     );
   }

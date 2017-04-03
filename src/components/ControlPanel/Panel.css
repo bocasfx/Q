@@ -11,3 +11,12 @@
   border-top: none;
   border-bottom: none;
 }
+
+.panel-list {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.panel-title {
+  margin-bottom: 15px;
+}

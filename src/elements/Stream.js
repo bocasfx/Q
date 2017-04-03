@@ -1,8 +1,11 @@
 import config from '../config/config';
 import Particle from './Particle';
+import uuidv1 from 'uuid/v1';
 
 class Stream {
   constructor(position) {
+
+    this.id = uuidv1();
 
     let x = position[0];
     let y = position[1];

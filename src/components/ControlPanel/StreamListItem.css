@@ -1,0 +1,15 @@
+.stream-list-item-container {
+  display: flex;
+  padding: 5px 10px;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.stream-list-item-container:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.stream-list-item-close {
+  margin-left: 10px;
+  cursor: pointer;
+}
