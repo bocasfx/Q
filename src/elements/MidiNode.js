@@ -15,6 +15,8 @@ class MidiNode extends Node {
     let output = outputs.values().next();
     this.midiOut = output.value;
     this.type = 'midi';
+    this.note = 30;
+    this.velocity = 127;
   }
 
   play() {
@@ -22,10 +24,10 @@ class MidiNode extends Node {
       return;
     }
     this.active = true;
-    this.midiOut.send([0x92, 60, 127]);
+    this.midiOut.send([0x92, this.note, this.velocity]);
     setTimeout(() => {
       this.active = false;
-      this.midiOut.send([0x82, 60, 127]);
+      this.midiOut.send([0x82, this.note, this.velocity]);
     }, this.sustain);
   }
 
