@@ -15,8 +15,6 @@ class AudioNode extends Node {
   }
 
   set src(filePath) {
-    debugger;
-    console.log(filePath);
     this.audio = new Audio(filePath);
     this.audio.addEventListener('ended', this.onFinishedPlaying);
   }
@@ -52,10 +50,10 @@ class AudioNode extends Node {
 
     canvasContext.beginPath();
     canvasContext.arc(this.position[0], this.position[1], config.audioNode.radius + extraRadius, 0, 2 * Math.PI, false);
-    canvasContext.strokeStyle = config.audioNode.strokeStyle;
+    canvasContext.strokeStyle = this.audio ? config.audioNode.strokeStyle : config.inactiveNode.strokeStyle;
     canvasContext.lineWidth = config.audioNode.lineWidth;
     canvasContext.setLineDash(config.audioNode.lineDash);
-    canvasContext.fillStyle = config.audioNode.fillStyle;
+    canvasContext.fillStyle = this.audio? config.audioNode.fillStyle : config.inactiveNode.fillStyle;
     canvasContext.fill();
     canvasContext.stroke();
   }

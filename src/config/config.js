@@ -17,6 +17,10 @@ export default {
     count: 1,
     shadow: 'rgba(0, 0, 0, 0.3)'
   },
+  inactiveNode: {
+    fillStyle: 'rgba(211, 211, 211, 0.7)', 
+    strokeStyle: 'rgba(169, 169, 169, 0.7)'
+  },
   synthNode: {
     radius: 15,
     fillStyle: 'rgba(102, 51, 153, 0.7)', 

@@ -13,7 +13,7 @@ canvas {
   /*background-image: url('/backgrounds/tasky.png');*/
   /*background-image: url('/backgrounds/fake_brick.png');*/
   /*background-image: url('/backgrounds/black_scales.png');*/
-  background-image: url('/backgrounds/inflicted.png');
+  background-image: url(../public/backgrounds/inflicted.png);
   /*background-image: url('/backgrounds/crissXcross.png');*/
   /*background-image: url('/backgrounds/carbon_fibre_v2.png');*/
   /*background-image: url('/backgrounds/black_linen_v2.png');*/
