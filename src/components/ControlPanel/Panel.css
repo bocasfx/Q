@@ -1,0 +1,13 @@
+.panel-container {
+  height: 50%;
+  border: 1px solid dimgray;
+  box-sizing: border-box;
+  padding: 15px;
+  color: rgb(127, 127, 127);
+  font-size: 0.8em;
+}
+
+.panel-container:last-child {
+  border-top: none;
+  border-bottom: none;
+}
