@@ -6,10 +6,10 @@ import { setNodeSource } from '../../actions/Nodes';
 let electron = null;
 let dialog = null;
 
-  if (window.require) {
-    electron = window.require('electron');
-    dialog = electron.remote.dialog;
-  }
+if (window.require) {
+  electron = window.require('electron');
+  dialog = electron.remote.dialog;
+}
 
 class FileButton extends React.Component {
   constructor(props) {
