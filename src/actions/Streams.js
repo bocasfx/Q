@@ -12,3 +12,10 @@ export const deleteStream = (id) => {
     id
   };
 };
+
+export const selectStream = (id) => {
+  return {
+    type: 'SELECT_STREAM',
+    id
+  };
+};

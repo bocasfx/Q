@@ -18,12 +18,25 @@ const deleteStream = (state, id) => {
   });
 };
 
+const selectStream = (state, id) => {
+  return state.map((stream) => {
+    stream.selected = stream.id === id ? !stream.selected : false;
+    return stream;
+  });
+};
+
 export default (state = initialState, action) => {
   switch (action.type) {
+
     case 'ADD_STREAM':
       return addStream(state, action.position, action.event);
+
     case 'DELETE_STREAM':
       return deleteStream(state, action.id);
+
+    case 'SELECT_STREAM':
+      return selectStream(state, action.id);
+
     default:
       return state;
   }

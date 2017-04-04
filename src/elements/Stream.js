@@ -29,6 +29,7 @@ class Stream {
     this.path = [];
     this.particles = particles;
     this.name = names.generate();
+    this.selected = false;
 
     this.calculateEasing = this.calculateEasing.bind(this);
     this.onMouseDown = this.onMouseDown.bind(this);
@@ -121,15 +122,18 @@ class Stream {
 
   render(canvasContext) {
 
+    canvasContext.beginPath();
+    canvasContext.strokeStyle = this.selected ? config.selectedStream.strokeStyle : config.stream.strokeStyle;
+    canvasContext.lineWidth = config.stream.lineWidth;
+    canvasContext.setLineDash(config.stream.lineDash);
+
     for (let i=1; i<this.queue.length; i++) {
-      canvasContext.beginPath();
-      canvasContext.strokeStyle = config.stream.strokeStyle;
-      canvasContext.lineWidth = config.stream.lineWidth;
-      canvasContext.setLineDash(config.stream.lineDash);
+      
       canvasContext.moveTo(this.queue[i-1][0], this.queue[i-1][1]);
       canvasContext.lineTo(this.queue[i][0], this.queue[i][1]);
-      canvasContext.stroke();
     }
+
+    canvasContext.stroke();
 
     this.particles.forEach((particle) => {
       particle.render(canvasContext);

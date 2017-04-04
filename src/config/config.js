@@ -57,9 +57,13 @@ export default {
   },
   selectedNode: {
     radius: 21,
-    strokeStyle: 'rgb(127, 127, 127)',
+    strokeStyle: 'rgb(255, 215, 0)',
     lineWidth: 2,
     lineDash: [3, 7]
+  },
+
+  selectedStream: {
+    strokeStyle: 'rgb(255, 215, 0)',
   },
   fader: {
     marks: {

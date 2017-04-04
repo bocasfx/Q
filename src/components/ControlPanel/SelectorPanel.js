@@ -1,14 +1,36 @@
 import React from 'react';
-import Panel from './Panel';
+import Panel from '../Tabs/Panel';
 import { connect } from 'react-redux';
-import StreamListItem from './ListItem/StreamListItem';
-import NodeListItem from './ListItem/NodeListItem';
+import ListItem from './ListItem';
 import Tabs from '../Tabs/Tabs';
+import { bindActionCreators } from 'redux';
+import { deleteStream, selectStream } from '../../actions/Streams';
+import { deleteNode, selectNode } from '../../actions/Nodes';
 
 class SelectorPanel extends React.Component {
   constructor(props) {
     super(props);
     this.renderStreams = this.renderStreams.bind(this);
+  }
+
+  onDeleteStream(id, event) {
+    event.preventDefault();
+    this.props.deleteStream(id);
+  }
+
+  onDeleteNode(id, event) {
+    event.preventDefault();
+    this.props.deleteNode(id);
+  }
+
+  onClickNode(id, event) {
+    event.preventDefault();
+    this.props.selectNode(id);
+  }
+
+  onClickStream(id, event) {
+    event.preventDefault();
+    this.props.selectStream(id);
   }
 
   renderStreams() {
@@ -17,7 +39,12 @@ class SelectorPanel extends React.Component {
     }
 
     return this.props.streams.map((stream, idx) => {
-      return <StreamListItem key={idx} stream={stream} idx={idx} selected={stream.selected}/>;
+      return <ListItem
+        key={idx}
+        item={stream}
+        idx={idx}
+        onDelete={this.onDeleteStream.bind(this, stream.id)}
+        onClick={this.onClickStream.bind(this, stream.id)}/>;
     });
   }
 
@@ -27,7 +54,12 @@ class SelectorPanel extends React.Component {
     }
 
     return this.props.nodes.map((node, idx) => {
-      return <NodeListItem key={idx} node={node} idx={idx} selected={node.selected}/>;
+      return <ListItem
+        key={idx}
+        item={node}
+        idx={idx}
+        onDelete={this.onDeleteNode.bind(this, node.id)}
+        onClick={this.onClickNode.bind(this, node.id)}/>;
     });
   }
 
@@ -52,4 +84,13 @@ const mapStateToProps = (state) => {
   };
 };
 
-module.exports = connect(mapStateToProps, null)(SelectorPanel);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteStream: bindActionCreators(deleteStream, dispatch),
+    selectStream: bindActionCreators(selectStream, dispatch),
+    deleteNode: bindActionCreators(deleteNode, dispatch),
+    selectNode: bindActionCreators(selectNode, dispatch)
+  };
+};
+
+module.exports = connect(mapStateToProps, mapDispatchToProps)(SelectorPanel);
