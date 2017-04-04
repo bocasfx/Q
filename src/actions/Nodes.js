@@ -73,3 +73,10 @@ export const deleteNode = (id) => {
     id
   };
 };
+
+export const selectNode = (id) => {
+  return {
+    type: 'SELECT_NODE',
+    id
+  };
+};

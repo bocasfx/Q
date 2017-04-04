@@ -80,6 +80,15 @@ class SynthNode extends Node {
     canvasContext.fillStyle = config.synthNode.fillStyle;
     canvasContext.fill();
     canvasContext.stroke();
+
+    if (this.selected) {
+      canvasContext.beginPath();
+      canvasContext.arc(this.position[0], this.position[1], config.selectedNode.radius, 0, 2 * Math.PI, false);
+      canvasContext.strokeStyle = config.selectedNode.strokeStyle;
+      canvasContext.lineWidth = config.selectedNode.lineWidth;
+      canvasContext.setLineDash(config.selectedNode.lineDash);
+      canvasContext.stroke();
+    }
   }
 }
 

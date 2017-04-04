@@ -4,6 +4,7 @@ class Node {
 
   constructor() {
     this.name = names.generate();
+    this.selected = false;
   }
 
   set src(value) {

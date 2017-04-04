@@ -17,17 +17,17 @@ class SelectorPanel extends React.Component {
     }
 
     return this.props.streams.map((stream, idx) => {
-      return <StreamListItem key={idx} stream={stream} idx={idx}/>;
+      return <StreamListItem key={idx} stream={stream} idx={idx} selected={stream.selected}/>;
     });
   }
 
   renderNodes() {
-    if (!this.props.streams.length) {
+    if (!this.props.nodes.length) {
       return <div className="panel-empty">No Nodes</div>;
     }
 
     return this.props.nodes.map((node, idx) => {
-      return <NodeListItem key={idx} node={node} idx={idx}/>;
+      return <NodeListItem key={idx} node={node} idx={idx} selected={node.selected}/>;
     });
   }
 

@@ -55,6 +55,12 @@ export default {
     lineWidth: 2,
     lineDash: [3, 30]
   },
+  selectedNode: {
+    radius: 21,
+    strokeStyle: 'rgb(127, 127, 127)',
+    lineWidth: 2,
+    lineDash: [3, 7]
+  },
   fader: {
     marks: {
       0: '-0',

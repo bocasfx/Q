@@ -7,24 +7,23 @@ import ListItem from './ListItem';
 class StreamListItem extends React.Component {
   constructor(props) {
     super(props);
-    this.onClick = this.onClick.bind(this);
+    this.onDelete = this.onDelete.bind(this);
   }
 
-  onClick(event) {
+  onDelete(event) {
     event.preventDefault();
     this.props.deleteStream(this.props.stream.id);
   }
 
   render() {
     return (
-      <ListItem idx={this.props.idx} item={this.props.stream} onClick={this.onClick}/>
+      <ListItem
+        idx={this.props.idx}
+        item={this.props.stream}
+        onDelete={this.onDelete}/>
     );
   }
 }
-
-const mapStateToProps = (state) => {
-  return state;
-};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -32,5 +31,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(StreamListItem);
-
+module.exports = connect(null, mapDispatchToProps)(StreamListItem);

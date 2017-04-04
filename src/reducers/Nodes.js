@@ -90,6 +90,13 @@ const deleteNode = (state, id) => {
   });
 };
 
+const selectNode = (state, id) => {
+  return state.map((node) => {
+    node.selected = node.id === id ? !node.selected : false;
+    return node;
+  });
+};
+
 export default (state = initialState, action) => {
   switch (action.type) {
 
@@ -119,6 +126,9 @@ export default (state = initialState, action) => {
 
     case 'DELETE_NODE':
       return deleteNode(state, action.id);
+
+    case 'SELECT_NODE':
+      return selectNode(state, action.id);
 
     default:
       return state;

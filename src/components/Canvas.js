@@ -7,7 +7,6 @@ import { showNodeSettings } from '../actions/Devices';
 import { addStream } from '../actions/Streams';
 import { bindActionCreators } from 'redux';
 import { calculateDistance } from '../utils/utils';
-import { setDetectionStatus } from '../actions/Collisions';
 
 class Canvas extends React.Component {
 
@@ -203,8 +202,7 @@ const mapDispatchToProps = (dispatch) => {
     addStream: bindActionCreators(addStream, dispatch),
     detectCollisions: bindActionCreators(detectCollisions, dispatch),
     showNodeSettings: bindActionCreators(showNodeSettings, dispatch),
-    setNodePosition: bindActionCreators(setNodePosition, dispatch),
-    setDetectionStatus: bindActionCreators(setDetectionStatus, dispatch)
+    setNodePosition: bindActionCreators(setNodePosition, dispatch)
   };
 };
 

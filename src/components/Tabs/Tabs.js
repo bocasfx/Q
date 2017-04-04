@@ -1,5 +1,8 @@
 import React from 'react';
 import './Tabs.css';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { setSelection } from '../../actions/Selection';
 
 class Tabs extends React.Component {
   constructor(props) {
@@ -16,6 +19,7 @@ class Tabs extends React.Component {
     this.setState({
       selected: idx
     });
+    this.props.setSelection(this.props.children[idx].props.label.toLowerCase());
   }
 
   renderTitles() {
@@ -46,4 +50,10 @@ class Tabs extends React.Component {
   }
 }
 
-module.exports = Tabs;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setSelection: bindActionCreators(setSelection, dispatch)
+  };
+};
+
+module.exports = connect(null, mapDispatchToProps)(Tabs);
