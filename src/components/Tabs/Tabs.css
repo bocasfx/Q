@@ -1,0 +1,21 @@
+.tabs-labels {
+  display: flex;
+  border-bottom: 1px solid dimgray;
+  background-color: rgba(0, 0, 0, 0.2);
+  font-size: 1.2em;
+}
+
+.tabs-labels div {
+  padding: 10px 20px;
+}
+
+.tabs-labels a {
+  color: rgba(127, 127, 127, 0.5);
+  text-decoration: none;
+}
+
+.tabs-selected {
+  background-color: rgba(0, 0, 0, 0.2);
+  color: darkorange;
+  opacity: 0.7;
+}

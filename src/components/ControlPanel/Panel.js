@@ -5,7 +5,9 @@ class Panel extends React.Component {
   render() {
     return (
       <div className="panel-container">
-        {this.props.children}
+        <div className="panel-list">
+          {this.props.children}
+        </div>
       </div>
     );
   }

@@ -1,0 +1,6 @@
+.editor-panel-container {
+  padding: 20px;
+  border-bottom: 1px solid dimgray;
+  color: rgb(127, 127, 127);
+  height: 60%;
+}

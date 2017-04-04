@@ -1,10 +1,8 @@
 .panel-container {
   height: 50%;
-  border: 1px solid dimgray;
   box-sizing: border-box;
   padding: 15px;
   color: rgb(127, 127, 127);
-  font-size: 0.8em;
 }
 
 .panel-container:last-child {
@@ -15,6 +13,12 @@
 .panel-list {
   height: 100%;
   overflow-y: auto;
+}
+
+.panel-list .panel-empty {
+  width: 100%;
+  margin-top: 40px;
+  text-align: center;
 }
 
 .panel-title {
