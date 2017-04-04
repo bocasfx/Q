@@ -1,4 +1,10 @@
+import names from '../config/names';
+
 class Node {
+
+  constructor() {
+    this.name = names.generate();
+  }
 
   set src(value) {
   }

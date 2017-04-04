@@ -11,20 +11,25 @@ class SynthNode extends Node {
     this.sustain = config.synthNode.sustain;
     this.active = false;
     this.oscillator = audioContext.createOscillator();
+    this.oscillator2 = audioContext.createOscillator();
     this.gainNode = audioContext.createGain();
     this.oscillator.connect(this.gainNode);
+    this.oscillator2.connect(this.gainNode);
     this.gainNode.connect(audioContext.destination);
     this.gainNode.gain.value = 0;
     this.velocity = 1.0;
     this.oscillator.type = 'sine';
-    this.frequency = 440;
+    this.oscillator2.type = 'square';
+    this.frequency = 120;
     this.oscillator.start();
+    this.oscillator2.start();
     this.type = 'synth';
     this.gainValue = 1;
   }
 
   set frequency(freq) {
     this.oscillator.frequency.value = freq;
+    this.oscillator2.frequency.value = freq - 20;
   }
 
   get frequency() {

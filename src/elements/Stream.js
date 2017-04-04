@@ -1,6 +1,7 @@
 import config from '../config/config';
 import Particle from './Particle';
 import uuidv1 from 'uuid/v1';
+import names from '../config/names';
 
 class Stream {
   constructor(position) {
@@ -27,6 +28,7 @@ class Stream {
     this.pathIndex = 0;
     this.path = [];
     this.particles = particles;
+    this.name = names.generate();
 
     this.calculateEasing = this.calculateEasing.bind(this);
     this.onMouseDown = this.onMouseDown.bind(this);

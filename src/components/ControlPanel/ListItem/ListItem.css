@@ -1,15 +1,15 @@
-.stream-list-item-container {
+.list-item-container {
   display: flex;
   padding: 5px 10px;
   justify-content: space-between;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
-.stream-list-item-container:hover {
+.list-item-container:hover {
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-.stream-list-item-close {
+.list-item-name {
   margin-left: 10px;
-  cursor: pointer;
 }

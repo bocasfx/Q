@@ -17,12 +17,17 @@ class Canvas extends React.Component {
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
+    this.onDoubleClick = this.onDoubleClick.bind(this);
+    this.setCursorStyle = this.setCursorStyle.bind(this);
+
     this.draw = this.draw.bind(this);
     this.flow = this.flow.bind(this);
-    this.onDoubleClick = this.onDoubleClick.bind(this);
     this.mouseDown = false;
     this.selectedNodeId = null;
     this.calculating = false;
+    this.cursorStyle = {
+      cursor: 'crosshair'
+    };
   }
   
   componentDidMount() {
@@ -30,6 +35,27 @@ class Canvas extends React.Component {
     requestAnimationFrame(() => {
       this.flow();
     });
+  }
+
+  setCursorStyle() {
+
+    if (this.props.devices.streams ||
+        this.props.devices.synthNodes ||
+        this.props.devices.midiNodes ||
+        this.props.devices.audioNodes) {
+      this.cursorStyle = {
+        cursor: 'crosshair'
+      };
+    } else if (this.mouseDown) {
+      this.cursorStyle = {
+        cursor: '-webkit-grabbing'
+      };
+    } else {
+      this.cursorStyle = {
+        cursor: '-webkit-grab'
+      };
+    }
+    
   }
 
   onMouseMove(event) {
@@ -52,6 +78,7 @@ class Canvas extends React.Component {
   onMouseDown(event) {
     event.preventDefault();
     this.mouseDown = true;
+    this.setCursorStyle();
 
     // Streams
     if (this.props.devices.streams) {
@@ -84,6 +111,7 @@ class Canvas extends React.Component {
     event.preventDefault();
     this.mouseDown = false;
     this.selectedNodeId = null;
+    this.setCursorStyle();
     if (this.props.devices.streams) {
       let streams = this.props.streams;
       let stream = streams[streams.length - 1];
@@ -141,6 +169,7 @@ class Canvas extends React.Component {
   }
 
   render() {
+    this.setCursorStyle();
     return (
       <canvas
         draggable="true"
@@ -151,6 +180,7 @@ class Canvas extends React.Component {
         onMouseDown={this.onMouseDown}
         onMouseUp={this.onMouseUp}
         onDoubleClick={this.onDoubleClick}
+        style={this.cursorStyle}
       />
     );
   }

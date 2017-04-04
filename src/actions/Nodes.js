@@ -66,3 +66,10 @@ export const setNodeSource = (id, path) => {
     path
   };
 };
+
+export const deleteNode = (id) => {
+  return {
+    type: 'DELETE_NODE',
+    id
+  };
+};

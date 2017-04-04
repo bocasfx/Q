@@ -1,8 +1,8 @@
 import React from 'react';
-import './StreamListItem.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { deleteStream } from '../../actions/Streams';
+import { deleteStream } from '../../../actions/Streams';
+import ListItem from './ListItem';
 
 class StreamListItem extends React.Component {
   constructor(props) {
@@ -12,15 +12,12 @@ class StreamListItem extends React.Component {
 
   onClick(event) {
     event.preventDefault();
-    this.props.deleteStream(this.props.id);
+    this.props.deleteStream(this.props.stream.id);
   }
 
   render() {
     return (
-      <div className="stream-list-item-container">
-        <div>{this.props.id}</div>
-        <div className="stream-list-item-close" onClick={this.onClick}>&times;</div>
-      </div>
+      <ListItem idx={this.props.idx} item={this.props.stream} onClick={this.onClick}/>
     );
   }
 }

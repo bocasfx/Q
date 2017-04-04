@@ -12,13 +12,10 @@ const addStream = (state, position, event) => {
 };
 
 const deleteStream = (state, id) => {
-  console.log(state);
   let streamList = state.splice(0);
-  let newList = _.remove(streamList, (stream) => {
+  return _.remove(streamList, (stream) => {
     return stream.id !== id;
   });
-  console.log(newList);
-  return newList;
 };
 
 export default (state = initialState, action) => {

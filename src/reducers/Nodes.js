@@ -3,6 +3,7 @@ import MidiNode from '../elements/MidiNode';
 import AudioNode from '../elements/AudioNode';
 import { calculateDistance } from '../utils/utils';
 import config from '../config/config';
+import _ from 'lodash';
 
 const initialState = [];
 
@@ -76,10 +77,16 @@ const setNodeVolume = (state, id, volume) => {
 const setNodeSource = (state, id, path) => {
   return state.map((node) => {
     if (node.id === id) {
-      console.log('setting');
       node.src = path;
     }
     return node;
+  });
+};
+
+const deleteNode = (state, id) => {
+  let nodeList = state.splice(0);
+  return _.remove(nodeList, (node) => {
+    return node.id !== id;
   });
 };
 
@@ -109,6 +116,9 @@ export default (state = initialState, action) => {
 
     case 'SET_NODE_SOURCE':
       return setNodeSource(state, action.id, action.path);
+
+    case 'DELETE_NODE':
+      return deleteNode(state, action.id);
 
     default:
       return state;

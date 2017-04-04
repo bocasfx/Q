@@ -29,13 +29,6 @@ const showNodeSettings = (state, id) => {
   return newState;
 };
 
-const hideNodeSettings = (state) => {
-  let newState = Object.assign({}, state, {});
-  newState.nodeSettings = false;
-  newState.nodeSettingsId = null;
-  return newState;
-};
-
 export default (state = initialState, action) => {
   switch (action.type) {
 
@@ -44,9 +37,6 @@ export default (state = initialState, action) => {
 
     case 'SHOW_NODE_SETTINGS':
       return showNodeSettings(state, action.id);
-
-    case 'HIDE_NODE_SETTINGS':
-      return hideNodeSettings(state, action.id);
 
     default:
       return state;
