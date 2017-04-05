@@ -1,5 +1,5 @@
 const initialState = {
-  objType: 'streams'
+  objType: 'nodes'
 };
 
 const setSelection = (state, objType) => {

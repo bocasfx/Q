@@ -29,6 +29,9 @@ class Knob extends React.Component {
   }
 
   onMouseDown(event) {
+    if (this.props.disabled) {
+      return;
+    }
     event.preventDefault();
     this.setState({
       dragging: true,

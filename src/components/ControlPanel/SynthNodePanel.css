@@ -1,0 +1,27 @@
+.synth-node-panel-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.synth-node-panel-row {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 40px;
+}
+
+.synth-node-panel-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.synth-node-panel-column div {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.synth-node-panel-row label {
+  margin-right: 5px;
+}

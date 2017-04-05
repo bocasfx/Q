@@ -18,7 +18,7 @@
   background-color: transparent;
   color: rgba(127, 127, 127, 0.7);
   padding: 7px;
-  outline: none;
+  outline: 0;
   user-select: none;
 }
 

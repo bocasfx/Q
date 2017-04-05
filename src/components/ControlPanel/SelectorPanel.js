@@ -6,6 +6,7 @@ import Tabs from '../Tabs/Tabs';
 import { bindActionCreators } from 'redux';
 import { deleteStream, selectStream } from '../../actions/Streams';
 import { deleteNode, selectNode } from '../../actions/Nodes';
+import './SelectorPanel.css';
 
 class SelectorPanel extends React.Component {
   constructor(props) {
@@ -65,14 +66,16 @@ class SelectorPanel extends React.Component {
 
   render() {
     return (
-      <Tabs>
-        <Panel label="Streams">
-          {this.renderStreams()}
-        </Panel>
-        <Panel label="Nodes">
-          {this.renderNodes()}
-        </Panel>
-      </Tabs>
+      <div className="selector-panel-container">
+        <Tabs>
+          <Panel label="Nodes">
+            {this.renderNodes()}
+          </Panel>
+          <Panel label="Streams">
+            {this.renderStreams()}
+          </Panel>
+        </Tabs>
+      </div>
     );
   }
 }

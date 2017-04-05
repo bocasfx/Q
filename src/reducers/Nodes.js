@@ -97,6 +97,13 @@ const selectNode = (state, id) => {
   });
 };
 
+const deselectNodes = (state) => {
+  return state.map((node) => {
+    node.selected = false;
+    return node;
+  });
+};
+
 export default (state = initialState, action) => {
   switch (action.type) {
 
@@ -129,6 +136,9 @@ export default (state = initialState, action) => {
 
     case 'SELECT_NODE':
       return selectNode(state, action.id);
+
+    case 'DESELECT_NODES':
+      return deselectNodes(state);
 
     default:
       return state;

@@ -49,7 +49,9 @@ class EditorPanel extends React.Component {
   render() {
     return (
       <div className="editor-panel-container">
-        {this.renderObject()}
+        <div className="editor-panel-inner">
+          {this.renderObject()}
+        </div>
       </div>
     );
   }

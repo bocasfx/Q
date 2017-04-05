@@ -28,13 +28,6 @@ export const detectCollisions = (streams) => {
   };
 };
 
-export const detectDoubleClick = (position) => {
-  return {
-    type: 'DETECT_DOUBLE_CLICK',
-    position
-  };
-};
-
 export const setNodePosition = (id, position) => {
   return {
     type: 'SET_NODE_POSITION',
@@ -78,5 +71,11 @@ export const selectNode = (id) => {
   return {
     type: 'SELECT_NODE',
     id
+  };
+};
+
+export const deselectNodes = () => {
+  return {
+    type: 'DESELECT_NODES'
   };
 };

@@ -2,8 +2,7 @@ import React from 'react';
 import './Canvas.css';
 import config from '../config/config';
 import { connect } from 'react-redux';
-import { addSynthNode, addMidiNode, addAudioNode, detectCollisions, setNodePosition } from '../actions/Nodes';
-import { showNodeSettings } from '../actions/Devices';
+import { addSynthNode, addMidiNode, addAudioNode, detectCollisions, setNodePosition, selectNode, deselectNodes } from '../actions/Nodes';
 import { addStream } from '../actions/Streams';
 import { bindActionCreators } from 'redux';
 import { calculateDistance } from '../utils/utils';
@@ -16,8 +15,8 @@ class Canvas extends React.Component {
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
-    this.onDoubleClick = this.onDoubleClick.bind(this);
     this.setCursorStyle = this.setCursorStyle.bind(this);
+    this.selectNode = this.selectNode.bind(this);
 
     this.draw = this.draw.bind(this);
     this.flow = this.flow.bind(this);
@@ -94,16 +93,12 @@ class Canvas extends React.Component {
     // Audio Nodes
     } else if (this.props.devices.audioNodes) {
       this.props.addAudioNode([event.pageX, event.pageY]);
-
-    // Select Node
-    } else {
-      this.props.nodes.forEach((node) => {
-        let distance = calculateDistance(node.position, [event.pageX, event.pageY]);
-        if (distance <= config.app.doubleClickDistance) {
-          this.selectedNodeId = node.id;
-        }
-      });
     }
+
+    let x = event.pageX;
+    let y = event.pageY;
+
+    this.selectNode([x, y]);
   }
 
   onMouseUp(event) {
@@ -118,13 +113,25 @@ class Canvas extends React.Component {
     }
   }
 
-  onDoubleClick(event) {
-    this.props.nodes.forEach((node) => {
-      let distance = calculateDistance(node.position, [event.pageX, event.pageY]);
-      if (distance <= config.app.doubleClickDistance) {
-        this.props.showNodeSettings(node.id);
+  selectNode(position) {
+    setTimeout(() => {
+      let selected = null;
+      this.props.nodes.forEach((node) => {
+        let distance = calculateDistance(node.position, position);
+        if (distance <= config.app.doubleClickDistance) {
+          selected = node.id;
+          if (!node.selected) {
+            this.props.selectNode(node.id);
+          }
+        }
+      });
+
+      if (!selected) {
+        this.props.deselectNodes();
       }
-    });
+      
+      this.selectedNodeId = selected;
+    }, 0);
   }
 
   flow() {
@@ -178,7 +185,6 @@ class Canvas extends React.Component {
         onMouseMove={this.onMouseMove}
         onMouseDown={this.onMouseDown}
         onMouseUp={this.onMouseUp}
-        onDoubleClick={this.onDoubleClick}
         style={this.cursorStyle}
       />
     );
@@ -199,9 +205,10 @@ const mapDispatchToProps = (dispatch) => {
     addSynthNode: bindActionCreators(addSynthNode, dispatch),
     addMidiNode: bindActionCreators(addMidiNode, dispatch),
     addAudioNode: bindActionCreators(addAudioNode, dispatch),
+    selectNode: bindActionCreators(selectNode, dispatch),
+    deselectNodes: bindActionCreators(deselectNodes, dispatch),
     addStream: bindActionCreators(addStream, dispatch),
     detectCollisions: bindActionCreators(detectCollisions, dispatch),
-    showNodeSettings: bindActionCreators(showNodeSettings, dispatch),
     setNodePosition: bindActionCreators(setNodePosition, dispatch)
   };
 };
