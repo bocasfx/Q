@@ -56,10 +56,19 @@ const setNodePosition = (state, id, position) => {
   });
 };
 
-const setNodeFrequency = (state, id, frequency) => {
+const setNodeOsc1Frequency = (state, id, frequency) => {
   return state.map((node) => {
     if (node.id === id) {
-      node.frequency = frequency;
+      node.osc1Freq = frequency;
+    }
+    return node;
+  });
+};
+
+const setNodeOsc2Frequency = (state, id, frequency) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.osc2Freq = frequency;
     }
     return node;
   });
@@ -122,8 +131,11 @@ export default (state = initialState, action) => {
     case 'SET_NODE_POSITION':
       return setNodePosition(state, action.id, action.position);
 
-    case 'SET_NODE_FREQUENCY':
-      return setNodeFrequency(state, action.id, action.frequency);
+    case 'SET_NODE_OSC1_FREQUENCY':
+      return setNodeOsc1Frequency(state, action.id, action.frequency);
+
+    case 'SET_NODE_OSC2_FREQUENCY':
+      return setNodeOsc2Frequency(state, action.id, action.frequency);
 
     case 'SET_NODE_VOLUME':
       return setNodeVolume(state, action.id, action.volume);

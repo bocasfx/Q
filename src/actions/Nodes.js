@@ -36,9 +36,17 @@ export const setNodePosition = (id, position) => {
   };
 };
 
-export const setNodeFrequency = (id, frequency) => {
+export const setNodeOsc1Frequency = (id, frequency) => {
   return {
-    type: 'SET_NODE_FREQUENCY',
+    type: 'SET_NODE_OSC1_FREQUENCY',
+    id,
+    frequency
+  };
+};
+
+export const setNodeOsc2Frequency = (id, frequency) => {
+  return {
+    type: 'SET_NODE_OSC2_FREQUENCY',
     id,
     frequency
   };

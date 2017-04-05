@@ -20,27 +20,27 @@ class SynthNode extends Node {
     this.velocity = 1.0;
     this.oscillator1.type = 'sine';
     this.oscillator2.type = 'sine';
-    this.osc1freq = 120;
-    this.osc2freq = 100;
+    this.osc1Freq = 120;
+    this.osc2Freq = 100;
     this.oscillator1.start();
     this.oscillator2.start();
     this.type = 'synth';
     this.gainValue = 1;
   }
 
-  set osc1freq(freq) {
+  set osc1Freq(freq) {
     this.oscillator1.frequency.value = freq;
   }
 
-  get osc1freq() {
+  get osc1Freq() {
     return this.oscillator1.frequency.value;
   }
 
-  set osc2freq(freq) {
+  set osc2Freq(freq) {
     this.oscillator2.frequency.value = freq;
   }
 
-  get osc2freq() {
+  get osc2Freq() {
     return this.oscillator2.frequency.value;
   }
 

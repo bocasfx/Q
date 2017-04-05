@@ -19,11 +19,11 @@ class Knob extends React.Component {
   }
 
   componentDidMount() {
-    let value = this.props.value.toFixed(1);
-    let angle = (value * 300 / this.props.max) + 300;
+    let value = this.props.value;
+    let angle = (value * 300.0 / this.props.max) + 300.0;
     this.setState({
       mounted: true,
-      value,
+      value: value.toFixed(1),
       angle
     });
   }
@@ -51,7 +51,9 @@ class Knob extends React.Component {
     angle = angle >= 600 ? 600 : angle;
     angle = angle <= 300 ? 300 : angle;
 
-    let value = parseFloat((((angle - 300.0) / 300.0) * this.props.max).toFixed(1), 10);
+    let value = (((angle - 300.0) / 300.0) * this.props.max);
+    value = value.toFixed(1);
+
     this.setState({
       angle,
       y: event.pageY,
@@ -73,8 +75,10 @@ class Knob extends React.Component {
       transform: 'rotate(' + angle + 'deg)'
     };
 
+    let disabled = this.props.disabled;
+
     return (
-      <div className="knob-container">
+      <div className="knob-container" disabled={disabled}>
         <div className="knob-outer">
           <div className="knob-dot" style={dotStyle} onMouseDown={this.onMouseDown} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp}>&middot;</div>
           <div className="knob-dial">{this.state.value}</div>

@@ -7,17 +7,12 @@ class Node {
     this.selected = false;
   }
 
-  set src(value) {
-  }
-
-  get src() {
-  }
-
-  set volume(value) {
-  }
-
-  get volume() {
-  }
+  set osc1Freq(frequency) {}
+  get osc1Freq() {}
+  set src(value) {}
+  get src() {}
+  set volume(value) {}
+  get volume() {}
 }
 
 module.exports = Node;

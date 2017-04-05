@@ -2,6 +2,9 @@ import React from 'react';
 import Knob from '../Mixer/Knob';
 import './SynthNodePanel.css';
 import noteConfig from '../../config/frequencies';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { setNodeOsc1Frequency, setNodeOsc2Frequency } from '../../actions/Nodes';
 
 class SynthNodePanel extends React.Component {
   constructor(props) {
@@ -15,12 +18,12 @@ class SynthNodePanel extends React.Component {
     };
   }
 
-  setOsc1Freq(freq) {
-    this.props.node.osc1freq = freq;
+  setOsc1Freq(frequency) {
+    this.props.setNodeOsc1Frequency(this.props.node.id, frequency);
   }
 
-  setOsc2Freq(freq) {
-    this.props.node.osc2freq = freq;
+  setOsc2Freq(frequency) {
+    this.props.setNodeOsc2Frequency(this.props.node.id, frequency);
   }
 
   renderNoteSelect() {
@@ -45,18 +48,22 @@ class SynthNodePanel extends React.Component {
     return (
       <div className="synth-node-panel-container">
 
+        <div className="synth-node-panel-row">
+          <input defaultValue={this.props.node.name}/>
+        </div>
+
         <input name="osc" type="radio" value="continue" onChange={this.onRadioChange} checked={this.state.checked}/>
         <div className="synth-node-panel-row">
           <Knob
             label="Osc. 1 Freq."
-            value={this.props.node.osc1freq}
+            value={this.props.node.osc1Freq}
             min={20}
             max={2000}
             onChange={this.setOsc1Freq}
             disabled={!this.state.checked}/>
           <Knob
             label="Osc. 2 Freq."
-            value={this.props.node.osc2freq}
+            value={this.props.node.osc2Freq}
             min={20}
             max={2000}
             onChange={this.setOsc2Freq}
@@ -67,14 +74,14 @@ class SynthNodePanel extends React.Component {
         <div className="synth-node-panel-row">
           <div className="synth-node-panel-column">
             <div>
-              <label htmlFor="node-note">Note</label>
+              <label htmlFor="node-note" disabled={this.state.checked}>Note</label>
               <select name="node-note" onChange={this.setNodeNote} disabled={this.state.checked}>
                 {this.renderNoteSelect()}
               </select>
             </div>
 
             <div>
-              <label htmlFor="node-octave">Octave</label>
+              <label htmlFor="node-octave" disabled={this.state.checked}>Octave</label>
               <select name="node-octave" onChange={this.setNodeOctave} disabled={this.state.checked}>
                 {this.renderOctaveSelect()}
               </select>
@@ -83,14 +90,14 @@ class SynthNodePanel extends React.Component {
 
           <div className="synth-node-panel-column">
             <div>
-              <label htmlFor="node-note">Note</label>
+              <label htmlFor="node-note" disabled={this.state.checked}>Note</label>
               <select name="node-note" onChange={this.setNodeNote} disabled={this.state.checked}>
                 {this.renderNoteSelect()}
               </select>
             </div>
 
             <div>
-              <label htmlFor="node-octave">Octave</label>
+              <label htmlFor="node-octave" disabled={this.state.checked}>Octave</label>
               <select name="node-octave" onChange={this.setNodeOctave} disabled={this.state.checked}>
                 {this.renderOctaveSelect()}
               </select>
@@ -102,4 +109,11 @@ class SynthNodePanel extends React.Component {
   }
 }
 
-module.exports = SynthNodePanel;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setNodeOsc1Frequency: bindActionCreators(setNodeOsc1Frequency, dispatch),
+    setNodeOsc2Frequency: bindActionCreators(setNodeOsc2Frequency, dispatch)
+  };
+};
+
+module.exports = connect(null, mapDispatchToProps)(SynthNodePanel);

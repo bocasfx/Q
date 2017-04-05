@@ -5,19 +5,30 @@ body {
   font-family: sans-serif;
   font-size: 0.8em;
   user-select: none;
-  color: gray;
+  color: darkgray;
 }
 
+input,
 select {
   background-color: rgba(0, 0, 0, 0.1);
   border: 1px solid dimgray;
   border-radius: 0;
-  color: rgb(127, 127, 127);
   outline: 0;
+  color: darkgray;
+}
+
+input {
+  padding: 5px;
 }
 
 select:disabled {
-  background-color: #444;
+  opacity: 0.5;
+  color: rgba(127, 127, 127, 0.7);
+}
+
+label[disabled] {
+  opacity: 0.5;
+  color: rgba(127, 127, 127, 0.7);
 }
 
 input[type="radio"] {
@@ -33,7 +44,6 @@ input[type="radio"]:after {
   content: '';
   display: inline-block;
   visibility: visible;
-  /*border: 1px solid dimgray;*/
   outline: 0;
   position: relative;
 }
