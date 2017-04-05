@@ -13,8 +13,8 @@
 }
 
 .knob-outer {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,25 +29,26 @@
   width: 43px;
   height: 43px;
   position: absolute;
-  font-size: 1.5em;
+  font-size: 2.5em;
   line-height: 1.9em;
   color: darkorange;
   opacity: 0.6;
   transform: rotate(300deg);
+  cursor: pointer;
 }
 
 
 .knob-dial {
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   border: 1px solid rgba(127, 127, 127, 0.2);
   cursor: pointer;
   text-align: center;
-  color: dimgray;
+  color: rgb(127, 127, 127);
   font-size: 0.9em;
   vertical-align: middle;
-  line-height: 2.5em;
+  line-height: 4.5em;
   box-shadow: 3px 3px 3px 0px rgba(0,0,0,0.75);
   background-color: rgba(127, 127, 127, 0.1);
 }

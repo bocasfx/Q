@@ -15,9 +15,9 @@ class Channel extends React.Component {
     if (this.props.type === 'synth') {
       return (
         <div>
-          <Knob label="Distortion"/>
-          <Knob label="Frequency"/>
-          <Knob label="Attack"/>
+          <Knob label="Distortion" value={0} min={0} max={1}/>
+          <Knob label="Frequency" value={0} min={0} max={1}/>
+          <Knob label="Attack" value={0} min={0} max={1}/>
         </div>
       );
     } else if (this.props.type === 'audio') {
