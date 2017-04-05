@@ -10,30 +10,38 @@ class SynthNode extends Node {
     this.position = position;
     this.sustain = config.synthNode.sustain;
     this.active = false;
-    this.oscillator = audioContext.createOscillator();
+    this.oscillator1 = audioContext.createOscillator();
     this.oscillator2 = audioContext.createOscillator();
     this.gainNode = audioContext.createGain();
-    this.oscillator.connect(this.gainNode);
+    this.oscillator1.connect(this.gainNode);
     this.oscillator2.connect(this.gainNode);
     this.gainNode.connect(audioContext.destination);
     this.gainNode.gain.value = 0;
     this.velocity = 1.0;
-    this.oscillator.type = 'sine';
-    this.oscillator2.type = 'square';
-    this.frequency = 120;
-    this.oscillator.start();
+    this.oscillator1.type = 'sine';
+    this.oscillator2.type = 'sine';
+    this.osc1freq = 120;
+    this.osc2freq = 100;
+    this.oscillator1.start();
     this.oscillator2.start();
     this.type = 'synth';
     this.gainValue = 1;
   }
 
-  set frequency(freq) {
-    this.oscillator.frequency.value = freq;
-    this.oscillator2.frequency.value = freq - 20;
+  set osc1freq(freq) {
+    this.oscillator1.frequency.value = freq;
   }
 
-  get frequency() {
-    return this.oscillator.frequency.value;
+  get osc1freq() {
+    return this.oscillator1.frequency.value;
+  }
+
+  set osc2freq(freq) {
+    this.oscillator2.frequency.value = freq;
+  }
+
+  get osc2freq() {
+    return this.oscillator2.frequency.value;
   }
 
   set volume(value) {
