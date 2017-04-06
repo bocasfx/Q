@@ -1,0 +1,24 @@
+.oscillator-panel-container {
+  width: 100px;
+}
+
+.oscillator-panel-toggle {
+  height: 75px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.oscillator-panel-freq {
+  margin-top: 20px;
+}
+
+.oscillator-panel-notes div {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.oscillator-panel-notes div:last-child {
+  margin-top: 5px;
+}

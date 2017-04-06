@@ -10,18 +10,15 @@
   margin-bottom: 40px;
 }
 
-.synth-node-panel-column {
+.synth-node-panel-row-between {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+}
+
+.synth-node-panel-name {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-}
-
-.synth-node-panel-column div {
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.synth-node-panel-row label {
-  margin-right: 5px;
+  margin-bottom: 20px;
 }

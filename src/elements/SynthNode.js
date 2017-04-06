@@ -32,16 +32,8 @@ class SynthNode extends Node {
     this.oscillator1.frequency.value = freq;
   }
 
-  get osc1Freq() {
-    return this.oscillator1.frequency.value;
-  }
-
   set osc2Freq(freq) {
     this.oscillator2.frequency.value = freq;
-  }
-
-  get osc2Freq() {
-    return this.oscillator2.frequency.value;
   }
 
   set volume(value) {

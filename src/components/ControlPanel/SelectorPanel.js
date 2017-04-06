@@ -24,9 +24,11 @@ class SelectorPanel extends React.Component {
     this.props.deleteNode(id);
   }
 
-  onClickNode(id, event) {
+  onClickNode(node, event) {
     event.preventDefault();
-    this.props.selectNode(id);
+    if (!node.selected) {
+      this.props.selectNode(node.id);
+    }
   }
 
   onClickStream(id, event) {
@@ -60,7 +62,7 @@ class SelectorPanel extends React.Component {
         item={node}
         idx={idx}
         onDelete={this.onDeleteNode.bind(this, node.id)}
-        onClick={this.onClickNode.bind(this, node.id)}/>;
+        onClick={this.onClickNode.bind(this, node)}/>;
     });
   }
 

@@ -79,5 +79,19 @@ export default {
       0.9: '-9',
       1: '-10'
     }
+  },
+  waveToggle: {
+    marks: {
+      0: 'Sine',
+      1: 'Square',
+      2: 'Sawtooth',
+      3: 'Triangle'
+    },
+    emptyMarks: {
+      0: '',
+      1: '',
+      2: '',
+      3: ''
+    }
   }
 };
