@@ -126,7 +126,7 @@ class Canvas extends React.Component {
         }
       });
 
-      if (!selected) {
+      if (!selected && !this.props.devices.streams) {
         this.props.deselectNodes();
       }
       

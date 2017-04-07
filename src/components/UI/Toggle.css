@@ -1,0 +1,45 @@
+.toggle {
+  height: 75px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.toggle .rc-slider-vertical {
+  left: -10px;
+}
+
+.toggle .rc-slider-rail {
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid dimgray;
+  width: 20px;
+  border-radius: 20px;
+  left: -3px;
+  top: -10px;
+  height: 95px;
+}
+
+.toggle .rc-slider-track {
+  display: none;
+}
+
+.toggle .rc-slider-dot {
+  display: none;
+}
+
+.rc-slider-vertical .rc-slider-mark {
+  top: 3px;
+}
+
+.toggle .rc-slider-vertical .rc-slider-handle,
+.toggle .rc-slider-vertical .rc-slider-handle:hover {
+  width: 14px;
+  border: none;
+  background-color: darkorange;
+}
+
+.toggle .rc-slider-mark-text,
+.toggle .rc-slider-mark-text .rc-slider-mark-text-active {
+  color: darkgray;
+  margin-left: 5px;
+}

@@ -4,21 +4,14 @@
   justify-content: space-around;
 }
 
-.synth-node-panel-row {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 40px;
-}
-
-.synth-node-panel-row-between {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 40px;
-}
-
 .synth-node-panel-name {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   margin-bottom: 20px;
+}
+
+.synth-node-panel-adsr-label {
+  margin: 10px 0 0 3px;
+  font-size: 0.9em;
 }

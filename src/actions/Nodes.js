@@ -87,3 +87,19 @@ export const deselectNodes = () => {
     type: 'DESELECT_NODES'
   };
 };
+
+export const setNodeOsc1WaveType = (id, waveType) => {
+  return {
+    type: 'SET_NODE_OSC1_WAVE_TYPE',
+    id,
+    waveType
+  };
+};
+
+export const setNodeOsc2WaveType = (id, waveType) => {
+  return {
+    type: 'SET_NODE_OSC2_WAVE_TYPE',
+    id,
+    waveType
+  };
+};

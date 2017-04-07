@@ -72,3 +72,20 @@ canvas {
 .main-container {
   display: flex;
 }
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.row-between {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}

@@ -2,16 +2,22 @@ import React from 'react';
 import './OscillatorPanel.css';
 import Knob from '../Mixer/Knob';
 import config from '../../config/config';
-import Slider from 'rc-slider/lib/Slider';
-import 'rc-slider/assets/index.css';
 import noteConfig from '../../config/frequencies';
+import Toggle from '../UI/Toggle';
+
+const waveTypes = {
+  0: 'sine',
+  1: 'square',
+  2: 'sawtooth',
+  3: 'triangle'
+};
 
 class OscillatorPanel extends React.Component {
   constructor(props) {
     super(props);
     this.onFreqChange = this.onFreqChange.bind(this);
     this.onRadioChange = this.onRadioChange.bind(this);
-    this.onWaveChange = this.onWaveChange.bind(this);
+    this.onWaveTypeChange = this.onWaveTypeChange.bind(this);
 
     this.state = {
       checked: true
@@ -40,8 +46,8 @@ class OscillatorPanel extends React.Component {
     });
   }
 
-  onWaveChange(value) {
-    console.log(value);
+  onWaveTypeChange(value) {
+    this.props.onWaveTypeChange(this.props.nodeId, waveTypes[value]);
   }
 
   render() {
@@ -51,22 +57,22 @@ class OscillatorPanel extends React.Component {
 
     return (
       <div className="oscillator-panel-container">
-        <div>{this.props.label}</div>
-        <div className="oscillator-panel-toggle">
-          <Slider
+        <div className="oscillator-panel-label">{this.props.label}</div>
+        <div className="toggle">
+          <Toggle
             vertical
             min={0}
             step={1}
             max={3}
             marks={config.waveToggle.marks}
             defaultValue={0}
-            onChange={this.onWaveChange}/>
+            onChange={this.onWaveTypeChange}/>
         </div>
 
         <div className="oscillator-panel-freq">
           <input name={this.props.name} type="radio" value="continue" onChange={this.onRadioChange} checked={this.state.checked}/>
           <Knob
-            label={this.props.label + ' Freq.'}
+            label={'Frequency'}
             value={this.props.oscillator.frequency.value}
             min={20}
             max={2000}

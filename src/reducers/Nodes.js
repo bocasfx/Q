@@ -113,6 +113,25 @@ const deselectNodes = (state) => {
   });
 };
 
+const setNodeOsc1WaveType = (state, id, waveType) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.osc1WaveType = waveType;
+    }
+    return node;
+  });
+};
+
+const setNodeOsc2WaveType = (state, id, waveType) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.osc2WaveType = waveType;
+    }
+    return node;
+  });
+};
+
+
 export default (state = initialState, action) => {
   switch (action.type) {
 
@@ -151,6 +170,12 @@ export default (state = initialState, action) => {
 
     case 'DESELECT_NODES':
       return deselectNodes(state);
+
+    case 'SET_NODE_OSC1_WAVE_TYPE':
+      return setNodeOsc1WaveType(state, action.id, action.waveType);
+
+    case 'SET_NODE_OSC2_WAVE_TYPE':
+      return setNodeOsc2WaveType(state, action.id, action.waveType);
 
     default:
       return state;

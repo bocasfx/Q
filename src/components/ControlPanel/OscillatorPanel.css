@@ -4,7 +4,7 @@
   padding: 10px;
 }
 
-.oscillator-panel-container div:first-child {
+.oscillator-panel-label{
   margin-bottom: 20px;
 }
 
@@ -20,46 +20,4 @@
 
 .oscillator-panel-notes div:last-child {
   margin-top: 5px;
-}
-
-.oscillator-panel-toggle {
-  height: 75px;
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-}
-
-.oscillator-panel-toggle .rc-slider-vertical {
-  left: -10px;
-}
-
-.oscillator-panel-toggle .rc-slider-rail {
-  background-color: rgba(0, 0, 0, 0.2);
-  border: 1px solid dimgray;
-  width: 20px;
-  border-radius: 20px;
-  left: -3px;
-  top: -10px;
-  height: 95px;
-}
-
-.oscillator-panel-toggle .rc-slider-track {
-  display: none;
-}
-
-.oscillator-panel-toggle .rc-slider-dot {
-  display: none;
-}
-
-.oscillator-panel-toggle .rc-slider-vertical .rc-slider-handle,
-.oscillator-panel-toggle .rc-slider-vertical .rc-slider-handle:hover {
-  width: 14px;
-  border: none;
-  background-color: darkorange;
-}
-
-.oscillator-panel-toggle .rc-slider-mark-text,
-.oscillator-panel-toggle .rc-slider-mark-text .rc-slider-mark-text-active {
-  color: darkgray;
-  margin-left: 5px;
 }
