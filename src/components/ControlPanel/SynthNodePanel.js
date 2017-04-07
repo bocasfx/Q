@@ -19,13 +19,13 @@ class SynthNodePanel extends React.Component {
             nodeId={this.props.node.id}
             oscillator={this.props.node.oscillator1}
             onFreqChange={this.props.setNodeOsc1Frequency}
-            label="Osc. 1 Freq."/>
+            label="Osc. 1"/>
           <OscillatorPanel
             name="osc2"
-            node={this.props.node}
+            nodeId={this.props.node.id}
             oscillator={this.props.node.oscillator2}
             onFreqChange={this.props.setNodeOsc2Frequency}
-            label="Osc. 2 Freq."/>
+            label="Osc. 2"/>
         </div>
       </div>
     );

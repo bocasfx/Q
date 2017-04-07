@@ -8,6 +8,7 @@
   display: flex;
   align-items: center;
   overflow-x: scroll;
+  z-index: 1;
 }
 
 .mixer-inner-container {

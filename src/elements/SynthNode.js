@@ -21,7 +21,7 @@ class SynthNode extends Node {
     this.oscillator1.type = 'sine';
     this.oscillator2.type = 'sine';
     this.osc1Freq = 120;
-    this.osc2Freq = 100;
+    this.osc2Freq = 440;
     this.oscillator1.start();
     this.oscillator2.start();
     this.type = 'synth';

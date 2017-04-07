@@ -82,10 +82,10 @@ export default {
   },
   waveToggle: {
     marks: {
-      0: 'Sine',
-      1: 'Square',
-      2: 'Sawtooth',
-      3: 'Triangle'
+      0: 'Sin',
+      1: 'Sq',
+      2: 'Saw',
+      3: 'Tri'
     },
     emptyMarks: {
       0: '',

@@ -51,13 +51,14 @@ class OscillatorPanel extends React.Component {
 
     return (
       <div className="oscillator-panel-container">
+        <div>{this.props.label}</div>
         <div className="oscillator-panel-toggle">
           <Slider
             vertical
             min={0}
             step={1}
             max={3}
-            marks={config.waveToggle.emptyMarks}
+            marks={config.waveToggle.marks}
             defaultValue={0}
             onChange={this.onWaveChange}/>
         </div>
@@ -65,7 +66,7 @@ class OscillatorPanel extends React.Component {
         <div className="oscillator-panel-freq">
           <input name={this.props.name} type="radio" value="continue" onChange={this.onRadioChange} checked={this.state.checked}/>
           <Knob
-            label={this.props.label}
+            label={this.props.label + ' Freq.'}
             value={this.props.oscillator.frequency.value}
             min={20}
             max={2000}
