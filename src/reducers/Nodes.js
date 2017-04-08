@@ -132,6 +132,7 @@ const setNodeOsc2WaveType = (state, id, waveType) => {
 };
 
 const cloneNode = (state, id) => {
+  console.log(state);
   
 };
 

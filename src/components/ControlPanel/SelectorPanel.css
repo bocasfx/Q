@@ -1,3 +1,9 @@
 .selector-panel-container {
-  height: 40%;
+  height: 300px;
+  max-height: 300px;
+}
+
+.selector-panel-container .tabs-content {
+  height: 260px;
+  max-height: 260px;
 }

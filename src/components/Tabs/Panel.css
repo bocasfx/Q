@@ -1,7 +1,7 @@
 .panel-container {
-  height: 50%;
+  height: 100%;
   box-sizing: border-box;
-  padding: 15px;
+  padding: 0 15px;
 }
 
 .panel-container:last-child {

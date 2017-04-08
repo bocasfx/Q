@@ -38,7 +38,7 @@ class Tabs extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="tabs-container">
         <div className="tabs-labels">
           {this.renderTitles()}
         </div>

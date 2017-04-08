@@ -6,6 +6,14 @@
   cursor: pointer;
 }
 
+.list-item-container:first-child {
+  padding-top: 20px;
+}
+
+.list-item-container:last-child {
+  padding-bottom: 20px;
+}
+
 .list-item-container:hover {
   background-color: rgba(0, 0, 0, 0.2);
 }
