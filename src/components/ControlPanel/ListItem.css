@@ -7,11 +7,11 @@
 }
 
 .list-item-container:first-child {
-  padding-top: 20px;
+  margin-top: 15px;
 }
 
 .list-item-container:last-child {
-  padding-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .list-item-container:hover {
