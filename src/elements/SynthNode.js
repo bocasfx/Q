@@ -1,12 +1,10 @@
 import config from '../config/config';
-import uuidv1 from 'uuid/v1';
 import Node from './Node';
 
 class SynthNode extends Node {
 
   constructor(position, audioContext) {
     super();
-    this.id = uuidv1();
     this.position = position;
     this.sustain = config.synthNode.sustain;
     this.active = false;

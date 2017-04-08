@@ -1,12 +1,10 @@
 import config from '../config/config';
-import uuidv1 from 'uuid/v1';
 import Node from './Node';
 
 class MidiNode extends Node {
 
   constructor(position, midiContext) {
     super();
-    this.id = uuidv1();
     this.position = position;
     this.midiContext = midiContext;
     this.sustain = config.midiNode.sustain;

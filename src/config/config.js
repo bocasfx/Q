@@ -14,7 +14,7 @@ export default {
     lineJoin: 'round',
     lineWidth: 2,
     lineDash: [],
-    count: 1,
+    count: 5,
     shadow: 'rgba(0, 0, 0, 0.3)'
   },
   inactiveNode: {

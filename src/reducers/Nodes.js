@@ -131,6 +131,9 @@ const setNodeOsc2WaveType = (state, id, waveType) => {
   });
 };
 
+const cloneNode = (state, id) => {
+  
+};
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -176,6 +179,9 @@ export default (state = initialState, action) => {
 
     case 'SET_NODE_OSC2_WAVE_TYPE':
       return setNodeOsc2WaveType(state, action.id, action.waveType);
+
+    case 'CLONE_NODE':
+      return cloneNode(state, action.id);
 
     default:
       return state;

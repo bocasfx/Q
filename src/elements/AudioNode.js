@@ -1,12 +1,10 @@
 import config from '../config/config';
-import uuidv1 from 'uuid/v1';
 import Node from './Node';
 
 class AudioNode extends Node {
 
   constructor(position) {
     super();
-    this.id = uuidv1();
     this.position = position;
     this.sustain = config.audioNode.sustain;
     this.active = false;

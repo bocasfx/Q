@@ -103,3 +103,10 @@ export const setNodeOsc2WaveType = (id, waveType) => {
     waveType
   };
 };
+
+export const cloneNode = (id) => {
+  return {
+    type: 'CLONE_NODE',
+    id
+  };
+};

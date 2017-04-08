@@ -1,8 +1,10 @@
 import names from '../config/names';
+import uuidv1 from 'uuid/v1';
 
 class Node {
 
   constructor() {
+    this.id = uuidv1();
     this.name = names.generate();
     this.selected = false;
     this.volume = 1.0;

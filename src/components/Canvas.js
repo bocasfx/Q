@@ -2,7 +2,7 @@ import React from 'react';
 import './Canvas.css';
 import config from '../config/config';
 import { connect } from 'react-redux';
-import { addSynthNode, addMidiNode, addAudioNode, detectCollisions, setNodePosition, selectNode, deselectNodes } from '../actions/Nodes';
+import { addSynthNode, addMidiNode, addAudioNode, detectCollisions, setNodePosition, selectNode, deselectNodes, cloneNode } from '../actions/Nodes';
 import { addStream } from '../actions/Streams';
 import { bindActionCreators } from 'redux';
 import { calculateDistance } from '../utils/utils';
@@ -78,27 +78,18 @@ class Canvas extends React.Component {
     this.mouseDown = true;
     this.setCursorStyle();
 
-    // Streams
-    if (this.props.devices.streams) {
-      this.props.addStream([event.pageX, event.pageY], event);
-
-    // Nodes
-    } else if (this.props.devices.synthNodes) {
-      this.props.addSynthNode([event.pageX, event.pageY], this.props.audioContext);
-
-    // MIDI Nodes
-    } else if (this.props.devices.midiNodes) {
-      this.props.addMidiNode([event.pageX, event.pageY], this.props.midiContext);
-
-    // Audio Nodes
-    } else if (this.props.devices.audioNodes) {
-      this.props.addAudioNode([event.pageX, event.pageY]);
-    }
-
     let x = event.pageX;
     let y = event.pageY;
 
-    this.selectNode([x, y]);
+    let position = [x, y];
+
+    if (this.props.devices.streams) {
+      this.props.addStream(position, event);
+    } else if (!event.metaKey) {
+      this.addNode(position);
+    }
+
+    this.selectNode([x, y], event.metaKey);
   }
 
   onMouseUp(event) {
@@ -113,24 +104,44 @@ class Canvas extends React.Component {
     }
   }
 
-  selectNode(position) {
+  addNode(position) {
+    // Synth Nodes
+    if (this.props.devices.synthNodes) {
+      this.props.addSynthNode(position, this.props.audioContext);
+
+    // MIDI Nodes
+    } else if (this.props.devices.midiNodes) {
+      this.props.addMidiNode(position, this.props.midiContext);
+
+    // Audio Nodes
+    } else if (this.props.devices.audioNodes) {
+      this.props.addAudioNode(position);
+    }
+  }
+
+  selectNode(position, metaKey) {
     setTimeout(() => {
-      let selected = null;
+      let selectedNodeId = null;
       this.props.nodes.forEach((node) => {
         let distance = calculateDistance(node.position, position);
         if (distance <= config.app.doubleClickDistance) {
-          selected = node.id;
+          selectedNodeId = node.id;
           if (!node.selected) {
             this.props.selectNode(node.id);
           }
         }
       });
 
-      if (!selected && !this.props.devices.streams) {
+      if (!selectedNodeId && !this.props.devices.streams) {
         this.props.deselectNodes();
+        return;
+      }
+
+      if (metaKey) {
+        this.props.cloneNode(selectedNodeId);
       }
       
-      this.selectedNodeId = selected;
+      this.selectedNodeId = selectedNodeId;
     }, 0);
   }
 
@@ -206,6 +217,7 @@ const mapDispatchToProps = (dispatch) => {
     addMidiNode: bindActionCreators(addMidiNode, dispatch),
     addAudioNode: bindActionCreators(addAudioNode, dispatch),
     selectNode: bindActionCreators(selectNode, dispatch),
+    cloneNode: bindActionCreators(cloneNode, dispatch),
     deselectNodes: bindActionCreators(deselectNodes, dispatch),
     addStream: bindActionCreators(addStream, dispatch),
     detectCollisions: bindActionCreators(detectCollisions, dispatch),
