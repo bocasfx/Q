@@ -1,22 +1,23 @@
 .toggle {
-  height: 75px;
+  position: relative;
+  height: 70px;
   padding: 10px;
   display: flex;
   justify-content: center;
 }
 
 .toggle .rc-slider-vertical {
-  left: -10px;
+  left: -8px;
 }
 
 .toggle .rc-slider-rail {
   background-color: rgba(0, 0, 0, 0.2);
   border: 1px solid dimgray;
-  width: 20px;
+  width: 15px;
   border-radius: 20px;
   left: -3px;
-  top: -10px;
-  height: 95px;
+  top: -5.5px;
+  height: 85px;
 }
 
 .toggle .rc-slider-track {
@@ -28,12 +29,14 @@
 }
 
 .rc-slider-vertical .rc-slider-mark {
-  top: 3px;
+  height: 110%;
+  top: -3px;
 }
 
 .toggle .rc-slider-vertical .rc-slider-handle,
 .toggle .rc-slider-vertical .rc-slider-handle:hover {
-  width: 14px;
+  width: 10px;
+  height: 10px;
   border: none;
   background-color: darkorange;
 }
@@ -41,5 +44,17 @@
 .toggle .rc-slider-mark-text,
 .toggle .rc-slider-mark-text .rc-slider-mark-text-active {
   color: darkgray;
-  margin-left: 5px;
+}
+
+.toggle-icon-container {
+  margin: -5px 0 0 20px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+}
+
+.toggle img {
+  width: 16px;
+  left: 45px;
+  margin-top: 12px;
 }

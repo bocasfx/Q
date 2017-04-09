@@ -11,7 +11,16 @@
   margin-bottom: 20px;
 }
 
+.synth-node-panel-adsr-icon {
+  margin: 5px 0 0 -3px;
+  width: 30px;
+}
+
 .synth-node-panel-adsr-label {
-  margin: 10px 0 0 3px;
-  font-size: 0.9em;
+  margin: 0 0 5px 2px;
+  font-size: 0.8em;
+}
+
+.synth-node-panel-gain {
+  margin-bottom: 20px;
 }

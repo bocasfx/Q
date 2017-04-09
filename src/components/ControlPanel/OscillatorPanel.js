@@ -64,7 +64,8 @@ class OscillatorPanel extends React.Component {
             min={0}
             step={1}
             max={3}
-            marks={config.waveToggle.marks}
+            icons={config.waveToggle.icons}
+            marks={config.waveToggle.emptyMarks}
             defaultValue={0}
             onChange={this.onWaveTypeChange}/>
         </div>

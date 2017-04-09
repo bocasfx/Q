@@ -110,7 +110,7 @@ class Stream {
           if ((pointInRope + step * 2) > this.queue.length) {
             pointInRope = this.queue.length - 1;
           } else {
-            pointInRope += (step - 1);
+            pointInRope += step;
           }
           particleIdx++;
         }

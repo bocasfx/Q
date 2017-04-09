@@ -14,7 +14,7 @@ export default {
     lineJoin: 'round',
     lineWidth: 2,
     lineDash: [],
-    count: 5,
+    count: 3,
     shadow: 'rgba(0, 0, 0, 0.3)'
   },
   inactiveNode: {
@@ -27,7 +27,7 @@ export default {
     lineDash: [],
     lineWidth: 2,
     strokeStyle: 'rgba(186, 85, 211, 0.7)',
-    sustain: 500,
+    sustain: 100,
     shadow: 'rgba(0, 0, 0, 0.3)'
   },
   midiNode: {
@@ -36,7 +36,7 @@ export default {
     lineDash: [],
     lineWidth: 2,
     fillStyle: 'rgba(154, 205, 50, 0.7)',
-    sustain: 500,
+    sustain: 100,
     shadow: 'rgba(0, 0, 0, 0.3)'
   },
   audioNode: {
@@ -45,7 +45,7 @@ export default {
     lineDash: [],
     lineWidth: 2,
     strokeStyle: 'rgba(255, 215, 0, 0.7)',
-    sustain: 500,
+    sustain: 100,
     shadow: 'rgba(0, 0, 0, 0.3)'
   },
   stream: {
@@ -81,32 +81,37 @@ export default {
     }
   },
   waveToggle: {
-    marks: {
-      0: 'Sin',
-      1: 'Sq',
-      2: 'Saw',
-      3: 'Tri'
-    },
+    icons: [
+      '/icons/triangle.svg',
+      '/icons/square.svg',
+      '/icons/saw.svg',
+      '/icons/sine.svg'
+    ],
     emptyMarks: {
-      0: '',
-      1: '',
-      2: '',
-      3: ''
+      0: ' ',
+      1: ' ',
+      2: ' ',
+      3: ' '
     }
   },
-  adsr: {
-    marks: {
-      0: '-',
-      1: ' ',
-      2: '-',
-      3: ' ',
-      4: '-',
-      5: ' ',
-      6: '-',
-      7: ' ',
-      8: '-',
-      9: ' ',
-      10: '-'
+  controlPanel: {
+    width: 300,
+    adsr: {
+      marks: {
+        0: '-',
+        1: ' ',
+        2: '-',
+        3: ' ',
+        4: '-',
+        5: ' ',
+        6: '-',
+        7: ' ',
+        8: '-',
+        9: ' '
+      }
     }
+  },
+  menu: {
+    height: 53
   }
 };
