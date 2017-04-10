@@ -8,20 +8,30 @@ class Knob extends React.Component {
       dragging: false,
       angle: 300,
       y: null,
-      value: 0
+      value: 0,
+      mounted: false
     };
 
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
+    this.mounted = false;
   }
 
   componentDidMount() {
-    // this.props.min = this.props.min || 0;
-    // this.props.max = this.props.max || 10.0;
+    let value = this.props.value;
+    let angle = (value * 300.0 / this.props.max) + 300.0;
+    this.setState({
+      mounted: true,
+      value: value.toFixed(1),
+      angle
+    });
   }
 
   onMouseDown(event) {
+    if (this.props.disabled) {
+      return;
+    }
     event.preventDefault();
     this.setState({
       dragging: true,
@@ -41,18 +51,22 @@ class Knob extends React.Component {
     angle = angle >= 600 ? 600 : angle;
     angle = angle <= 300 ? 300 : angle;
 
-    let value = parseFloat((((angle - 300.0) / 300.0) * 10.0).toFixed(1), 10);
+    let value = (((angle - 300.0) / 300.0) * this.props.max);
+    value = value.toFixed(1);
+
     this.setState({
       angle,
       y: event.pageY,
       value
     });
+    this.props.onChange(value);
   }
 
   onMouseUp(event) {
     event.preventDefault();
     this.setState({ dragging: false });
-    window.onMouseMove = null;
+    window.onmousemove = null;
+    window.onmouseup = null;
   }
 
   render() {
@@ -61,13 +75,15 @@ class Knob extends React.Component {
       transform: 'rotate(' + angle + 'deg)'
     };
 
+    let disabled = this.props.disabled;
+
     return (
-      <div className="knob-container">
-        <div className="knob-label">{this.props.label}</div>
+      <div className="knob-container" disabled={disabled}>
         <div className="knob-outer">
           <div className="knob-dot" style={dotStyle} onMouseDown={this.onMouseDown} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp}>&middot;</div>
           <div className="knob-dial">{this.state.value}</div>
         </div>
+        <div className="knob-label">{this.props.label}</div>
       </div>
     );
   }

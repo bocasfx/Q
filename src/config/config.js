@@ -27,8 +27,13 @@ export default {
     lineDash: [],
     lineWidth: 2,
     strokeStyle: 'rgba(186, 85, 211, 0.7)',
-    sustain: 500,
-    shadow: 'rgba(0, 0, 0, 0.3)'
+    shadow: 'rgba(0, 0, 0, 0.3)',
+    envelope: {
+      attack: 0.01,
+      decay: 0.1,
+      sustain: 1.0,
+      release: 0.01
+    }
   },
   midiNode: {
     radius: 15,
@@ -36,7 +41,7 @@ export default {
     lineDash: [],
     lineWidth: 2,
     fillStyle: 'rgba(154, 205, 50, 0.7)',
-    sustain: 500,
+    sustain: 100,
     shadow: 'rgba(0, 0, 0, 0.3)'
   },
   audioNode: {
@@ -45,7 +50,7 @@ export default {
     lineDash: [],
     lineWidth: 2,
     strokeStyle: 'rgba(255, 215, 0, 0.7)',
-    sustain: 500,
+    sustain: 100,
     shadow: 'rgba(0, 0, 0, 0.3)'
   },
   stream: {
@@ -54,6 +59,16 @@ export default {
     strokeStyle: 'gray',
     lineWidth: 2,
     lineDash: [3, 30]
+  },
+  selectedNode: {
+    radius: 21,
+    strokeStyle: 'rgb(255, 215, 0)',
+    lineWidth: 2,
+    lineDash: [3, 7]
+  },
+
+  selectedStream: {
+    strokeStyle: 'rgb(255, 215, 0)',
   },
   fader: {
     marks: {
@@ -69,5 +84,39 @@ export default {
       0.9: '-9',
       1: '-10'
     }
+  },
+  waveToggle: {
+    icons: [
+      '/icons/triangle.svg',
+      '/icons/square.svg',
+      '/icons/saw.svg',
+      '/icons/sine.svg'
+    ],
+    emptyMarks: {
+      0: ' ',
+      1: ' ',
+      2: ' ',
+      3: ' '
+    }
+  },
+  controlPanel: {
+    width: 300,
+    adsr: {
+      marks: {
+        0: '-',
+        1: ' ',
+        2: '-',
+        3: ' ',
+        4: '-',
+        5: ' ',
+        6: '-',
+        7: ' ',
+        8: '-',
+        9: ' '
+      }
+    }
+  },
+  menu: {
+    height: 53
   }
 };

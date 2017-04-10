@@ -1,17 +1,16 @@
 import config from '../config/config';
-import uuidv1 from 'uuid/v1';
 import Node from './Node';
 
 class AudioNode extends Node {
 
   constructor(position) {
     super();
-    this.id = uuidv1();
     this.position = position;
     this.sustain = config.audioNode.sustain;
     this.active = false;
     this.type = 'audio';
     this.onFinishedPlaying = this.onFinishedPlaying.bind(this);
+    this.selected = false;
   }
 
   set src(filePath) {
@@ -56,6 +55,15 @@ class AudioNode extends Node {
     canvasContext.fillStyle = this.audio? config.audioNode.fillStyle : config.inactiveNode.fillStyle;
     canvasContext.fill();
     canvasContext.stroke();
+
+    if (this.selected) {
+      canvasContext.beginPath();
+      canvasContext.arc(this.position[0], this.position[1], config.selectedNode.radius, 0, 2 * Math.PI, false);
+      canvasContext.strokeStyle = config.selectedNode.strokeStyle;
+      canvasContext.lineWidth = config.selectedNode.lineWidth;
+      canvasContext.setLineDash(config.selectedNode.lineDash);
+      canvasContext.stroke();
+    }
   }
 }
 

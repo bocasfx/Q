@@ -1,8 +1,12 @@
 import config from '../config/config';
 import Particle from './Particle';
+import uuidv1 from 'uuid/v1';
+import names from '../config/names';
 
 class Stream {
   constructor(position) {
+
+    this.id = uuidv1();
 
     let x = position[0];
     let y = position[1];
@@ -24,6 +28,8 @@ class Stream {
     this.pathIndex = 0;
     this.path = [];
     this.particles = particles;
+    this.name = names.generate();
+    this.selected = false;
 
     this.calculateEasing = this.calculateEasing.bind(this);
     this.onMouseDown = this.onMouseDown.bind(this);
@@ -104,7 +110,7 @@ class Stream {
           if ((pointInRope + step * 2) > this.queue.length) {
             pointInRope = this.queue.length - 1;
           } else {
-            pointInRope += (step - 1);
+            pointInRope += step;
           }
           particleIdx++;
         }
@@ -116,15 +122,18 @@ class Stream {
 
   render(canvasContext) {
 
+    canvasContext.beginPath();
+    canvasContext.strokeStyle = this.selected ? config.selectedStream.strokeStyle : config.stream.strokeStyle;
+    canvasContext.lineWidth = config.stream.lineWidth;
+    canvasContext.setLineDash(config.stream.lineDash);
+
     for (let i=1; i<this.queue.length; i++) {
-      canvasContext.beginPath();
-      canvasContext.strokeStyle = config.stream.strokeStyle;
-      canvasContext.lineWidth = config.stream.lineWidth;
-      canvasContext.setLineDash(config.stream.lineDash);
+      
       canvasContext.moveTo(this.queue[i-1][0], this.queue[i-1][1]);
       canvasContext.lineTo(this.queue[i][0], this.queue[i][1]);
-      canvasContext.stroke();
     }
+
+    canvasContext.stroke();
 
     this.particles.forEach((particle) => {
       particle.render(canvasContext);

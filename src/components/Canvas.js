@@ -2,12 +2,10 @@ import React from 'react';
 import './Canvas.css';
 import config from '../config/config';
 import { connect } from 'react-redux';
-import { addSynthNode, addMidiNode, addAudioNode, detectCollisions, setNodePosition } from '../actions/Nodes';
-import { showNodeSettings } from '../actions/Devices';
+import { addSynthNode, addMidiNode, addAudioNode, detectCollisions, setNodePosition, selectNode, deselectNodes, cloneNode } from '../actions/Nodes';
 import { addStream } from '../actions/Streams';
 import { bindActionCreators } from 'redux';
 import { calculateDistance } from '../utils/utils';
-import { setDetectionStatus } from '../actions/Collisions';
 
 class Canvas extends React.Component {
 
@@ -17,12 +15,17 @@ class Canvas extends React.Component {
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
+    this.setCursorStyle = this.setCursorStyle.bind(this);
+    this.selectNode = this.selectNode.bind(this);
+
     this.draw = this.draw.bind(this);
     this.flow = this.flow.bind(this);
-    this.onDoubleClick = this.onDoubleClick.bind(this);
     this.mouseDown = false;
     this.selectedNodeId = null;
     this.calculating = false;
+    this.cursorStyle = {
+      cursor: 'crosshair'
+    };
   }
   
   componentDidMount() {
@@ -30,6 +33,27 @@ class Canvas extends React.Component {
     requestAnimationFrame(() => {
       this.flow();
     });
+  }
+
+  setCursorStyle() {
+
+    if (this.props.devices.streams ||
+        this.props.devices.synthNodes ||
+        this.props.devices.midiNodes ||
+        this.props.devices.audioNodes) {
+      this.cursorStyle = {
+        cursor: 'crosshair'
+      };
+    } else if (this.mouseDown) {
+      this.cursorStyle = {
+        cursor: '-webkit-grabbing'
+      };
+    } else {
+      this.cursorStyle = {
+        cursor: '-webkit-grab'
+      };
+    }
+    
   }
 
   onMouseMove(event) {
@@ -52,38 +76,27 @@ class Canvas extends React.Component {
   onMouseDown(event) {
     event.preventDefault();
     this.mouseDown = true;
+    this.setCursorStyle();
 
-    // Streams
+    let x = event.pageX;
+    let y = event.pageY;
+
+    let position = [x, y];
+
     if (this.props.devices.streams) {
-      this.props.addStream([event.pageX, event.pageY], event);
-
-    // Nodes
-    } else if (this.props.devices.synthNodes) {
-      this.props.addSynthNode([event.pageX, event.pageY], this.props.audioContext);
-
-    // MIDI Nodes
-    } else if (this.props.devices.midiNodes) {
-      this.props.addMidiNode([event.pageX, event.pageY], this.props.midiContext);
-
-    // Audio Nodes
-    } else if (this.props.devices.audioNodes) {
-      this.props.addAudioNode([event.pageX, event.pageY]);
-
-    // Select Node
-    } else {
-      this.props.nodes.forEach((node) => {
-        let distance = calculateDistance(node.position, [event.pageX, event.pageY]);
-        if (distance <= config.app.doubleClickDistance) {
-          this.selectedNodeId = node.id;
-        }
-      });
+      this.props.addStream(position, event);
+    } else if (!event.metaKey) {
+      this.addNode(position);
     }
+
+    this.selectNode([x, y], event.metaKey);
   }
 
   onMouseUp(event) {
     event.preventDefault();
     this.mouseDown = false;
     this.selectedNodeId = null;
+    this.setCursorStyle();
     if (this.props.devices.streams) {
       let streams = this.props.streams;
       let stream = streams[streams.length - 1];
@@ -91,13 +104,45 @@ class Canvas extends React.Component {
     }
   }
 
-  onDoubleClick(event) {
-    this.props.nodes.forEach((node) => {
-      let distance = calculateDistance(node.position, [event.pageX, event.pageY]);
-      if (distance <= config.app.doubleClickDistance) {
-        this.props.showNodeSettings(node.id);
+  addNode(position) {
+    // Synth Nodes
+    if (this.props.devices.synthNodes) {
+      this.props.addSynthNode(position, this.props.audioContext);
+
+    // MIDI Nodes
+    } else if (this.props.devices.midiNodes) {
+      this.props.addMidiNode(position, this.props.midiContext);
+
+    // Audio Nodes
+    } else if (this.props.devices.audioNodes) {
+      this.props.addAudioNode(position);
+    }
+  }
+
+  selectNode(position, metaKey) {
+    setTimeout(() => {
+      let selectedNodeId = null;
+      this.props.nodes.forEach((node) => {
+        let distance = calculateDistance(node.position, position);
+        if (distance <= config.app.doubleClickDistance) {
+          selectedNodeId = node.id;
+          if (!node.selected) {
+            this.props.selectNode(node.id);
+          }
+        }
+      });
+
+      if (!selectedNodeId && !this.props.devices.streams) {
+        this.props.deselectNodes();
+        return;
       }
-    });
+
+      if (metaKey) {
+        this.props.cloneNode(selectedNodeId);
+      }
+      
+      this.selectedNodeId = selectedNodeId;
+    }, 0);
   }
 
   flow() {
@@ -141,16 +186,17 @@ class Canvas extends React.Component {
   }
 
   render() {
+    this.setCursorStyle();
     return (
       <canvas
         draggable="true"
         ref="canvas"
-        width={window.innerWidth}
-        height={window.innerHeight - 53}
+        width={window.innerWidth - config.controlPanel.width}
+        height={window.innerHeight - config.menu.height}
         onMouseMove={this.onMouseMove}
         onMouseDown={this.onMouseDown}
         onMouseUp={this.onMouseUp}
-        onDoubleClick={this.onDoubleClick}
+        style={this.cursorStyle}
       />
     );
   }
@@ -170,11 +216,12 @@ const mapDispatchToProps = (dispatch) => {
     addSynthNode: bindActionCreators(addSynthNode, dispatch),
     addMidiNode: bindActionCreators(addMidiNode, dispatch),
     addAudioNode: bindActionCreators(addAudioNode, dispatch),
+    selectNode: bindActionCreators(selectNode, dispatch),
+    cloneNode: bindActionCreators(cloneNode, dispatch),
+    deselectNodes: bindActionCreators(deselectNodes, dispatch),
     addStream: bindActionCreators(addStream, dispatch),
     detectCollisions: bindActionCreators(detectCollisions, dispatch),
-    showNodeSettings: bindActionCreators(showNodeSettings, dispatch),
-    setNodePosition: bindActionCreators(setNodePosition, dispatch),
-    setDetectionStatus: bindActionCreators(setDetectionStatus, dispatch)
+    setNodePosition: bindActionCreators(setNodePosition, dispatch)
   };
 };
 

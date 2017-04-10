@@ -1,0 +1,26 @@
+.synth-node-panel-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.synth-node-panel-name {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.synth-node-panel-adsr-icon {
+  margin: 5px 0 0 -3px;
+  width: 30px;
+}
+
+.synth-node-panel-adsr-label {
+  margin: 0 0 5px 2px;
+  font-size: 0.8em;
+}
+
+.synth-node-panel-gain {
+  margin-bottom: 20px;
+}

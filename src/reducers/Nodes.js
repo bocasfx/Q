@@ -3,6 +3,7 @@ import MidiNode from '../elements/MidiNode';
 import AudioNode from '../elements/AudioNode';
 import { calculateDistance } from '../utils/utils';
 import config from '../config/config';
+import _ from 'lodash';
 
 const initialState = [];
 
@@ -32,16 +33,16 @@ const detectCollisions = (state, streams) => {
     return state;
   }
   return state.map((node) => {
-    if (!node.active) {
-      streams.forEach((stream) => {
-        stream.particles.forEach((particle) => {
-          let distance = calculateDistance(node.position, particle.position);
-          if (distance <= config.app.collisionDistance) {
-            setTimeout(() => { node.play(); }, 0);
-          }
-        });
+    streams.forEach((stream) => {
+      stream.particles.forEach((particle) => {
+        let distance = calculateDistance(node.position, particle.position);
+        if (distance <= config.app.collisionDistance) {
+          node.enqueueParticle(particle.id);
+        } else {
+          node.dequeueParticle(particle.id);
+        }
       });
-    }
+    });
     return node;
   });
 };
@@ -55,10 +56,19 @@ const setNodePosition = (state, id, position) => {
   });
 };
 
-const setNodeFrequency = (state, id, frequency) => {
+const setNodeOsc1Frequency = (state, id, frequency) => {
   return state.map((node) => {
     if (node.id === id) {
-      node.frequency = frequency;
+      node.osc1Freq = frequency;
+    }
+    return node;
+  });
+};
+
+const setNodeOsc2Frequency = (state, id, frequency) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.osc2Freq = frequency;
     }
     return node;
   });
@@ -76,11 +86,54 @@ const setNodeVolume = (state, id, volume) => {
 const setNodeSource = (state, id, path) => {
   return state.map((node) => {
     if (node.id === id) {
-      console.log('setting');
       node.src = path;
     }
     return node;
   });
+};
+
+const deleteNode = (state, id) => {
+  let nodeList = state.splice(0);
+  return _.remove(nodeList, (node) => {
+    return node.id !== id;
+  });
+};
+
+const selectNode = (state, id) => {
+  return state.map((node) => {
+    node.selected = node.id === id ? !node.selected : false;
+    return node;
+  });
+};
+
+const deselectNodes = (state) => {
+  return state.map((node) => {
+    node.selected = false;
+    return node;
+  });
+};
+
+const setNodeOsc1WaveType = (state, id, waveType) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.osc1WaveType = waveType;
+    }
+    return node;
+  });
+};
+
+const setNodeOsc2WaveType = (state, id, waveType) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.osc2WaveType = waveType;
+    }
+    return node;
+  });
+};
+
+const cloneNode = (state, id) => {
+  console.log(state);
+  
 };
 
 export default (state = initialState, action) => {
@@ -101,14 +154,35 @@ export default (state = initialState, action) => {
     case 'SET_NODE_POSITION':
       return setNodePosition(state, action.id, action.position);
 
-    case 'SET_NODE_FREQUENCY':
-      return setNodeFrequency(state, action.id, action.frequency);
+    case 'SET_NODE_OSC1_FREQUENCY':
+      return setNodeOsc1Frequency(state, action.id, action.frequency);
+
+    case 'SET_NODE_OSC2_FREQUENCY':
+      return setNodeOsc2Frequency(state, action.id, action.frequency);
 
     case 'SET_NODE_VOLUME':
       return setNodeVolume(state, action.id, action.volume);
 
     case 'SET_NODE_SOURCE':
       return setNodeSource(state, action.id, action.path);
+
+    case 'DELETE_NODE':
+      return deleteNode(state, action.id);
+
+    case 'SELECT_NODE':
+      return selectNode(state, action.id);
+
+    case 'DESELECT_NODES':
+      return deselectNodes(state);
+
+    case 'SET_NODE_OSC1_WAVE_TYPE':
+      return setNodeOsc1WaveType(state, action.id, action.waveType);
+
+    case 'SET_NODE_OSC2_WAVE_TYPE':
+      return setNodeOsc2WaveType(state, action.id, action.waveType);
+
+    case 'CLONE_NODE':
+      return cloneNode(state, action.id);
 
     default:
       return state;

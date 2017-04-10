@@ -25,17 +25,13 @@ class Mixer extends React.Component {
 
   render() {
 
-    let style = {};
-
     if (!this.props.devices.mixer) {
-      style = {
-        display: 'none'
-      };
+      return null;
     }
 
     return (
-      <div className="mixer-container" style={style}>
-        <div className="mixer-inner-container" style={style}>
+      <div className="mixer-container">
+        <div className="mixer-inner-container">
           {this.renderChannels('audio')}
           {this.renderChannels('synth')}
           {this.renderChannels('midi')}

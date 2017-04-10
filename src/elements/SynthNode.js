@@ -1,62 +1,61 @@
 import config from '../config/config';
-import uuidv1 from 'uuid/v1';
 import Node from './Node';
+import Oscillator from './Oscillator';
+import Amplifier from './Amplifier';
+import EnvelopeGenerator from './EnvelopeGenerator';
 
 class SynthNode extends Node {
 
   constructor(position, audioContext) {
     super();
-    this.id = uuidv1();
     this.position = position;
-    this.sustain = config.synthNode.sustain;
     this.active = false;
-    this.oscillator = audioContext.createOscillator();
-    this.gainNode = audioContext.createGain();
-    this.oscillator.connect(this.gainNode);
-    this.gainNode.connect(audioContext.destination);
-    this.gainNode.gain.value = 0;
-    this.velocity = 1.0;
-    this.oscillator.type = 'sine';
-    this.frequency = 440;
-    this.oscillator.start();
+
+    this.oscillator1 = new Oscillator(audioContext);
+    this.oscillator2 = new Oscillator(audioContext);
+    this.amplifier = new Amplifier(audioContext);
+
+    this.envelopeGenerator = new EnvelopeGenerator(config.synthNode.envelope, audioContext);
+
+    this.oscillator1.connect(this.amplifier);
+    this.oscillator2.connect(this.amplifier);
+    this.envelopeGenerator.connect(this.amplifier.amplitude);
+    this.amplifier.connect(audioContext.destination);
+
     this.type = 'synth';
-    this.gainValue = 1;
+    this.sustain = config.synthNode.sustain;
   }
 
-  set frequency(freq) {
-    this.oscillator.frequency.value = freq;
+  set osc1Freq(freq) {
+    this.oscillator1.frequency = freq;
   }
 
-  get frequency() {
-    return this.oscillator.frequency.value;
+  set osc2Freq(freq) {
+    this.oscillator2.frequency = freq;
   }
 
-  set volume(value) {
-    this.gainValue = value;
+  set osc1WaveType(waveType) {
+    this.oscillator1.waveType = waveType;
   }
 
-  get volume() {
-    return this.gainNode.gain.value;
+  set osc2WaveType(waveType) {
+    this.oscillator2.waveType = waveType;
   }
 
   play() {
     if (this.active) {
       return;
     }
-    this.activate();
-    setTimeout(() => {
-      this.deactivate();
-    }, this.sustain);
-  }
-
-  activate() {
     this.active = true;
-    this.gainNode.gain.value = this.gainValue;
+    this.envelopeGenerator.trigger(this.volume);
   }
 
-  deactivate() {
-    this.gainNode.gain.value = 0;
+  stop() {
+    if (!this.active) {
+      return;
+    }
     this.active = false;
+    this.envelopeGenerator.close();
   }
 
   render(canvasContext) {
@@ -75,6 +74,15 @@ class SynthNode extends Node {
     canvasContext.fillStyle = config.synthNode.fillStyle;
     canvasContext.fill();
     canvasContext.stroke();
+
+    if (this.selected) {
+      canvasContext.beginPath();
+      canvasContext.arc(this.position[0], this.position[1], config.selectedNode.radius, 0, 2 * Math.PI, false);
+      canvasContext.strokeStyle = config.selectedNode.strokeStyle;
+      canvasContext.lineWidth = config.selectedNode.lineWidth;
+      canvasContext.setLineDash(config.selectedNode.lineDash);
+      canvasContext.stroke();
+    }
   }
 }
 

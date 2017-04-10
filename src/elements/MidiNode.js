@@ -1,12 +1,10 @@
 import config from '../config/config';
-import uuidv1 from 'uuid/v1';
 import Node from './Node';
 
 class MidiNode extends Node {
 
   constructor(position, midiContext) {
     super();
-    this.id = uuidv1();
     this.position = position;
     this.midiContext = midiContext;
     this.sustain = config.midiNode.sustain;
@@ -17,6 +15,7 @@ class MidiNode extends Node {
     this.type = 'midi';
     this.note = 30;
     this.velocity = 127;
+    this.selected = false;
   }
 
   play() {
@@ -48,6 +47,14 @@ class MidiNode extends Node {
     canvasContext.fill();
     canvasContext.stroke();
 
+    if (this.selected) {
+      canvasContext.beginPath();
+      canvasContext.arc(this.position[0], this.position[1], config.selectedNode.radius, 0, 2 * Math.PI, false);
+      canvasContext.strokeStyle = config.selectedNode.strokeStyle;
+      canvasContext.lineWidth = config.selectedNode.lineWidth;
+      canvasContext.setLineDash(config.selectedNode.lineDash);
+      canvasContext.stroke();
+    }
   }
 }
 

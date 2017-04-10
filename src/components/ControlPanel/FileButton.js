@@ -3,8 +3,13 @@ import './FileButton.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setNodeSource } from '../../actions/Nodes';
-const electron = window.require('electron');
-const dialog = electron.remote.dialog;
+let electron = null;
+let dialog = null;
+
+if (window.require) {
+  electron = window.require('electron');
+  dialog = electron.remote.dialog;
+}
 
 class FileButton extends React.Component {
   constructor(props) {
@@ -13,6 +18,11 @@ class FileButton extends React.Component {
   }
 
   onClick() {
+    if (!dialog) {
+      console.error('This feature is not available on the browser version of Q.');
+      return;
+    }
+
     dialog.showOpenDialog((files) => {
       if (files && files.length) {
         this.props.setNodeSource(this.props.node.id, files[0]);

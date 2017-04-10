@@ -1,15 +1,47 @@
+import names from '../config/names';
+import uuidv1 from 'uuid/v1';
+import _ from 'lodash';
+
 class Node {
 
-  set src(value) {
+  constructor() {
+    this.id = uuidv1();
+    this.name = names.generate();
+    this.selected = false;
+    this.particleQueue = [];
+    this.volume = 0.8;
   }
 
-  get src() {
+  set osc1Freq(frequency) {}
+  set osc2Freq(frequency) {}
+  set osc1WaveType(waveType) {}
+  set osc2WaveType(waveType) {}
+  set src(value) {}
+  get src() {}
+
+  stop() {}
+
+  enqueueParticle(id) {
+    let particleIdx = _.findIndex(this.particleQueue, (particleId) => {
+      return particleId === id;
+    });
+
+    if (particleIdx < 0) {
+      if (!this.particleQueue.length) {
+        this.play();
+      }
+      this.particleQueue.push(id);
+    }
   }
 
-  set volume(value) {
-  }
+  dequeueParticle(id) {
+    _.remove(this.particleQueue, (particleId) => {
+      return particleId === id;
+    });
 
-  get volume() {
+    if (!this.particleQueue.length) {
+      this.stop();
+    }
   }
 }
 
