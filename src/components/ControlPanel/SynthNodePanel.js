@@ -49,7 +49,7 @@ class SynthNodePanel extends React.Component {
         <div className="row synth-node-panel-gain">
           <Knob
             label={'Gain'}
-            value={this.props.node.gainValue}
+            value={this.props.node.volume}
             min={0}
             max={1}
             onChange={this.onGainChange}/>

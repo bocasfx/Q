@@ -33,16 +33,16 @@ const detectCollisions = (state, streams) => {
     return state;
   }
   return state.map((node) => {
-    if (!node.active) {
-      streams.forEach((stream) => {
-        stream.particles.forEach((particle) => {
-          let distance = calculateDistance(node.position, particle.position);
-          if (distance <= config.app.collisionDistance) {
-            setTimeout(() => { node.play(); }, 0);
-          }
-        });
+    streams.forEach((stream) => {
+      stream.particles.forEach((particle) => {
+        let distance = calculateDistance(node.position, particle.position);
+        if (distance <= config.app.collisionDistance) {
+          node.enqueueParticle(particle.id);
+        } else {
+          node.dequeueParticle(particle.id);
+        }
       });
-    }
+    });
     return node;
   });
 };

@@ -1,5 +1,6 @@
 import names from '../config/names';
 import uuidv1 from 'uuid/v1';
+import _ from 'lodash';
 
 class Node {
 
@@ -7,7 +8,8 @@ class Node {
     this.id = uuidv1();
     this.name = names.generate();
     this.selected = false;
-    this.volume = 1.0;
+    this.particleQueue = [];
+    this.volume = 0.8;
   }
 
   set osc1Freq(frequency) {}
@@ -16,8 +18,31 @@ class Node {
   set osc2WaveType(waveType) {}
   set src(value) {}
   get src() {}
-  set volume(value) {}
-  get volume() {}
+
+  stop() {}
+
+  enqueueParticle(id) {
+    let particleIdx = _.findIndex(this.particleQueue, (particleId) => {
+      return particleId === id;
+    });
+
+    if (particleIdx < 0) {
+      if (!this.particleQueue.length) {
+        this.play();
+      }
+      this.particleQueue.push(id);
+    }
+  }
+
+  dequeueParticle(id) {
+    _.remove(this.particleQueue, (particleId) => {
+      return particleId === id;
+    });
+
+    if (!this.particleQueue.length) {
+      this.stop();
+    }
+  }
 }
 
 module.exports = Node;
