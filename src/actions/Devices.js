@@ -5,15 +5,8 @@ export const toggleDevice = (device) => {
   };
 };
 
-export const showNodeSettings = (id) => {
+export const hideMixer = () => {
   return {
-    type: 'SHOW_NODE_SETTINGS',
-    id
-  };
-};
-
-export const hideNodeSettings = () => {
-  return {
-    type: 'HIDE_NODE_SETTINGS'
+    type: 'HIDE_MIXER'
   };
 };

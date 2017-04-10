@@ -1,0 +1,22 @@
+.mixer-container {
+  position: absolute;
+  width: 100%;
+  height: calc(100% - 53px);
+  max-height: calc(100% - 53px);
+  background-color: rgb(15, 15, 15);
+  transition: 1s ease-in-out;
+  display: flex;
+  align-items: center;
+  overflow-x: scroll;
+  z-index: 1;
+}
+
+.mixer-inner-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-right: 40px solid transparent;
+  border-left: 40px solid transparent;
+  transition: 1s ease-in-out;
+}

@@ -1,62 +1,48 @@
-import config from '../config/config';
-import { normalizeVelocity } from '../utils/utils';
+import names from '../config/names';
 import uuidv1 from 'uuid/v1';
+import _ from 'lodash';
 
 class Node {
 
-  constructor(position, audioContext) {
+  constructor() {
     this.id = uuidv1();
-    this.position = position;
-    this.sustain = config.node.sustain;
-    this.playing = false;
-    this.oscillator = audioContext.createOscillator();
-    this.gainNode = audioContext.createGain();
-    this.oscillator.connect(this.gainNode);
-    this.gainNode.connect(audioContext.destination);
-    this.gainNode.gain.value = 0;
-    this.velocity = normalizeVelocity(position[1]);
-    this.oscillator.type = 'sine';
-    this.frequency = 440;
-    this.oscillator.start();
+    this.name = names.generate();
+    this.selected = false;
+    this.particleQueue = [];
+    this.volume = 0.8;
   }
 
-  set frequency(freq) {
-    this.oscillator.frequency.value = freq;
-  }
+  set osc1Freq(frequency) {}
+  set osc2Freq(frequency) {}
+  set osc1WaveType(waveType) {}
+  set osc2WaveType(waveType) {}
+  set src(value) {}
+  get src() {}
 
-  get frequency() {
-    return this.oscillator.frequency.value;
-  }
+  stop() {}
 
-  play() {
-    if (this.playing) {
-      return;
+  enqueueParticle(id) {
+    let particleIdx = _.findIndex(this.particleQueue, (particleId) => {
+      return particleId === id;
+    });
+
+    if (particleIdx < 0) {
+      if (!this.particleQueue.length) {
+        this.play();
+      }
+      this.particleQueue.push(id);
     }
-    this.gainNode.gain.value = this.velocity;
-    this.playing = true;
-    setTimeout(() => {
-      this.gainNode.gain.value = 0;
-      this.playing = false;
-    }, this.sustain);
   }
 
-  render(canvasContext) {
-    let extraRadius = this.playing ? 2 : 0;
+  dequeueParticle(id) {
+    _.remove(this.particleQueue, (particleId) => {
+      return particleId === id;
+    });
 
-    canvasContext.beginPath();
-    canvasContext.arc(this.position[0] + 3, this.position[1] + 3, config.midiNode.radius + extraRadius, 0, 2 * Math.PI, false);
-    canvasContext.fillStyle = config.node.shadow;
-    canvasContext.fill();
-
-    canvasContext.beginPath();
-    canvasContext.arc(this.position[0], this.position[1], config.node.radius + extraRadius, 0, 2 * Math.PI, false);
-    canvasContext.strokeStyle = config.node.strokeStyle;
-    canvasContext.lineWidth = config.node.lineWidth;
-    canvasContext.setLineDash(config.node.lineDash);
-    canvasContext.fillStyle = config.node.fillStyle;
-    canvasContext.fill();
-    canvasContext.stroke();
+    if (!this.particleQueue.length) {
+      this.stop();
+    }
   }
 }
 
-export default Node;
+module.exports = Node;

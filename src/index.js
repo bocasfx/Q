@@ -5,8 +5,9 @@ import './index.css';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import reducer from './reducers';
-import Menu from './components/Menu';
-import NodeSettings from './components/NodeSettings';
+import Menu from './components/Menu/Menu';
+import Mixer from './components/Mixer/Mixer';
+import ControlPanel from './components/ControlPanel/ControlPanel';
 
 const store = createStore(reducer);
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -14,8 +15,11 @@ const renderDom = (midiContext) => {
   ReactDOM.render(
     <Provider store={store}>
       <div>
-        <NodeSettings/>
-        <Canvas audioContext={audioContext} midiContext={midiContext}/>
+        <Mixer/>
+        <div className="main-container">
+          <Canvas audioContext={audioContext} midiContext={midiContext}/>
+          <ControlPanel/>
+        </div>
         <Menu midi={midiContext !== null}/>
       </div>
     </Provider>,

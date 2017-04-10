@@ -1,0 +1,23 @@
+.file-button-container {
+  border-radius: 3px;
+  border: 1px solid rgba(127, 127, 127, 0.5);
+  color: rgba(127, 127, 127, 0.5);
+}
+
+.file-button-container button {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  color: rgba(127, 127, 127, 0.5);
+  font-size: 1em;
+}
+
+.file-button-container button:focus {
+  outline: 0;
+  outline: -webkit-focus-ring-color auto 0;
+}

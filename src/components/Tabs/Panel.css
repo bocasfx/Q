@@ -1,0 +1,25 @@
+.panel-container {
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0 15px;
+  overflow-y: auto;
+}
+
+.panel-container:last-child {
+  border-top: none;
+  border-bottom: none;
+}
+
+.panel-list {
+  height: 100%;
+}
+
+.panel-list .panel-empty {
+  width: 100%;
+  margin-top: 100px;
+  text-align: center;
+}
+
+.panel-title {
+  margin-bottom: 15px;
+}

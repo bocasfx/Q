@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {toggleDevice} from '../actions/Devices';
+import {toggleDevice} from '../../actions/Devices';
 import './Button.css';
 
 class Button extends React.Component {
