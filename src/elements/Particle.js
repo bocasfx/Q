@@ -1,8 +1,10 @@
 import config from '../config/config';
+import uuidv1 from 'uuid/v1';
 
 class Particle {
   constructor(position) {
     this.position = position;
+    this.id = uuidv1();
   }
 
   render(canvasContext) {

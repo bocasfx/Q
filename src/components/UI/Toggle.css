@@ -39,6 +39,7 @@
   height: 10px;
   border: none;
   background-color: darkorange;
+  cursor: pointer;
 }
 
 .toggle .rc-slider-mark-text,

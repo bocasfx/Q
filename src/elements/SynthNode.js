@@ -1,53 +1,54 @@
 import config from '../config/config';
 import Node from './Node';
+import Oscillator from './Oscillator';
+import Amplifier from './Amplifier';
+import EnvelopeGenerator from './EnvelopeGenerator';
 
 class SynthNode extends Node {
 
   constructor(position, audioContext) {
     super();
     this.position = position;
-    this.sustain = config.synthNode.sustain;
     this.active = false;
-    this.oscillator1 = audioContext.createOscillator();
-    this.oscillator2 = audioContext.createOscillator();
-    this.gainNode = audioContext.createGain();
-    this.oscillator1.connect(this.gainNode);
-    this.oscillator2.connect(this.gainNode);
-    this.gainNode.connect(audioContext.destination);
-    this.gainNode.gain.value = 0;
-    this.velocity = 1.0;
-    this.oscillator1.type = 'sine';
-    this.oscillator2.type = 'sine';
-    this.osc1Freq = 120;
-    this.osc2Freq = 60;
-    this.oscillator1.start();
-    this.oscillator2.start();
+
+    this.oscillator1 = new Oscillator(audioContext);
+    this.oscillator2 = new Oscillator(audioContext);
+    this.amplifier = new Amplifier(audioContext);
+
+    this.envelopeGenerator = new EnvelopeGenerator(config.synthNode.envelope, audioContext);
+
+    this.oscillator1.connect(this.amplifier);
+    this.oscillator2.connect(this.amplifier);
+    this.envelopeGenerator.connect(this.amplifier.amplitude);
+    this.amplifier.connect(audioContext.destination);
+
     this.type = 'synth';
-    this.gainValue = 1;
+    this.volume = 0;
+    this.sustain = config.synthNode.sustain;
   }
 
   set osc1Freq(freq) {
-    this.oscillator1.frequency.value = freq;
+    this.oscillator1.frequency = freq;
   }
 
   set osc2Freq(freq) {
-    this.oscillator2.frequency.value = freq;
+    this.oscillator2.frequency = freq;
   }
 
   set osc1WaveType(waveType) {
-    this.oscillator1.type = waveType;
+    this.oscillator1.waveType = waveType;
   }
 
   set osc2WaveType(waveType) {
-    this.oscillator2.type = waveType;
+    this.oscillator2.waveType = waveType;
   }
 
-  set volume(value) {
-    this.gainValue = value;
+  set volume(vol) {
+    this.amplifier.volume = vol;
   }
 
   get volume() {
-    return this.gainNode.gain.value;
+    return this.amplifier.volume;
   }
 
   play() {
@@ -55,18 +56,22 @@ class SynthNode extends Node {
       return;
     }
     this.activate();
-    setTimeout(() => {
-      this.deactivate();
-    }, this.sustain);
+    this.envelopeGenerator.trigger(this.volume);
+  }
+
+  stop() {
+    if (!this.active) {
+      return;
+    }
+    this.deactivate();
+    this.envelopeGenerator.close();
   }
 
   activate() {
     this.active = true;
-    this.gainNode.gain.value = this.gainValue;
   }
 
   deactivate() {
-    this.gainNode.gain.value = 0;
     this.active = false;
   }
 

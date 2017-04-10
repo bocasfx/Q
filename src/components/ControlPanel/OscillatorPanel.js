@@ -74,7 +74,7 @@ class OscillatorPanel extends React.Component {
           <input name={this.props.name} type="radio" value="continue" onChange={this.onRadioChange} checked={this.state.checked}/>
           <Knob
             label={'Frequency'}
-            value={this.props.oscillator.frequency.value}
+            value={this.props.oscillator.frequency}
             min={20}
             max={2000}
             onChange={this.onFreqChange}

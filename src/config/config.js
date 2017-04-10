@@ -14,7 +14,7 @@ export default {
     lineJoin: 'round',
     lineWidth: 2,
     lineDash: [],
-    count: 3,
+    count: 1,
     shadow: 'rgba(0, 0, 0, 0.3)'
   },
   inactiveNode: {
@@ -27,8 +27,13 @@ export default {
     lineDash: [],
     lineWidth: 2,
     strokeStyle: 'rgba(186, 85, 211, 0.7)',
-    sustain: 100,
-    shadow: 'rgba(0, 0, 0, 0.3)'
+    shadow: 'rgba(0, 0, 0, 0.3)',
+    envelope: {
+      attack: 0.01,
+      decay: 0.1,
+      sustain: 1.0,
+      release: 0.01
+    }
   },
   midiNode: {
     radius: 15,
