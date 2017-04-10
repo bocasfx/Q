@@ -9,9 +9,8 @@ class Amplifier {
   }
 
   set volume(vol) {
-    // let now = this.audioContext.currentTime;
-    // this.gain.gain.linearRampToValueAtTime(vol, now);
-    this.gain.gain.value = vol;
+    let now = this.audioContext.currentTime;
+    this.gain.gain.linearRampToValueAtTime(vol, now);
   }
 
   get volume() {

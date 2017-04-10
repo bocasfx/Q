@@ -23,7 +23,6 @@ class SynthNode extends Node {
     this.amplifier.connect(audioContext.destination);
 
     this.type = 'synth';
-    this.volume = 0;
     this.sustain = config.synthNode.sustain;
   }
 
@@ -43,19 +42,11 @@ class SynthNode extends Node {
     this.oscillator2.waveType = waveType;
   }
 
-  set volume(vol) {
-    this.amplifier.volume = vol;
-  }
-
-  get volume() {
-    return this.amplifier.volume;
-  }
-
   play() {
     if (this.active) {
       return;
     }
-    this.activate();
+    this.active = true;
     this.envelopeGenerator.trigger(this.volume);
   }
 
@@ -63,16 +54,8 @@ class SynthNode extends Node {
     if (!this.active) {
       return;
     }
-    this.deactivate();
-    this.envelopeGenerator.close();
-  }
-
-  activate() {
-    this.active = true;
-  }
-
-  deactivate() {
     this.active = false;
+    this.envelopeGenerator.close();
   }
 
   render(canvasContext) {

@@ -9,6 +9,7 @@ class Node {
     this.name = names.generate();
     this.selected = false;
     this.particleQueue = [];
+    this.volume = 0.8;
   }
 
   set osc1Freq(frequency) {}
@@ -17,8 +18,6 @@ class Node {
   set osc2WaveType(waveType) {}
   set src(value) {}
   get src() {}
-  set volume(value) {}
-  get volume() {}
 
   stop() {}
 

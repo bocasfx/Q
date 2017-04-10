@@ -7,11 +7,11 @@ class EnvelopeGenerator {
     this.decay = envelope.decay;
   }
 
-  trigger() {
+  trigger(volume) {
     let now = this.audioContext.currentTime;
     this.param.cancelScheduledValues(now);
     this.param.linearRampToValueAtTime(0, now);
-    this.param.linearRampToValueAtTime(1, now + this.attack);
+    this.param.linearRampToValueAtTime(volume, now + this.attack);
   }
 
   close() {
