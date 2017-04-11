@@ -74,35 +74,35 @@ class SynthNodePanel extends React.Component {
               defaultValue={0}
               onChange={this.onAttackChange}/>
               <div className="synth-node-panel-adsr-icon">
-                <img src="/icons/attack.svg" alt="attack"/>
+                <img src="/icons/control-panel/attack.svg" alt="attack"/>
               </div>
           </div>
           <div className="column">
             <div className="synth-node-panel-adsr-label">D</div>
             <Toggle
               vertical
-              min={0}
+              min={0.1}
               step={0.1}
-              max={9}
+              max={1.0}
               marks={config.controlPanel.adsr.marks}
               defaultValue={0}
               onChange={this.onDecayChange}/>
               <div className="synth-node-panel-adsr-icon">
-                <img src="/icons/decay.svg" alt="decay"/>
+                <img src="/icons/control-panel/decay.svg" alt="decay"/>
               </div>
           </div>
           <div className="column">
             <div className="synth-node-panel-adsr-label">S</div>
             <Toggle
               vertical
-              min={0}
+              min={0.1}
               step={0.1}
-              max={9}
+              max={1.0}
               marks={config.controlPanel.adsr.marks}
               defaultValue={0}
               onChange={this.onSustainChange}/>
               <div className="synth-node-panel-adsr-icon">
-                <img src="/icons/sustain.svg" alt="sustain"/>
+                <img src="/icons/control-panel/sustain.svg" alt="sustain"/>
               </div>
           </div>
           <div className="column">
@@ -116,7 +116,7 @@ class SynthNodePanel extends React.Component {
               defaultValue={0}
               onChange={this.onReleaseChange}/>
               <div className="synth-node-panel-adsr-icon">
-                <img src="/icons/release.svg" alt="release"/>
+                <img src="/icons/control-panel/release.svg" alt="release"/>
               </div>
           </div>
         </div>

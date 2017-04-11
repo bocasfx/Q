@@ -29,8 +29,7 @@
 }
 
 .rc-slider-vertical .rc-slider-mark {
-  height: 110%;
-  top: -3px;
+  top: -10px;
 }
 
 .toggle .rc-slider-vertical .rc-slider-handle,
