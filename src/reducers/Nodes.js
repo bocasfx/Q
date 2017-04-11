@@ -136,6 +136,24 @@ const cloneNode = (state, id) => {
   
 };
 
+const setNodeAttack = (state, id, value) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.attack = value;
+    }
+    return node;
+  });
+};
+
+const setNodeRelease = (state, id, value) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.release = value;
+    }
+    return node;
+  });
+};
+
 export default (state = initialState, action) => {
   switch (action.type) {
 
@@ -183,6 +201,12 @@ export default (state = initialState, action) => {
 
     case 'CLONE_NODE':
       return cloneNode(state, action.id);
+
+    case 'SET_NODE_ATTACK':
+      return setNodeAttack(state, action.id, action.value);
+
+    case 'SET_NODE_RELEASE':
+      return setNodeRelease(state, action.id, action.value);
 
     default:
       return state;

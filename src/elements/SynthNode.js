@@ -42,6 +42,14 @@ class SynthNode extends Node {
     this.oscillator2.waveType = waveType;
   }
 
+  set attack(value) {
+    this.envelopeGenerator.attack = value;
+  }
+
+  set release(value) {
+    this.envelopeGenerator.release = value;
+  }
+
   play() {
     if (this.active) {
       return;

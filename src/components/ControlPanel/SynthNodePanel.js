@@ -2,11 +2,18 @@ import React from 'react';
 import './SynthNodePanel.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setNodeOsc1Frequency, setNodeOsc2Frequency, setNodeOsc1WaveType, setNodeOsc2WaveType, setNodeVolume } from '../../actions/Nodes';
 import OscillatorPanel from './OscillatorPanel';
 import Toggle from '../UI/Toggle';
 import config from '../../config/config';
 import Knob from '../Mixer/Knob';
+import {
+  setNodeOsc1Frequency,
+  setNodeOsc2Frequency,
+  setNodeOsc1WaveType,
+  setNodeOsc2WaveType,
+  setNodeVolume,
+  setNodeAttack,
+  setNodeRelease } from '../../actions/Nodes';
 
 class SynthNodePanel extends React.Component {
 
@@ -24,7 +31,7 @@ class SynthNodePanel extends React.Component {
   }
 
   onAttackChange(value) {
-
+    this.props.setNodeAttack(this.props.node.id, value);
   }
 
   onDecayChange(value) {
@@ -36,7 +43,7 @@ class SynthNodePanel extends React.Component {
   }
 
   onReleaseChange(value) {
-
+    this.props.setNodeRelease(this.props.node.id, value);
   }
 
   render() {
@@ -60,9 +67,9 @@ class SynthNodePanel extends React.Component {
             <div className="synth-node-panel-adsr-label">A</div>
             <Toggle
               vertical
-              min={0}
+              min={0.1}
               step={0.1}
-              max={9}
+              max={1.0}
               marks={config.controlPanel.adsr.marks}
               defaultValue={0}
               onChange={this.onAttackChange}/>
@@ -102,9 +109,9 @@ class SynthNodePanel extends React.Component {
             <div className="synth-node-panel-adsr-label">R</div>
             <Toggle
               vertical
-              min={0}
+              min={0.1}
               step={0.1}
-              max={9}
+              max={1.0}
               marks={config.controlPanel.adsr.marks}
               defaultValue={0}
               onChange={this.onReleaseChange}/>
@@ -141,7 +148,9 @@ const mapDispatchToProps = (dispatch) => {
     setNodeOsc2Frequency: bindActionCreators(setNodeOsc2Frequency, dispatch),
     setNodeOsc1WaveType: bindActionCreators(setNodeOsc1WaveType, dispatch),
     setNodeOsc2WaveType: bindActionCreators(setNodeOsc2WaveType, dispatch),
-    setNodeVolume: bindActionCreators(setNodeVolume, dispatch)
+    setNodeVolume: bindActionCreators(setNodeVolume, dispatch),
+    setNodeAttack: bindActionCreators(setNodeAttack, dispatch),
+    setNodeRelease: bindActionCreators(setNodeRelease, dispatch)
   };
 };
 

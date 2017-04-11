@@ -18,6 +18,10 @@ class Node {
   set osc2WaveType(waveType) {}
   set src(value) {}
   get src() {}
+  set attack(value) {}
+  get attack() {}
+  set release(value) {}
+  get release() {}
 
   stop() {}
 

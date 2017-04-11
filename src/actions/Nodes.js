@@ -110,3 +110,19 @@ export const cloneNode = (id) => {
     id
   };
 };
+
+export const setNodeAttack = (id, value) => {
+  return {
+    type: 'SET_NODE_ATTACK',
+    id,
+    value
+  };
+};
+
+export const setNodeRelease = (id, value) => {
+  return {
+    type: 'SET_NODE_RELEASE',
+    id,
+    value
+  };
+};
