@@ -1,7 +1,7 @@
 export default {
   app: {
     collisionDistance: 22,
-    doubleClickDistance: 15,
+    doubleClickDistance: 20,
     maxFrequency: 1500
   },
   canvas: {
@@ -22,7 +22,7 @@ export default {
     strokeStyle: 'rgba(169, 169, 169, 0.7)'
   },
   synthNode: {
-    radius: 15,
+    radius: 20,
     fillStyle: 'rgba(102, 51, 153, 0.7)', 
     lineDash: [],
     lineWidth: 2,

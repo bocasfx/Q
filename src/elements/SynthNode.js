@@ -24,6 +24,15 @@ class SynthNode extends Node {
 
     this.type = 'synth';
     this.sustain = config.synthNode.sustain;
+
+    this.nodeImg = new Image();
+    this.nodeImg.src = '/icons/nodes/node.png';
+
+    this.activeNodeImg = new Image();
+    this.activeNodeImg.src = '/icons/nodes/node-active.png';
+
+    this.selectedNodeImg = new Image();
+    this.selectedNodeImg.src = '/icons/nodes/node-selected.png';
   }
 
   set osc1Freq(freq) {
@@ -67,29 +76,12 @@ class SynthNode extends Node {
   }
 
   render(canvasContext) {
-    let extraRadius = this.active ? 2 : 0;
 
-    canvasContext.beginPath();
-    canvasContext.arc(this.position[0] + 3, this.position[1] + 3, config.midiNode.radius + extraRadius, 0, 2 * Math.PI, false);
-    canvasContext.fillStyle = config.synthNode.shadow;
-    canvasContext.fill();
-
-    canvasContext.beginPath();
-    canvasContext.arc(this.position[0], this.position[1], config.synthNode.radius + extraRadius, 0, 2 * Math.PI, false);
-    canvasContext.strokeStyle = config.synthNode.strokeStyle;
-    canvasContext.lineWidth = config.synthNode.lineWidth;
-    canvasContext.setLineDash(config.synthNode.lineDash);
-    canvasContext.fillStyle = config.synthNode.fillStyle;
-    canvasContext.fill();
-    canvasContext.stroke();
+    let image = this.active ? this.activeNodeImg : this.nodeImg;
+    canvasContext.drawImage(image, this.position[0] - 20, this.position[1] - 20);
 
     if (this.selected) {
-      canvasContext.beginPath();
-      canvasContext.arc(this.position[0], this.position[1], config.selectedNode.radius, 0, 2 * Math.PI, false);
-      canvasContext.strokeStyle = config.selectedNode.strokeStyle;
-      canvasContext.lineWidth = config.selectedNode.lineWidth;
-      canvasContext.setLineDash(config.selectedNode.lineDash);
-      canvasContext.stroke();
+      canvasContext.drawImage(this.selectedNodeImg, this.position[0] - 20, this.position[1] - 20);
     }
   }
 }
