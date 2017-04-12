@@ -31,6 +31,7 @@ class Stream {
     this.particles = particles;
     this.name = names.generate();
     this.selected = false;
+    this.type = 'stream';
 
     this.calculateEasing = this.calculateEasing.bind(this);
     this.onMouseDown = this.onMouseDown.bind(this);
