@@ -26,13 +26,10 @@ class SynthNode extends Node {
     this.sustain = config.synthNode.sustain;
 
     this.nodeImg = new Image();
-    this.nodeImg.src = '/icons/elements/node.png';
+    this.nodeImg.src = '/icons/elements/synth-node.png';
 
     this.activeNodeImg = new Image();
-    this.activeNodeImg.src = '/icons/elements/node-active.png';
-
-    this.selectedNodeImg = new Image();
-    this.selectedNodeImg.src = '/icons/elements/node-selected.png';
+    this.activeNodeImg.src = '/icons/elements/synth-node-active.png';
   }
 
   set osc1Freq(freq) {
@@ -73,16 +70,6 @@ class SynthNode extends Node {
     }
     this.active = false;
     this.envelopeGenerator.close();
-  }
-
-  render(canvasContext) {
-
-    let image = this.active ? this.activeNodeImg : this.nodeImg;
-    canvasContext.drawImage(image, this.position[0] - 20, this.position[1] - 20);
-
-    if (this.selected) {
-      canvasContext.drawImage(this.selectedNodeImg, this.position[0] - 20, this.position[1] - 20);
-    }
   }
 }
 

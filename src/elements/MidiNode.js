@@ -16,6 +16,12 @@ class MidiNode extends Node {
     this.note = 30;
     this.velocity = 127;
     this.selected = false;
+
+    this.nodeImg = new Image();
+    this.nodeImg.src = '/icons/elements/midi-node.png';
+
+    this.activeNodeImg = new Image();
+    this.activeNodeImg.src = '/icons/elements/midi-node-active.png';
   }
 
   play() {
@@ -28,33 +34,6 @@ class MidiNode extends Node {
       this.active = false;
       this.midiOut.send([0x82, this.note, this.velocity]);
     }, this.sustain);
-  }
-
-  render(canvasContext) {
-    let extraRadius = this.active ? 2 : 0;
-
-    canvasContext.beginPath();
-    canvasContext.arc(this.position[0] + 3, this.position[1] + 3, config.midiNode.radius + extraRadius, 0, 2 * Math.PI, false);
-    canvasContext.fillStyle = config.midiNode.shadow;
-    canvasContext.fill();
-
-    canvasContext.beginPath();
-    canvasContext.arc(this.position[0], this.position[1], config.midiNode.radius + extraRadius, 0, 2 * Math.PI, false);
-    canvasContext.strokeStyle = config.midiNode.strokeStyle;
-    canvasContext.lineWidth = config.midiNode.lineWidth;
-    canvasContext.setLineDash(config.midiNode.lineDash);
-    canvasContext.fillStyle = config.midiNode.fillStyle;
-    canvasContext.fill();
-    canvasContext.stroke();
-
-    if (this.selected) {
-      canvasContext.beginPath();
-      canvasContext.arc(this.position[0], this.position[1], config.selectedNode.radius, 0, 2 * Math.PI, false);
-      canvasContext.strokeStyle = config.selectedNode.strokeStyle;
-      canvasContext.lineWidth = config.selectedNode.lineWidth;
-      canvasContext.setLineDash(config.selectedNode.lineDash);
-      canvasContext.stroke();
-    }
   }
 }
 

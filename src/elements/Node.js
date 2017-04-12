@@ -10,6 +10,9 @@ class Node {
     this.selected = false;
     this.particleQueue = [];
     this.volume = 0.8;
+
+    this.selectedNodeImg = new Image();
+    this.selectedNodeImg.src = '/icons/elements/node-selected.png';
   }
 
   set osc1Freq(frequency) {}
@@ -45,6 +48,16 @@ class Node {
 
     if (!this.particleQueue.length) {
       this.stop();
+    }
+  }
+
+  render(canvasContext) {
+
+    let image = this.active ? this.activeNodeImg : this.nodeImg;
+    canvasContext.drawImage(image, this.position[0] - 20, this.position[1] - 20);
+
+    if (this.selected) {
+      canvasContext.drawImage(this.selectedNodeImg, this.position[0] - 20, this.position[1] - 20);
     }
   }
 }
