@@ -1,9 +1,9 @@
 .selector-panel-container {
-  height: 300px;
-  max-height: 300px;
+  height: 200px;
+  max-height: 200px;
 }
 
 .selector-panel-container .tabs-content {
-  height: 260px;
-  max-height: 260px;
+  height: 160px;
+  max-height: 160px;
 }

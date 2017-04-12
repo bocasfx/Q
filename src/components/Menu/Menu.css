@@ -1,8 +1,10 @@
 .menu-container {
-  width: 100%;
+  width: 55px;
   background-color: rgba(0, 0, 0, 0.3);
-  border-top: 1px solid dimgray;
+  border-right: 1px solid dimgray;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: top;
+  padding-top: 40px;
 }

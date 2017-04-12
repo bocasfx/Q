@@ -17,10 +17,10 @@ const renderDom = (midiContext) => {
       <div>
         <Mixer/>
         <div className="main-container">
+          <Menu midi={midiContext !== null}/>
           <Canvas audioContext={audioContext} midiContext={midiContext}/>
           <ControlPanel/>
         </div>
-        <Menu midi={midiContext !== null}/>
       </div>
     </Provider>,
     document.getElementById('root')

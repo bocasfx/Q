@@ -86,12 +86,6 @@ export default {
     }
   },
   waveToggle: {
-    icons: [
-      '/icons/control-panel/triangle.svg',
-      '/icons/control-panel/square.svg',
-      '/icons/control-panel/saw.svg',
-      '/icons/control-panel/sine.svg'
-    ],
     emptyMarks: {
       0: ' ',
       1: ' ',
@@ -118,6 +112,6 @@ export default {
     }
   },
   menu: {
-    height: 53
+    width: 56
   }
 };

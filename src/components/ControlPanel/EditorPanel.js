@@ -47,7 +47,7 @@ class EditorPanel extends React.Component {
   }
 
   render() {
-    let height = window.innerHeight - 355;
+    let height = window.innerHeight - 201;
     let style = {
       height,
       maxHeight: height

@@ -2,6 +2,7 @@ import config from '../config/config';
 import Particle from './Particle';
 import uuidv1 from 'uuid/v1';
 import names from '../config/names';
+import { getPosition } from '../utils/utils';
 
 class Stream {
   constructor(position) {
@@ -57,10 +58,7 @@ class Stream {
 
   onMouseDown(event) {
     event.preventDefault();
-    let x = event.pageX;
-    let y = event.pageY;
-
-    this.headPosition = [x, y];
+    this.headPosition = getPosition(event);
     this.path = [];
     this.pathIndex = 0;
     this.path.push(this.headPosition);
@@ -74,9 +72,7 @@ class Stream {
 
   onMouseMove(event) {
     event.preventDefault();
-    let x = event.pageX;
-    let y = event.pageY;
-    this.headPosition = [x, y];
+    this.headPosition = getPosition(event);
   }
 
   flow() {

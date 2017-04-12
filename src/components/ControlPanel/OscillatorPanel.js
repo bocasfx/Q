@@ -22,6 +22,13 @@ class OscillatorPanel extends React.Component {
     this.state = {
       checked: true
     };
+
+    this.envelopeIcons = [
+      '/icons/control-panel/envelope/triangle.svg',
+      '/icons/control-panel/envelope/square.svg',
+      '/icons/control-panel/envelope/saw.svg',
+      '/icons/control-panel/envelope/sine.svg'
+    ];
   }
 
   onFreqChange(frequency) {
@@ -64,7 +71,7 @@ class OscillatorPanel extends React.Component {
             min={0}
             step={1}
             max={3}
-            icons={config.waveToggle.icons}
+            icons={this.envelopeIcons}
             marks={config.waveToggle.emptyMarks}
             defaultValue={0}
             onChange={this.onWaveTypeChange}/>

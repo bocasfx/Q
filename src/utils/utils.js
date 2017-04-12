@@ -1,3 +1,4 @@
+import config from '../config/config';
 
 export const calculateDistance = (a, b) => {
   let x0 = a[0];
@@ -6,4 +7,13 @@ export const calculateDistance = (a, b) => {
   let y1 = b[1];
 
   return Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2));
+};
+
+export const getPosition = (event) => {
+  let x = event.pageX;
+  let y = event.pageY;
+
+  x -= config.menu.width;
+
+  return [x, y];
 };

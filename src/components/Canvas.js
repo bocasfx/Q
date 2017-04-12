@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { addSynthNode, addMidiNode, addAudioNode, detectCollisions, setNodePosition, selectNode, deselectNodes, cloneNode } from '../actions/Nodes';
 import { addStream } from '../actions/Streams';
 import { bindActionCreators } from 'redux';
-import { calculateDistance } from '../utils/utils';
+import { calculateDistance, getPosition } from '../utils/utils';
 
 class Canvas extends React.Component {
 
@@ -69,7 +69,8 @@ class Canvas extends React.Component {
       let stream = streams[streams.length - 1];
       stream.onMouseMove(event);
     } else if (!this.props.devices.synthNodes && !this.props.devices.midiNodes && !this.props.devices.audioNodes) {
-      this.props.setNodePosition(this.selectedNodeId, [event.pageX, event.pageY]);
+      let position = getPosition(event);
+      this.props.setNodePosition(this.selectedNodeId, position);
     }
   }
 
@@ -78,10 +79,7 @@ class Canvas extends React.Component {
     this.mouseDown = true;
     this.setCursorStyle();
 
-    let x = event.pageX;
-    let y = event.pageY;
-
-    let position = [x, y];
+    let position = getPosition(event);
 
     if (this.props.devices.streams) {
       this.props.addStream(position, event);
@@ -89,7 +87,7 @@ class Canvas extends React.Component {
       this.addNode(position);
     }
 
-    this.selectNode([x, y], event.metaKey);
+    this.selectNode(position, event.metaKey);
   }
 
   onMouseUp(event) {
@@ -191,8 +189,8 @@ class Canvas extends React.Component {
       <canvas
         draggable="true"
         ref="canvas"
-        width={window.innerWidth - config.controlPanel.width}
-        height={window.innerHeight - config.menu.height}
+        width={window.innerWidth - config.controlPanel.width - config.menu.width}
+        height={window.innerHeight}
         onMouseMove={this.onMouseMove}
         onMouseDown={this.onMouseDown}
         onMouseUp={this.onMouseUp}

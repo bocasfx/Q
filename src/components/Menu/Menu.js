@@ -1,7 +1,6 @@
 import React from 'react';
 import './Menu.css';
 import MenuButton from './MenuButton';
-import config from '../../config/config';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {toggleDevice} from '../../actions/Devices';
@@ -9,9 +8,6 @@ import {toggleDevice} from '../../actions/Devices';
 class Menu extends React.Component {
   constructor(props) {
     super(props);
-    this.style = {
-      height: config.menu.height - 1
-    };
 
     this.onSynthNodeButtonClick = this.onSynthNodeButtonClick.bind(this);
     this.onStreamButtonClick = this.onStreamButtonClick.bind(this);
@@ -42,12 +38,26 @@ class Menu extends React.Component {
 
   render() {
     return (
-      <div className="menu-container" style={this.style}>
-        <MenuButton backgroundImage="/icons/nodes/node.png" onClick={this.onStreamButtonClick} active={this.props.devices.streams}/>
-        <MenuButton backgroundImage="/icons/nodes/node.png" onClick={this.onSynthNodeButtonClick} active={this.props.devices.synthNodes}/>
-        <MenuButton backgroundImage="/icons/nodes/node.png" onClick={this.onMidiNodeButtonClick} active={this.props.devices.midiNodes}/>
-        <MenuButton backgroundImage="/icons/nodes/node.png" onClick={this.onAudioNodeButtonClick} active={this.props.devices.audioNodes}/>
-        <MenuButton backgroundImage="/icons/nodes/node.png" onClick={this.onMixerButtonClick} active={this.props.devices.mixer}/>
+      <div className="menu-container">
+        <MenuButton
+          icon="/icons/menu/particle.png"
+          onClick={this.onStreamButtonClick}
+          active={this.props.devices.streams}
+          separator={true}/>
+        <MenuButton
+          icon="/icons/menu/synth.png"
+          onClick={this.onSynthNodeButtonClick}
+          active={this.props.devices.synthNodes}
+          separator={true}/>
+        <MenuButton
+          icon="/icons/menu/midi.png"
+          onClick={this.onMidiNodeButtonClick}
+          active={this.props.devices.midiNodes}
+          separator={true}/>
+        <MenuButton
+          icon="/icons/nodes/node.png"
+          onClick={this.onAudioNodeButtonClick}
+          active={this.props.devices.audioNodes}/>
       </div>
     );
   }
