@@ -55,7 +55,7 @@ class Menu extends React.Component {
           active={this.props.devices.midiNodes}
           separator={true}/>
         <MenuButton
-          icon="/icons/nodes/node.png"
+          icon="/icons/menu/audio.png"
           onClick={this.onAudioNodeButtonClick}
           active={this.props.devices.audioNodes}/>
       </div>

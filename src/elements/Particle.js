@@ -6,7 +6,7 @@ class Particle {
     this.id = uuidv1();
 
     this.particleImg = new Image();
-    this.particleImg.src = '/icons/nodes/particle.png';
+    this.particleImg.src = '/icons/elements/particle.png';
   }
 
   render(canvasContext) {

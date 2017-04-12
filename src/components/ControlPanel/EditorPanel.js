@@ -8,6 +8,10 @@ class EditorPanel extends React.Component {
   constructor(props) {
     super(props);
     this.renderObject = this.renderObject.bind(this);
+    this.onScroll = this.onScroll.bind(this);
+    this.state = {
+      scrolling: false
+    };
   }
 
   renderObject() {
@@ -46,15 +50,24 @@ class EditorPanel extends React.Component {
     })[0];
   }
 
+  onScroll(event) {
+    this.setState({
+      scrolling: !!event.target.scrollTop
+    });
+  }
+
   render() {
-    let height = window.innerHeight - 201;
+    let height = window.innerHeight - 301;
     let style = {
       height,
       maxHeight: height
     };
 
+    let panelClass = 'editor-panel-container';
+    panelClass += this.state.scrolling ? ' editor-panel-inset' : '';
+
     return (
-      <div className="editor-panel-container" style={style}>
+      <div className={panelClass} style={style} onScroll={this.onScroll}>
         <div className="editor-panel-inner">
           {this.renderObject()}
         </div>

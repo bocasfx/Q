@@ -26,13 +26,13 @@ class SynthNode extends Node {
     this.sustain = config.synthNode.sustain;
 
     this.nodeImg = new Image();
-    this.nodeImg.src = '/icons/nodes/node.png';
+    this.nodeImg.src = '/icons/elements/node.png';
 
     this.activeNodeImg = new Image();
-    this.activeNodeImg.src = '/icons/nodes/node-active.png';
+    this.activeNodeImg.src = '/icons/elements/node-active.png';
 
     this.selectedNodeImg = new Image();
-    this.selectedNodeImg.src = '/icons/nodes/node-selected.png';
+    this.selectedNodeImg.src = '/icons/elements/node-selected.png';
   }
 
   set osc1Freq(freq) {
