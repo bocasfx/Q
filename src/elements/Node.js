@@ -12,7 +12,7 @@ class Node {
     this.volume = 0.8;
 
     this.selectedNodeImg = new Image();
-    this.selectedNodeImg.src = '/icons/elements/node-selected.png';
+    this.selectedNodeImg.src = './icons/elements/node-selected.png';
   }
 
   set osc1Freq(frequency) {}

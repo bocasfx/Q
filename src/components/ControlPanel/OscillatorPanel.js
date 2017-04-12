@@ -24,10 +24,10 @@ class OscillatorPanel extends React.Component {
     };
 
     this.envelopeIcons = [
-      '/icons/control-panel/envelope/triangle.svg',
-      '/icons/control-panel/envelope/square.svg',
-      '/icons/control-panel/envelope/saw.svg',
-      '/icons/control-panel/envelope/sine.svg'
+      './icons/control-panel/envelope/triangle.svg',
+      './icons/control-panel/envelope/square.svg',
+      './icons/control-panel/envelope/saw.svg',
+      './icons/control-panel/envelope/sine.svg'
     ];
   }
 

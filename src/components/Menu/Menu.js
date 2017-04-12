@@ -40,22 +40,22 @@ class Menu extends React.Component {
     return (
       <div className="menu-container">
         <MenuButton
-          icon="/icons/menu/particle.png"
+          icon="./icons/menu/particle.png"
           onClick={this.onStreamButtonClick}
           active={this.props.devices.streams}
           separator={true}/>
         <MenuButton
-          icon="/icons/menu/synth.png"
+          icon="./icons/menu/synth.png"
           onClick={this.onSynthNodeButtonClick}
           active={this.props.devices.synthNodes}
           separator={true}/>
         <MenuButton
-          icon="/icons/menu/midi.png"
+          icon="./icons/menu/midi.png"
           onClick={this.onMidiNodeButtonClick}
           active={this.props.devices.midiNodes}
           separator={true}/>
         <MenuButton
-          icon="/icons/menu/audio.png"
+          icon="./icons/menu/audio.png"
           onClick={this.onAudioNodeButtonClick}
           active={this.props.devices.audioNodes}/>
       </div>

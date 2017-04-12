@@ -26,10 +26,10 @@ class SynthNode extends Node {
     this.sustain = config.synthNode.sustain;
 
     this.nodeImg = new Image();
-    this.nodeImg.src = '/icons/elements/synth-node.png';
+    this.nodeImg.src = './icons/elements/synth-node.png';
 
     this.activeNodeImg = new Image();
-    this.activeNodeImg.src = '/icons/elements/synth-node-active.png';
+    this.activeNodeImg.src = './icons/elements/synth-node-active.png';
   }
 
   set osc1Freq(freq) {

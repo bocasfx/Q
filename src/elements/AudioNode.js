@@ -13,10 +13,10 @@ class AudioNode extends Node {
     this.selected = false;
 
     this.nodeImg = new Image();
-    this.nodeImg.src = '/icons/elements/audio-node.png';
+    this.nodeImg.src = './icons/elements/audio-node.png';
 
     this.activeNodeImg = new Image();
-    this.activeNodeImg.src = '/icons/elements/audio-node-active.png';
+    this.activeNodeImg.src = './icons/elements/audio-node-active.png';
   }
 
   set src(filePath) {

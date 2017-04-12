@@ -18,10 +18,10 @@ class MidiNode extends Node {
     this.selected = false;
 
     this.nodeImg = new Image();
-    this.nodeImg.src = '/icons/elements/midi-node.png';
+    this.nodeImg.src = './icons/elements/midi-node.png';
 
     this.activeNodeImg = new Image();
-    this.activeNodeImg.src = '/icons/elements/midi-node-active.png';
+    this.activeNodeImg.src = './icons/elements/midi-node-active.png';
   }
 
   play() {
@@ -30,10 +30,14 @@ class MidiNode extends Node {
     }
     this.active = true;
     this.midiOut.send([0x92, this.note, this.velocity]);
-    setTimeout(() => {
-      this.active = false;
-      this.midiOut.send([0x82, this.note, this.velocity]);
-    }, this.sustain);
+  }
+
+  stop() {
+    if (!this.active) {
+      return;
+    }
+    this.active = false;
+    this.midiOut.send([0x82, this.note, this.velocity]);
   }
 }
 
