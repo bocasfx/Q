@@ -21,9 +21,8 @@ class Slider extends React.Component {
   }
 
   renderMarks() {
-    let markCount = (this.props.max - this.props.min) / this.props.step;
     let marks = [];
-    for (let i=0 ; i<markCount; i++) {
+    for (let i=0 ; i<this.props.marks; i++) {
       marks.push(<div className="slider-mark" key={i}>-</div>);
     }
     return marks;

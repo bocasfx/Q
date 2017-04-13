@@ -126,3 +126,11 @@ export const setNodeRelease = (id, value) => {
     value
   };
 };
+
+export const setNodeName = (id, name) => {
+  return {
+    type: 'SET_NODE_NAME',
+    id,
+    name
+  };
+};

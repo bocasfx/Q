@@ -162,6 +162,15 @@ const setNodeRelease = (state, id, value) => {
   });
 };
 
+const setNodeName = (state, id, name) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.name = name;
+    }
+    return node;
+  });
+};
+
 export default (state = initialState, action) => {
   switch (action.type) {
 
@@ -215,6 +224,9 @@ export default (state = initialState, action) => {
 
     case 'SET_NODE_RELEASE':
       return setNodeRelease(state, action.id, action.value);
+
+    case 'SET_NODE_NAME':
+      return setNodeName(state, action.id, action.name);
 
     default:
       return state;

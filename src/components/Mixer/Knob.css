@@ -41,7 +41,6 @@
   font-size: 2.5em;
   line-height: 1.9em;
   color: darkorange;
-  opacity: 0.6;
   transform: rotate(300deg);
   cursor: pointer;
 }
