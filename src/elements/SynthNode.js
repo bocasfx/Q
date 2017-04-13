@@ -52,8 +52,16 @@ class SynthNode extends Node {
     this.envelopeGenerator.attack = value;
   }
 
+  get attack() {
+    return this.envelopeGenerator.attack;
+  }
+
   set release(value) {
     this.envelopeGenerator.release = value;
+  }
+
+  get release() {
+    return this.envelopeGenerator.release;
   }
 
   play() {

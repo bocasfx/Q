@@ -3,8 +3,6 @@ import './SynthNodePanel.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import OscillatorPanel from './OscillatorPanel';
-import Toggle from '../UI/Toggle';
-import config from '../../config/config';
 import Knob from '../Mixer/Knob';
 import {
   setNodeOsc1Frequency,
@@ -22,6 +20,7 @@ class SynthNodePanel extends React.Component {
     this.onGainChange = this.onGainChange.bind(this);
     this.onAttackChange = this.onAttackChange.bind(this);
     this.onReleaseChange = this.onReleaseChange.bind(this);
+    this.onNameChange = this.onNameChange.bind(this);
   }
 
   onGainChange(value) {
@@ -36,11 +35,15 @@ class SynthNodePanel extends React.Component {
     this.props.setNodeRelease(this.props.node.id, value);
   }
 
+  onNameChange(value) {
+    console.log(value);
+  }
+
   render() {
     return (
       <div className="synth-node-panel-container">
         <div className="synth-node-panel-name">
-          <input name="node-name" value={this.props.node.name}/>
+          <input name="node-name" value={this.props.node.name} onChange={this.onNameChange}/>
         </div>
 
         <div className="row synth-node-panel-gain">
@@ -51,34 +54,20 @@ class SynthNodePanel extends React.Component {
             max={1}
             onChange={this.onGainChange}/>
           <div className="column">
-            <div className="synth-node-panel-adsr-label">A</div>
-            <Toggle
-              vertical
-              min={0.1}
-              step={0.1}
-              max={1.0}
-              marks={config.controlPanel.adsr.marks}
-              defaultValue={0}
+            <Knob
+              label={'Attack'}
               value={this.props.node.attack}
+              min={0}
+              max={2.0}
               onChange={this.onAttackChange}/>
-              <div className="synth-node-panel-adsr-icon">
-                <img src="./icons/control-panel/adsr/attack.svg" alt="attack"/>
-              </div>
           </div>
           <div className="column">
-            <div className="synth-node-panel-adsr-label">R</div>
-            <Toggle
-              vertical
-              min={0.1}
-              step={0.1}
-              max={1.0}
-              marks={config.controlPanel.adsr.marks}
-              defaultValue={0}
+            <Knob
+              label={'Release'}
               value={this.props.node.release}
+              min={0}
+              max={2.0}
               onChange={this.onReleaseChange}/>
-              <div className="synth-node-panel-adsr-icon">
-                <img src="./icons/control-panel/adsr/release.svg" alt="release"/>
-              </div>
           </div>
         </div>
 
