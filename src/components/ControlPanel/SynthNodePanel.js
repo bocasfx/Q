@@ -21,8 +21,6 @@ class SynthNodePanel extends React.Component {
     super(props);
     this.onGainChange = this.onGainChange.bind(this);
     this.onAttackChange = this.onAttackChange.bind(this);
-    this.onDecayChange = this.onDecayChange.bind(this);
-    this.onSustainChange = this.onSustainChange.bind(this);
     this.onReleaseChange = this.onReleaseChange.bind(this);
   }
 
@@ -34,14 +32,6 @@ class SynthNodePanel extends React.Component {
     this.props.setNodeAttack(this.props.node.id, value);
   }
 
-  onDecayChange(value) {
-
-  }
-
-  onSustainChange(value) {
-
-  }
-
   onReleaseChange(value) {
     this.props.setNodeRelease(this.props.node.id, value);
   }
@@ -50,7 +40,7 @@ class SynthNodePanel extends React.Component {
     return (
       <div className="synth-node-panel-container">
         <div className="synth-node-panel-name">
-          <input name="node-name" defaultValue={this.props.node.name}/>
+          <input name="node-name" value={this.props.node.name}/>
         </div>
 
         <div className="row synth-node-panel-gain">
@@ -60,9 +50,6 @@ class SynthNodePanel extends React.Component {
             min={0}
             max={1}
             onChange={this.onGainChange}/>
-        </div>
-
-        <div className="row">
           <div className="column">
             <div className="synth-node-panel-adsr-label">A</div>
             <Toggle
@@ -72,37 +59,10 @@ class SynthNodePanel extends React.Component {
               max={1.0}
               marks={config.controlPanel.adsr.marks}
               defaultValue={0}
+              value={this.props.node.attack}
               onChange={this.onAttackChange}/>
               <div className="synth-node-panel-adsr-icon">
                 <img src="./icons/control-panel/adsr/attack.svg" alt="attack"/>
-              </div>
-          </div>
-          <div className="column">
-            <div className="synth-node-panel-adsr-label">D</div>
-            <Toggle
-              vertical
-              min={0.1}
-              step={0.1}
-              max={1.0}
-              marks={config.controlPanel.adsr.marks}
-              defaultValue={0}
-              onChange={this.onDecayChange}/>
-              <div className="synth-node-panel-adsr-icon">
-                <img src="./icons/control-panel/adsr/decay.svg" alt="decay"/>
-              </div>
-          </div>
-          <div className="column">
-            <div className="synth-node-panel-adsr-label">S</div>
-            <Toggle
-              vertical
-              min={0.1}
-              step={0.1}
-              max={1.0}
-              marks={config.controlPanel.adsr.marks}
-              defaultValue={0}
-              onChange={this.onSustainChange}/>
-              <div className="synth-node-panel-adsr-icon">
-                <img src="./icons/control-panel/adsr/sustain.svg" alt="sustain"/>
               </div>
           </div>
           <div className="column">
@@ -114,6 +74,7 @@ class SynthNodePanel extends React.Component {
               max={1.0}
               marks={config.controlPanel.adsr.marks}
               defaultValue={0}
+              value={this.props.node.release}
               onChange={this.onReleaseChange}/>
               <div className="synth-node-panel-adsr-icon">
                 <img src="./icons/control-panel/adsr/release.svg" alt="release"/>

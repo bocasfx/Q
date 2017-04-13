@@ -32,19 +32,27 @@ const detectCollisions = (state, streams) => {
   if (!streams.length || !state.length) {
     return state;
   }
-  return state.map((node) => {
+  let stateMutated = false;
+  let newState = state.map((node) => {
     streams.forEach((stream) => {
       stream.particles.forEach((particle) => {
         let distance = calculateDistance(node.position, particle.position);
         if (distance <= config.app.collisionDistance) {
-          node.enqueueParticle(particle.id);
+          if (!node.isParticleQueued(particle.id)) {
+            node.enqueueParticle(particle.id);
+            stateMutated = true;
+          }
         } else {
-          node.dequeueParticle(particle.id);
+          if (node.isParticleQueued(particle.id)) {
+            node.dequeueParticle(particle.id);
+            stateMutated = true;
+          }
         }
       });
     });
     return node;
   });
+  return stateMutated ? newState : state;
 };
 
 const setNodePosition = (state, id, position) => {

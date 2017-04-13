@@ -18,10 +18,15 @@
   background-color: rgba(0, 0, 0, 0.2);
 }
 
+.list-item-selected {
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid dimgray;
+}
+
 .list-item-name {
   margin-left: 10px;
 }
 
-.list-item-selected {
-  color: darkorange;
+.list-item-icon {
+  margin-left: 10px;
 }

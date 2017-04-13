@@ -28,17 +28,18 @@ class Node {
 
   stop() {}
 
-  enqueueParticle(id) {
+  isParticleQueued(id) {
     let particleIdx = _.findIndex(this.particleQueue, (particleId) => {
       return particleId === id;
     });
+    return particleIdx >= 0;
+  }
 
-    if (particleIdx < 0) {
-      if (!this.particleQueue.length) {
-        this.play();
-      }
-      this.particleQueue.push(id);
+  enqueueParticle(id) {
+    if (!this.particleQueue.length) {
+      this.play();
     }
+    this.particleQueue.push(id);
   }
 
   dequeueParticle(id) {

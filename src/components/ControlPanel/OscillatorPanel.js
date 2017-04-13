@@ -4,11 +4,12 @@ import Knob from '../Mixer/Knob';
 import config from '../../config/config';
 import noteConfig from '../../config/frequencies';
 import Toggle from '../UI/Toggle';
+import _ from 'lodash';
 
 const waveTypes = {
   0: 'sine',
-  1: 'square',
-  2: 'sawtooth',
+  1: 'sawtooth',
+  2: 'square',
   3: 'triangle'
 };
 
@@ -54,6 +55,7 @@ class OscillatorPanel extends React.Component {
   }
 
   onWaveTypeChange(value) {
+    console.log('test');
     this.props.onWaveTypeChange(this.props.nodeId, waveTypes[value]);
   }
 
@@ -61,6 +63,10 @@ class OscillatorPanel extends React.Component {
 
     let forNote = this.props.name + '-note';
     let forOctave = this.props.name + '-octave';
+    let waveValue = _.findKey(waveTypes, (type) => {
+      return this.props.oscillator.waveType === type;
+    });
+    console.log(waveValue);
 
     return (
       <div className="oscillator-panel-container">
@@ -74,6 +80,7 @@ class OscillatorPanel extends React.Component {
             icons={this.envelopeIcons}
             marks={config.waveToggle.emptyMarks}
             defaultValue={0}
+            value={parseInt(waveValue, 10)}
             onChange={this.onWaveTypeChange}/>
         </div>
 

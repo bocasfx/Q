@@ -30,7 +30,8 @@ class Toggle extends React.Component {
             step={this.props.step}
             max={this.props.max}
             marks={this.props.marks}
-            defaultValue={this.props.defaultValue}
+            defaultValue={this.props.value}
+            value={this.props.value}
             onChange={this.props.onChange}/>
         </div>
       </div>

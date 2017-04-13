@@ -24,6 +24,11 @@ class SelectorPanel extends React.Component {
     this.props.deleteNode(id);
   }
 
+  onCloneNode(id, event) {
+    event.preventDefault();
+    console.log('TODO');
+  }
+
   onClickNode(node, event) {
     event.preventDefault();
     if (!node.selected) {
@@ -62,6 +67,7 @@ class SelectorPanel extends React.Component {
         item={node}
         idx={idx}
         onDelete={this.onDeleteNode.bind(this, node.id)}
+        onClone={this.onCloneNode.bind(this, node.id)}
         onClick={this.onClickNode.bind(this, node)}/>;
     });
   }

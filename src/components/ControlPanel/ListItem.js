@@ -23,14 +23,23 @@ class ListItem extends React.Component {
       color
     };
 
+    let itemClass = 'list-item-container';
+    itemClass += this.props.item.selected ? ' list-item-selected' : '';
 
     return (
-      <div className="list-item-container" onClick={this.props.onClick}>
+      <div className={itemClass} onClick={this.props.onClick}>
         <div>
           <span>{this.props.idx + 1}</span>
           <span className="list-item-name" style={style}>{this.props.item.name}</span>
         </div>
-        <div className="list-item-close" onClick={this.props.onDelete}>&times;</div>
+        <div>
+          <span className="list-item-icon" onClick={this.props.onClone}>
+            <i className="fa fa-copy"></i>
+          </span>
+          <span className="list-item-icon" onClick={this.props.onDelete}>
+            <i className="fa fa-trash"></i>
+          </span>
+        </div>
       </div>
     );
   }

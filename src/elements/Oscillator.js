@@ -23,6 +23,10 @@ class Oscillator {
     this.oscillator.type = waveType;
   }
 
+  get waveType() {
+    return this.oscillator.type;
+  }
+
   connect(node) {
     if (node.hasOwnProperty('input')) {
       this.output.connect(node.input);
