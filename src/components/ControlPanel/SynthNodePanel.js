@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import OscillatorPanel from './OscillatorPanel';
 import Knob from '../Mixer/Knob';
+import Slider from '../UI/Slider';
 import {
   setNodeOsc1Frequency,
   setNodeOsc2Frequency,
@@ -54,19 +55,19 @@ class SynthNodePanel extends React.Component {
             max={1}
             onChange={this.onGainChange}/>
           <div className="column">
-            <Knob
-              label={'Attack'}
-              value={this.props.node.attack}
+            <Slider
               min={0}
-              max={2.0}
+              max={2}
+              step={0.5}
+              value={this.props.node.attack}
               onChange={this.onAttackChange}/>
           </div>
           <div className="column">
-            <Knob
-              label={'Release'}
-              value={this.props.node.release}
+            <Slider
               min={0}
-              max={2.0}
+              max={2}
+              step={0.5}
+              value={this.props.node.release}
               onChange={this.onReleaseChange}/>
           </div>
         </div>

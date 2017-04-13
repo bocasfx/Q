@@ -8,21 +8,18 @@ class Knob extends React.Component {
       dragging: false,
       angle: 300,
       y: null,
-      value: 0,
-      mounted: false
+      value: 0
     };
 
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
-    this.mounted = false;
   }
 
   componentDidMount() {
     let value = this.props.value;
     let angle = (value * 300.0 / this.props.max) + 300.0;
     this.setState({
-      mounted: true,
       value: parseFloat(value.toFixed(1)),
       angle
     });

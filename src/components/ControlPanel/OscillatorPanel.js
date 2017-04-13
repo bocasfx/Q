@@ -55,7 +55,6 @@ class OscillatorPanel extends React.Component {
   }
 
   onWaveTypeChange(value) {
-    console.log('test');
     this.props.onWaveTypeChange(this.props.nodeId, waveTypes[value]);
   }
 
@@ -66,7 +65,6 @@ class OscillatorPanel extends React.Component {
     let waveValue = _.findKey(waveTypes, (type) => {
       return this.props.oscillator.waveType === type;
     });
-    console.log(waveValue);
 
     return (
       <div className="oscillator-panel-container">

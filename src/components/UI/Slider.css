@@ -1,0 +1,38 @@
+.slider-container {
+  position: relative;
+  cursor: pointer;
+}
+
+.slider-track {
+  position: relative;
+  width: 14px;
+  height: 85px;
+  border: 1px solid dimgray;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.slider-handle {
+  left: 2px;
+  top: 3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  position: relative;
+  background-color: darkorange;
+}
+
+.slider-marks {
+  position: absolute;
+  top: 0;
+  left: 25px;
+  height: 85px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.slider-mark {
+  max-height: 1px;
+  line-height: 0px;
+}
