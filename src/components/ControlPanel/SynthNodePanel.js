@@ -21,7 +21,9 @@ class SynthNodePanel extends React.Component {
     super(props);
 
     this.state = {
-      nodeName: props.node.name
+      nodeName: props.node.name,
+      attack: props.node.attack,
+      release: props.node.release
     };
 
     this.onGainChange = this.onGainChange.bind(this);
@@ -32,7 +34,9 @@ class SynthNodePanel extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      nodeName: nextProps.node.name
+      nodeName: nextProps.node.name,
+      attack: nextProps.node.attack,
+      release: nextProps.node.release
     });
   }
 
@@ -42,10 +46,16 @@ class SynthNodePanel extends React.Component {
 
   onAttackChange(value) {
     this.props.setNodeAttack(this.props.node.id, value);
+    this.setState({
+      attack: value
+    });
   }
 
   onReleaseChange(value) {
     this.props.setNodeRelease(this.props.node.id, value);
+    this.setState({
+      release: value
+    });
   }
 
   onNameChange(event) {
@@ -60,7 +70,7 @@ class SynthNodePanel extends React.Component {
     return (
       <div className="synth-node-panel-container">
         <div className="synth-node-panel-name">
-          <input name="node-name" value={this.state.nodeName} onChange={this.onNameChange}/>
+          <input type="text" name="node-name" value={this.state.nodeName} onChange={this.onNameChange}/>
         </div>
 
         <div className="row synth-node-panel-gain">
@@ -74,9 +84,9 @@ class SynthNodePanel extends React.Component {
             <Slider
               min={0}
               max={2}
-              step={0.5}
+              step={0.1}
               marks={5}
-              value={this.props.node.attack}
+              value={this.state.attack}
               onChange={this.onAttackChange}/>
             <div className="synth-node-panel-adsr-icon">
               <img src="./icons/control-panel/adsr/attack.svg" alt="attack"/>
@@ -86,9 +96,9 @@ class SynthNodePanel extends React.Component {
             <Slider
               min={0}
               max={2}
-              step={0.5}
+              step={0.1}
               marks={5}
-              value={this.props.node.release}
+              value={this.state.release}
               onChange={this.onReleaseChange}/>
             <div className="synth-node-panel-adsr-icon">
               <img src="./icons/control-panel/adsr/release.svg" alt="release"/>

@@ -49,6 +49,7 @@ class SynthNode extends Node {
   }
 
   set attack(value) {
+    console.log(value);
     this.envelopeGenerator.attack = value;
   }
 

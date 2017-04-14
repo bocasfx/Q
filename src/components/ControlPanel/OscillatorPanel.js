@@ -1,9 +1,8 @@
 import React from 'react';
 import './OscillatorPanel.css';
 import Knob from '../Mixer/Knob';
-import config from '../../config/config';
+import Slider from '../UI/Slider';
 import noteConfig from '../../config/frequencies';
-import Toggle from '../UI/Toggle';
 import _ from 'lodash';
 
 const waveTypes = {
@@ -20,8 +19,14 @@ class OscillatorPanel extends React.Component {
     this.onRadioChange = this.onRadioChange.bind(this);
     this.onWaveTypeChange = this.onWaveTypeChange.bind(this);
 
+    let waveType = _.findKey(waveTypes, (type) => {
+      return props.oscillator.waveType === type;
+    });
+    waveType = parseInt(waveType, 10);
+
     this.state = {
-      checked: true
+      checked: true,
+      waveType
     };
 
     this.envelopeIcons = [
@@ -30,6 +35,16 @@ class OscillatorPanel extends React.Component {
       './icons/control-panel/envelope/saw.svg',
       './icons/control-panel/envelope/sine.svg'
     ];
+  }
+
+  componentWillReceiveProps(nextProps) {
+    let waveType = _.findKey(waveTypes, (type) => {
+      return nextProps.oscillator.waveType === type;
+    });
+    waveType = parseInt(waveType, 10);
+    this.setState({
+      waveType
+    });
   }
 
   onFreqChange(frequency) {
@@ -56,30 +71,28 @@ class OscillatorPanel extends React.Component {
 
   onWaveTypeChange(value) {
     this.props.onWaveTypeChange(this.props.nodeId, waveTypes[value]);
+    this.setState({
+      waveType: value
+    });
   }
 
   render() {
 
     let forNote = this.props.name + '-note';
     let forOctave = this.props.name + '-octave';
-    let waveValue = _.findKey(waveTypes, (type) => {
-      return this.props.oscillator.waveType === type;
-    });
 
     return (
       <div className="oscillator-panel-container">
         <div className="oscillator-panel-label">{this.props.label}</div>
         <div className="toggle">
-          <Toggle
-            vertical
+          <Slider
             min={0}
-            step={1}
             max={3}
-            icons={this.envelopeIcons}
-            marks={config.waveToggle.emptyMarks}
-            defaultValue={0}
-            value={parseInt(waveValue, 10)}
-            onChange={this.onWaveTypeChange}/>
+            step={1}
+            marks={0}
+            value={this.state.waveType}
+            onChange={this.onWaveTypeChange}
+            icons={this.envelopeIcons}/>
         </div>
 
         <div className="oscillator-panel-freq">

@@ -4,20 +4,9 @@ import './Slider.css';
 class Slider extends React.Component {
   constructor(props) {
     super(props);
-
-    this.travel = 71;
-
-    this.state = {
-      dragging: false,
-      y: null,
-      position: this.travel,
-      value: 0
-    };
-
     this.renderMarks = this.renderMarks.bind(this);
-    this.onMouseDown = this.onMouseDown.bind(this);
-    this.onMouseMove = this.onMouseMove.bind(this);
-    this.onMouseUp = this.onMouseUp.bind(this);
+    this.renderIcons = this.renderIcons.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   renderMarks() {
@@ -28,57 +17,33 @@ class Slider extends React.Component {
     return marks;
   }
 
-  onMouseDown(event) {
-    if (this.props.disabled) {
-      return;
+  renderIcons() {
+    if (this.props.icons) {
+      return this.props.icons.map((icon, idx) => {
+        return <img src={icon} alt={icon} key={idx}/>;
+      });
     }
-    event.preventDefault();
-    this.setState({
-      dragging: true,
-      y: event.pageY
-    });
-    window.onmousemove = this.onMouseMove.bind(this);
-    window.onmouseup = this.onMouseUp.bind(this);
   }
 
-  onMouseMove(event) {
-    event.preventDefault();
-    if (!this.state.dragging) {
-      return;
-    }
-
-    let position = this.state.position - (this.state.y - event.pageY);
-    position = position >= this.travel ? this.travel : position;
-    position = position <= 3 ? 3 : position;
-
-    let value = this.props.max - (this.props.max - this.props.min) / (this.travel - 3) * (position - 3) + this.props.min;
-
-    this.setState({
-      y: event.pageY,
-      value,
-      position
-    });
-
-    this.props.onChange(value);
-  }
-
-  onMouseUp(event) {
-    event.preventDefault();
-    this.setState({ dragging: false });
-    window.onmousemove = null;
-    window.onmouseup = null;
+  onChange(event) {
+    let value = event.target.value;
+    this.props.onChange(parseFloat(value));
   }
 
   render() {
-    let handleStyle = {
-      top: this.state.position + 'px'
-    };
-
     return (
       <div className="slider-container">
-        <div className="slider-track">
-          <div className="slider-handle" style={handleStyle} onMouseDown={this.onMouseDown} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp}></div>
+        <div className="slider-icon-container">
+          {this.renderIcons()}
         </div>
+        <input
+          className="slider"
+          type="range"
+          min={this.props.min}
+          max={this.props.max}
+          step={this.props.step}
+          value={this.props.value}
+          onChange={this.onChange}/>
         <div className="slider-marks">
           {this.renderMarks()}
         </div>
