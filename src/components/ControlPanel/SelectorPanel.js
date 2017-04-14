@@ -43,7 +43,7 @@ class SelectorPanel extends React.Component {
 
   renderStreams() {
     if (!this.props.streams.length) {
-      return <div className="panel-empty">No Streams</div>;
+      return null;
     }
 
     return this.props.streams.map((stream, idx) => {
@@ -58,7 +58,7 @@ class SelectorPanel extends React.Component {
 
   renderNodes() {
     if (!this.props.nodes.length) {
-      return <div className="panel-empty">No Nodes</div>;
+      return null;
     }
 
     return this.props.nodes.map((node, idx) => {

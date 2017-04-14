@@ -20,7 +20,7 @@ class ListItem extends React.Component {
     }
 
     let style = {
-      color
+      backgroundColor: color
     };
 
     let itemClass = 'list-item-container';
@@ -29,8 +29,8 @@ class ListItem extends React.Component {
     return (
       <div className={itemClass} onClick={this.props.onClick}>
         <div>
-          <span>{this.props.idx + 1}</span>
-          <span className="list-item-name" style={style}>{this.props.item.name}</span>
+          <span className="list-item-bullet" style={style}></span>
+          <span className="list-item-name">{this.props.item.name}</span>
         </div>
         <div>
           <span className="list-item-icon" onClick={this.props.onClone}>

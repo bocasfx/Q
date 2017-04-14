@@ -4,6 +4,7 @@
   justify-content: space-between;
   box-sizing: border-box;
   cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0);
 }
 
 .list-item-container:first-child {
@@ -15,11 +16,11 @@
 }
 
 .list-item-container:hover {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 .list-item-selected {
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.1);
   border: 1px solid dimgray;
 }
 
@@ -28,5 +29,18 @@
 }
 
 .list-item-icon {
+  opacity: 0;
   margin-left: 10px;
+  transition: 0.1s ease-in-out;
+}
+
+.list-item-container:hover .list-item-icon {
+  opacity: 1;
+}
+
+.list-item-bullet {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
 }
