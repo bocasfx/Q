@@ -7,9 +7,7 @@ import EnvelopeGenerator from './EnvelopeGenerator';
 class SynthNode extends Node {
 
   constructor(position, audioContext) {
-    super();
-    this.position = position;
-    this.active = false;
+    super(position);
 
     this.oscillator1 = new Oscillator(audioContext);
     this.oscillator2 = new Oscillator(audioContext);
@@ -23,7 +21,6 @@ class SynthNode extends Node {
     this.amplifier.connect(audioContext.destination);
 
     this.type = 'synth';
-    this.sustain = config.synthNode.sustain;
 
     this.nodeImg = new Image();
     this.nodeImg.src = './icons/elements/synth-node.png';
@@ -49,7 +46,6 @@ class SynthNode extends Node {
   }
 
   set attack(value) {
-    console.log(value);
     this.envelopeGenerator.attack = value;
   }
 

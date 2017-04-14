@@ -4,12 +4,15 @@ import _ from 'lodash';
 
 class Node {
 
-  constructor() {
+  constructor(position) {
+    this.position = position;
     this.id = uuidv1();
     this.name = names.generate();
     this.selected = false;
+    this.active = false;
     this.particleQueue = [];
     this.volume = 0.8;
+    this.disabled = false;
 
     this.selectedNodeImg = new Image();
     this.selectedNodeImg.src = './icons/elements/node-selected.png';
@@ -36,6 +39,10 @@ class Node {
   }
 
   enqueueParticle(id) {
+    if (this.disabled) {
+      return;
+    }
+
     if (!this.particleQueue.length) {
       this.play();
     }

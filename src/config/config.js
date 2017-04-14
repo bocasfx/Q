@@ -14,18 +14,14 @@ export default {
     color: 'darkorange',
     envelope: {
       attack: 0.01,
-      decay: 0.1,
-      sustain: 1.0,
       release: 0.01
     }
   },
   midiNode: {
-    color: 'limegreen',
-    sustain: 100
+    color: 'limegreen'
   },
   audioNode: {
-    color: 'deepskyblue',
-    sustain: 100
+    color: 'deepskyblue'
   },
   stream: {
     color: 'deeppink',

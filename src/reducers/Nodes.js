@@ -171,6 +171,15 @@ const setNodeName = (state, id, name) => {
   });
 };
 
+const setNodeDisabledStatus = (state, id, status) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.disabled = status;
+    }
+    return node;
+  });
+};
+
 export default (state = initialState, action) => {
   switch (action.type) {
 
@@ -227,6 +236,9 @@ export default (state = initialState, action) => {
 
     case 'SET_NODE_NAME':
       return setNodeName(state, action.id, action.name);
+
+    case 'SET_NODE_DISABLED_STATUS':
+      return setNodeDisabledStatus(state, action.id, action.status);
 
     default:
       return state;

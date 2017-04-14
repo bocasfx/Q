@@ -13,7 +13,8 @@ import {
   setNodeVolume,
   setNodeAttack,
   setNodeRelease,
-  setNodeName } from '../../actions/Nodes';
+  setNodeName,
+  setNodeDisabledStatus } from '../../actions/Nodes';
 
 class SynthNodePanel extends React.Component {
 
@@ -23,20 +24,23 @@ class SynthNodePanel extends React.Component {
     this.state = {
       nodeName: props.node.name,
       attack: props.node.attack,
-      release: props.node.release
+      release: props.node.release,
+      disabled: props.node.disabled
     };
 
     this.onGainChange = this.onGainChange.bind(this);
     this.onAttackChange = this.onAttackChange.bind(this);
     this.onReleaseChange = this.onReleaseChange.bind(this);
     this.onNameChange = this.onNameChange.bind(this);
+    this.onNodeToggle = this.onNodeToggle.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       nodeName: nextProps.node.name,
       attack: nextProps.node.attack,
-      release: nextProps.node.release
+      release: nextProps.node.release,
+      disabled: nextProps.node.disabled
     });
   }
 
@@ -66,11 +70,30 @@ class SynthNodePanel extends React.Component {
     });
   }
 
+  onNodeToggle() {
+    this.props.setNodeDisabledStatus(this.props.node.id, !this.state.disabled);
+    this.setState({
+      disabled: !this.state.disabled
+    });
+  }
+
   render() {
+    let toggleClass = 'synth-node-panel-on';
+    toggleClass += this.state.disabled ? ' synth-node-panel-off' : '';
+
     return (
       <div className="synth-node-panel-container">
-        <div className="synth-node-panel-name">
-          <input type="text" name="node-name" value={this.state.nodeName} onChange={this.onNameChange}/>
+        <div className="row-between">
+          <input
+            className="synth-node-panel-name"
+            type="text"
+            name="node-name"
+            value={this.state.nodeName}
+            onChange={this.onNameChange}
+            disabled={this.state.disabled}/>
+          <div className={toggleClass} onClick={this.onNodeToggle}>
+            <i className="fa fa-power-off"></i>
+          </div>
         </div>
 
         <div className="row synth-node-panel-gain">
@@ -79,7 +102,8 @@ class SynthNodePanel extends React.Component {
             value={this.props.node.volume}
             min={0}
             max={1}
-            onChange={this.onGainChange}/>
+            onChange={this.onGainChange}
+            disabled={this.state.disabled}/>
           <div className="column">
             <Slider
               min={0}
@@ -87,7 +111,8 @@ class SynthNodePanel extends React.Component {
               step={0.1}
               marks={5}
               value={this.state.attack}
-              onChange={this.onAttackChange}/>
+              onChange={this.onAttackChange}
+              disabled={this.state.disabled}/>
             <div className="synth-node-panel-adsr-icon">
               <img src="./icons/control-panel/adsr/attack.svg" alt="attack"/>
             </div>
@@ -99,7 +124,8 @@ class SynthNodePanel extends React.Component {
               step={0.1}
               marks={5}
               value={this.state.release}
-              onChange={this.onReleaseChange}/>
+              onChange={this.onReleaseChange}
+              disabled={this.state.disabled}/>
             <div className="synth-node-panel-adsr-icon">
               <img src="./icons/control-panel/adsr/release.svg" alt="release"/>
             </div>
@@ -113,14 +139,16 @@ class SynthNodePanel extends React.Component {
             oscillator={this.props.node.oscillator1}
             onFreqChange={this.props.setNodeOsc1Frequency}
             onWaveTypeChange={this.props.setNodeOsc1WaveType}
-            label="Osc. 1"/>
+            label="Osc. 1"
+            disabled={this.state.disabled}/>
           <OscillatorPanel
             name="osc2"
             nodeId={this.props.node.id}
             oscillator={this.props.node.oscillator2}
             onFreqChange={this.props.setNodeOsc2Frequency}
             onWaveTypeChange={this.props.setNodeOsc2WaveType}
-            label="Osc. 2"/>
+            label="Osc. 2"
+            disabled={this.state.disabled}/>
         </div>
       </div>
     );
@@ -136,7 +164,8 @@ const mapDispatchToProps = (dispatch) => {
     setNodeVolume: bindActionCreators(setNodeVolume, dispatch),
     setNodeAttack: bindActionCreators(setNodeAttack, dispatch),
     setNodeRelease: bindActionCreators(setNodeRelease, dispatch),
-    setNodeName: bindActionCreators(setNodeName, dispatch)
+    setNodeName: bindActionCreators(setNodeName, dispatch),
+    setNodeDisabledStatus: bindActionCreators(setNodeDisabledStatus, dispatch)
   };
 };
 

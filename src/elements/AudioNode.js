@@ -1,16 +1,11 @@
-import config from '../config/config';
 import Node from './Node';
 
 class AudioNode extends Node {
 
   constructor(position) {
-    super();
-    this.position = position;
-    this.sustain = config.audioNode.sustain;
-    this.active = false;
+    super(position);
     this.type = 'audio';
     this.onFinishedPlaying = this.onFinishedPlaying.bind(this);
-    this.selected = false;
 
     this.nodeImg = new Image();
     this.nodeImg.src = './icons/elements/audio-node.png';

@@ -43,7 +43,8 @@ class Slider extends React.Component {
           max={this.props.max}
           step={this.props.step}
           value={this.props.value}
-          onChange={this.onChange}/>
+          onChange={this.onChange}
+          disabled={this.props.disabled}/>
         <div className="slider-marks">
           {this.renderMarks()}
         </div>

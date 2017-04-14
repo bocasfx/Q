@@ -26,7 +26,8 @@ class OscillatorPanel extends React.Component {
 
     this.state = {
       checked: true,
-      waveType
+      waveType,
+      disabled: props.disabled
     };
 
     this.envelopeIcons = [
@@ -43,7 +44,8 @@ class OscillatorPanel extends React.Component {
     });
     waveType = parseInt(waveType, 10);
     this.setState({
-      waveType
+      waveType,
+      disabled: nextProps.disabled
     });
   }
 
@@ -82,7 +84,7 @@ class OscillatorPanel extends React.Component {
     let forOctave = this.props.name + '-octave';
 
     return (
-      <div className="oscillator-panel-container">
+      <div className="oscillator-panel-container" disabled={this.state.disabled}>
         <div className="oscillator-panel-label">{this.props.label}</div>
         <div className="toggle">
           <Slider
@@ -92,7 +94,8 @@ class OscillatorPanel extends React.Component {
             marks={0}
             value={this.state.waveType}
             onChange={this.onWaveTypeChange}
-            icons={this.envelopeIcons}/>
+            icons={this.envelopeIcons}
+            disabled={this.state.disabled}/>
         </div>
 
         <div className="oscillator-panel-freq">
@@ -103,22 +106,28 @@ class OscillatorPanel extends React.Component {
             min={20}
             max={2000}
             onChange={this.onFreqChange}
-            disabled={!this.state.checked}/>
+            disabled={!this.state.checked || this.state.disabled}/>
         </div>
 
         <div className="oscillator-panel-freq">
-          <input name={this.props.name} type="radio" value="discrete" onChange={this.onRadioChange} checked={!this.state.checked}/>
+          <input
+            name={this.props.name}
+            type="radio"
+            value="discrete"
+            onChange={this.onRadioChange}
+            checked={!this.state.checked}
+            disabled={this.state.disabled}/>
           <div className="oscillator-panel-notes">
             <div>
-              <label htmlFor={forNote} disabled={this.state.checked}>Note</label>
-              <select name={forNote} onChange={this.setNodeNote} disabled={this.state.checked}>
+              <label htmlFor={forNote} disabled={this.state.checked || this.state.disabled}>Note</label>
+              <select name={forNote} onChange={this.setNodeNote} disabled={this.state.checked || this.state.disabled}>
                 {this.renderNoteSelect()}
               </select>
             </div>
 
             <div>
-              <label htmlFor={forOctave} disabled={this.state.checked}>Octave</label>
-              <select name={forOctave} onChange={this.setNodeOctave} disabled={this.state.checked}>
+              <label htmlFor={forOctave} disabled={this.state.checked || this.state.disabled}>Octave</label>
+              <select name={forOctave} onChange={this.setNodeOctave} disabled={this.state.checked || this.state.disabled}>
                 {this.renderOctaveSelect()}
               </select>
             </div>

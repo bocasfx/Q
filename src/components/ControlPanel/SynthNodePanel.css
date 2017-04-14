@@ -5,10 +5,7 @@
 }
 
 .synth-node-panel-name {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  margin-bottom: 20px;
+  width: 210px;
 }
 
 .synth-node-panel-adsr-icon {
@@ -23,4 +20,18 @@
 
 .synth-node-panel-gain {
   margin-bottom: 20px;
+}
+
+.synth-node-panel-on {
+  padding: 4px 6px;
+  border: 1px solid dimgray;
+  color: darkorange;
+  text-shadow: 0 0 10px darkorange;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.synth-node-panel-off {
+  color: dimgray;
+  text-shadow: none;
 }

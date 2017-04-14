@@ -20,6 +20,7 @@
 .slider {
   position: absolute;
   margin-left: -5px;
+  transition: 0.3s ease-in-out;
 }
 
 .slider-mark {
@@ -52,6 +53,10 @@ input[type=range].slider::-webkit-slider-thumb {
   cursor: pointer;
   -webkit-appearance: none;
   box-shadow: -2px 2px 2px rgba(0, 0, 0, 0.4);
+}
+
+.slider[disabled] {
+  opacity: 0.5;
 }
 
 .slider-icon-container {

@@ -134,3 +134,13 @@ export const setNodeName = (id, name) => {
     name
   };
 };
+
+export const setNodeDisabledStatus = (id, status) => {
+  return {
+    type: 'SET_NODE_DISABLED_STATUS',
+    id,
+    status
+  };
+};
+
+
