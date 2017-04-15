@@ -1,6 +1,6 @@
 import React from 'react';
 import './OscillatorPanel.css';
-import Knob from '../Mixer/Knob';
+import Knob from '../UI/Knob';
 import Slider from '../UI/Slider';
 import noteConfig from '../../config/frequencies';
 import _ from 'lodash';
@@ -86,17 +86,15 @@ class OscillatorPanel extends React.Component {
     return (
       <div className="oscillator-panel-container" disabled={this.state.disabled}>
         <div className="oscillator-panel-label">{this.props.label}</div>
-        <div className="toggle">
-          <Slider
-            min={0}
-            max={3}
-            step={1}
-            marks={0}
-            value={this.state.waveType}
-            onChange={this.onWaveTypeChange}
-            icons={this.envelopeIcons}
-            disabled={this.state.disabled}/>
-        </div>
+        <Slider
+          min={0}
+          max={3}
+          step={1}
+          marks={0}
+          value={this.state.waveType}
+          onChange={this.onWaveTypeChange}
+          icons={this.envelopeIcons}
+          disabled={this.state.disabled}/>  
 
         <div className="oscillator-panel-freq">
           <input name={this.props.name} type="radio" value="continue" onChange={this.onRadioChange} checked={this.state.checked}/>

@@ -3,6 +3,7 @@ import './EditorPanel.css';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import NodePanel from './NodePanel';
+import StreamPanel from './StreamPanel';
 
 class EditorPanel extends React.Component {
   constructor(props) {
@@ -24,9 +25,7 @@ class EditorPanel extends React.Component {
       return null;
     }
     return (
-      <div>
-        <div>{stream.name}</div>
-      </div>
+      <StreamPanel stream={stream}/>
     );
   }
 

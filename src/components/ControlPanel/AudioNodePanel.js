@@ -1,5 +1,5 @@
 import React from 'react';
-import FileButton from './FileButton';
+import FileButton from '../UI/FileButton';
 
 class AudioNodePanel extends React.Component {
   render() {

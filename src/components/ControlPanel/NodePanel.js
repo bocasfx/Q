@@ -1,6 +1,7 @@
 import React from 'react';
 import SynthNodePanel from './SynthNodePanel';
 import AudioNodePanel from './AudioNodePanel';
+import NodePanelHeader from './NodePanelHeader';
 
 class NodePanel extends React.Component {
   
@@ -21,6 +22,7 @@ class NodePanel extends React.Component {
   render() {
     return (
       <div>
+        <NodePanelHeader node={this.props.node}/>
         {this.renderNodePanel()}
       </div>
     );

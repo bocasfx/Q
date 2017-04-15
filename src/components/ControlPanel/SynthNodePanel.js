@@ -3,7 +3,7 @@ import './SynthNodePanel.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import OscillatorPanel from './OscillatorPanel';
-import Knob from '../Mixer/Knob';
+import Knob from '../UI/Knob';
 import Slider from '../UI/Slider';
 import {
   setNodeOsc1Frequency,
@@ -12,9 +12,7 @@ import {
   setNodeOsc2WaveType,
   setNodeVolume,
   setNodeAttack,
-  setNodeRelease,
-  setNodeName,
-  setNodeDisabledStatus } from '../../actions/Nodes';
+  setNodeRelease } from '../../actions/Nodes';
 
 class SynthNodePanel extends React.Component {
 
@@ -31,8 +29,6 @@ class SynthNodePanel extends React.Component {
     this.onGainChange = this.onGainChange.bind(this);
     this.onAttackChange = this.onAttackChange.bind(this);
     this.onReleaseChange = this.onReleaseChange.bind(this);
-    this.onNameChange = this.onNameChange.bind(this);
-    this.onNodeToggle = this.onNodeToggle.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -62,40 +58,9 @@ class SynthNodePanel extends React.Component {
     });
   }
 
-  onNameChange(event) {
-    let name = event.target.value;
-    this.props.setNodeName(this.props.node.id, name);
-    this.setState({
-      nodeName: name
-    });
-  }
-
-  onNodeToggle() {
-    this.props.setNodeDisabledStatus(this.props.node.id, !this.state.disabled);
-    this.setState({
-      disabled: !this.state.disabled
-    });
-  }
-
   render() {
-    let toggleClass = 'synth-node-panel-on';
-    toggleClass += this.state.disabled ? ' synth-node-panel-off' : '';
-
     return (
       <div className="synth-node-panel-container">
-        <div className="row-between">
-          <input
-            className="synth-node-panel-name"
-            type="text"
-            name="node-name"
-            value={this.state.nodeName}
-            onChange={this.onNameChange}
-            disabled={this.state.disabled}/>
-          <div className={toggleClass} onClick={this.onNodeToggle}>
-            <i className="fa fa-power-off"></i>
-          </div>
-        </div>
-
         <div className="row synth-node-panel-gain">
           <Knob
             label={'Gain'}
@@ -163,9 +128,7 @@ const mapDispatchToProps = (dispatch) => {
     setNodeOsc2WaveType: bindActionCreators(setNodeOsc2WaveType, dispatch),
     setNodeVolume: bindActionCreators(setNodeVolume, dispatch),
     setNodeAttack: bindActionCreators(setNodeAttack, dispatch),
-    setNodeRelease: bindActionCreators(setNodeRelease, dispatch),
-    setNodeName: bindActionCreators(setNodeName, dispatch),
-    setNodeDisabledStatus: bindActionCreators(setNodeDisabledStatus, dispatch)
+    setNodeRelease: bindActionCreators(setNodeRelease, dispatch)
   };
 };
 
