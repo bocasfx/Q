@@ -38,6 +38,11 @@
   color: darkorange;
   transform: rotate(300deg);
   cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.knob-container[disabled] .knob-dot {
+  color: dimgray;
 }
 
 

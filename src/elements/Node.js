@@ -16,6 +16,9 @@ class Node {
 
     this.selectedNodeImg = new Image();
     this.selectedNodeImg.src = './icons/elements/node-selected.png';
+
+    this.disabledNodeImg = new Image();
+    this.disabledNodeImg.src = './icons/elements/disabled-node.png';
   }
 
   set osc1Freq(frequency) {}
@@ -61,7 +64,13 @@ class Node {
 
   render(canvasContext) {
 
-    let image = this.active ? this.activeNodeImg : this.nodeImg;
+    let image;
+
+    if (this.disabled) {
+      image = this.disabledNodeImg;
+    } else {
+      image = this.active ? this.activeNodeImg : this.nodeImg;
+    }
     canvasContext.drawImage(image, this.position[0] - 20, this.position[1] - 20);
 
     if (this.selected) {
