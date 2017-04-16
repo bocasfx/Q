@@ -3,51 +3,28 @@ import './NodePanelHeader.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setNodeName, setNodeDisabledStatus } from '../../actions/Nodes';
-import { getSelectedElement } from '../../utils/utils';
 
 class NodePanelHeader extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      selectedNode: null
-    };
-
     this.onNameChange = this.onNameChange.bind(this);
     this.onNodeToggle = this.onNodeToggle.bind(this);
   }
 
-  componentDidMount() {
-    this.setState({
-      selectedNode: getSelectedElement(this.props.nodes)
-    });
-  }
-
-  componentWillReceiveProps(nextProps) {
-     this.setState({
-      selectedNode: getSelectedElement(nextProps.nodes)
-    });
-  }
-
   onNameChange(event) {
     let name = event.target.value;
-    this.props.setNodeName(this.state.selectedNode.id, name);
+    this.props.setNodeName(this.props.node.id, name);
   }
 
   onNodeToggle() {
-    this.props.setNodeDisabledStatus(this.state.selectedNode.id, !this.state.selectedNode.disabled);
+    this.props.setNodeDisabledStatus(this.props.node.id, !this.props.node.disabled);
   }
 
   render() {
 
-    if (!this.state.selectedNode) {
-      return null;
-    }
-
     let toggleClass = 'synth-node-panel-on';
-    if (this.state.selectedNode) {
-      toggleClass += this.state.selectedNode.disabled ? ' synth-node-panel-off' : '';
-    }
+    toggleClass += this.props.node.disabled ? ' synth-node-panel-off' : '';
 
     return (
       <div className="node-panel-header-container">
@@ -56,9 +33,9 @@ class NodePanelHeader extends React.Component {
             className="synth-node-panel-name"
             type="text"
             name="node-name"
-            value={this.state.selectedNode.name}
+            value={this.props.node.name}
             onChange={this.onNameChange}
-            disabled={this.state.selectedNode.disabled}/>
+            disabled={this.props.node.disabled}/>
           <div className={toggleClass} onClick={this.onNodeToggle}>
             <i className="fa fa-power-off"></i>
           </div>

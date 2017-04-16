@@ -4,7 +4,6 @@ import AudioNodePanel from './AudioNodePanel';
 import MidiNodePanel from './MidiNodePanel';
 import NodePanelHeader from './NodePanelHeader';
 import { connect } from 'react-redux';
-import { getSelectedElement } from '../../utils/utils';
 
 class NodePanel extends React.Component {
   
@@ -14,13 +13,12 @@ class NodePanel extends React.Component {
   }
 
   renderNodePanel() {
-    let node = getSelectedElement(this.props.nodes);
-    if (node.type === 'synth') {
-      return <SynthNodePanel/>;
-    } else if (node.type === 'audio') {
-      return <AudioNodePanel/>;
-    } else if (node.type === 'midi') {
-      return <MidiNodePanel/>;
+    if (this.props.node.type === 'synth') {
+      return <SynthNodePanel node={this.props.node}/>;
+    } else if (this.props.node.type === 'audio') {
+      return <AudioNodePanel node={this.props.node}/>;
+    } else if (this.props.node.type === 'midi') {
+      return <MidiNodePanel node={this.props.node}/>;
     }
     return null;
   }
@@ -28,7 +26,7 @@ class NodePanel extends React.Component {
   render() {
     return (
       <div>
-        <NodePanelHeader/>
+        <NodePanelHeader node={this.props.node}/>
         {this.renderNodePanel()}
       </div>
     );

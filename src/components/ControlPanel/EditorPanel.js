@@ -12,8 +12,21 @@ class EditorPanel extends React.Component {
     this.renderObject = this.renderObject.bind(this);
     this.onScroll = this.onScroll.bind(this);
     this.state = {
-      scrolling: false
+      scrolling: false,
+      node: null
     };
+  }
+
+  componentDidMount() {
+    this.setState({
+      node: getSelectedElement(this.props.nodes)
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      node: getSelectedElement(nextProps.nodes)
+    });
   }
 
   renderObject() {
@@ -31,11 +44,10 @@ class EditorPanel extends React.Component {
   }
 
   renderNode() {
-    let node = getSelectedElement(this.props.nodes);
-    if (!node) {
+    if (!this.state.node) {
       return null;
     }
-    return <NodePanel/>;
+    return <NodePanel node={this.state.node}/>;
   }
 
   getSelectedStream() {
