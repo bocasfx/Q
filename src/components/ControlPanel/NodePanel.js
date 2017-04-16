@@ -4,12 +4,16 @@ import AudioNodePanel from './AudioNodePanel';
 import MidiNodePanel from './MidiNodePanel';
 import NodePanelHeader from './NodePanelHeader';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { setNodeName, setNodeDisabledStatus } from '../../actions/Nodes';
 
 class NodePanel extends React.Component {
   
   constructor(props) {
     super(props);
     this.renderNodePanel = this.renderNodePanel.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onToggle = this.onToggle.bind(this);
   }
 
   renderNodePanel() {
@@ -23,20 +27,33 @@ class NodePanel extends React.Component {
     return null;
   }
 
+  onChange(name) {
+    this.props.setNodeName(this.props.node.id, name);
+  }
+
+  onToggle(disabled) {
+    this.props.setNodeDisabledStatus(this.props.node.id, disabled);
+  }
+
   render() {
     return (
       <div>
-        <NodePanelHeader node={this.props.node}/>
+        <NodePanelHeader
+          onChange={this.onChange}
+          onToggle={this.onToggle}
+          name={this.props.node.name}
+          disabled={this.props.node.disabled}/>
         {this.renderNodePanel()}
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    nodes: state.Nodes
+    setNodeName: bindActionCreators(setNodeName, dispatch),
+    setNodeDisabledStatus: bindActionCreators(setNodeDisabledStatus, dispatch)
   };
 };
 
-module.exports = connect(mapStateToProps)(NodePanel);
+module.exports = connect(null, mapDispatchToProps)(NodePanel);
