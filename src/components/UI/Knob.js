@@ -27,8 +27,11 @@ class Knob extends React.Component {
 
   componentWillReceiveProps(nextProps) {
 
-    let angle = (nextProps.value * 300.0 / this.props.max) + 300.0;
+    if (this.state.dragging) {
+      return;
+    }
 
+    let angle = (nextProps.value * 300.0 / nextProps.max) + 300.0;
     this.setState({
       value: parseFloat(nextProps.value.toFixed(1)),
       angle
@@ -66,6 +69,7 @@ class Knob extends React.Component {
       y: event.pageY,
       value
     });
+
     this.props.onChange(parseFloat(value));
   }
 

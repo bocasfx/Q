@@ -1,7 +1,10 @@
 import React from 'react';
 import SynthNodePanel from './SynthNodePanel';
 import AudioNodePanel from './AudioNodePanel';
+import MidiNodePanel from './MidiNodePanel';
 import NodePanelHeader from './NodePanelHeader';
+import { connect } from 'react-redux';
+import { getSelectedElement } from '../../utils/utils';
 
 class NodePanel extends React.Component {
   
@@ -11,10 +14,13 @@ class NodePanel extends React.Component {
   }
 
   renderNodePanel() {
-    if (this.props.node.type === 'synth') {
-      return <SynthNodePanel node={this.props.node}/>;
-    } else if (this.props.node.type === 'audio') {
-      return <AudioNodePanel node={this.props.node}/>;
+    let node = getSelectedElement(this.props.nodes);
+    if (node.type === 'synth') {
+      return <SynthNodePanel/>;
+    } else if (node.type === 'audio') {
+      return <AudioNodePanel/>;
+    } else if (node.type === 'midi') {
+      return <MidiNodePanel/>;
     }
     return null;
   }
@@ -22,11 +28,17 @@ class NodePanel extends React.Component {
   render() {
     return (
       <div>
-        <NodePanelHeader node={this.props.node}/>
+        <NodePanelHeader/>
         {this.renderNodePanel()}
       </div>
     );
   }
 }
 
-module.exports = NodePanel;
+const mapStateToProps = (state) => {
+  return {
+    nodes: state.Nodes
+  };
+};
+
+module.exports = connect(mapStateToProps)(NodePanel);

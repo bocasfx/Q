@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import NodePanel from './NodePanel';
 import StreamPanel from './StreamPanel';
+import { getSelectedElement } from '../../utils/utils';
 
 class EditorPanel extends React.Component {
   constructor(props) {
@@ -30,22 +31,16 @@ class EditorPanel extends React.Component {
   }
 
   renderNode() {
-    let node = this.getSelectedNode();
+    let node = getSelectedElement(this.props.nodes);
     if (!node) {
       return null;
     }
-    return <NodePanel node={node}/>;
+    return <NodePanel/>;
   }
 
   getSelectedStream() {
     return _.filter(this.props.streams, (stream) => {
       return stream.selected;
-    })[0];
-  }
-
-  getSelectedNode() {
-    return _.filter(this.props.nodes, (node) => {
-      return node.selected;
     })[0];
   }
 

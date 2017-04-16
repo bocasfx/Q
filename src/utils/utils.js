@@ -1,4 +1,5 @@
 import config from '../config/config';
+import _ from 'lodash';
 
 export const calculateDistance = (a, b) => {
   let x0 = a[0];
@@ -16,4 +17,10 @@ export const getPosition = (event) => {
   x -= config.menu.width;
 
   return [x, y];
+};
+
+export const getSelectedElement = (elements) => {
+  return _.filter(elements, (element) => {
+    return element.selected;
+  })[0];
 };

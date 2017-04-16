@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import OscillatorPanel from './OscillatorPanel';
 import Knob from '../UI/Knob';
 import Slider from '../UI/Slider';
+import { getSelectedElement } from '../../utils/utils';
 import {
   setNodeOsc1Frequency,
   setNodeOsc2Frequency,
@@ -20,10 +21,7 @@ class SynthNodePanel extends React.Component {
     super(props);
 
     this.state = {
-      nodeName: props.node.name,
-      attack: props.node.attack,
-      release: props.node.release,
-      disabled: props.node.disabled
+      selectedNode: null
     };
 
     this.onGainChange = this.onGainChange.bind(this);
@@ -31,53 +29,54 @@ class SynthNodePanel extends React.Component {
     this.onReleaseChange = this.onReleaseChange.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidMount() {
     this.setState({
-      nodeName: nextProps.node.name,
-      attack: nextProps.node.attack,
-      release: nextProps.node.release,
-      disabled: nextProps.node.disabled
+      selectedNode: getSelectedElement(this.props.nodes)
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+     this.setState({
+      selectedNode: getSelectedElement(nextProps.nodes)
     });
   }
 
   onGainChange(value) {
-    this.props.setNodeVolume(this.props.node.id, value);
+    this.props.setNodeVolume(this.state.selectedNode.id, value);
   }
 
   onAttackChange(value) {
-    this.props.setNodeAttack(this.props.node.id, value);
-    this.setState({
-      attack: value
-    });
+    this.props.setNodeAttack(this.state.selectedNode.id, value);
   }
 
   onReleaseChange(value) {
-    this.props.setNodeRelease(this.props.node.id, value);
-    this.setState({
-      release: value
-    });
+    this.props.setNodeRelease(this.state.selectedNode.id, value);
   }
 
   render() {
+    if (!this.state.selectedNode) {
+      return null;
+    }
+
     return (
       <div className="synth-node-panel-container">
         <div className="row synth-node-panel-gain">
           <Knob
             label={'Gain'}
-            value={this.props.node.volume}
+            value={this.state.selectedNode.volume}
             min={0}
             max={1}
             onChange={this.onGainChange}
-            disabled={this.state.disabled}/>
+            disabled={this.state.selectedNode.disabled}/>
           <div className="column">
             <Slider
               min={0}
               max={2}
               step={0.1}
               marks={5}
-              value={this.state.attack}
+              value={this.state.selectedNode.attack}
               onChange={this.onAttackChange}
-              disabled={this.state.disabled}/>
+              disabled={this.state.selectedNode.disabled}/>
             <div className="synth-node-panel-adsr-icon">
               <img src="./icons/control-panel/adsr/attack.svg" alt="attack"/>
             </div>
@@ -88,9 +87,9 @@ class SynthNodePanel extends React.Component {
               max={2}
               step={0.1}
               marks={5}
-              value={this.state.release}
+              value={this.state.selectedNode.release}
               onChange={this.onReleaseChange}
-              disabled={this.state.disabled}/>
+              disabled={this.state.selectedNode.disabled}/>
             <div className="synth-node-panel-adsr-icon">
               <img src="./icons/control-panel/adsr/release.svg" alt="release"/>
             </div>
@@ -100,25 +99,31 @@ class SynthNodePanel extends React.Component {
         <div className="row-between">
           <OscillatorPanel
             name="osc1"
-            nodeId={this.props.node.id}
-            oscillator={this.props.node.oscillator1}
+            nodeId={this.state.selectedNode.id}
+            oscillator={this.state.selectedNode.oscillator1}
             onFreqChange={this.props.setNodeOsc1Frequency}
             onWaveTypeChange={this.props.setNodeOsc1WaveType}
             label="Osc. 1"
-            disabled={this.state.disabled}/>
+            disabled={this.state.selectedNode.disabled}/>
           <OscillatorPanel
             name="osc2"
-            nodeId={this.props.node.id}
-            oscillator={this.props.node.oscillator2}
+            nodeId={this.state.selectedNode.id}
+            oscillator={this.state.selectedNode.oscillator2}
             onFreqChange={this.props.setNodeOsc2Frequency}
             onWaveTypeChange={this.props.setNodeOsc2WaveType}
             label="Osc. 2"
-            disabled={this.state.disabled}/>
+            disabled={this.state.selectedNode.disabled}/>
         </div>
       </div>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    nodes: state.Nodes
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -132,4 +137,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-module.exports = connect(null, mapDispatchToProps)(SynthNodePanel);
+module.exports = connect(mapStateToProps, mapDispatchToProps)(SynthNodePanel);
