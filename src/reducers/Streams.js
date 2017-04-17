@@ -25,6 +25,24 @@ const selectStream = (state, id) => {
   });
 };
 
+const setStreamName = (state, id, name) => {
+  return state.map((stream) => {
+    if (stream.id === id) {
+      stream.name = name;
+    }
+    return stream;
+  });
+};
+
+const setStreamDisabledStatus = (state, id, status) => {
+  return state.map((stream) => {
+    if (stream.id === id) {
+      stream.disabled = status;
+    }
+    return stream;
+  });
+};
+
 export default (state = initialState, action) => {
   switch (action.type) {
 
@@ -36,6 +54,12 @@ export default (state = initialState, action) => {
 
     case 'SELECT_STREAM':
       return selectStream(state, action.id);
+
+    case 'SET_STREAM_NAME':
+      return setStreamName(state, action.id, action.name);
+
+    case 'SET_STREAM_DISABLED_STATUS':
+      return setStreamDisabledStatus(state, action.id, action.status);
 
     default:
       return state;

@@ -32,6 +32,7 @@ class Stream {
     this.name = names.generate();
     this.selected = false;
     this.type = 'stream';
+    this.disabled = false;
 
     this.calculateEasing = this.calculateEasing.bind(this);
     this.onMouseDown = this.onMouseDown.bind(this);
@@ -77,6 +78,9 @@ class Stream {
   }
 
   flow() {
+    if (this.disabled) {
+      return;
+    }
     if (this.headPosition !== '') {
       if (this.mouseState === 'up') {
         if (this.path.length) {
@@ -121,6 +125,7 @@ class Stream {
 
     canvasContext.beginPath();
     canvasContext.strokeStyle = this.selected ? config.selectedStream.strokeStyle : config.stream.strokeStyle;
+    canvasContext.strokeStyle = this.disabled ? config.stream.strokeStyle : canvasContext.strokeStyle;
     canvasContext.lineWidth = config.stream.lineWidth;
     canvasContext.setLineDash(config.stream.lineDash);
 
@@ -133,6 +138,7 @@ class Stream {
     canvasContext.stroke();
 
     this.particles.forEach((particle) => {
+      particle.disabled = this.disabled;
       particle.render(canvasContext);
     });
   }

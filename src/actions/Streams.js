@@ -19,3 +19,19 @@ export const selectStream = (id) => {
     id
   };
 };
+
+export const setStreamName = (id, name) => {
+  return {
+    type: 'SET_STREAM_NAME',
+    id,
+    name
+  };
+};
+
+export const setStreamDisabledStatus = (id, status) => {
+  return {
+    type: 'SET_STREAM_DISABLED_STATUS',
+    id,
+    status
+  };
+};

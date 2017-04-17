@@ -2,7 +2,7 @@ import React from 'react';
 import SynthNodePanel from './SynthNodePanel';
 import AudioNodePanel from './AudioNodePanel';
 import MidiNodePanel from './MidiNodePanel';
-import NodePanelHeader from './NodePanelHeader';
+import ElementPanelHeader from './ElementPanelHeader';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setNodeName, setNodeDisabledStatus } from '../../actions/Nodes';
@@ -38,7 +38,7 @@ class NodePanel extends React.Component {
   render() {
     return (
       <div>
-        <NodePanelHeader
+        <ElementPanelHeader
           onChange={this.onChange}
           onToggle={this.onToggle}
           name={this.props.node.name}

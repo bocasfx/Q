@@ -32,15 +32,20 @@
   opacity: 0;
   margin-left: 10px;
   transition: 0.1s ease-in-out;
+  width: 10px;
+  height: 10px;
 }
 
 .list-item-container:hover .list-item-icon {
   opacity: 1;
 }
 
+.list-item-icon:hover {
+  color: darkorange;
+}
+
 .list-item-bullet {
   display: inline-block;
   width: 10px;
   height: 10px;
-  border-radius: 5px;
 }

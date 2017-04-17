@@ -1,16 +1,43 @@
 import React from 'react';
 import './StreamPanel.css';
+import ElementPanelHeader from './ElementPanelHeader';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { setStreamName, setStreamDisabledStatus } from '../../actions/Streams';
 
 class StreamPanel extends React.Component {
+  constructor(props) {
+    super(props);
+    this.onChange = this.onChange.bind(this);
+    this.onToggle = this.onToggle.bind(this);
+  }
+
+  onChange(name) {
+    this.props.setStreamName(this.props.stream.id, name);
+  }
+
+  onToggle(disabled) {
+    this.props.setStreamDisabledStatus(this.props.stream.id, disabled);
+  }
+
   render() {
     return (
       <div className="stream-panel-container">
-        <div>
-          <div>{this.props.stream.name}</div>
-        </div>
+        <ElementPanelHeader
+          onChange={this.onChange}
+          onToggle={this.onToggle}
+          name={this.props.stream.name}
+          disabled={this.props.stream.disabled}/>
       </div>
     );
   }
 }
 
-module.exports = StreamPanel;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setStreamName: bindActionCreators(setStreamName, dispatch),
+    setStreamDisabledStatus: bindActionCreators(setStreamDisabledStatus, dispatch)
+  };
+};
+
+module.exports = connect(null, mapDispatchToProps)(StreamPanel);

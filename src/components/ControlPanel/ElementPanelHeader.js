@@ -1,5 +1,4 @@
 import React from 'react';
-import './NodePanelHeader.css';
 
 class NodePanelHeader extends React.Component {
   constructor(props) {
