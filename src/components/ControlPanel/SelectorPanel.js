@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import ListItem from './ListItem';
 import Tabs from '../Tabs/Tabs';
 import { bindActionCreators } from 'redux';
-import { deleteStream, selectStream } from '../../actions/Streams';
+import { deleteStream, selectStream, setStreamDisabledStatus } from '../../actions/Streams';
 import { deleteNode, selectNode, setNodeDisabledStatus } from '../../actions/Nodes';
 import './SelectorPanel.css';
 
@@ -17,34 +17,41 @@ class SelectorPanel extends React.Component {
   onDeleteStream(id, event) {
     event.preventDefault();
     this.props.deleteStream(id);
+    event.stopPropagation();
   }
 
   onDeleteNode(id, event) {
     event.preventDefault();
     this.props.deleteNode(id);
+    event.stopPropagation();
   }
 
   onToggleNode(node, event) {
-    console.log(node);
     event.preventDefault();
     this.props.setNodeDisabledStatus(node.id, !node.disabled);
+    event.stopPropagation();
+  }
+
+  onToggleStream(stream, event) {
+    event.preventDefault();
+    this.props.setStreamDisabledStatus(stream.id, !stream.disabled);
+    event.stopPropagation();
   }
 
   onCloneNode(id, event) {
     event.preventDefault();
     console.log('TODO');
+    event.stopPropagation();
   }
 
   onClickNode(node, event) {
     event.preventDefault();
-    if (!node.selected) {
-      this.props.selectNode(node.id);
-    }
+    this.props.selectNode(node.id);
   }
 
-  onClickStream(id, event) {
+  onClickStream(stream, event) {
     event.preventDefault();
-    this.props.selectStream(id);
+    this.props.selectStream(stream.id);
   }
 
   renderStreams() {
@@ -57,8 +64,9 @@ class SelectorPanel extends React.Component {
         key={idx}
         item={stream}
         idx={idx}
+        onToggle={this.onToggleStream.bind(this, stream)}
         onDelete={this.onDeleteStream.bind(this, stream.id)}
-        onClick={this.onClickStream.bind(this, stream.id)}/>;
+        onClick={this.onClickStream.bind(this, stream)}/>;
     });
   }
 
@@ -108,7 +116,8 @@ const mapDispatchToProps = (dispatch) => {
     selectStream: bindActionCreators(selectStream, dispatch),
     deleteNode: bindActionCreators(deleteNode, dispatch),
     selectNode: bindActionCreators(selectNode, dispatch),
-    setNodeDisabledStatus: bindActionCreators(setNodeDisabledStatus, dispatch)
+    setNodeDisabledStatus: bindActionCreators(setNodeDisabledStatus, dispatch),
+    setStreamDisabledStatus: bindActionCreators(setStreamDisabledStatus, dispatch)
   };
 };
 

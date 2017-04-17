@@ -1,13 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 class NodePanelHeader extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      name: props.name,
-      disabled: props.disabled
-    };
 
     this.onChange = this.onChange.bind(this);
     this.onToggle = this.onToggle.bind(this);
@@ -15,30 +11,17 @@ class NodePanelHeader extends React.Component {
 
   onChange(event) {
     let name = event.target.value;
-    this.setState({
-      name
-    });
     this.props.onChange(name);
   }
 
   onToggle() {
-    let disabled = !this.state.disabled;
-    this.setState({
-      disabled
-    });
+    let disabled = !this.props.element.disabled;
     this.props.onToggle(disabled);
-  }
-  
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      name: nextProps.name,
-      disabled: nextProps.disabled
-    });
   }
 
   render() {
     let toggleClass = 'synth-node-panel-on';
-    toggleClass += this.state.disabled ? ' synth-node-panel-off' : '';
+    toggleClass += this.props.element.disabled ? ' synth-node-panel-off' : '';
 
     return (
       <div className="node-panel-header-container">
@@ -47,9 +30,9 @@ class NodePanelHeader extends React.Component {
             className="synth-node-panel-name"
             type="text"
             name="node-name"
-            value={this.state.name}
+            value={this.props.element.name}
             onChange={this.onChange}
-            disabled={this.state.disabled}/>
+            disabled={this.props.element.disabled}/>
           <div className={toggleClass} onClick={this.onToggle}>
             <i className="fa fa-power-off"></i>
           </div>
@@ -59,4 +42,10 @@ class NodePanelHeader extends React.Component {
   }
 }
 
-module.exports = NodePanelHeader;
+const mapStateToProps = (state) => {
+  return {
+    nodes: state.Nodes
+  };
+};
+
+module.exports = connect(mapStateToProps)(NodePanelHeader);

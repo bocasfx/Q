@@ -11,6 +11,7 @@ const path = require('path');
 let mainWindow;
 
 function createWindow() {
+  debugger;
   mainWindow = new BrowserWindow({width: 1200, height: 800});
   const startUrl = process.env.ELECTRON_START_URL || url.format({
     pathname: path.join(__dirname, '/../build/index.html'),

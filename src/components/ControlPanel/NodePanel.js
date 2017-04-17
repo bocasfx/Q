@@ -41,8 +41,7 @@ class NodePanel extends React.Component {
         <ElementPanelHeader
           onChange={this.onChange}
           onToggle={this.onToggle}
-          name={this.props.node.name}
-          disabled={this.props.node.disabled}/>
+          element={this.props.node}/>
         {this.renderNodePanel()}
       </div>
     );

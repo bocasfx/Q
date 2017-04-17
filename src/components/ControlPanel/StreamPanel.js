@@ -17,6 +17,7 @@ class StreamPanel extends React.Component {
   }
 
   onToggle(disabled) {
+    debugger;
     this.props.setStreamDisabledStatus(this.props.stream.id, disabled);
   }
 
@@ -26,8 +27,7 @@ class StreamPanel extends React.Component {
         <ElementPanelHeader
           onChange={this.onChange}
           onToggle={this.onToggle}
-          name={this.props.stream.name}
-          disabled={this.props.stream.disabled}/>
+          element={this.props.stream}/>
       </div>
     );
   }
