@@ -143,4 +143,12 @@ export const setNodeDisabledStatus = (id, status) => {
   };
 };
 
+export const setNodePan = (id, pan) => {
+  return {
+    type: 'SET_NODE_PAN',
+    id,
+    pan
+  };
+};
+
 

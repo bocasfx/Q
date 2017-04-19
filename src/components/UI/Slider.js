@@ -31,13 +31,14 @@ class Slider extends React.Component {
   }
 
   render() {
+    let className = this.props.horizontal ? 'slider slider-horizontal' : 'slider';
     return (
       <div className="slider-container">
         <div className="slider-icon-container">
           {this.renderIcons()}
         </div>
         <input
-          className="slider"
+          className={className}
           type="range"
           min={this.props.min}
           max={this.props.max}

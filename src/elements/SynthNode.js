@@ -17,7 +17,7 @@ class SynthNode extends Node {
 
     this.oscillator1.connect(this.amplifier);
     this.oscillator2.connect(this.amplifier);
-    this.envelopeGenerator.connect(this.amplifier.amplitude);
+    this.envelopeGenerator.connect(this.amplifier.amplitudeL, this.amplifier.amplitudeR);
     this.amplifier.connect(audioContext.destination);
 
     this.type = 'synth';
@@ -66,7 +66,7 @@ class SynthNode extends Node {
       return;
     }
     this.active = true;
-    this.envelopeGenerator.trigger(this.volume);
+    this.envelopeGenerator.trigger(this.volume, this.pan);
   }
 
   stop() {

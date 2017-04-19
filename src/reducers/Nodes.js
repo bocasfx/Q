@@ -180,6 +180,15 @@ const setNodeDisabledStatus = (state, id, status) => {
   });
 };
 
+const setNodePan = (state, id, pan) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.pan = pan;
+    }
+    return node;
+  });
+};
+
 export default (state = initialState, action) => {
   switch (action.type) {
 
@@ -239,6 +248,9 @@ export default (state = initialState, action) => {
 
     case 'SET_NODE_DISABLED_STATUS':
       return setNodeDisabledStatus(state, action.id, action.status);
+
+    case 'SET_NODE_PAN':
+      return setNodePan(state, action.id, action.pan);
 
     default:
       return state;

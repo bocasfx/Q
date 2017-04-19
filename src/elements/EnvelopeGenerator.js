@@ -3,25 +3,34 @@ class EnvelopeGenerator {
     this.audioContext = audioContext;
     this.attack = envelope.attack;
     this.release = envelope.release;
-    this.sustain = envelope.sustain;
     this.decay = envelope.decay;
   }
 
-  trigger(volume) {
+  trigger(volume, pan) {
+    let panL = pan <= 0 ? 1 : 1 - pan;
+    let panR = pan >= 0 ? 1 : 1 - (-1 * pan);
     let now = this.audioContext.currentTime;
-    this.param.cancelScheduledValues(now);
-    this.param.linearRampToValueAtTime(0, now);
-    this.param.linearRampToValueAtTime(volume, now + this.attack);
+    this.paramL.cancelScheduledValues(now);
+    this.paramL.linearRampToValueAtTime(0, now);
+    this.paramL.linearRampToValueAtTime(volume * panL, now + this.attack);
+
+    this.paramR.cancelScheduledValues(now);
+    this.paramR.linearRampToValueAtTime(0, now);
+    this.paramR.linearRampToValueAtTime(volume * panR, now + this.attack);
   }
 
   close() {
     let now = this.audioContext.currentTime;
-    this.param.cancelScheduledValues(now);
-    this.param.linearRampToValueAtTime(0, now + this.release); 
+    this.paramL.cancelScheduledValues(now);
+    this.paramL.linearRampToValueAtTime(0, now + this.release); 
+
+    this.paramR.cancelScheduledValues(now);
+    this.paramR.linearRampToValueAtTime(0, now + this.release); 
   }
 
-  connect(param) {
-    this.param = param;
+  connect(paramL, paramR) {
+    this.paramL = paramL;
+    this.paramR = paramR;
   }
 }
 

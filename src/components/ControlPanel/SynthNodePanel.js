@@ -12,7 +12,8 @@ import {
   setNodeOsc2WaveType,
   setNodeVolume,
   setNodeAttack,
-  setNodeRelease } from '../../actions/Nodes';
+  setNodeRelease,
+  setNodePan } from '../../actions/Nodes';
 
 class SynthNodePanel extends React.Component {
 
@@ -22,6 +23,7 @@ class SynthNodePanel extends React.Component {
     this.onGainChange = this.onGainChange.bind(this);
     this.onAttackChange = this.onAttackChange.bind(this);
     this.onReleaseChange = this.onReleaseChange.bind(this);
+    this.onPanChange = this.onPanChange.bind(this);
   }
 
   onGainChange(value) {
@@ -34,6 +36,10 @@ class SynthNodePanel extends React.Component {
 
   onReleaseChange(value) {
     this.props.setNodeRelease(this.props.node.id, value);
+  }
+
+  onPanChange(value) {
+    this.props.setNodePan(this.props.node.id, value);
   }
 
   render() {
@@ -51,7 +57,7 @@ class SynthNodePanel extends React.Component {
             <Slider
               min={0}
               max={2}
-              step={0.1}
+              step={0.01}
               marks={5}
               value={this.props.node.attack}
               onChange={this.onAttackChange}
@@ -64,7 +70,7 @@ class SynthNodePanel extends React.Component {
             <Slider
               min={0}
               max={2}
-              step={0.1}
+              step={0.01}
               marks={5}
               value={this.props.node.release}
               onChange={this.onReleaseChange}
@@ -73,6 +79,20 @@ class SynthNodePanel extends React.Component {
               <img src="./icons/control-panel/adsr/release.svg" alt="release"/>
             </div>
           </div>
+        </div>
+          
+        <div className="row synth-node-panel-pan synth-node-panel-pan-labels">
+          <div>L</div>
+          <Slider
+            min={-1}
+            max={1}
+            step={0.1}
+            marks={0}
+            value={this.props.node.pan}
+            onChange={this.onPanChange}
+            disabled={this.props.node.disabled}
+            horizontal={true}/>
+          <div>R</div>
         </div>
 
         <div className="row-between">
@@ -112,7 +132,8 @@ const mapDispatchToProps = (dispatch) => {
     setNodeOsc2WaveType: bindActionCreators(setNodeOsc2WaveType, dispatch),
     setNodeVolume: bindActionCreators(setNodeVolume, dispatch),
     setNodeAttack: bindActionCreators(setNodeAttack, dispatch),
-    setNodeRelease: bindActionCreators(setNodeRelease, dispatch)
+    setNodeRelease: bindActionCreators(setNodeRelease, dispatch),
+    setNodePan: bindActionCreators(setNodePan, dispatch)
   };
 };
 

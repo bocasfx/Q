@@ -4,7 +4,7 @@ class Oscillator {
     this.audioContext = audioContext;
     this.oscillator = audioContext.createOscillator();
     this.waveType = 'sine';
-    this.frequency = 60;
+    this.frequency = 120;
     this.oscillator.start(0);
 
     this.input = this.oscillator;

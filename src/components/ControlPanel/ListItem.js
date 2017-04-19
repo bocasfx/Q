@@ -22,10 +22,13 @@ class ListItem extends React.Component {
     };
 
     if (!this.props.item.disabled) {
-      return <span className="list-item-bullet" style={style}><i className="fa fa-circle"></i></span>;
+      if (this.props.item.active) {
+        return <span className="list-item-bullet" style={style}><i className="fa fa-circle"></i></span>;
+      }
+      return <span className="list-item-bullet" style={style}><i className="fa fa-circle-o"></i></span>;
     }
     
-    return <span className="list-item-bullet" style={style}><i className="fa fa-times"></i></span>;
+    return <span className="list-item-bullet" style={style}><i className="fa fa-ban"></i></span>;
   }
 
   render() {

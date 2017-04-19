@@ -19,6 +19,17 @@
 }
 
 .synth-node-panel-gain {
+  margin-bottom: 0;
+}
+
+.synth-node-panel-pan {
+  margin-bottom: 0;
+  height: 40px;
+}
+
+.synth-node-panel-pan-labels {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 20px;
 }
 

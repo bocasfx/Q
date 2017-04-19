@@ -1,16 +1,26 @@
 class Amplifier {
   constructor(audioContext) {
     this.audioContext = audioContext;
-    this.gain = audioContext.createGain();
-    this.gain.gain.value = 0;
-    this.input = this.gain;
-    this.output = this.gain;
-    this.amplitude = this.gain.gain;
+    this.gainL = audioContext.createGain();
+    this.gainR = audioContext.createGain();
+    this.gainL.gain.value = 0;
+    this.gainR.gain.value = 0;
+    this.splitter = audioContext.createChannelSplitter(2);
+    this.merger = audioContext.createChannelMerger(2);
+    this.splitter.connect(this.gainL, 0);
+    this.splitter.connect(this.gainR, 1);
+    this.gainL.connect(this.merger, 0, 0);
+    this.gainR.connect(this.merger, 0, 1);
+    this.input = this.splitter;
+    this.output = this.merger;
+    this.amplitudeL = this.gainL.gain;
+    this.amplitudeR = this.gainR.gain;
   }
 
   set volume(vol) {
     let now = this.audioContext.currentTime;
-    this.gain.gain.linearRampToValueAtTime(vol, now);
+    this.gainL.gain.linearRampToValueAtTime(vol, now);
+    this.gainR.gain.linearRampToValueAtTime(vol, now);
   }
 
   get volume() {
