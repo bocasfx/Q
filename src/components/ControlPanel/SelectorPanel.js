@@ -1,8 +1,8 @@
 import React from 'react';
-import Panel from '../Tabs/Panel';
+import Panel from '../UI/Tabs/Panel';
 import { connect } from 'react-redux';
 import ListItem from './ListItem';
-import Tabs from '../Tabs/Tabs';
+import Tabs from '../UI/Tabs/Tabs';
 import { bindActionCreators } from 'redux';
 import { deleteStream, selectStream, setStreamDisabledStatus } from '../../actions/Streams';
 import { deleteNode, selectNode, setNodeDisabledStatus } from '../../actions/Nodes';

@@ -2,7 +2,7 @@ import React from 'react';
 import './Tabs.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setSelection } from '../../actions/Selection';
+import { setSelection } from '../../../actions/Selection';
 
 class Tabs extends React.Component {
   constructor(props) {
