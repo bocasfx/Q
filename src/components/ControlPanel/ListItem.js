@@ -1,36 +1,8 @@
 import React from 'react';
 import './ListItem.css';
-import config from '../../config/config';
-
-const color = {
-  synth: config.synthNode.color,
-  midi: config.midiNode.color,
-  audio: config.audioNode.color,
-  stream: config.stream.color
-};
+import ActivityIndicator from '../UI/ActivityIndicator';
 
 class ListItem extends React.Component {
-  constructor(props) {
-    super(props);
-    this.renderBullet = this.renderBullet.bind(this);
-  }
-
-  renderBullet() {
-
-    let style = {
-      color: color[this.props.item.type]
-    };
-
-    if (!this.props.item.disabled) {
-      if (this.props.item.active) {
-        return <span className="list-item-bullet" style={style}><i className="fa fa-circle"></i></span>;
-      }
-      return <span className="list-item-bullet" style={style}><i className="fa fa-circle-o"></i></span>;
-    }
-    
-    return <span className="list-item-bullet" style={style}><i className="fa fa-ban"></i></span>;
-  }
-
   render() {
 
     let itemClass = 'list-item-container';
@@ -39,7 +11,7 @@ class ListItem extends React.Component {
     return (
       <div className={itemClass} onClick={this.props.onClick}>
         <div>
-          {this.renderBullet()}
+          <ActivityIndicator item={this.props.item}/>
           <span className="list-item-name">{this.props.item.name}</span>
         </div>
         <div>

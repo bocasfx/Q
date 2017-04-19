@@ -14,6 +14,7 @@ class Menu extends React.Component {
     this.onMidiNodeButtonClick = this.onMidiNodeButtonClick.bind(this);
     this.onAudioNodeButtonClick = this.onAudioNodeButtonClick.bind(this);
     this.onMixerButtonClick = this.onMixerButtonClick.bind(this);
+    this.onLinkButtonClick = this.onLinkButtonClick.bind(this);
   }
 
   onSynthNodeButtonClick() {
@@ -34,6 +35,10 @@ class Menu extends React.Component {
 
   onMixerButtonClick() {
     this.props.toggleDevice('mixer');
+  }
+
+  onLinkButtonClick() {
+    this.props.toggleDevice('link');
   }
 
   render() {
@@ -57,7 +62,12 @@ class Menu extends React.Component {
         <MenuButton
           icon="./icons/menu/audio.png"
           onClick={this.onAudioNodeButtonClick}
-          active={this.props.devices.audioNodes}/>
+          active={this.props.devices.audioNodes}
+          separator={true}/>
+        <MenuButton
+          icon="./icons/menu/link.png"
+          onClick={this.onLinkButtonClick}
+          active={this.props.devices.link}/>
       </div>
     );
   }

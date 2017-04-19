@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import ActivityIndicator from '../UI/ActivityIndicator';
+import './ElementPanelHeader.css';
 
 class NodePanelHeader extends React.Component {
   constructor(props) {
@@ -20,14 +22,15 @@ class NodePanelHeader extends React.Component {
   }
 
   render() {
-    let toggleClass = 'synth-node-panel-on';
-    toggleClass += this.props.element.disabled ? ' synth-node-panel-off' : '';
+    let toggleClass = 'element-panel-header-on';
+    toggleClass += this.props.element.disabled ? ' element-panel-header-off' : '';
 
     return (
-      <div className="node-panel-header-container">
+      <div className="element-panel-header-container">
         <div className="row-between">
+          <ActivityIndicator item={this.props.element}/>
           <input
-            className="synth-node-panel-name"
+            className="element-panel-header-name"
             type="text"
             name="node-name"
             value={this.props.element.name}

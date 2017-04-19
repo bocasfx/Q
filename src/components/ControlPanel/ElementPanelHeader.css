@@ -1,0 +1,17 @@
+.element-panel-header-name {
+  width: 185px;
+}
+
+.element-panel-header-on {
+  padding: 4px 6px;
+  border: 1px solid dimgray;
+  color: darkorange;
+  text-shadow: 0 0 10px darkorange;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.element-panel-header-off {
+  color: dimgray;
+  text-shadow: none;
+}

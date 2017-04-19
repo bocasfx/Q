@@ -4,10 +4,6 @@
   justify-content: space-around;
 }
 
-.synth-node-panel-name {
-  width: 210px;
-}
-
 .synth-node-panel-adsr-icon {
   margin: 5px 0 0 -3px;
   width: 30px;
@@ -31,18 +27,4 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
-}
-
-.synth-node-panel-on {
-  padding: 4px 6px;
-  border: 1px solid dimgray;
-  color: darkorange;
-  text-shadow: 0 0 10px darkorange;
-  cursor: pointer;
-  transition: 0.3s ease-in-out;
-}
-
-.synth-node-panel-off {
-  color: dimgray;
-  text-shadow: none;
 }

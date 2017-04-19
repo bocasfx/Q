@@ -6,7 +6,8 @@ const initialState = {
   settings: false,
   nodeSettings: false,
   nodeSettingsId: null,
-  mixer: false
+  mixer: false,
+  link: false
 };
 
 const toggleDevice = (state, device) => {
