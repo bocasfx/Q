@@ -38,6 +38,9 @@ class Canvas extends React.Component {
     };
 
     this.linkSrcId = '';
+
+    this.linkAnchorImg = new Image();
+    this.linkAnchorImg.src = './icons/elements/link-anchor.png';
   }
   
   componentDidMount() {
@@ -207,13 +210,16 @@ class Canvas extends React.Component {
     this.canvasContext.beginPath();
     this.canvasContext.strokeStyle = config.link.strokeStyle;
     this.canvasContext.lineWidth = config.link.lineWidth;
+    this.canvasContext.setLineDash(config.link.lineDash);
 
     node.links.forEach((link) => {
       let destNode = _.find(this.props.nodes, (nodeObj) => {
-        return nodeObj.id === link;
+        return nodeObj.id === link.id;
       });
       this.canvasContext.moveTo(node.position[0], node.position[1]);
+      this.canvasContext.drawImage(this.linkAnchorImg, node.position[0] - 7.5, node.position[1] - 7.5);
       this.canvasContext.lineTo(destNode.position[0], destNode.position[1]);
+      this.canvasContext.drawImage(this.linkAnchorImg, destNode.position[0] - 7.5, destNode.position[1] - 7.5);
     });
 
     this.canvasContext.stroke();

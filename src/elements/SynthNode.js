@@ -66,6 +66,7 @@ class SynthNode extends Node {
       return;
     }
     this.active = true;
+    console.log(this.id);
     this.envelopeGenerator.trigger(this.volume, this.pan);
   }
 

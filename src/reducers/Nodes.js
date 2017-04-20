@@ -28,6 +28,26 @@ const addAudioNode = (state, position) => {
   return nodeList;
 };
 
+const playLinks = (node) => {
+  if (!node.links.length) {
+    return;
+  }
+  node.links.forEach((link) => {
+    link.play();
+    playLinks(link);
+  });
+};
+
+const stopLinks = (node) => {
+  if (!node.links.length) {
+    return;
+  }
+  node.links.forEach((link) => {
+    link.stop();
+    stopLinks(link);
+  });
+};
+
 const detectCollisions = (state, streams) => {
   if (!streams.length || !state.length) {
     return state;
@@ -40,11 +60,13 @@ const detectCollisions = (state, streams) => {
         if (distance <= config.app.collisionDistance) {
           if (!node.isParticleQueued(particle.id)) {
             node.enqueueParticle(particle.id);
+            playLinks(node);
             stateMutated = true;
           }
         } else {
           if (node.isParticleQueued(particle.id)) {
             node.dequeueParticle(particle.id);
+            stopLinks(node);
             stateMutated = true;
           }
         }
@@ -193,7 +215,10 @@ const linkNodes = (state, srcId, destId) => {
   let srcNode = _.find(state, (node) => {
     return node.id === srcId;
   });
-  srcNode.link(destId);
+  let destNode = _.find(state, (node) => {
+    return node.id === destId;
+  });
+  srcNode.link(destNode);
   return state;
 };
 

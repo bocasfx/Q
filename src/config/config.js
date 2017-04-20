@@ -35,8 +35,9 @@ export default {
     strokeStyle: 'gold',
   },
   link: {
-    strokeStyle: 'gray',
-    lineWidth: 4
+    strokeStyle: 'dimgray',
+    lineWidth: 3,
+    lineDash: [3, 3]
   },
   fader: {
     marks: {

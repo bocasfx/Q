@@ -48,6 +48,8 @@ class Node {
       return;
     }
 
+    // Trigger the node if it's the
+    // first particle to enter the queue.
     if (!this.particleQueue.length) {
       this.play();
     }
@@ -59,13 +61,15 @@ class Node {
       return particleId === id;
     });
 
+    // Stop the node only if it's the
+    // last particle to leave the queue
     if (!this.particleQueue.length) {
       this.stop();
     }
   }
 
-  link(destId) {
-    this.links.push(destId);
+  link(destNode) {
+    this.links.push(destNode);
   }
 
   render(canvasContext) {
