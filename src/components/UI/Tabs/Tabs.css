@@ -2,7 +2,6 @@
   display: flex;
   border-bottom: 1px solid dimgray;
   background-color: rgba(0, 0, 0, 0.1);
-  font-size: 1.2em;
 }
 
 .tabs-labels div {

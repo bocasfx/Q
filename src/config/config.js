@@ -32,7 +32,7 @@ export default {
     lineDash: [3, 30]
   },
   selectedStream: {
-    strokeStyle: 'deeppink',
+    strokeStyle: 'gold',
   },
   fader: {
     marks: {

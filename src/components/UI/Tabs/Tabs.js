@@ -28,7 +28,6 @@ class Tabs extends React.Component {
       return (
         <a href="#" onClick={this.onClick.bind(this, idx)} key={idx}>
           <div className={selectedClass}>
-          
             {child.props.label}
           </div>
         </a>

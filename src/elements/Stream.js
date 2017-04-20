@@ -38,6 +38,9 @@ class Stream {
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
+
+    this.markerImage = new Image();
+    this.markerImage.src = './icons/elements/stream-marker.png';
   }
 
   advancePathIndex() {
@@ -65,11 +68,14 @@ class Stream {
     this.pathIndex = 0;
     this.path.push(this.headPosition);
     this.mouseState = 'down';
+    this.showMarker = true;
+    this.markerPosition = getPosition(event);
   }
 
   onMouseUp(event) {
     event.preventDefault();
     this.mouseState = 'up';
+    this.showMarker = false;
   }
 
   onMouseMove(event) {
@@ -141,6 +147,10 @@ class Stream {
       particle.disabled = this.disabled;
       particle.render(canvasContext);
     });
+
+    if (this.showMarker) {
+      canvasContext.drawImage(this.markerImage, this.markerPosition[0] - 7.5, this.markerPosition[1] - 7.5);
+    }
   }
 }
 

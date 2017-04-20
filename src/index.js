@@ -9,6 +9,10 @@ import Menu from './components/Menu/Menu';
 import Mixer from './components/Mixer/Mixer';
 import ControlPanel from './components/ControlPanel/ControlPanel';
 
+window.onresize = () => {
+  location.reload();
+};
+
 const store = createStore(reducer);
 const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 const renderDom = (midiContext) => {
