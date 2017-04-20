@@ -151,4 +151,10 @@ export const setNodePan = (id, pan) => {
   };
 };
 
-
+export const linkNodes = (srcId, destId) => {
+  return {
+    type: 'LINK_NODES',
+    srcId,
+    destId
+  };
+};

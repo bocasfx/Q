@@ -189,6 +189,14 @@ const setNodePan = (state, id, pan) => {
   });
 };
 
+const linkNodes = (state, srcId, destId) => {
+  let srcNode = _.find(state, (node) => {
+    return node.id === srcId;
+  });
+  srcNode.link(destId);
+  return state;
+};
+
 export default (state = initialState, action) => {
   switch (action.type) {
 
@@ -251,6 +259,9 @@ export default (state = initialState, action) => {
 
     case 'SET_NODE_PAN':
       return setNodePan(state, action.id, action.pan);
+
+    case 'LINK_NODES':
+      return linkNodes(state, action.srcId, action.destId);
 
     default:
       return state;

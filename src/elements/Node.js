@@ -14,6 +14,7 @@ class Node {
     this.volume = 0.8;
     this.disabled = false;
     this.pan = 0;
+    this.links =[];
 
     this.selectedNodeImg = new Image();
     this.selectedNodeImg.src = './icons/elements/node-selected.png';
@@ -61,6 +62,10 @@ class Node {
     if (!this.particleQueue.length) {
       this.stop();
     }
+  }
+
+  link(destId) {
+    this.links.push(destId);
   }
 
   render(canvasContext) {

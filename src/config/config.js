@@ -34,6 +34,10 @@ export default {
   selectedStream: {
     strokeStyle: 'gold',
   },
+  link: {
+    strokeStyle: 'gray',
+    lineWidth: 4
+  },
   fader: {
     marks: {
       0: '-0',

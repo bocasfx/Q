@@ -1,11 +1,21 @@
 import React from 'react';
 import './Canvas.css';
+import _ from 'lodash';
 import config from '../config/config';
 import { connect } from 'react-redux';
-import { addSynthNode, addMidiNode, addAudioNode, detectCollisions, setNodePosition, selectNode, deselectNodes, cloneNode } from '../actions/Nodes';
 import { addStream } from '../actions/Streams';
 import { bindActionCreators } from 'redux';
 import { calculateDistance, getPosition } from '../utils/utils';
+import {
+  addSynthNode,
+  addMidiNode,
+  addAudioNode,
+  detectCollisions,
+  setNodePosition,
+  selectNode,
+  deselectNodes,
+  cloneNode,
+  linkNodes } from '../actions/Nodes';
 
 class Canvas extends React.Component {
 
@@ -26,6 +36,8 @@ class Canvas extends React.Component {
     this.cursorStyle = {
       cursor: 'crosshair'
     };
+
+    this.linkSrcId = '';
   }
   
   componentDidMount() {
@@ -40,7 +52,8 @@ class Canvas extends React.Component {
     if (this.props.devices.streams ||
         this.props.devices.synthNodes ||
         this.props.devices.midiNodes ||
-        this.props.devices.audioNodes) {
+        this.props.devices.audioNodes ||
+        this.props.devices.link) {
       this.cursorStyle = {
         cursor: 'crosshair'
       };
@@ -83,11 +96,14 @@ class Canvas extends React.Component {
 
     if (this.props.devices.streams) {
       this.props.addStream(position, event);
-    } else if (!event.metaKey) {
+    } else if (this.props.devices.link) {
+      this.initiateNodeLink(position);
+    } else if (this.props.devices.synthNodes || this.props.devices.midiNodes || this.props.devices.audioNodes) {
       this.addNode(position);
+      this.selectNode(position, event.metaKey);
+    } else if (!event.metaKey) {
+      this.selectNode(position, event.metaKey);
     }
-
-    this.selectNode(position, event.metaKey);
   }
 
   onMouseUp(event) {
@@ -99,6 +115,9 @@ class Canvas extends React.Component {
       let streams = this.props.streams;
       let stream = streams[streams.length - 1];
       stream.onMouseUp(event);
+    } else if (this.props.devices.link) {
+      let position = getPosition(event);
+      this.finalizeNodeLink(position);
     }
   }
 
@@ -143,6 +162,24 @@ class Canvas extends React.Component {
     }, 0);
   }
 
+  initiateNodeLink(position) {
+    this.props.nodes.forEach((node) => {
+      let distance = calculateDistance(node.position, position);
+      if (distance <= config.app.doubleClickDistance) {
+        this.linkSrcId = node.id;
+      }
+    });
+  }
+
+  finalizeNodeLink(position) {
+    this.props.nodes.forEach((node) => {
+      let distance = calculateDistance(node.position, position);
+      if (distance <= config.app.doubleClickDistance) {
+        this.props.linkNodes(this.linkSrcId, node.id);
+      }
+    });
+  }
+
   flow() {
     this.props.streams.forEach((stream) => {
       stream.flow();
@@ -165,6 +202,23 @@ class Canvas extends React.Component {
     }
   }
 
+  renderLinks(node) {
+
+    this.canvasContext.beginPath();
+    this.canvasContext.strokeStyle = config.link.strokeStyle;
+    this.canvasContext.lineWidth = config.link.lineWidth;
+
+    node.links.forEach((link) => {
+      let destNode = _.find(this.props.nodes, (nodeObj) => {
+        return nodeObj.id === link;
+      });
+      this.canvasContext.moveTo(node.position[0], node.position[1]);
+      this.canvasContext.lineTo(destNode.position[0], destNode.position[1]);
+    });
+
+    this.canvasContext.stroke();
+  }
+
   draw() {
     this.canvasContext.fillStyle = config.canvas.backgroundColor;
     this.canvasContext.clearRect(0, 0, this.canvasContext.canvas.width, this.canvasContext.canvas.height);
@@ -172,6 +226,10 @@ class Canvas extends React.Component {
 
     this.props.streams.forEach((stream) => {
       stream.render(this.canvasContext);
+    });
+
+    this.props.nodes.forEach((node) => {
+      this.renderLinks(node);
     });
 
     this.props.nodes.forEach((node) => {
@@ -219,7 +277,8 @@ const mapDispatchToProps = (dispatch) => {
     deselectNodes: bindActionCreators(deselectNodes, dispatch),
     addStream: bindActionCreators(addStream, dispatch),
     detectCollisions: bindActionCreators(detectCollisions, dispatch),
-    setNodePosition: bindActionCreators(setNodePosition, dispatch)
+    setNodePosition: bindActionCreators(setNodePosition, dispatch),
+    linkNodes: bindActionCreators(linkNodes, dispatch)
   };
 };
 
