@@ -6,16 +6,18 @@ import { connect } from 'react-redux';
 import { addStream } from '../actions/Streams';
 import { bindActionCreators } from 'redux';
 import { calculateDistance, getPosition } from '../utils/utils';
-import {
-  addSynthNode,
+import { addSynthNode,
   addMidiNode,
   addAudioNode,
-  detectCollisions,
   setNodePosition,
   selectNode,
   deselectNodes,
   cloneNode,
-  linkNodes } from '../actions/Nodes';
+  linkNodes,
+  enqueueParticle,
+  dequeueParticle,
+  playNode,
+  stopNode } from '../actions/Nodes';
 
 class Canvas extends React.Component {
 
@@ -189,17 +191,66 @@ class Canvas extends React.Component {
     });
   }
 
+  playLinks(node, rootId, particleId, checkForRoot) {
+    if (!node.links.length) {
+      return;
+    }
+    if (checkForRoot && node.id === rootId) {
+      return;
+    }
+    node.links.forEach((link) => {
+      setTimeout(() => {
+        this.props.playNode(link.id);
+        this.playLinks(link, rootId, particleId, true);
+      }, link.linkDelay);
+    });
+  };
+
+  stopLinks(node, rootId, particleId, checkForRoot) {
+    if (!node.links.length) {
+      return;
+    }
+    if (checkForRoot && node.id === rootId) {
+      return;
+    }
+    node.links.forEach((link) => {
+      setTimeout(() => {
+        this.props.stopNode(link.id);
+        this.stopLinks(link, rootId, particleId, true);
+      }, link.linkDelay);
+    });
+  };
+
+  detectCollisions() {
+    if (!this.props.streams.length || !this.props.nodes.length) {
+      return;
+    }
+    this.props.nodes.forEach((node) => {
+      this.props.streams.forEach((stream) => {
+        stream.particles.forEach((particle) => {
+          let distance = calculateDistance(node.position, particle.position);
+          if (distance <= config.app.collisionDistance) {
+            if (!node.isParticleQueued(particle.id)) {
+              this.props.enqueueParticle(node.id, particle.id);
+              this.playLinks(node, node.id, particle.id, false);
+            }
+          } else {
+            if (node.isParticleQueued(particle.id)) {
+              this.props.dequeueParticle(node.id, particle.id);
+              this.stopLinks(node, node.id, particle.id, false);
+            }
+          }
+        });
+      });
+    });
+  };
+
   flow() {
     this.props.streams.forEach((stream) => {
       stream.flow();
     });
-    // if (!this.calculating) {
-    //   this.calculating = true;
-    //   setTimeout(() => {
-        this.props.detectCollisions(this.props.streams);
-      //   this.calculating = false;
-      // }, 0);
-    // }
+
+    this.detectCollisions();
 
     // No need to render when the mixer is visible.
     if (!this.props.devices.mixer) {
@@ -306,9 +357,12 @@ const mapDispatchToProps = (dispatch) => {
     cloneNode: bindActionCreators(cloneNode, dispatch),
     deselectNodes: bindActionCreators(deselectNodes, dispatch),
     addStream: bindActionCreators(addStream, dispatch),
-    detectCollisions: bindActionCreators(detectCollisions, dispatch),
     setNodePosition: bindActionCreators(setNodePosition, dispatch),
-    linkNodes: bindActionCreators(linkNodes, dispatch)
+    linkNodes: bindActionCreators(linkNodes, dispatch),
+    enqueueParticle: bindActionCreators(enqueueParticle, dispatch),
+    dequeueParticle: bindActionCreators(dequeueParticle, dispatch),
+    playNode: bindActionCreators(playNode, dispatch),
+    stopNode: bindActionCreators(stopNode, dispatch)
   };
 };
 

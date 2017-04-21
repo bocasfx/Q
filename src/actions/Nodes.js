@@ -21,13 +21,6 @@ export const addAudioNode = (position) => {
   };
 };
 
-export const detectCollisions = (streams) => {
-  return {
-    type: 'DETECT_COLLISIONS',
-    streams
-  };
-};
-
 export const setNodePosition = (id, position) => {
   return {
     type: 'SET_NODE_POSITION',
@@ -156,5 +149,35 @@ export const linkNodes = (srcId, destId) => {
     type: 'LINK_NODES',
     srcId,
     destId
+  };
+};
+
+export const enqueueParticle = (nodeId, particleId) => {
+  return {
+    type: 'ENQUEUE_PARTICLE',
+    nodeId,
+    particleId
+  };
+};
+
+export const dequeueParticle = (nodeId, particleId) => {
+  return {
+    type: 'DEQUEUE_PARTICLE',
+    nodeId,
+    particleId
+  };
+};
+
+export const playNode = (nodeId) => {
+  return {
+    type: 'PLAY_NODE',
+    nodeId
+  };
+};
+
+export const stopNode = (nodeId) => {
+  return {
+    type: 'STOP_NODE',
+    nodeId
   };
 };

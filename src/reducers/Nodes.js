@@ -1,8 +1,6 @@
 import SynthNode from '../elements/SynthNode';
 import MidiNode from '../elements/MidiNode';
 import AudioNode from '../elements/AudioNode';
-import { calculateDistance } from '../utils/utils';
-import config from '../config/config';
 import _ from 'lodash';
 
 const initialState = [];
@@ -26,65 +24,6 @@ const addAudioNode = (state, position) => {
   let nodeList = state.splice(0);
   nodeList.push(audioNode);
   return nodeList;
-};
-
-const playLinks = (node, rootId, checkForRoot) => {
-  if (!node.links.length) {
-    return;
-  }
-  if (checkForRoot && node.id === rootId) {
-    return;
-  }
-  node.links.forEach((link) => {
-    setTimeout(() => {
-      link.play();
-      playLinks(link, rootId, true);
-    }, link.linkDelay);
-  });
-};
-
-const stopLinks = (node, rootId, checkForRoot) => {
-  if (!node.links.length) {
-    return;
-  }
-  if (checkForRoot && node.id === rootId) {
-    return;
-  }
-  node.links.forEach((link) => {
-    setTimeout(() => {
-      link.stop();
-      stopLinks(link, rootId, true);
-    }, link.linkDelay);
-  });
-};
-
-const detectCollisions = (state, streams) => {
-  if (!streams.length || !state.length) {
-    return state;
-  }
-  let stateMutated = false;
-  let newState = state.map((node) => {
-    streams.forEach((stream) => {
-      stream.particles.forEach((particle) => {
-        let distance = calculateDistance(node.position, particle.position);
-        if (distance <= config.app.collisionDistance) {
-          if (!node.isParticleQueued(particle.id)) {
-            node.enqueueParticle(particle.id);
-            playLinks(node, node.id, false);
-            stateMutated = true;
-          }
-        } else {
-          if (node.isParticleQueued(particle.id)) {
-            node.dequeueParticle(particle.id);
-            stopLinks(node, node.id, false);
-            stateMutated = true;
-          }
-        }
-      });
-    });
-    return node;
-  });
-  return stateMutated ? newState : state;
 };
 
 const setNodePosition = (state, id, position) => {
@@ -232,6 +171,42 @@ const linkNodes = (state, srcId, destId) => {
   return state;
 };
 
+const enqueueParticle = (state, nodeId, particleId) => {
+  return state.map((node) => {
+    if (node.id === nodeId) {
+      node.enqueueParticle(particleId);
+    }
+    return node;
+  });
+};
+
+const dequeueParticle = (state, nodeId, particleId) => {
+  return state.map((node) => {
+    if (node.id === nodeId) {
+      node.dequeueParticle(particleId);
+    }
+    return node;
+  });
+};
+
+const playNode = (state, nodeId) => {
+  return state.map((node) => {
+    if (node.id === nodeId) {
+      node.play();
+    }
+    return node;
+  });
+};
+
+const stopNode = (state, nodeId) => {
+  return state.map((node) => {
+    if (node.id === nodeId) {
+      node.stop();
+    }
+    return node;
+  });
+};
+
 export default (state = initialState, action) => {
   switch (action.type) {
 
@@ -243,9 +218,6 @@ export default (state = initialState, action) => {
 
     case 'ADD_AUDIO_NODE':
       return addAudioNode(state, action.position, action.midiContext);
-
-    case 'DETECT_COLLISIONS':
-      return detectCollisions(state, action.streams);
 
     case 'SET_NODE_POSITION':
       return setNodePosition(state, action.id, action.position);
@@ -297,6 +269,18 @@ export default (state = initialState, action) => {
 
     case 'LINK_NODES':
       return linkNodes(state, action.srcId, action.destId);
+
+    case 'ENQUEUE_PARTICLE':
+      return enqueueParticle(state, action.nodeId, action.particleId);
+
+    case 'DEQUEUE_PARTICLE':
+      return dequeueParticle(state, action.nodeId, action.particleId);
+
+    case 'PLAY_NODE':
+      return playNode(state, action.nodeId);
+
+    case 'STOP_NODE':
+      return stopNode(state, action.nodeId);
 
     default:
       return state;

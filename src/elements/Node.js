@@ -14,8 +14,8 @@ class Node {
     this.volume = 0.8;
     this.disabled = false;
     this.pan = 0;
-    this.links =[];
-    this.linkDelay = 300;
+    this.links = [];
+    this.linkDelay = 100;
 
     this.selectedNodeImg = new Image();
     this.selectedNodeImg.src = './icons/elements/node-selected.png';
