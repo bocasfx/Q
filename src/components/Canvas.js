@@ -37,7 +37,8 @@ class Canvas extends React.Component {
       cursor: 'crosshair'
     };
 
-    this.linkSrcId = '';
+    this.linkSrc = null;
+    this.linkPosition = null;
 
     this.linkAnchorImg = new Image();
     this.linkAnchorImg.src = './icons/elements/link-anchor.png';
@@ -84,6 +85,8 @@ class Canvas extends React.Component {
       }
       let stream = streams[streams.length - 1];
       stream.onMouseMove(event);
+    } else if (this.props.devices.link) {
+      this.linkPosition = getPosition(event);
     } else if (!this.props.devices.synthNodes && !this.props.devices.midiNodes && !this.props.devices.audioNodes) {
       let position = getPosition(event);
       this.props.setNodePosition(this.selectedNodeId, position);
@@ -100,6 +103,7 @@ class Canvas extends React.Component {
     if (this.props.devices.streams) {
       this.props.addStream(position, event);
     } else if (this.props.devices.link) {
+      this.linkPosition = position;
       this.initiateNodeLink(position);
     } else if (this.props.devices.synthNodes || this.props.devices.midiNodes || this.props.devices.audioNodes) {
       this.addNode(position);
@@ -121,6 +125,8 @@ class Canvas extends React.Component {
     } else if (this.props.devices.link) {
       let position = getPosition(event);
       this.finalizeNodeLink(position);
+      this.linkSrc = null;
+      this.linkPosition = null;
     }
   }
 
@@ -169,7 +175,7 @@ class Canvas extends React.Component {
     this.props.nodes.forEach((node) => {
       let distance = calculateDistance(node.position, position);
       if (distance <= config.app.doubleClickDistance) {
-        this.linkSrcId = node.id;
+        this.linkSrc = node;
       }
     });
   }
@@ -178,7 +184,7 @@ class Canvas extends React.Component {
     this.props.nodes.forEach((node) => {
       let distance = calculateDistance(node.position, position);
       if (distance <= config.app.doubleClickDistance) {
-        this.props.linkNodes(this.linkSrcId, node.id);
+        this.props.linkNodes(this.linkSrc.id, node.id);
       }
     });
   }
@@ -187,13 +193,13 @@ class Canvas extends React.Component {
     this.props.streams.forEach((stream) => {
       stream.flow();
     });
-    if (!this.calculating) {
-      this.calculating = true;
-      setTimeout(() => {
+    // if (!this.calculating) {
+    //   this.calculating = true;
+    //   setTimeout(() => {
         this.props.detectCollisions(this.props.streams);
-        this.calculating = false;
-      }, 0);
-    }
+      //   this.calculating = false;
+      // }, 0);
+    // }
 
     // No need to render when the mixer is visible.
     if (!this.props.devices.mixer) {
@@ -225,6 +231,22 @@ class Canvas extends React.Component {
     this.canvasContext.stroke();
   }
 
+  renderLinkHandle() {
+    if (!this.linkSrc || !this.linkPosition) {
+      return;
+    }
+
+    this.canvasContext.beginPath();
+    this.canvasContext.strokeStyle = config.link.strokeStyle;
+    this.canvasContext.lineWidth = config.link.lineWidth;
+    this.canvasContext.setLineDash(config.link.lineDash);
+
+    this.canvasContext.moveTo(this.linkSrc.position[0], this.linkSrc.position[1]);
+    this.canvasContext.drawImage(this.linkAnchorImg, this.linkSrc.position[0] - 7.5, this.linkSrc.position[1] - 7.5);
+    this.canvasContext.lineTo(this.linkPosition[0], this.linkPosition[1]);
+    this.canvasContext.stroke();
+  }
+
   draw() {
     this.canvasContext.fillStyle = config.canvas.backgroundColor;
     this.canvasContext.clearRect(0, 0, this.canvasContext.canvas.width, this.canvasContext.canvas.height);
@@ -233,6 +255,8 @@ class Canvas extends React.Component {
     this.props.streams.forEach((stream) => {
       stream.render(this.canvasContext);
     });
+
+    this.renderLinkHandle();
 
     this.props.nodes.forEach((node) => {
       this.renderLinks(node);

@@ -28,23 +28,33 @@ const addAudioNode = (state, position) => {
   return nodeList;
 };
 
-const playLinks = (node) => {
+const playLinks = (node, rootId, checkForRoot) => {
   if (!node.links.length) {
     return;
   }
+  if (checkForRoot && node.id === rootId) {
+    return;
+  }
   node.links.forEach((link) => {
-    link.play();
-    playLinks(link);
+    setTimeout(() => {
+      link.play();
+      playLinks(link, rootId, true);
+    }, link.linkDelay);
   });
 };
 
-const stopLinks = (node) => {
+const stopLinks = (node, rootId, checkForRoot) => {
   if (!node.links.length) {
     return;
   }
+  if (checkForRoot && node.id === rootId) {
+    return;
+  }
   node.links.forEach((link) => {
-    link.stop();
-    stopLinks(link);
+    setTimeout(() => {
+      link.stop();
+      stopLinks(link, rootId, true);
+    }, link.linkDelay);
   });
 };
 
@@ -60,13 +70,13 @@ const detectCollisions = (state, streams) => {
         if (distance <= config.app.collisionDistance) {
           if (!node.isParticleQueued(particle.id)) {
             node.enqueueParticle(particle.id);
-            playLinks(node);
+            playLinks(node, node.id, false);
             stateMutated = true;
           }
         } else {
           if (node.isParticleQueued(particle.id)) {
             node.dequeueParticle(particle.id);
-            stopLinks(node);
+            stopLinks(node, node.id, false);
             stateMutated = true;
           }
         }
