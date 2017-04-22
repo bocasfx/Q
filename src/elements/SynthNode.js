@@ -10,11 +10,11 @@ class SynthNode extends Node {
   constructor(position) {
     super(position);
 
-    this.oscillator1 = new Oscillator(audioContext);
-    this.oscillator2 = new Oscillator(audioContext);
-    this.amplifier = new Amplifier(audioContext);
+    this.oscillator1 = new Oscillator();
+    this.oscillator2 = new Oscillator();
+    this.amplifier = new Amplifier();
 
-    this.envelopeGenerator = new EnvelopeGenerator(config.synthNode.envelope, audioContext);
+    this.envelopeGenerator = new EnvelopeGenerator(config.synthNode.envelope);
 
     this.oscillator1.connect(this.amplifier);
     this.oscillator2.connect(this.amplifier);
@@ -34,8 +34,16 @@ class SynthNode extends Node {
     this.oscillator1.frequency = freq;
   }
 
+  get osc1Freq() {
+    return this.oscillator1.frequency;
+  }
+
   set osc2Freq(freq) {
     this.oscillator2.frequency = freq;
+  }
+
+  get osc2Freq() {
+    return this.oscillator2.frequency;
   }
 
   set osc1WaveType(waveType) {

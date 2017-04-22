@@ -1,7 +1,8 @@
+import audioContext from '../config/audio-context';
+
 class Oscillator {
 
-  constructor(audioContext) {
-    this.audioContext = audioContext;
+  constructor() {
     this.oscillator = audioContext.createOscillator();
     this.waveType = 'sine';
     this.frequency = 120;
@@ -12,7 +13,7 @@ class Oscillator {
   }
 
   set frequency(freq) {
-    this.oscillator.frequency.setValueAtTime(freq, this.audioContext.currentTime);
+    this.oscillator.frequency.setValueAtTime(freq, audioContext.currentTime);
   }
 
   get frequency() {

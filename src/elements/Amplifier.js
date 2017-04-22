@@ -1,6 +1,7 @@
+import audioContext from '../config/audio-context';
+
 class Amplifier {
-  constructor(audioContext) {
-    this.audioContext = audioContext;
+  constructor() {
     this.gainL = audioContext.createGain();
     this.gainR = audioContext.createGain();
     this.gainL.gain.value = 0;
@@ -18,7 +19,7 @@ class Amplifier {
   }
 
   set volume(vol) {
-    let now = this.audioContext.currentTime;
+    let now = audioContext.currentTime;
     this.gainL.gain.linearRampToValueAtTime(vol, now);
     this.gainR.gain.linearRampToValueAtTime(vol, now);
   }

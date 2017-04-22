@@ -8,6 +8,7 @@ import reducer from './reducers';
 import Menu from './components/Menu/Menu';
 import Mixer from './components/Mixer/Mixer';
 import ControlPanel from './components/ControlPanel/ControlPanel';
+import { serialize } from './utils/serializer';
 
 const store = createStore(reducer);
 
@@ -42,18 +43,18 @@ const initialize = () => {
   window.onkeypress = (event) => {
     if (event.ctrlKey && event.key ==='s') {
       const state = store.getState();
-      console.log(state.Nodes[0]);
-      console.log(JSON.stringify(state.Nodes[0]));
-      localStorage.QState = JSON.stringify(state);
+      let serializedState = serialize(state);
+      console.log(serializedState);
+      localStorage.QState = serializedState;
     }
   };
 
-  // if (localStorage.QState) {
-  //   store.dispatch({
-  //     type: 'HYDRATE_STATE',
-  //     payload: JSON.parse(localStorage.QState)
-  //   });
-  // }
+  if (localStorage.QState) {
+    store.dispatch({
+      type: 'HYDRATE_STATE',
+      payload: JSON.parse(localStorage.QState)
+    });
+  }
 };
 
 initialize();

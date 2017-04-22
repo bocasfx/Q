@@ -1,6 +1,6 @@
 module.exports = {
   Devices: {
-    streams: true,
+    streams: false,
     synthNodes: false,
     midiNodes: false,
     audioNodes: false,

@@ -1,13 +1,16 @@
 import Node from './Node';
+import midiContext from '../config/midi-context';
 
 class MidiNode extends Node {
 
-  constructor(position, midiContext) {
+  constructor(position) {
     super(position);
-    this.midiContext = midiContext;
-    let outputs = midiContext.outputs;
-    let output = outputs.values().next();
-    this.midiOut = output.value;
+    midiContext.then((ctx) => {
+      let outputs = ctx.outputs;
+      let output = outputs.values().next();
+      this.midiOut = output.value;
+    });
+    
     this.type = 'midi';
     this.note = 30;
     this.velocity = 127;
@@ -20,7 +23,7 @@ class MidiNode extends Node {
   }
 
   play() {
-    if (this.active) {
+    if (this.active || !this.midiOut) {
       return;
     }
     this.active = true;

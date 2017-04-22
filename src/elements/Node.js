@@ -26,6 +26,8 @@ class Node {
 
   set osc1Freq(frequency) {}
   set osc2Freq(frequency) {}
+  get osc1Freq() {}
+  get osc2Freq() {}
   set osc1WaveType(waveType) {}
   set osc2WaveType(waveType) {}
   set src(value) {}
