@@ -135,7 +135,7 @@ class Canvas extends React.Component {
   addNode(position) {
     // Synth Nodes
     if (this.props.devices.synthNodes) {
-      this.props.addSynthNode(position, this.props.audioContext);
+      this.props.addSynthNode(position);
 
     // MIDI Nodes
     } else if (this.props.devices.midiNodes) {

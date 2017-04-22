@@ -3,10 +3,11 @@ import Node from './Node';
 import Oscillator from './Oscillator';
 import Amplifier from './Amplifier';
 import EnvelopeGenerator from './EnvelopeGenerator';
+import audioContext from '../config/audio-context';
 
 class SynthNode extends Node {
 
-  constructor(position, audioContext) {
+  constructor(position) {
     super(position);
 
     this.oscillator1 = new Oscillator(audioContext);

@@ -2,11 +2,10 @@ import SynthNode from '../elements/SynthNode';
 import MidiNode from '../elements/MidiNode';
 import AudioNode from '../elements/AudioNode';
 import _ from 'lodash';
+import { Nodes } from '../config/initial-state';
 
-const initialState = [];
-
-const addSynthNode = (state, position, audioContext) => {
-  let node = new SynthNode(position, audioContext);
+const addSynthNode = (state, position) => {
+  let node = new SynthNode(position);
   let nodeList = state.splice(0);
   nodeList.push(node);
   return nodeList;
@@ -207,11 +206,11 @@ const stopNode = (state, nodeId) => {
   });
 };
 
-export default (state = initialState, action) => {
+export default (state = Nodes, action) => {
   switch (action.type) {
 
     case 'ADD_SYNTH_NODE':
-      return addSynthNode(state, action.position, action.audioContext);
+      return addSynthNode(state, action.position);
 
     case 'ADD_MIDI_NODE':
       return addMidiNode(state, action.position, action.midiContext);

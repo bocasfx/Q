@@ -1,8 +1,7 @@
-export const addSynthNode = (position, audioContext) => {
+export const addSynthNode = (position) => {
   return {
     type: 'ADD_SYNTH_NODE',
-    position,
-    audioContext
+    position
   };
 };
 

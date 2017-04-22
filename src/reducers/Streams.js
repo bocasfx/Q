@@ -1,7 +1,6 @@
 import Stream from '../elements/Stream';
 import _ from 'lodash';
-
-const initialState = [];
+import { Streams } from '../config/initial-state';
 
 const addStream = (state, position, event) => {
   let stream = new Stream(position);
@@ -47,7 +46,7 @@ const setStreamDisabledStatus = (state, id, status) => {
   });
 };
 
-export default (state = initialState, action) => {
+export default (state = Streams, action) => {
   switch (action.type) {
 
     case 'ADD_STREAM':

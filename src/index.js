@@ -9,12 +9,8 @@ import Menu from './components/Menu/Menu';
 import Mixer from './components/Mixer/Mixer';
 import ControlPanel from './components/ControlPanel/ControlPanel';
 
-window.onresize = () => {
-  location.reload();
-};
-
 const store = createStore(reducer);
-const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
 const renderDom = (midiContext) => {
   ReactDOM.render(
     <Provider store={store}>
@@ -22,7 +18,7 @@ const renderDom = (midiContext) => {
         <Mixer/>
         <div className="main-container">
           <Menu midi={midiContext !== null}/>
-          <Canvas audioContext={audioContext} midiContext={midiContext}/>
+          <Canvas midiContext={midiContext}/>
           <ControlPanel/>
         </div>
       </div>
@@ -31,13 +27,33 @@ const renderDom = (midiContext) => {
   );
 };
 
-if (navigator.requestMIDIAccess) {
-  navigator.requestMIDIAccess({sysex: false})
-    .then((midiContext) => {
-      renderDom(midiContext);
-    }, () => {
-      renderDom(null);
-    });
-} else {
-  renderDom(null);
-}
+const initialize = () => {
+  if (navigator.requestMIDIAccess) {
+    navigator.requestMIDIAccess({sysex: false})
+      .then((midiContext) => {
+        renderDom(midiContext);
+      }, () => {
+        renderDom(null);
+      });
+  } else {
+    renderDom(null);
+  }
+
+  window.onkeypress = (event) => {
+    if (event.ctrlKey && event.key ==='s') {
+      const state = store.getState();
+      console.log(state.Nodes[0]);
+      console.log(JSON.stringify(state.Nodes[0]));
+      localStorage.QState = JSON.stringify(state);
+    }
+  };
+
+  // if (localStorage.QState) {
+  //   store.dispatch({
+  //     type: 'HYDRATE_STATE',
+  //     payload: JSON.parse(localStorage.QState)
+  //   });
+  // }
+};
+
+initialize();

@@ -7,7 +7,7 @@ class Node {
   constructor(position) {
     this.position = position;
     this.id = uuidv1();
-    this.name = names.generate();
+    this.name = names.generate(true);
     this.selected = false;
     this.active = false;
     this.particleQueue = [];

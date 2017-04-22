@@ -1,14 +1,4 @@
-const initialState = {
-  streams: true,
-  synthNodes: false,
-  midiNodes: false,
-  audioNodes: false,
-  settings: false,
-  nodeSettings: false,
-  nodeSettingsId: null,
-  mixer: false,
-  link: false
-};
+import { Devices } from '../config/initial-state';
 
 const toggleDevice = (state, device) => {
   let newState = Object.assign({}, state, {});
@@ -20,7 +10,7 @@ const toggleDevice = (state, device) => {
   return newState;
 };
 
-export default (state = initialState, action) => {
+export default (state = Devices, action) => {
   switch (action.type) {
 
     case 'TOGGLE_DEVICE':
