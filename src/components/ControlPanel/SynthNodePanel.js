@@ -120,7 +120,7 @@ class SynthNodePanel extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    nodes: state.Nodes
+    nodes: state.nodes
   };
 };
 

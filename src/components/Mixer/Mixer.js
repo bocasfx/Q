@@ -43,8 +43,8 @@ class Mixer extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    devices: state.Devices,
-    nodes: state.Nodes
+    devices: state.devices,
+    nodes: state.nodes
   };
 };
 

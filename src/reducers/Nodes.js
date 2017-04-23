@@ -2,7 +2,7 @@ import SynthNode from '../elements/SynthNode';
 import MidiNode from '../elements/MidiNode';
 import AudioNode from '../elements/AudioNode';
 import _ from 'lodash';
-import { Nodes } from '../config/initial-state';
+import { nodes } from '../config/initial-state';
 
 const addSynthNode = (state, position) => {
   let node = new SynthNode(position);
@@ -111,7 +111,6 @@ const setNodeOsc2WaveType = (state, id, waveType) => {
 
 const cloneNode = (state, id) => {
   console.log(state);
-  
 };
 
 const setNodeAttack = (state, id, value) => {
@@ -222,7 +221,7 @@ const stopNode = (state, nodeId) => {
   });
 };
 
-export default (state = Nodes, action) => {
+export default (state = nodes, action) => {
   switch (action.type) {
 
     case 'ADD_SYNTH_NODE':

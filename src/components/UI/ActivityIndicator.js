@@ -43,8 +43,8 @@ class ActivityIndicator extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    nodes: state.Nodes,
-    streams: state.Streams
+    nodes: state.nodes,
+    streams: state.streams
   };
 };
 

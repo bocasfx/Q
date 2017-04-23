@@ -84,9 +84,9 @@ class EditorPanel extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    nodes: state.Nodes,
-    streams: state.Streams,
-    selection: state.Selection
+    nodes: state.nodes,
+    streams: state.streams,
+    selection: state.selection
   };
 };
 

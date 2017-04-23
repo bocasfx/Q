@@ -1,5 +1,5 @@
 module.exports = {
-  Devices: {
+  devices: {
     streams: false,
     synthNodes: false,
     midiNodes: false,
@@ -10,9 +10,14 @@ module.exports = {
     mixer: false,
     link: false
   },
-  Nodes: [],
-  Streams: [],
-  Selection: {
+  nodes: [],
+  streams: [],
+  selection: {
     objType: 'nodes'
+  },
+  notifications: {
+    message: '',
+    level: 'info',
+    hidden: true
   }
 };

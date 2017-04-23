@@ -343,9 +343,9 @@ class Canvas extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    devices: state.Devices,
-    nodes: state.Nodes,
-    streams: state.Streams,
+    devices: state.devices,
+    nodes: state.nodes,
+    streams: state.streams,
     collisions: state.Collisions
   };
 };

@@ -8,6 +8,7 @@ import reducer from './reducers';
 import Menu from './components/Menu/Menu';
 import Mixer from './components/Mixer/Mixer';
 import ControlPanel from './components/ControlPanel/ControlPanel';
+import Toaster from './components/UI/Toaster';
 import { serialize } from './utils/serializer';
 
 const store = createStore(reducer);
@@ -16,6 +17,7 @@ const renderDom = (midiContext) => {
   ReactDOM.render(
     <Provider store={store}>
       <div>
+        <Toaster/>
         <Mixer/>
         <div className="main-container">
           <Menu midi={midiContext !== null}/>

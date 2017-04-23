@@ -1,4 +1,4 @@
-import { Devices } from '../config/initial-state';
+import { devices } from '../config/initial-state';
 
 const toggleDevice = (state, device) => {
   let newState = Object.assign({}, state, {});
@@ -10,7 +10,7 @@ const toggleDevice = (state, device) => {
   return newState;
 };
 
-export default (state = Devices, action) => {
+export default (state = devices, action) => {
   switch (action.type) {
 
     case 'TOGGLE_DEVICE':

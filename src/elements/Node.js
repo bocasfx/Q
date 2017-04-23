@@ -15,7 +15,7 @@ class Node {
     this.disabled = false;
     this.pan = 0;
     this.links = [];
-    this.linkDelay = 100;
+    this.linkDelay = 500;
 
     this.selectedNodeImg = new Image();
     this.selectedNodeImg.src = './icons/elements/node-selected.png';

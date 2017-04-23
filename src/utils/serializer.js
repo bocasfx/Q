@@ -35,7 +35,7 @@ const serializeAudioNode = (node) => {
 };
 
 export const serialize = (payload) => {
-  let nodes = payload.Nodes;
+  let nodes = payload.nodes;
   let serializedNodes = nodes.map((node) => {
     switch (node.type) {
       case 'synth':
@@ -50,21 +50,22 @@ export const serialize = (payload) => {
   });
   console.log(serializedNodes);
   return JSON.stringify({
-    Nodes: serializedNodes
+    nodes: serializedNodes
   });
 };
 
 export const hydrate = (payload) => {
-  let nodes = payload.Nodes.map((node) => {
+  let nodes = payload.nodes.map((node) => {
     let newNode = createNode(node);
     let extendedNode = Object.assign(newNode, node);
     return extendedNode;
   });
   let newState = Object.assign({}, payload, {
-    Nodes: nodes,
-    Devices: initialState.Devices,
-    Streams: initialState.Streams,
-    Selection: initialState.Selection
+    nodes: nodes,
+    devices: initialState.devices,
+    streams: initialState.streams,
+    selection: initialState.selection,
+    notifications: initialState.notifications
   });
   return newState;
 };

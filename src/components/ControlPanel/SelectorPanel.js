@@ -105,8 +105,8 @@ class SelectorPanel extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    streams: state.Streams,
-    nodes: state.Nodes
+    streams: state.streams,
+    nodes: state.nodes
   };
 };
 
