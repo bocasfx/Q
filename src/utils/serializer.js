@@ -48,6 +48,7 @@ export const serialize = (payload) => {
         return null;
     }
   });
+  console.log(serializedNodes);
   return JSON.stringify({
     Nodes: serializedNodes
   });

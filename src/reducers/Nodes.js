@@ -159,6 +159,19 @@ const setNodePan = (state, id, pan) => {
   });
 };
 
+const graphHasLoop = (node, rootId, checkForRoot) => {
+  if (checkForRoot && node.id === rootId) {
+    return true;
+  }
+  for (var i = 0; i < node.links.length; i++) {
+    let result = graphHasLoop(node.links[i], rootId, true);
+    if (result) {
+      return result;
+    }
+  }
+  return false;
+};
+
 const linkNodes = (state, srcId, destId) => {
   let srcNode = _.find(state, (node) => {
     return node.id === srcId;
@@ -167,6 +180,9 @@ const linkNodes = (state, srcId, destId) => {
     return node.id === destId;
   });
   srcNode.link(destNode);
+  if (graphHasLoop(destNode, srcNode.id, false)) {
+    console.log('LOOP!');
+  }
   return state;
 };
 
