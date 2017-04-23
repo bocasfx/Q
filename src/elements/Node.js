@@ -9,10 +9,10 @@ class Node {
     this.id = uuidv1();
     this.name = names.generate(true);
     this.selected = false;
-    this.active = false;
+    this.activeStatus = false;
     this.particleQueue = [];
     this.volume = 0.8;
-    this.disabled = false;
+    this._disabled = false;
     this.pan = 0;
     this.links = [];
     this.linkDelay = 500;
@@ -37,6 +37,17 @@ class Node {
   set release(value) {}
   get release() {}
 
+  set disabled(value) {
+    this._disabled = value;
+    this.links.forEach((link) => {
+      link.disabled = value;
+    });
+  }
+
+  get disabled() {
+    return this._disabled;
+  }
+
   stop() {}
 
   isParticleQueued(id) {
@@ -47,7 +58,7 @@ class Node {
   }
 
   enqueueParticle(id) {
-    if (this.disabled) {
+    if (this._disabled) {
       return;
     }
 
@@ -79,7 +90,7 @@ class Node {
 
     let image;
 
-    if (this.disabled) {
+    if (this._disabled) {
       image = this.disabledNodeImg;
     } else {
       image = this.active ? this.activeNodeImg : this.nodeImg;

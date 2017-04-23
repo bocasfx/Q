@@ -186,7 +186,7 @@ class Canvas extends React.Component {
     this.props.nodes.forEach((node) => {
       let distance = calculateDistance(node.position, position);
       if (distance <= config.app.doubleClickDistance) {
-        if (this.linkSrc.id !== node.id) {
+        if (this.linkSrc && this.linkSrc.id !== node.id) {
           this.props.linkNodes(this.linkSrc.id, node.id);
         }
       }

@@ -71,7 +71,7 @@ class SynthNode extends Node {
   }
 
   play() {
-    if (this.active) {
+    if (this.active || this._disabled) {
       return;
     }
     this.active = true;
