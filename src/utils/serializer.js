@@ -17,20 +17,20 @@ const createNode = (node) => {
 };
 
 const serializeSynthNode = (node) => {
-  return (({ id, type, name, position, selected, volume, attack, release, osc1Freq, osc2Freq, disabled, pan, links, linkDelay }) => {
-    return { id, type, name, position, selected, volume, attack, release, osc1Freq, osc2Freq, disabled, pan, links, linkDelay };
+  return (({ id, type, name, position, selected, volume, attack, release, osc1Freq, osc2Freq, disabled, pan, links, delay }) => {
+    return { id, type, name, position, selected, volume, attack, release, osc1Freq, osc2Freq, disabled, pan, links, delay };
   })(node);
 };
 
 const serializeMidiNode = (node) => {
-  return (({ id, type, name, position, selected, note, velocity, disabled, links, linkDelay }) => {
-    return { id, type, name, position, selected, note, velocity, disabled, links, linkDelay };
+  return (({ id, type, name, position, selected, note, velocity, disabled, links, delay }) => {
+    return { id, type, name, position, selected, note, velocity, disabled, links, delay };
   })(node);
 };
 
 const serializeAudioNode = (node) => {
-  return (({ id, type, name, position, selected, disabled, links, linkDelay }) => {
-    return { id, type, name, position, selected, disabled, links, linkDelay };
+  return (({ id, type, name, position, selected, disabled, links, delay }) => {
+    return { id, type, name, position, selected, disabled, links, delay };
   })(node);
 };
 

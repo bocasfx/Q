@@ -75,6 +75,7 @@ canvas {
 
 .main-container {
   display: flex;
+  background-image: url(../public/backgrounds/concrete_wall.png);
 }
 
 .column {

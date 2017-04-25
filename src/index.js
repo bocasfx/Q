@@ -30,6 +30,12 @@ const renderDom = (midiContext) => {
   );
 };
 
+const saveContent = () => {
+  const state = store.getState();
+  let serializedState = serialize(state);
+  localStorage.QState = serializedState;
+};
+
 const initialize = () => {
   if (navigator.requestMIDIAccess) {
     navigator.requestMIDIAccess({sysex: false})
@@ -44,11 +50,13 @@ const initialize = () => {
 
   window.onkeypress = (event) => {
     if (event.ctrlKey && event.key ==='s') {
-      const state = store.getState();
-      let serializedState = serialize(state);
-      console.log(serializedState);
-      localStorage.QState = serializedState;
+      saveContent();
     }
+  };
+
+  window.onresize = () => {
+    saveContent();
+    location.reload();
   };
 
   if (localStorage.QState) {

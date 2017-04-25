@@ -185,37 +185,46 @@ const linkNodes = (state, srcId, destId) => {
   return state;
 };
 
-const enqueueParticle = (state, nodeId, particleId) => {
+const enqueueParticle = (state, id, particleId) => {
   return state.map((node) => {
-    if (node.id === nodeId) {
+    if (node.id === id) {
       node.enqueueParticle(particleId);
     }
     return node;
   });
 };
 
-const dequeueParticle = (state, nodeId, particleId) => {
+const dequeueParticle = (state, id, particleId) => {
   return state.map((node) => {
-    if (node.id === nodeId) {
+    if (node.id === id) {
       node.dequeueParticle(particleId);
     }
     return node;
   });
 };
 
-const playNode = (state, nodeId) => {
+const playNode = (state, id) => {
   return state.map((node) => {
-    if (node.id === nodeId) {
+    if (node.id === id) {
       node.play();
     }
     return node;
   });
 };
 
-const stopNode = (state, nodeId) => {
+const stopNode = (state, id) => {
   return state.map((node) => {
-    if (node.id === nodeId) {
+    if (node.id === id) {
       node.stop();
+    }
+    return node;
+  });
+};
+
+const setNodeDelay = (state, id, delay) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.delay = delay;
     }
     return node;
   });
@@ -285,16 +294,19 @@ export default (state = nodes, action) => {
       return linkNodes(state, action.srcId, action.destId);
 
     case 'ENQUEUE_PARTICLE':
-      return enqueueParticle(state, action.nodeId, action.particleId);
+      return enqueueParticle(state, action.id, action.particleId);
 
     case 'DEQUEUE_PARTICLE':
-      return dequeueParticle(state, action.nodeId, action.particleId);
+      return dequeueParticle(state, action.id, action.particleId);
 
     case 'PLAY_NODE':
-      return playNode(state, action.nodeId);
+      return playNode(state, action.id);
 
     case 'STOP_NODE':
-      return stopNode(state, action.nodeId);
+      return stopNode(state, action.id);
+
+    case 'SET_NODE_DELAY':
+      return setNodeDelay(state, action.id, action.delay);
 
     default:
       return state;

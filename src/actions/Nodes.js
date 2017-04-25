@@ -151,32 +151,40 @@ export const linkNodes = (srcId, destId) => {
   };
 };
 
-export const enqueueParticle = (nodeId, particleId) => {
+export const enqueueParticle = (id, particleId) => {
   return {
     type: 'ENQUEUE_PARTICLE',
-    nodeId,
+    id,
     particleId
   };
 };
 
-export const dequeueParticle = (nodeId, particleId) => {
+export const dequeueParticle = (id, particleId) => {
   return {
     type: 'DEQUEUE_PARTICLE',
-    nodeId,
+    id,
     particleId
   };
 };
 
-export const playNode = (nodeId) => {
+export const playNode = (id) => {
   return {
     type: 'PLAY_NODE',
-    nodeId
+    id
   };
 };
 
-export const stopNode = (nodeId) => {
+export const stopNode = (id) => {
   return {
     type: 'STOP_NODE',
-    nodeId
+    id
+  };
+};
+
+export const setNodeDelay = (id, delay) => {
+  return {
+    type: 'SET_NODE_DELAY',
+    id,
+    delay
   };
 };

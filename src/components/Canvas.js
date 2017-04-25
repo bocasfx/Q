@@ -204,7 +204,7 @@ class Canvas extends React.Component {
       setTimeout(() => {
         this.props.playNode(link.id);
         this.playLinks(link, rootId, particleId, true);
-      }, link.linkDelay);
+      }, link.delay);
     });
   };
 
@@ -219,7 +219,7 @@ class Canvas extends React.Component {
       setTimeout(() => {
         this.props.stopNode(link.id);
         this.stopLinks(link, rootId, particleId, true);
-      }, link.linkDelay);
+      }, link.delay);
     });
   };
 
