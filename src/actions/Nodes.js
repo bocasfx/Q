@@ -188,3 +188,11 @@ export const setNodeDelay = (id, delay) => {
     delay
   };
 };
+
+export const setNodeProbability = (id, probability) => {
+  return {
+    type: 'SET_NODE_PROBABILITY',
+    id,
+    probability
+  };
+};

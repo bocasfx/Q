@@ -1,8 +1,5 @@
 import React from 'react';
 import './FileButton.css';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { setNodeSource } from '../../actions/Nodes';
 let electron = null;
 let dialog = null;
 
@@ -24,9 +21,7 @@ class FileButton extends React.Component {
     }
 
     dialog.showOpenDialog((files) => {
-      if (files && files.length) {
-        this.props.setNodeSource(this.props.node.id, files[0]);
-      }
+      this.props.onChange(files);
     });
   }
 
@@ -41,14 +36,4 @@ class FileButton extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return state;
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setNodeSource: bindActionCreators(setNodeSource, dispatch)
-  };
-};
-
-module.exports = connect(mapStateToProps, mapDispatchToProps)(FileButton);
+module.exports = FileButton;

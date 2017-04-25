@@ -16,6 +16,8 @@ class Node {
     this.pan = 0;
     this.links = [];
     this.delay = 500;
+    this.probability = 1.0;
+    this.ignoring = false;
 
     this.selectedNodeImg = new Image();
     this.selectedNodeImg.src = './icons/elements/node-selected.png';
@@ -46,6 +48,12 @@ class Node {
 
   get disabled() {
     return this._disabled;
+  }
+
+  get shouldPlay() {
+    let prob = Math.random();
+    this.ignoring = prob > this.probability;
+    return !this.ignoring;
   }
 
   stop() {}
@@ -79,6 +87,7 @@ class Node {
     // last particle to leave the queue
     if (!this.particleQueue.length) {
       this.stop();
+      this.ignoring = false;
     }
   }
 
@@ -92,9 +101,12 @@ class Node {
 
     if (this._disabled) {
       image = this.disabledNodeImg;
+    } else if (this.ignoring) {
+      image = this.probabilityNodeImg;
     } else {
       image = this.active ? this.activeNodeImg : this.nodeImg;
     }
+
     canvasContext.drawImage(image, this.position[0] - 20, this.position[1] - 20);
 
     if (this.selected) {

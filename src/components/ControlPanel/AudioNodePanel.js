@@ -2,30 +2,30 @@ import React from 'react';
 import FileButton from '../UI/FileButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setNodeDelay } from '../../actions/Nodes';
-import Knob from '../UI/Knob';
+import { setNodeSource } from '../../actions/Nodes';
+import NodePanelHeader from './NodePanelHeader';
 
 class AudioNodePanel extends React.Component {
   constructor(props) {
     super(props);
-    this.onDelayChange = this.onDelayChange.bind(this);
+    this.onFileChange = this.onFileChange.bind(this);
   }
 
-  onDelayChange(value) {
-    this.props.setNodeDelay(this.props.node.id, value);
+  onFileChange(files) {
+    if (files && files.length) {
+      this.props.setNodeSource(this.props.node.id, files[0]);
+    }
   }
 
   render() {
     return (
       <div className="audio-node-panel-container">
-        <FileButton node={this.props.node}/>
-        <Knob
-          label={'Delay'}
-          value={this.props.node.delay}
-          min={0}
-          max={5000}
-          onChange={this.onDelayChange}
-          disabled={this.props.node.disabled}/>
+        <div className="row">
+          <FileButton onChange={this.onFileChange}/>
+        </div>
+        <div className="row">
+          <NodePanelHeader node={this.props.node}/>
+        </div>
       </div>
     );
   }
@@ -39,7 +39,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setNodeDelay: bindActionCreators(setNodeDelay, dispatch)
+    setNodeSource: bindActionCreators(setNodeSource, dispatch)
   };
 };
 

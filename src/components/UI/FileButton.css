@@ -1,20 +1,19 @@
 .file-button-container {
-  border-radius: 3px;
-  border: 1px solid rgba(127, 127, 127, 0.5);
-  color: rgba(127, 127, 127, 0.5);
+  width: 100%;
 }
 
 .file-button-container button {
+  width: 100%;
   cursor: pointer;
-  width: 30px;
-  height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: transparent;
-  border: none;
-  color: rgba(127, 127, 127, 0.5);
+  color: dimgray;
   font-size: 1em;
+  border: 1px solid dimgray;
+  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.75);
+  padding: 10px;
 }
 
 .file-button-container button:focus {

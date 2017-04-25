@@ -6,10 +6,6 @@ const addStream = (state, position, event) => {
   let stream = new Stream(position);
   let streamList = state.splice(0);
   streamList.push(stream);
-  streamList = streamList.map((strm) => {
-    strm.selected = stream.id === strm.id ? !strm.selected : false;
-    return strm;
-  });
   stream.onMouseDown(event);
   return streamList;
 };

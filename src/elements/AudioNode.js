@@ -12,6 +12,9 @@ class AudioNode extends Node {
 
     this.activeNodeImg = new Image();
     this.activeNodeImg.src = './icons/elements/audio-node-active.png';
+
+    this.probabilityNodeImg = new Image();
+    this.probabilityNodeImg.src = './icons/elements/audio-node-probability.png';
   }
 
   set src(filePath) {
@@ -30,7 +33,7 @@ class AudioNode extends Node {
   }
 
   play() {
-    if (this.active || !this.audio) {
+    if (this.active || !this.audio || !this.shouldPlay) {
       return;
     }
     this.active = true;

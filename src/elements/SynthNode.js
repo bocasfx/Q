@@ -28,6 +28,9 @@ class SynthNode extends Node {
 
     this.activeNodeImg = new Image();
     this.activeNodeImg.src = './icons/elements/synth-node-active.png';
+
+    this.probabilityNodeImg = new Image();
+    this.probabilityNodeImg.src = './icons/elements/synth-node-probability.png';
   }
 
   set osc1Freq(freq) {
@@ -71,7 +74,7 @@ class SynthNode extends Node {
   }
 
   play() {
-    if (this.active || this._disabled) {
+    if (this.active || this._disabled || !this.shouldPlay) {
       return;
     }
     this.active = true;

@@ -20,10 +20,13 @@ class MidiNode extends Node {
 
     this.activeNodeImg = new Image();
     this.activeNodeImg.src = './icons/elements/midi-node-active.png';
+
+    this.probabilityNodeImg = new Image();
+    this.probabilityNodeImg.src = './icons/elements/midi-node-probability.png';
   }
 
   play() {
-    if (this.active || !this.midiOut) {
+    if (this.active || !this.midiOut || !this.shouldPlay) {
       return;
     }
     this.active = true;

@@ -230,6 +230,15 @@ const setNodeDelay = (state, id, delay) => {
   });
 };
 
+const setNodeProbability = (state, id, probability) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.probability = probability;
+    }
+    return node;
+  });
+};
+
 export default (state = nodes, action) => {
   switch (action.type) {
 
@@ -307,6 +316,9 @@ export default (state = nodes, action) => {
 
     case 'SET_NODE_DELAY':
       return setNodeDelay(state, action.id, action.delay);
+
+    case 'SET_NODE_PROBABILITY':
+      return setNodeProbability(state, action.id, action.probability);
 
     default:
       return state;

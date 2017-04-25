@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import OscillatorPanel from './OscillatorPanel';
 import Knob from '../UI/Knob';
 import Slider from '../UI/Slider';
+import NodePanelHeader from './NodePanelHeader';
 import {
   setNodeOsc1Frequency,
   setNodeOsc2Frequency,
@@ -13,8 +14,7 @@ import {
   setNodeVolume,
   setNodeAttack,
   setNodeRelease,
-  setNodePan,
-  setNodeDelay } from '../../actions/Nodes';
+  setNodePan } from '../../actions/Nodes';
 
 class SynthNodePanel extends React.Component {
 
@@ -25,7 +25,6 @@ class SynthNodePanel extends React.Component {
     this.onAttackChange = this.onAttackChange.bind(this);
     this.onReleaseChange = this.onReleaseChange.bind(this);
     this.onPanChange = this.onPanChange.bind(this);
-    this.onDelayChange = this.onDelayChange.bind(this);
   }
 
   onGainChange(value) {
@@ -44,13 +43,14 @@ class SynthNodePanel extends React.Component {
     this.props.setNodePan(this.props.node.id, value);
   }
 
-  onDelayChange(value) {
-    this.props.setNodeDelay(this.props.node.id, value);
-  }
-
   render() {
     return (
       <div className="synth-node-panel-container">
+
+        <div className="row">
+          <NodePanelHeader node={this.props.node}/>
+        </div>
+
         <div className="row synth-node-panel-gain">
           <Knob
             label={'Gain'}
@@ -85,13 +85,6 @@ class SynthNodePanel extends React.Component {
               <img src="./icons/control-panel/adsr/release.svg" alt="release"/>
             </div>
           </div>
-          <Knob
-            label={'Delay'}
-            value={this.props.node.delay}
-            min={0}
-            max={5000}
-            onChange={this.onDelayChange}
-            disabled={this.props.node.disabled}/>
         </div>
           
         <div className="row synth-node-panel-pan synth-node-panel-pan-labels">
@@ -146,8 +139,7 @@ const mapDispatchToProps = (dispatch) => {
     setNodeVolume: bindActionCreators(setNodeVolume, dispatch),
     setNodeAttack: bindActionCreators(setNodeAttack, dispatch),
     setNodeRelease: bindActionCreators(setNodeRelease, dispatch),
-    setNodePan: bindActionCreators(setNodePan, dispatch),
-    setNodeDelay: bindActionCreators(setNodeDelay, dispatch)
+    setNodePan: bindActionCreators(setNodePan, dispatch)
   };
 };
 

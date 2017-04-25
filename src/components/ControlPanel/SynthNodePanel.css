@@ -28,3 +28,8 @@
   justify-content: space-between;
   margin-bottom: 20px;
 }
+
+.synth-node-panel-pan-labels div {
+  font-size: 0.8em;
+  align-items: center;
+}
