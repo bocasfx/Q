@@ -1,12 +1,14 @@
 import React from 'react';
 import './Knob.css';
 
+const _angle = 295.0;
+
 class Knob extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       dragging: false,
-      angle: 300,
+      angle: _angle,
       y: null,
       value: 0
     };
@@ -18,7 +20,7 @@ class Knob extends React.Component {
 
   componentDidMount() {
     let value = this.props.value;
-    let angle = (value * 300.0 / this.props.max) + 300.0;
+    let angle = (value * _angle / this.props.max) + _angle;
     this.setState({
       value: parseFloat(value.toFixed(1)),
       angle
@@ -31,7 +33,7 @@ class Knob extends React.Component {
       return;
     }
 
-    let angle = (nextProps.value * 300.0 / nextProps.max) + 300.0;
+    let angle = (nextProps.value * _angle / nextProps.max) + _angle;
     this.setState({
       value: parseFloat(nextProps.value.toFixed(1)),
       angle
@@ -58,10 +60,10 @@ class Knob extends React.Component {
     }
 
     let angle = this.state.angle + (this.state.y - event.pageY);
-    angle = angle >= 600 ? 600 : angle;
-    angle = angle <= 300 ? 300 : angle;
+    angle = angle >= 2 * _angle ? 2 * _angle : angle;
+    angle = angle <= _angle ? _angle : angle;
 
-    let value = (((angle - 300.0) / 300.0) * this.props.max);
+    let value = (((angle - _angle) / _angle) * this.props.max);
     value = parseFloat(value.toFixed(1));
 
     this.setState({
@@ -81,9 +83,8 @@ class Knob extends React.Component {
   }
 
   render() {
-    let angle = this.state.angle;
     let dotStyle = {
-      transform: 'rotate(' + angle + 'deg)'
+      transform: 'rotate(' + this.state.angle + 'deg)'
     };
 
     let disabled = this.props.disabled;
