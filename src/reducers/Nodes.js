@@ -180,8 +180,19 @@ const linkNodes = (state, srcId, destId) => {
   });
   srcNode.link(destNode);
   if (graphHasLoop(destNode, srcNode.id, false)) {
-    console.log('LOOP!');
+    alert('LOOP!');
   }
+  return state;
+};
+
+const unlinkNodes = (state, srcId, destId) => {
+  let srcNode = _.find(state, (node) => {
+    return node.id === srcId;
+  });
+  let destNode = _.find(state, (node) => {
+    return node.id === destId;
+  });
+  srcNode.unlink(destNode);
   return state;
 };
 
@@ -301,6 +312,9 @@ export default (state = nodes, action) => {
 
     case 'LINK_NODES':
       return linkNodes(state, action.srcId, action.destId);
+
+    case 'UNLINK_NODES':
+      return unlinkNodes(state, action.srcId, action.destId);
 
     case 'ENQUEUE_PARTICLE':
       return enqueueParticle(state, action.id, action.particleId);

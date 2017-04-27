@@ -15,6 +15,7 @@ class Menu extends React.Component {
     this.onAudioNodeButtonClick = this.onAudioNodeButtonClick.bind(this);
     this.onMixerButtonClick = this.onMixerButtonClick.bind(this);
     this.onLinkButtonClick = this.onLinkButtonClick.bind(this);
+    this.onUnlinkButtonClick = this.onUnlinkButtonClick.bind(this);
   }
 
   onSynthNodeButtonClick() {
@@ -39,6 +40,10 @@ class Menu extends React.Component {
 
   onLinkButtonClick() {
     this.props.toggleDevice('link');
+  }
+
+  onUnlinkButtonClick() {
+    this.props.toggleDevice('unlink');
   }
 
   render() {
@@ -67,7 +72,12 @@ class Menu extends React.Component {
         <MenuButton
           icon="./icons/menu/link.png"
           onClick={this.onLinkButtonClick}
-          active={this.props.devices.link}/>
+          active={this.props.devices.link}
+          separator={true}/>
+        <MenuButton
+          icon="./icons/menu/unlink.png"
+          onClick={this.onUnlinkButtonClick}
+          active={this.props.devices.unlink}/>
       </div>
     );
   }

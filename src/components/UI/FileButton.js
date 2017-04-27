@@ -20,8 +20,8 @@ class FileButton extends React.Component {
       return;
     }
 
-    dialog.showOpenDialog((files) => {
-      this.props.onChange(files);
+    dialog.showOpenDialog({properties: ['openFile']}, (files) => {
+      this.props.onChange(files[0]);
     });
   }
 

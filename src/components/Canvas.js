@@ -14,6 +14,7 @@ import { addSynthNode,
   deselectNodes,
   cloneNode,
   linkNodes,
+  unlinkNodes,
   enqueueParticle,
   dequeueParticle,
   playNode,
@@ -59,7 +60,8 @@ class Canvas extends React.Component {
         this.props.devices.synthNodes ||
         this.props.devices.midiNodes ||
         this.props.devices.audioNodes ||
-        this.props.devices.link) {
+        this.props.devices.link ||
+        this.props.devices.unlink) {
       this.cursorStyle = {
         cursor: 'crosshair'
       };
@@ -72,7 +74,26 @@ class Canvas extends React.Component {
         cursor: '-webkit-grab'
       };
     }
-    
+  }
+
+  onMouseDown(event) {
+    event.preventDefault();
+    this.mouseDown = true;
+    this.setCursorStyle();
+
+    let position = getPosition(event);
+
+    if (this.props.devices.streams) {
+      this.props.addStream(position, event);
+    } else if (this.props.devices.link || this.props.devices.unlink) {
+      this.linkPosition = position;
+      this.initiateNodeLink(position);
+    } else if (this.props.devices.synthNodes || this.props.devices.midiNodes || this.props.devices.audioNodes) {
+      this.addNode(position);
+      this.selectNode(position, event.metaKey);
+    } else if (!event.metaKey) {
+      this.selectNode(position, event.metaKey);
+    }
   }
 
   onMouseMove(event) {
@@ -87,31 +108,11 @@ class Canvas extends React.Component {
       }
       let stream = streams[streams.length - 1];
       stream.onMouseMove(event);
-    } else if (this.props.devices.link) {
+    } else if (this.props.devices.link || this.props.devices.unlink) {
       this.linkPosition = getPosition(event);
     } else if (!this.props.devices.synthNodes && !this.props.devices.midiNodes && !this.props.devices.audioNodes) {
       let position = getPosition(event);
       this.props.setNodePosition(this.selectedNodeId, position);
-    }
-  }
-
-  onMouseDown(event) {
-    event.preventDefault();
-    this.mouseDown = true;
-    this.setCursorStyle();
-
-    let position = getPosition(event);
-
-    if (this.props.devices.streams) {
-      this.props.addStream(position, event);
-    } else if (this.props.devices.link) {
-      this.linkPosition = position;
-      this.initiateNodeLink(position);
-    } else if (this.props.devices.synthNodes || this.props.devices.midiNodes || this.props.devices.audioNodes) {
-      this.addNode(position);
-      this.selectNode(position, event.metaKey);
-    } else if (!event.metaKey) {
-      this.selectNode(position, event.metaKey);
     }
   }
 
@@ -127,6 +128,11 @@ class Canvas extends React.Component {
     } else if (this.props.devices.link) {
       let position = getPosition(event);
       this.finalizeNodeLink(position);
+      this.linkSrc = null;
+      this.linkPosition = null;
+    } else if (this.props.devices.unlink) {
+      let position = getPosition(event);
+      this.finalizeNodeLink(position, true);
       this.linkSrc = null;
       this.linkPosition = null;
     }
@@ -182,12 +188,16 @@ class Canvas extends React.Component {
     });
   }
 
-  finalizeNodeLink(position) {
+  finalizeNodeLink(position, unlink = false) {
     this.props.nodes.forEach((node) => {
       let distance = calculateDistance(node.position, position);
       if (distance <= config.app.doubleClickDistance) {
         if (this.linkSrc && this.linkSrc.id !== node.id) {
-          this.props.linkNodes(this.linkSrc.id, node.id);
+          if (unlink) {
+            this.props.unlinkNodes(this.linkSrc.id, node.id);
+          } else {
+            this.props.linkNodes(this.linkSrc.id, node.id);
+          }
         }
       }
     });
@@ -290,12 +300,12 @@ class Canvas extends React.Component {
     }
 
     this.canvasContext.beginPath();
-    this.canvasContext.strokeStyle = config.link.strokeStyle;
+    this.canvasContext.strokeStyle = this.props.devices.link ? config.link.strokeStyle : config.unlink.strokeStyle;
     this.canvasContext.lineWidth = config.link.lineWidth;
     this.canvasContext.setLineDash(config.link.lineDash);
 
     this.canvasContext.moveTo(this.linkSrc.position[0], this.linkSrc.position[1]);
-    this.canvasContext.drawImage(this.linkAnchorImg, this.linkSrc.position[0] - 7.5, this.linkSrc.position[1] - 7.5);
+    this.canvasContext.drawImage(this.linkAnchorImg, this.linkSrc.position[0] - 7, this.linkSrc.position[1] - 7);
     this.canvasContext.lineTo(this.linkPosition[0], this.linkPosition[1]);
     this.canvasContext.stroke();
   }
@@ -305,19 +315,23 @@ class Canvas extends React.Component {
     this.canvasContext.clearRect(0, 0, this.canvasContext.canvas.width, this.canvasContext.canvas.height);
     this.canvasContext.fillRect(0, 0, this.canvasContext.canvas.width, this.canvasContext.canvas.height);
 
-    this.props.streams.forEach((stream) => {
-      stream.render(this.canvasContext);
-    });
-
     this.renderLinkHandle();
 
-    this.props.nodes.forEach((node) => {
-      this.renderLinks(node);
+    this.props.streams.forEach((stream) => {
+      stream.render(this.canvasContext);
     });
 
     this.props.nodes.forEach((node) => {
       node.render(this.canvasContext);
     });
+
+
+
+    this.props.nodes.forEach((node) => {
+      this.renderLinks(node);
+    });
+
+    
 
     requestAnimationFrame(() => {
       this.flow();
@@ -361,6 +375,7 @@ const mapDispatchToProps = (dispatch) => {
     addStream: bindActionCreators(addStream, dispatch),
     setNodePosition: bindActionCreators(setNodePosition, dispatch),
     linkNodes: bindActionCreators(linkNodes, dispatch),
+    unlinkNodes: bindActionCreators(unlinkNodes, dispatch),
     enqueueParticle: bindActionCreators(enqueueParticle, dispatch),
     dequeueParticle: bindActionCreators(dequeueParticle, dispatch),
     playNode: bindActionCreators(playNode, dispatch),

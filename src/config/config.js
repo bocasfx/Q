@@ -39,6 +39,9 @@ export default {
     lineWidth: 3,
     lineDash: [3, 3]
   },
+  unlink: {
+    strokeStyle: 'crimson'
+  },
   fader: {
     marks: {
       0: '-0',

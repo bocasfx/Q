@@ -8,7 +8,8 @@ module.exports = {
     nodeSettings: false,
     nodeSettingsId: null,
     mixer: false,
-    link: false
+    link: false,
+    unlink: false
   },
   nodes: [],
   streams: [],

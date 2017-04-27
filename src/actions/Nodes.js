@@ -151,6 +151,14 @@ export const linkNodes = (srcId, destId) => {
   };
 };
 
+export const unlinkNodes = (srcId, destId) => {
+  return {
+    type: 'UNLINK_NODES',
+    srcId,
+    destId
+  };
+};
+
 export const enqueueParticle = (id, particleId) => {
   return {
     type: 'ENQUEUE_PARTICLE',

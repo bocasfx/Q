@@ -15,7 +15,7 @@ class Node {
     this._disabled = false;
     this.pan = 0;
     this.links = [];
-    this.delay = 500;
+    this.delay = 0;
     this.probability = 1.0;
     this.ignoring = false;
 
@@ -93,6 +93,14 @@ class Node {
 
   link(destNode) {
     this.links.push(destNode);
+    console.log(this.links);
+  }
+
+  unlink(destNode) {
+    this.links = _.remove(this.links, (link) => {
+      return link.id !== destNode.id;
+    });
+    console.log(this.links);
   }
 
   render(canvasContext) {

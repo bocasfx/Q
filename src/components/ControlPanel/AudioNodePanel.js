@@ -2,7 +2,7 @@ import React from 'react';
 import FileButton from '../UI/FileButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setNodeSource } from '../../actions/Nodes';
+import { setNodeSource, setNodeName } from '../../actions/Nodes';
 import NodePanelHeader from './NodePanelHeader';
 
 class AudioNodePanel extends React.Component {
@@ -11,10 +11,12 @@ class AudioNodePanel extends React.Component {
     this.onFileChange = this.onFileChange.bind(this);
   }
 
-  onFileChange(files) {
-    if (files && files.length) {
-      this.props.setNodeSource(this.props.node.id, files[0]);
-    }
+  onFileChange(filePath) {
+    this.props.setNodeSource(this.props.node.id, filePath);
+
+    let name = filePath.split('/');
+    name = name[name.length -1];
+    this.props.setNodeName(this.props.node.id, name);
   }
 
   render() {
@@ -39,7 +41,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setNodeSource: bindActionCreators(setNodeSource, dispatch)
+    setNodeSource: bindActionCreators(setNodeSource, dispatch),
+    setNodeName: bindActionCreators(setNodeName, dispatch)
   };
 };
 
