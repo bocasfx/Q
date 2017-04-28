@@ -5,7 +5,7 @@ import config from '../config/config';
 import { connect } from 'react-redux';
 import { addStream } from '../actions/Streams';
 import { bindActionCreators } from 'redux';
-import { calculateDistance, getPosition } from '../utils/utils';
+import { calculateDistance, getPosition, calculateNodeBorderDistance } from '../utils/utils';
 import { addSynthNode,
   addMidiNode,
   addAudioNode,
@@ -285,9 +285,13 @@ class Canvas extends React.Component {
       let destNode = _.find(this.props.nodes, (nodeObj) => {
         return nodeObj.id === link.id;
       });
-      this.canvasContext.moveTo(node.position[0], node.position[1]);
+
+      let startPoint = calculateNodeBorderDistance(node.position, destNode.position);
+      let endPoint = calculateNodeBorderDistance(destNode.position, node.position);
+
+      this.canvasContext.moveTo(startPoint[0], startPoint[1]);
       this.canvasContext.drawImage(this.linkAnchorImg, node.position[0] - 7.5, node.position[1] - 7.5);
-      this.canvasContext.lineTo(destNode.position[0], destNode.position[1]);
+      this.canvasContext.lineTo(endPoint[0], endPoint[1]);
       this.canvasContext.drawImage(this.linkAnchorImg, destNode.position[0] - 7.5, destNode.position[1] - 7.5);
     });
 
@@ -304,7 +308,9 @@ class Canvas extends React.Component {
     this.canvasContext.lineWidth = config.link.lineWidth;
     this.canvasContext.setLineDash(config.link.lineDash);
 
-    this.canvasContext.moveTo(this.linkSrc.position[0], this.linkSrc.position[1]);
+    let startPoint = calculateNodeBorderDistance(this.linkSrc.position, this.linkPosition);
+
+    this.canvasContext.moveTo(startPoint[0], startPoint[1]);
     this.canvasContext.drawImage(this.linkAnchorImg, this.linkSrc.position[0] - 7, this.linkSrc.position[1] - 7);
     this.canvasContext.lineTo(this.linkPosition[0], this.linkPosition[1]);
     this.canvasContext.stroke();
@@ -315,6 +321,10 @@ class Canvas extends React.Component {
     this.canvasContext.clearRect(0, 0, this.canvasContext.canvas.width, this.canvasContext.canvas.height);
     this.canvasContext.fillRect(0, 0, this.canvasContext.canvas.width, this.canvasContext.canvas.height);
 
+    this.props.nodes.forEach((node) => {
+      this.renderLinks(node);
+    });
+
     this.renderLinkHandle();
 
     this.props.streams.forEach((stream) => {
@@ -324,14 +334,6 @@ class Canvas extends React.Component {
     this.props.nodes.forEach((node) => {
       node.render(this.canvasContext);
     });
-
-
-
-    this.props.nodes.forEach((node) => {
-      this.renderLinks(node);
-    });
-
-    
 
     requestAnimationFrame(() => {
       this.flow();

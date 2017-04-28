@@ -24,3 +24,19 @@ export const getSelectedElement = (elements) => {
     return element.selected;
   })[0];
 };
+
+export const calculateNodeBorderDistance = (a, b) => {
+  let d2 = 22;
+  let d = calculateDistance(a, b);
+
+  let xa = a[0];
+  let ya = a[1];
+
+  let xb = b[0];
+  let yb = b[1];
+
+  let xc = xa - ((d2 * (xa - xb)) / d);
+  let yc = ya - ((d2 * (ya - yb)) / d);
+
+  return [xc, yc];
+};
