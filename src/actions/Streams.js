@@ -6,6 +6,14 @@ export const addStream = (position, event) => {
   };
 };
 
+export const addCircularStream = (position, event) => {
+  return {
+    type: 'ADD_CIRCULAR_STREAM',
+    position,
+    event
+  };
+};
+
 export const deleteStream = (id) => {
   return {
     type: 'DELETE_STREAM',

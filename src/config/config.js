@@ -31,7 +31,15 @@ export default {
     lineWidth: 2,
     lineDash: [3, 30]
   },
+  circularStream: {
+    strokeStyle: 'gray',
+    lineWidth: 2,
+    lineDash: [3, 3]
+  },
   selectedStream: {
+    strokeStyle: 'gold',
+  },
+  selectedCircularStream: {
     strokeStyle: 'gold',
   },
   link: {

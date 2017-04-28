@@ -3,7 +3,7 @@ import './Canvas.css';
 import _ from 'lodash';
 import config from '../config/config';
 import { connect } from 'react-redux';
-import { addStream } from '../actions/Streams';
+import { addStream, addCircularStream } from '../actions/Streams';
 import { bindActionCreators } from 'redux';
 import { calculateDistance, getPosition, calculateNodeBorderDistance } from '../utils/utils';
 import { addSynthNode,
@@ -57,6 +57,7 @@ class Canvas extends React.Component {
   setCursorStyle() {
 
     if (this.props.devices.streams ||
+        this.props.devices.circularStreams ||
         this.props.devices.synthNodes ||
         this.props.devices.midiNodes ||
         this.props.devices.audioNodes ||
@@ -85,6 +86,8 @@ class Canvas extends React.Component {
 
     if (this.props.devices.streams) {
       this.props.addStream(position, event);
+    } else if (this.props.devices.circularStreams) {
+      this.props.addCircularStream(position, event);
     } else if (this.props.devices.link || this.props.devices.unlink) {
       this.linkPosition = position;
       this.initiateNodeLink(position);
@@ -101,7 +104,7 @@ class Canvas extends React.Component {
     if (!this.mouseDown) {
       return;
     }
-    if (this.props.devices.streams) {
+    if (this.props.devices.streams || this.props.devices.circularStreams) {
       let streams = this.props.streams;
       if (!streams.length) {
         return;
@@ -375,6 +378,7 @@ const mapDispatchToProps = (dispatch) => {
     cloneNode: bindActionCreators(cloneNode, dispatch),
     deselectNodes: bindActionCreators(deselectNodes, dispatch),
     addStream: bindActionCreators(addStream, dispatch),
+    addCircularStream: bindActionCreators(addCircularStream, dispatch),
     setNodePosition: bindActionCreators(setNodePosition, dispatch),
     linkNodes: bindActionCreators(linkNodes, dispatch),
     unlinkNodes: bindActionCreators(unlinkNodes, dispatch),
