@@ -4,63 +4,61 @@ import uuidv1 from 'uuid/v1';
 import names from '../config/names';
 import { getPosition, calculateDistance } from '../utils/utils';
 
-class CircularStream {
+class LinearStream {
   constructor(position) {
 
     this.id = uuidv1();
     this.name = names.generate();
-    this.radius = 0;
+    this.length = 0;
     this.disabled = false;
     this.particles = [];
-    this.position = position;
-    this.cx = this.position[0] + this.radius;
-    this.cy = this.position[0] + this.radius;
-    this.deg2rad = Math.PI / 180;
-    this.particles = [];
+    this.from = position;
+    this.to = null;
     this.angles = [];
     this.speed = 5.0;
-
-    let space = 360 / config.particle.count;
-    let angle = 0;
-
-    for(let i=0; i < config.particle.count; i++) {
-      this.angles.push(angle);
-      angle += space;
-    }
+    this.distance = 0;
+    this.particleOffset = 0;
+    this.speed = 1;
 
     for (let i=0; i < config.particle.count; i++) {
-      this.particles.push(new Particle([this.position[0] - this.radius, this.position[1] - this.radius]));
+      this.particles.push(new Particle([this.from[0], this.from[1]]));
     }
   }
 
-  onMouseDown() {}
+  onMouseDown(event) {
+    this.to = getPosition(event);
+    this.distance = 0;
+  }
 
   onMouseMove(event) {
-    let position = getPosition(event);
-    this.radius = calculateDistance (position, this.position);
+    this.to = getPosition(event);
+    this.distance = calculateDistance(this.from, this.to);
+    this.space = this.distance / this.particles.length;
+  }
+
+  onMouseUp(event) {
+    this.to = getPosition(event);
+    this.distance = calculateDistance(this.from, this.to);
+    this.space = this.distance / this.particles.length;
   }
 
   flow() {
-
     if (this.disabled) {
       return;
     }
 
-    let angle = 0;
-
     this.particles.forEach((particle, idx) => {
 
-      angle = this.angles[idx];
-      
-      let x = this.position[0] + this.radius * Math.cos(angle * this.deg2rad);
-      let y = this.position[1] + this.radius * Math.sin(angle * this.deg2rad);
+      let ratio = (this.particleOffset + idx * this.space) / this.distance;
+      this.particleOffset += this.speed;
 
-      particle.position = [x, y];
-  
-      this.angles[idx] = this.angles[idx] + this.speed;
-      if (this.angles[idx] > 360) {
-        this.angles[idx] = 0;
+      if (this.particleOffset + idx * this.space >= this.distance) {
+        this.particleOffset = 0;
       }
+
+      let x3 = ratio * this.to[0] + (1 - ratio) * this.from[0];
+      let y3 = ratio * this.to[1] + (1 - ratio) * this.from[1];
+      particle.position = [x3, y3];
     });
   }
 
@@ -72,7 +70,8 @@ class CircularStream {
     canvasContext.lineWidth = config.circularStream.lineWidth;
     canvasContext.setLineDash(config.circularStream.lineDash);
 
-    canvasContext.arc(this.position[0], this.position[1], this.radius, 0, 2 * Math.PI);
+    canvasContext.moveTo(this.from[0], this.from[1]);
+    canvasContext.lineTo(this.to[0], this.to[1]);
 
     canvasContext.stroke();
 
@@ -83,4 +82,4 @@ class CircularStream {
   }
 }
   
-module.exports = CircularStream;
+module.exports = LinearStream;
