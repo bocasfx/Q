@@ -110,7 +110,14 @@ const setNodeOsc2WaveType = (state, id, waveType) => {
 };
 
 const cloneNode = (state, id) => {
-  console.log(state);
+  let clonedNode = {}; // new empty object to clone into
+  return state.map((node, id) => { // iterate over the state array
+    if (node.id === id) {    // check to see if id matches
+      clonedNode[node.key] = node.value; // copy values from node into clonedNode
+      return clonedNode; 
+    }    
+    return node;
+  }); 
 };
 
 const setNodeAttack = (state, id, value) => {
