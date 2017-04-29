@@ -12,6 +12,7 @@ class Menu extends React.Component {
     this.onSynthNodeButtonClick = this.onSynthNodeButtonClick.bind(this);
     this.onStreamButtonClick = this.onStreamButtonClick.bind(this);
     this.onCircularStreamButtonClick = this.onCircularStreamButtonClick.bind(this);
+    this.onLinearStreamButtonClick = this.onLinearStreamButtonClick.bind(this);
     this.onMidiNodeButtonClick = this.onMidiNodeButtonClick.bind(this);
     this.onAudioNodeButtonClick = this.onAudioNodeButtonClick.bind(this);
     this.onMixerButtonClick = this.onMixerButtonClick.bind(this);
@@ -27,8 +28,12 @@ class Menu extends React.Component {
     this.props.toggleDevice('streams');
   }
 
-   onCircularStreamButtonClick() {
+  onCircularStreamButtonClick() {
     this.props.toggleDevice('circularStreams');
+  }
+
+  onLinearStreamButtonClick() {
+    this.props.toggleDevice('linearStreams');
   }
 
   onMidiNodeButtonClick() {
@@ -63,6 +68,11 @@ class Menu extends React.Component {
           icon="./icons/menu/particle.png"
           onClick={this.onCircularStreamButtonClick}
           active={this.props.devices.circularStreams}
+          separator={true}/>
+        <MenuButton
+          icon="./icons/menu/particle.png"
+          onClick={this.onLinearStreamButtonClick}
+          active={this.props.devices.linearStreams}
           separator={true}/>
         <MenuButton
           icon="./icons/menu/synth.png"

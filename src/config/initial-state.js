@@ -2,6 +2,7 @@ module.exports = {
   devices: {
     streams: false,
     circularStreams: false,
+    linearStreams: false,
     synthNodes: false,
     midiNodes: false,
     audioNodes: false,

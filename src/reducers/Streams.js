@@ -1,5 +1,6 @@
 import Stream from '../elements/Stream';
 import CircularStream from '../elements/CircularStream';
+import LinearStream from '../elements/LinearStream';
 import _ from 'lodash';
 import { streams } from '../config/initial-state';
 
@@ -13,6 +14,14 @@ const addStream = (state, position, event) => {
 
 const addCircularStream = (state, position, event) => {
   let stream = new CircularStream(position);
+  let streamList = state.splice(0);
+  streamList.push(stream);
+  stream.onMouseDown(event);
+  return streamList;
+};
+
+const addLinearStream = (state, position, event) => {
+  let stream = new LinearStream(position);
   let streamList = state.splice(0);
   streamList.push(stream);
   stream.onMouseDown(event);
@@ -59,6 +68,9 @@ export default (state = streams, action) => {
 
     case 'ADD_CIRCULAR_STREAM':
       return addCircularStream(state, action.position, action.event);
+
+    case 'ADD_LINEAR_STREAM':
+      return addLinearStream(state, action.position, action.event);
 
     case 'DELETE_STREAM':
       return deleteStream(state, action.id);
