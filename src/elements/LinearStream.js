@@ -18,7 +18,7 @@ class LinearStream {
     this.speed = 5.0;
     this.distance = 0;
     this.particleOffset = 0;
-    this.speed = 1;
+    this.speed = 1.0;
 
     for (let i=0; i < config.particle.count; i++) {
       this.particles.push(new Particle([this.from[0], this.from[1]]));
@@ -28,6 +28,7 @@ class LinearStream {
   onMouseDown(event) {
     this.to = getPosition(event);
     this.distance = 0;
+    this.mouseDown = true;
   }
 
   onMouseMove(event) {
@@ -40,6 +41,7 @@ class LinearStream {
     this.to = getPosition(event);
     this.distance = calculateDistance(this.from, this.to);
     this.space = this.distance / this.particles.length;
+    this.mouseDown = false;
   }
 
   flow() {
@@ -65,13 +67,20 @@ class LinearStream {
   render(canvasContext) {
 
     canvasContext.beginPath();
-    canvasContext.strokeStyle = this.selected ? config.selectedCircularStream.strokeStyle : config.circularStream.strokeStyle;
-    canvasContext.strokeStyle = this.disabled ? config.circularStream.strokeStyle : canvasContext.strokeStyle;
-    canvasContext.lineWidth = config.circularStream.lineWidth;
-    canvasContext.setLineDash(config.circularStream.lineDash);
+    canvasContext.strokeStyle = this.selected ? config.selectedStream.strokeStyle : config.linearStream.strokeStyle;
+    canvasContext.strokeStyle = this.disabled ? config.linearStream.strokeStyle : canvasContext.strokeStyle;
+    canvasContext.lineWidth = config.linearStream.lineWidth;
+    canvasContext.setLineDash(config.linearStream.lineDash);
 
     canvasContext.moveTo(this.from[0], this.from[1]);
     canvasContext.lineTo(this.to[0], this.to[1]);
+
+    if (this.mouseDown) {
+      canvasContext.font = config.linearStream.font;
+      canvasContext.fillStyle = config.linearStream.fillStyle;
+      canvasContext.textAlign = config.linearStream.textAlign;
+      canvasContext.fillText(this.distance.toFixed(2), this.from[0], this.from[1]); 
+    }
 
     canvasContext.stroke();
 

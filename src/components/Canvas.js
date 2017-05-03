@@ -127,7 +127,7 @@ class Canvas extends React.Component {
     this.mouseDown = false;
     this.selectedNodeId = null;
     this.setCursorStyle();
-    if (this.props.devices.streams || this.props.devices.linearStreams) {
+    if (this.props.devices.streams || this.props.devices.circularStreams || this.props.devices.linearStreams) {
       let streams = this.props.streams;
       let stream = streams[streams.length - 1];
       stream.onMouseUp(event);

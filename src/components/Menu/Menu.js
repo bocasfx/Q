@@ -60,42 +60,42 @@ class Menu extends React.Component {
     return (
       <div className="menu-container">
         <MenuButton
-          icon="./icons/menu/particle.png"
+          icon="./icons/menu/stream.svg"
           onClick={this.onStreamButtonClick}
           active={this.props.devices.streams}
           separator={true}/>
         <MenuButton
-          icon="./icons/menu/particle.png"
+          icon="./icons/menu/circular-stream.svg"
           onClick={this.onCircularStreamButtonClick}
           active={this.props.devices.circularStreams}
           separator={true}/>
         <MenuButton
-          icon="./icons/menu/particle.png"
+          icon="./icons/menu/linear-stream.svg"
           onClick={this.onLinearStreamButtonClick}
           active={this.props.devices.linearStreams}
           separator={true}/>
         <MenuButton
-          icon="./icons/menu/synth.png"
+          icon="./icons/menu/synth.svg"
           onClick={this.onSynthNodeButtonClick}
           active={this.props.devices.synthNodes}
           separator={true}/>
         <MenuButton
-          icon="./icons/menu/midi.png"
+          icon="./icons/menu/midi.svg"
           onClick={this.onMidiNodeButtonClick}
           active={this.props.devices.midiNodes}
           separator={true}/>
         <MenuButton
-          icon="./icons/menu/audio.png"
+          icon="./icons/menu/audio.svg"
           onClick={this.onAudioNodeButtonClick}
           active={this.props.devices.audioNodes}
           separator={true}/>
         <MenuButton
-          icon="./icons/menu/link.png"
+          icon="./icons/menu/link.svg"
           onClick={this.onLinkButtonClick}
           active={this.props.devices.link}
           separator={true}/>
         <MenuButton
-          icon="./icons/menu/unlink.png"
+          icon="./icons/menu/unlink.svg"
           onClick={this.onUnlinkButtonClick}
           active={this.props.devices.unlink}/>
       </div>
