@@ -34,16 +34,24 @@ export default {
   circularStream: {
     strokeStyle: 'gray',
     lineWidth: 2,
-    lineDash: [3, 3]
+    lineDash: [3, 3],
+    font: '12px Arial',
+    fillStyle: 'gold',
+    textAlign: 'center'
+  },
+  linearStream: {
+    strokeStyle: 'gray',
+    lineWidth: 2,
+    lineDash: [3, 3],
+    font: '12px Arial',
+    fillStyle: 'gold',
+    textAlign: 'center'
   },
   selectedStream: {
     strokeStyle: 'gold',
   },
-  selectedCircularStream: {
-    strokeStyle: 'gold',
-  },
   link: {
-    strokeStyle: 'dimgray',
+    strokeStyle: 'gray',
     lineWidth: 3,
     lineDash: [3, 3]
   },

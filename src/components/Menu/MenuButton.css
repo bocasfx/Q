@@ -14,12 +14,21 @@
   align-items: center;
 }
 
+.menu-button-container:nth-child(-n+3) .menu-button {
+  opacity: 0.8;
+}
+
+.menu-button-container:nth-last-child(-n+2) .menu-button {
+  opacity: 0.2;
+}
+
 .menu-button-active {
   opacity: 1;
   filter: grayscale(0);
 }
 
-.menu-container > div:nth-child(1) > div.menu-button {
+.menu-button-container:nth-child(-n+3) .menu-button-active,
+.menu-button-container:nth-last-child(-n+2) .menu-button-active {
   opacity: 1;
 }
 
@@ -29,5 +38,5 @@
 }
 
 .menu-button-icon {
-  width: 30px;
+  width: 32px;
 }

@@ -13,12 +13,14 @@ class CircularStream {
     this.disabled = false;
     this.particles = [];
     this.position = position;
+    this.mousePosition = position;
     this.cx = this.position[0] + this.radius;
     this.cy = this.position[0] + this.radius;
     this.deg2rad = Math.PI / 180;
     this.particles = [];
     this.angles = [];
-    this.speed = 5.0;
+    this.speed = 1.0;
+    this.mouseDown = false;
 
     let space = 360 / config.particle.count;
     let angle = 0;
@@ -33,11 +35,17 @@ class CircularStream {
     }
   }
 
-  onMouseDown() {}
+  onMouseDown() {
+    this.mouseDown = true;
+  }
 
   onMouseMove(event) {
-    let position = getPosition(event);
-    this.radius = calculateDistance (position, this.position);
+    this.mousePosition = getPosition(event);
+    this.radius = calculateDistance (this.mousePosition, this.position);
+  }
+
+  onMouseUp() {
+    this.mouseDown = false;
   }
 
   flow() {
@@ -67,12 +75,21 @@ class CircularStream {
   render(canvasContext) {
 
     canvasContext.beginPath();
-    canvasContext.strokeStyle = this.selected ? config.selectedCircularStream.strokeStyle : config.circularStream.strokeStyle;
+    canvasContext.strokeStyle = this.selected ? config.selectedStream.strokeStyle : config.circularStream.strokeStyle;
     canvasContext.strokeStyle = this.disabled ? config.circularStream.strokeStyle : canvasContext.strokeStyle;
     canvasContext.lineWidth = config.circularStream.lineWidth;
     canvasContext.setLineDash(config.circularStream.lineDash);
 
     canvasContext.arc(this.position[0], this.position[1], this.radius, 0, 2 * Math.PI);
+
+    if (this.mouseDown) {
+      canvasContext.moveTo(this.position[0], this.position[1]);
+      canvasContext.lineTo(this.mousePosition[0], this.mousePosition[1]);
+      canvasContext.font = config.circularStream.font;
+      canvasContext.fillStyle = config.circularStream.fillStyle;
+      canvasContext.textAlign = config.circularStream.textAlign;
+      canvasContext.fillText(this.radius.toFixed(2), this.position[0], this.position[1]); 
+    }
 
     canvasContext.stroke();
 
