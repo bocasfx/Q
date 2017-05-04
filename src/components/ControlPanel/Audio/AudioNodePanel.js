@@ -1,9 +1,9 @@
 import React from 'react';
-import FileButton from '../UI/FileButton';
+import FileButton from '../../UI/FileButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setNodeSource, setNodeName } from '../../actions/Nodes';
-import NodePanelHeader from './NodePanelHeader';
+import { setNodeSource, setNodeName } from '../../../actions/Nodes';
+import NodePanelHeader from '../NodePanelHeader';
 
 class AudioNodePanel extends React.Component {
   constructor(props) {

@@ -1,7 +1,7 @@
 import React from 'react';
-import SynthNodePanel from './SynthNodePanel';
-import AudioNodePanel from './AudioNodePanel';
-import MidiNodePanel from './MidiNodePanel';
+import SynthNodePanel from './Synth/SynthNodePanel';
+import AudioNodePanel from './Audio/AudioNodePanel';
+import MidiNodePanel from './Midi/MidiNodePanel';
 import ElementPanelHeader from './ElementPanelHeader';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';

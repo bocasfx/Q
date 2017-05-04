@@ -3,9 +3,9 @@ import './SynthNodePanel.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import OscillatorPanel from './OscillatorPanel';
-import Knob from '../UI/Knob';
-import Slider from '../UI/Slider';
-import NodePanelHeader from './NodePanelHeader';
+import Knob from '../../UI/Knob';
+import Slider from '../../UI/Slider';
+import NodePanelHeader from '../NodePanelHeader';
 import {
   setNodeOsc1Frequency,
   setNodeOsc2Frequency,
@@ -14,7 +14,7 @@ import {
   setNodeVolume,
   setNodeAttack,
   setNodeRelease,
-  setNodePan } from '../../actions/Nodes';
+  setNodePan } from '../../../actions/Nodes';
 
 class SynthNodePanel extends React.Component {
 
