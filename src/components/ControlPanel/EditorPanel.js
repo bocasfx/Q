@@ -3,7 +3,7 @@ import './EditorPanel.css';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import NodePanel from './NodePanel';
-import StreamPanel from './StreamPanel';
+import StreamPanel from './Stream/StreamPanel';
 import { getSelectedElement } from '../../utils/utils';
 
 class EditorPanel extends React.Component {

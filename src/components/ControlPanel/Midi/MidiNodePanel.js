@@ -1,7 +1,7 @@
 import React from 'react';
 import './MidiNodePanel.css';
 import { connect } from 'react-redux';
-import NodePanelHeader from './NodePanelHeader';
+import NodePanelHeader from '../NodePanelHeader';
 
 class MidiNodePanel extends React.Component {
   render() {

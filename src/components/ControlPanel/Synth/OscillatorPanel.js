@@ -1,8 +1,8 @@
 import React from 'react';
 import './OscillatorPanel.css';
-import Knob from '../UI/Knob';
-import Slider from '../UI/Slider';
-import noteConfig from '../../config/frequencies';
+import Knob from '../../UI/Knob';
+import Slider from '../../UI/Slider';
+import noteConfig from '../../../config/frequencies';
 import _ from 'lodash';
 
 const waveTypes = {

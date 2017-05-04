@@ -1,9 +1,9 @@
 import React from 'react';
 import './StreamPanel.css';
-import ElementPanelHeader from './ElementPanelHeader';
+import ElementPanelHeader from '../ElementPanelHeader';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setStreamName, setStreamDisabledStatus } from '../../actions/Streams';
+import { setStreamName, setStreamDisabledStatus } from '../../../actions/Streams';
 
 class StreamPanel extends React.Component {
   constructor(props) {
