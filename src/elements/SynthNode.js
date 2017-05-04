@@ -14,7 +14,7 @@ class SynthNode extends Node {
     this.oscillator2 = new Oscillator();
     this.amplifier = new Amplifier();
 
-    this.envelopeGenerator = new EnvelopeGenerator(config.synthNode.envelope);
+    this.envelopeGenerator = new EnvelopeGenerator(config.synth.envelope);
 
     this.oscillator1.connect(this.amplifier);
     this.oscillator2.connect(this.amplifier);

@@ -133,7 +133,8 @@ class OscillatorPanel extends React.Component {
             min={20}
             max={2000}
             onChange={this.onFreqChange}
-            disabled={!this.state.checked || this.state.disabled}/>
+            disabled={!this.state.checked || this.state.disabled}
+            type={this.props.type}/>
         </div>
 
         <div className="oscillator-panel-freq">

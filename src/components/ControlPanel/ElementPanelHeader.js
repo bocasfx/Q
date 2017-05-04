@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ActivityIndicator from '../UI/ActivityIndicator';
 import './ElementPanelHeader.css';
+import { getNodeColor } from '../../utils/utils';
 
 class NodePanelHeader extends React.Component {
   constructor(props) {
@@ -25,6 +26,11 @@ class NodePanelHeader extends React.Component {
     let toggleClass = 'element-panel-header-on';
     toggleClass += this.props.element.disabled ? ' element-panel-header-off' : '';
 
+    console.log(this.props.element.disabled);
+
+    let color = getNodeColor(this.props.element.type);
+    let style = this.props.element.disabled ? {} : {color: color, textShadow: '0 0 10px ' + color};
+
     return (
       <div className="element-panel-header-container">
         <div className="row-between">
@@ -36,7 +42,7 @@ class NodePanelHeader extends React.Component {
             value={this.props.element.name}
             onChange={this.onChange}
             disabled={this.props.element.disabled}/>
-          <div className={toggleClass} onClick={this.onToggle}>
+          <div className={toggleClass} style={style} onClick={this.onToggle}>
             <i className="fa fa-power-off"></i>
           </div>
         </div>
@@ -47,7 +53,8 @@ class NodePanelHeader extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    nodes: state.nodes
+    nodes: state.nodes,
+    streams: state.streams
   };
 };
 
