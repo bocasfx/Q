@@ -2,11 +2,10 @@ import { devices } from '../config/initial-state';
 
 const toggleDevice = (state, device) => {
   let newState = Object.assign({}, state, {});
-  let deviceValue = newState[device];
   Object.keys(newState).forEach((key) => {
     newState[key] = false;
   });
-  newState[device] = !deviceValue;
+  newState[device] = true;
   return newState;
 };
 

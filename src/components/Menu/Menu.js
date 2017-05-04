@@ -9,6 +9,7 @@ class Menu extends React.Component {
   constructor(props) {
     super(props);
 
+    this.onGrabButtonClick = this.onGrabButtonClick.bind(this);
     this.onSynthNodeButtonClick = this.onSynthNodeButtonClick.bind(this);
     this.onStreamButtonClick = this.onStreamButtonClick.bind(this);
     this.onCircularStreamButtonClick = this.onCircularStreamButtonClick.bind(this);
@@ -18,6 +19,10 @@ class Menu extends React.Component {
     this.onMixerButtonClick = this.onMixerButtonClick.bind(this);
     this.onLinkButtonClick = this.onLinkButtonClick.bind(this);
     this.onUnlinkButtonClick = this.onUnlinkButtonClick.bind(this);
+  }
+
+  onGrabButtonClick() {
+    this.props.toggleDevice('grab');
   }
 
   onSynthNodeButtonClick() {
@@ -59,6 +64,11 @@ class Menu extends React.Component {
   render() {
     return (
       <div className="menu-container">
+        <MenuButton
+          icon="./icons/menu/grab.svg"
+          onClick={this.onGrabButtonClick}
+          active={this.props.devices.grab}
+          separator={true}/>
         <MenuButton
           icon="./icons/menu/stream.svg"
           onClick={this.onStreamButtonClick}

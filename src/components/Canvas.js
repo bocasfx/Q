@@ -28,23 +28,21 @@ class Canvas extends React.Component {
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
-    this.setCursorStyle = this.setCursorStyle.bind(this);
     this.selectNode = this.selectNode.bind(this);
-
     this.draw = this.draw.bind(this);
     this.flow = this.flow.bind(this);
-    this.mouseDown = false;
+
     this.selectedNodeId = null;
     this.calculating = false;
-    this.cursorStyle = {
-      cursor: 'crosshair'
-    };
-
     this.linkSrc = null;
     this.linkPosition = null;
 
     this.linkAnchorImg = new Image();
     this.linkAnchorImg.src = './icons/elements/link-anchor.png';
+
+    this.state = {
+      mouseDown: false
+    };
   }
   
   componentDidMount() {
@@ -54,34 +52,9 @@ class Canvas extends React.Component {
     });
   }
 
-  setCursorStyle() {
-
-    if (this.props.devices.streams ||
-        this.props.devices.circularStreams ||
-        this.props.devices.linearStreams ||
-        this.props.devices.synthNodes ||
-        this.props.devices.midiNodes ||
-        this.props.devices.audioNodes ||
-        this.props.devices.link ||
-        this.props.devices.unlink) {
-      this.cursorStyle = {
-        cursor: 'crosshair'
-      };
-    } else if (this.mouseDown) {
-      this.cursorStyle = {
-        cursor: '-webkit-grabbing'
-      };
-    } else {
-      this.cursorStyle = {
-        cursor: '-webkit-grab'
-      };
-    }
-  }
-
   onMouseDown(event) {
     event.preventDefault();
-    this.mouseDown = true;
-    this.setCursorStyle();
+    this.setState({mouseDown: true});
 
     let position = getPosition(event);
 
@@ -124,9 +97,8 @@ class Canvas extends React.Component {
 
   onMouseUp(event) {
     event.preventDefault();
-    this.mouseDown = false;
+    this.setState({mouseDown: false});
     this.selectedNodeId = null;
-    this.setCursorStyle();
     if (this.props.devices.streams || this.props.devices.circularStreams || this.props.devices.linearStreams) {
       let streams = this.props.streams;
       let stream = streams[streams.length - 1];
@@ -347,7 +319,22 @@ class Canvas extends React.Component {
   }
 
   render() {
-    this.setCursorStyle();
+    let cursorStyle = {
+      cursor: 'crosshair'
+    };
+
+    if (this.props.devices.grab) {
+      if (this.state.mouseDown) {
+        cursorStyle = {
+          cursor: '-webkit-grabbing'
+        };
+      } else {
+        cursorStyle = {
+          cursor: '-webkit-grab'
+        };
+      }
+    }
+
     return (
       <canvas
         draggable="true"
@@ -357,7 +344,7 @@ class Canvas extends React.Component {
         onMouseMove={this.onMouseMove}
         onMouseDown={this.onMouseDown}
         onMouseUp={this.onMouseUp}
-        style={this.cursorStyle}
+        style={cursorStyle}
       />
     );
   }
