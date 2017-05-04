@@ -77,7 +77,7 @@ class Canvas extends React.Component {
 
   onMouseMove(event) {
     event.preventDefault();
-    if (!this.mouseDown) {
+    if (!this.state.mouseDown) {
       return;
     }
     if (this.props.devices.streams || this.props.devices.circularStreams || this.props.devices.linearStreams) {

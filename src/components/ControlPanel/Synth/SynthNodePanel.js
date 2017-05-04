@@ -58,7 +58,8 @@ class SynthNodePanel extends React.Component {
             min={0}
             max={1}
             onChange={this.onGainChange}
-            disabled={this.props.node.disabled}/>
+            disabled={this.props.node.disabled}
+            type={this.props.node.type}/>
           <div className="column">
             <Slider
               min={0}
@@ -109,7 +110,8 @@ class SynthNodePanel extends React.Component {
             onFreqChange={this.props.setNodeOsc1Frequency}
             onWaveTypeChange={this.props.setNodeOsc1WaveType}
             label="Osc. 1"
-            disabled={this.props.node.disabled}/>
+            disabled={this.props.node.disabled}
+            type={this.props.node.type}/>
           <OscillatorPanel
             name="osc2"
             nodeId={this.props.node.id}
@@ -117,7 +119,8 @@ class SynthNodePanel extends React.Component {
             onFreqChange={this.props.setNodeOsc2Frequency}
             onWaveTypeChange={this.props.setNodeOsc2WaveType}
             label="Osc. 2"
-            disabled={this.props.node.disabled}/>
+            disabled={this.props.node.disabled}
+            type={this.props.node.type}/>
         </div>
       </div>
     );

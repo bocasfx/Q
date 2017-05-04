@@ -1,5 +1,6 @@
 import React from 'react';
 import './Knob.css';
+import { getNodeColor } from '../../utils/utils';
 
 const _angle = 295.0;
 
@@ -84,7 +85,8 @@ class Knob extends React.Component {
 
   render() {
     let dotStyle = {
-      transform: 'rotate(' + this.state.angle + 'deg)'
+      transform: 'rotate(' + this.state.angle + 'deg)',
+      color: getNodeColor(this.props.type)
     };
 
     let disabled = this.props.disabled;

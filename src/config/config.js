@@ -10,17 +10,17 @@ export default {
   particle: {
     count: 1,
   },
-  synthNode: {
+  synth: {
     color: 'darkorange',
     envelope: {
       attack: 0.01,
       release: 0.01
     }
   },
-  midiNode: {
+  midi: {
     color: 'limegreen'
   },
-  audioNode: {
+  audio: {
     color: 'deepskyblue'
   },
   stream: {

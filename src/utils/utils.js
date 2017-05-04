@@ -40,3 +40,7 @@ export const calculateNodeBorderDistance = (a, b) => {
 
   return [xc, yc];
 };
+
+export const getNodeColor = (type) => {
+  return config[type].color;
+};
