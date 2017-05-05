@@ -1,25 +1,18 @@
 import config from '../config/config';
 import Particle from './Particle';
-import uuidv1 from 'uuid/v1';
-import names from '../config/names';
 import { getPosition, calculateDistance } from '../utils/utils';
+import Stream from './Stream';
 
-class LinearStream {
+class LinearStream extends Stream {
   constructor(position) {
-
-    this.id = uuidv1();
-    this.name = names.generate();
+    super(position);
     this.length = 0;
-    this.disabled = false;
-    this.particles = [];
     this.from = position;
     this.to = null;
     this.angles = [];
     this.distance = 0;
     this.particleOffset = 0;
-    this.speed = 1.0;
-    this.type = 'stream';
-    this.count = config.particle.count;
+    this.class = 'linear';
 
     for (let i=0; i < config.particle.count; i++) {
       this.particles.push(new Particle(this.from));

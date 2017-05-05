@@ -1,11 +1,11 @@
-import Stream from '../elements/Stream';
+import FreehandStream from '../elements/FreehandStream';
 import CircularStream from '../elements/CircularStream';
 import LinearStream from '../elements/LinearStream';
 import _ from 'lodash';
 import { streams } from '../config/initial-state';
 
-const addStream = (state, position, event) => {
-  let stream = new Stream(position);
+const addFreehandStream = (state, position, event) => {
+  let stream = new FreehandStream(position);
   let streamList = state.splice(0);
   streamList.push(stream);
   stream.onMouseDown(event);
@@ -72,8 +72,8 @@ const setStreamSpeed = (state, id, speed) => {
 export default (state = streams, action) => {
   switch (action.type) {
 
-    case 'ADD_STREAM':
-      return addStream(state, action.position, action.event);
+    case 'ADD_FREEHAND_STREAM':
+      return addFreehandStream(state, action.position, action.event);
 
     case 'ADD_CIRCULAR_STREAM':
       return addCircularStream(state, action.position, action.event);

@@ -1,28 +1,19 @@
 import config from '../config/config';
 import Particle from './Particle';
-import uuidv1 from 'uuid/v1';
-import names from '../config/names';
 import { getPosition, calculateDistance } from '../utils/utils';
+import Stream from './Stream';
 
-class CircularStream {
+class CircularStream extends Stream {
   constructor(position) {
-
-    this.id = uuidv1();
-    this.name = names.generate();
+    super(position);
     this.radius = 0;
-    this.disabled = false;
-    this.particles = [];
     this.position = position;
     this.mousePosition = position;
     this.cx = this.position[0] + this.radius;
     this.cy = this.position[0] + this.radius;
     this.deg2rad = Math.PI / 180;
-    this.particles = [];
     this.angles = [];
-    this.speed = 1.0;
-    this.mouseDown = false;
-    this.type = 'stream';
-    this.count = config.particle.count;
+    this.class = 'circular';
 
     let space = 360 / config.particle.count;
     let angle = 0;

@@ -1,6 +1,6 @@
-export const addStream = (position, event) => {
+export const addFreehandStream = (position, event) => {
   return {
-    type: 'ADD_STREAM',
+    type: 'ADD_FREEHAND_STREAM',
     position,
     event
   };

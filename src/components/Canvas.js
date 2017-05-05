@@ -3,7 +3,7 @@ import './Canvas.css';
 import _ from 'lodash';
 import config from '../config/config';
 import { connect } from 'react-redux';
-import { addStream, addCircularStream, addLinearStream } from '../actions/Streams';
+import { addFreehandStream, addCircularStream, addLinearStream } from '../actions/Streams';
 import { bindActionCreators } from 'redux';
 import { calculateDistance, getPosition, calculateNodeBorderDistance } from '../utils/utils';
 import { addSynthNode,
@@ -59,7 +59,7 @@ class Canvas extends React.Component {
     let position = getPosition(event);
 
     if (this.props.devices.streams) {
-      this.props.addStream(position, event);
+      this.props.addFreehandStream(position, event);
     } else if (this.props.devices.circularStreams) {
       this.props.addCircularStream(position, event);
     } else if (this.props.devices.linearStreams) {
@@ -367,7 +367,7 @@ const mapDispatchToProps = (dispatch) => {
     selectNode: bindActionCreators(selectNode, dispatch),
     cloneNode: bindActionCreators(cloneNode, dispatch),
     deselectNodes: bindActionCreators(deselectNodes, dispatch),
-    addStream: bindActionCreators(addStream, dispatch),
+    addFreehandStream: bindActionCreators(addFreehandStream, dispatch),
     addCircularStream: bindActionCreators(addCircularStream, dispatch),
     addLinearStream: bindActionCreators(addLinearStream, dispatch),
     setNodePosition: bindActionCreators(setNodePosition, dispatch),
