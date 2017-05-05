@@ -93,14 +93,12 @@ class Node {
 
   link(destNode) {
     this.links.push(destNode);
-    console.log(this.links);
   }
 
   unlink(destNode) {
     this.links = _.remove(this.links, (link) => {
       return link.id !== destNode.id;
     });
-    console.log(this.links);
   }
 
   render(canvasContext) {

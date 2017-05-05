@@ -21,6 +21,8 @@ class CircularStream {
     this.angles = [];
     this.speed = 1.0;
     this.mouseDown = false;
+    this.type = 'stream';
+    this.count = config.particle.count;
 
     let space = 360 / config.particle.count;
     let angle = 0;
