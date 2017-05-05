@@ -26,8 +26,6 @@ class NodePanelHeader extends React.Component {
     let toggleClass = 'element-panel-header-on';
     toggleClass += this.props.element.disabled ? ' element-panel-header-off' : '';
 
-    console.log(this.props.element.disabled);
-
     let color = getNodeColor(this.props.element.type);
     let style = this.props.element.disabled ? {} : {color: color, textShadow: '0 0 10px ' + color};
 

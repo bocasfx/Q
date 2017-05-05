@@ -6,59 +6,9 @@ import { bindActionCreators } from 'redux';
 import {toggleDevice} from '../../actions/Devices';
 
 class Menu extends React.Component {
-  constructor(props) {
-    super(props);
 
-    this.onGrabButtonClick = this.onGrabButtonClick.bind(this);
-    this.onSynthNodeButtonClick = this.onSynthNodeButtonClick.bind(this);
-    this.onStreamButtonClick = this.onStreamButtonClick.bind(this);
-    this.onCircularStreamButtonClick = this.onCircularStreamButtonClick.bind(this);
-    this.onLinearStreamButtonClick = this.onLinearStreamButtonClick.bind(this);
-    this.onMidiNodeButtonClick = this.onMidiNodeButtonClick.bind(this);
-    this.onAudioNodeButtonClick = this.onAudioNodeButtonClick.bind(this);
-    this.onMixerButtonClick = this.onMixerButtonClick.bind(this);
-    this.onLinkButtonClick = this.onLinkButtonClick.bind(this);
-    this.onUnlinkButtonClick = this.onUnlinkButtonClick.bind(this);
-  }
-
-  onGrabButtonClick() {
-    this.props.toggleDevice('grab');
-  }
-
-  onSynthNodeButtonClick() {
-    this.props.toggleDevice('synthNodes');
-  }
-
-  onStreamButtonClick() {
-    this.props.toggleDevice('streams');
-  }
-
-  onCircularStreamButtonClick() {
-    this.props.toggleDevice('circularStreams');
-  }
-
-  onLinearStreamButtonClick() {
-    this.props.toggleDevice('linearStreams');
-  }
-
-  onMidiNodeButtonClick() {
-    this.props.toggleDevice('midiNodes');
-  }
-
-  onAudioNodeButtonClick() {
-    this.props.toggleDevice('audioNodes');
-  }
-
-  onMixerButtonClick() {
-    this.props.toggleDevice('mixer');
-  }
-
-  onLinkButtonClick() {
-    this.props.toggleDevice('link');
-  }
-
-  onUnlinkButtonClick() {
-    this.props.toggleDevice('unlink');
+  onClick(device) {
+    this.props.toggleDevice(device);
   }
 
   render() {
@@ -66,47 +16,52 @@ class Menu extends React.Component {
       <div className="menu-container">
         <MenuButton
           icon="./icons/menu/grab.svg"
-          onClick={this.onGrabButtonClick}
+          onClick={this.onClick.bind(this, 'grab')}
           active={this.props.devices.grab}
           separator={true}/>
         <MenuButton
+          icon="./icons/menu/clone.svg"
+          onClick={this.onClick.bind(this, 'clone')}
+          active={this.props.devices.clone}
+          separator={true}/>
+        <MenuButton
           icon="./icons/menu/stream.svg"
-          onClick={this.onStreamButtonClick}
+          onClick={this.onClick.bind(this, 'streams')}
           active={this.props.devices.streams}
           separator={true}/>
         <MenuButton
           icon="./icons/menu/circular-stream.svg"
-          onClick={this.onCircularStreamButtonClick}
+          onClick={this.onClick.bind(this, 'circularStreams')}
           active={this.props.devices.circularStreams}
           separator={true}/>
         <MenuButton
           icon="./icons/menu/linear-stream.svg"
-          onClick={this.onLinearStreamButtonClick}
+          onClick={this.onClick.bind(this, 'linearStreams')}
           active={this.props.devices.linearStreams}
           separator={true}/>
         <MenuButton
           icon="./icons/menu/synth.svg"
-          onClick={this.onSynthNodeButtonClick}
+          onClick={this.onClick.bind(this, 'synthNodes')}
           active={this.props.devices.synthNodes}
           separator={true}/>
         <MenuButton
           icon="./icons/menu/midi.svg"
-          onClick={this.onMidiNodeButtonClick}
+          onClick={this.onClick.bind(this, 'midiNodes')}
           active={this.props.devices.midiNodes}
           separator={true}/>
         <MenuButton
           icon="./icons/menu/audio.svg"
-          onClick={this.onAudioNodeButtonClick}
+          onClick={this.onClick.bind(this, 'audioNodes')}
           active={this.props.devices.audioNodes}
           separator={true}/>
         <MenuButton
           icon="./icons/menu/link.svg"
-          onClick={this.onLinkButtonClick}
+          onClick={this.onClick.bind(this, 'link')}
           active={this.props.devices.link}
           separator={true}/>
         <MenuButton
           icon="./icons/menu/unlink.svg"
-          onClick={this.onUnlinkButtonClick}
+          onClick={this.onClick.bind(this, 'unlink')}
           active={this.props.devices.unlink}/>
       </div>
     );
