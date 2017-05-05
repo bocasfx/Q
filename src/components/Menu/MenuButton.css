@@ -14,11 +14,15 @@
   align-items: center;
 }
 
-.menu-button-container:nth-child(-n+4) .menu-button {
+.menu-button-container:nth-child(-n+5) .menu-button {
   opacity: 0.8;
 }
 
 .menu-button-container:nth-child(1) .menu-button {
+  opacity: 0.2;
+}
+
+.menu-button-container:nth-child(2) .menu-button {
   opacity: 0.2;
 }
 

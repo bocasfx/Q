@@ -12,7 +12,8 @@ module.exports = {
     mixer: false,
     link: false,
     unlink: false,
-    grab: true
+    grab: true,
+    clone: false
   },
   nodes: [],
   streams: [],
