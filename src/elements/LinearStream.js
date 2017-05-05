@@ -21,7 +21,7 @@ class LinearStream {
     this.speed = 1.0;
 
     for (let i=0; i < config.particle.count; i++) {
-      this.particles.push(new Particle([this.from[0], this.from[1]]));
+      this.particles.push(new Particle(this.from));
     }
   }
 
@@ -50,6 +50,10 @@ class LinearStream {
     }
 
     this.particles.forEach((particle, idx) => {
+      if (this.distance === 0) {
+        particle.position = this.from;
+        return;
+      }
 
       let ratio = (this.particleOffset + idx * this.space) / this.distance;
       this.particleOffset += this.speed;
@@ -58,9 +62,9 @@ class LinearStream {
         this.particleOffset = 0;
       }
 
-      let x3 = ratio * this.to[0] + (1 - ratio) * this.from[0];
-      let y3 = ratio * this.to[1] + (1 - ratio) * this.from[1];
-      particle.position = [x3, y3];
+      let x = ratio * this.to[0] + (1 - ratio) * this.from[0];
+      let y = ratio * this.to[1] + (1 - ratio) * this.from[1];
+      particle.position = [x, y];
     });
   }
 
