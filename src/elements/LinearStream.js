@@ -15,10 +15,11 @@ class LinearStream {
     this.from = position;
     this.to = null;
     this.angles = [];
-    this.speed = 5.0;
     this.distance = 0;
     this.particleOffset = 0;
     this.speed = 1.0;
+    this.type = 'stream';
+    this.count = config.particle.count;
 
     for (let i=0; i < config.particle.count; i++) {
       this.particles.push(new Particle(this.from));

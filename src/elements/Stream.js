@@ -13,7 +13,8 @@ class Stream {
     let y = position[1];
 
     let particles = [];
-    for (let i = 0; i < config.particle.count; i++) {
+    this.count = config.particle.count;
+    for (let i = 0; i < this.count; i++) {
       particles.push(new Particle([x, y]));
     }
 
@@ -32,7 +33,9 @@ class Stream {
     this.name = names.generate();
     this.selected = false;
     this.type = 'stream';
+    this.class ='freehand';
     this.disabled = false;
+    this.speed = 1.0;
 
     this.calculateEasing = this.calculateEasing.bind(this);
     this.onMouseDown = this.onMouseDown.bind(this);
@@ -110,7 +113,7 @@ class Stream {
 
         let pointInRope = 0;
         let particleIdx = 0;
-        let step = Math.floor(this.queue.length / (this.particles.length - 1));
+        let step = this.particles.length > 1 ? Math.floor(this.queue.length / (this.particles.length - 1)) : this.queue.length * this.speed;
 
         while (pointInRope <= this.queue.length - step) {
           this.particles[particleIdx].position = this.queue[pointInRope];

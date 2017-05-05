@@ -60,6 +60,15 @@ const setStreamDisabledStatus = (state, id, status) => {
   });
 };
 
+const setStreamSpeed = (state, id, speed) => {
+  return state.map((stream) => {
+    if (stream.id === id) {
+      stream.speed = speed;
+    }
+    return stream;
+  });
+};
+
 export default (state = streams, action) => {
   switch (action.type) {
 
@@ -83,6 +92,9 @@ export default (state = streams, action) => {
 
     case 'SET_STREAM_DISABLED_STATUS':
       return setStreamDisabledStatus(state, action.id, action.status);
+
+    case 'SET_STREAM_SPEED':
+      return setStreamSpeed(state, action.id, action.speed);
 
     default:
       return state;

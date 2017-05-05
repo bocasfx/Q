@@ -51,3 +51,11 @@ export const setStreamDisabledStatus = (id, status) => {
     status
   };
 };
+
+export const setStreamSpeed = (id, speed) => {
+  return {
+    type: 'SET_STREAM_SPEED',
+    id,
+    speed
+  };
+};

@@ -14,6 +14,8 @@ class Knob extends React.Component {
       value: 0
     };
 
+    this.precision = props.precision !== undefined ? props.precision : 1;
+
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
@@ -23,7 +25,7 @@ class Knob extends React.Component {
     let value = this.props.value;
     let angle = (value * _angle / this.props.max) + _angle;
     this.setState({
-      value: parseFloat(value.toFixed(1)),
+      value: parseFloat(value.toFixed(this.precision)),
       angle
     });
   }
@@ -36,7 +38,7 @@ class Knob extends React.Component {
 
     let angle = (nextProps.value * _angle / nextProps.max) + _angle;
     this.setState({
-      value: parseFloat(nextProps.value.toFixed(1)),
+      value: parseFloat(nextProps.value.toFixed(this.precision)),
       angle
     });
   }
@@ -65,7 +67,7 @@ class Knob extends React.Component {
     angle = angle <= _angle ? _angle : angle;
 
     let value = (((angle - _angle) / _angle) * this.props.max);
-    value = parseFloat(value.toFixed(1));
+    value = parseFloat(value.toFixed(this.precision));
 
     this.setState({
       angle,
