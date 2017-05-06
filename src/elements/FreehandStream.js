@@ -1,5 +1,4 @@
 import config from '../config/config';
-import Particle from './Particle';
 import { getPosition } from '../utils/utils';
 import Stream from './Stream';
 
@@ -12,10 +11,6 @@ class FreehandStream extends Stream {
     this.pathIndex = 0;
     this.path = [];
     this.class ='freehand';
-
-    for (let i = 0; i < this.count; i++) {
-      this.particles.push(new Particle(position));
-    }
 
     for (let i = 0; i < config.stream.size; i++) {
       this.queue.push(position);

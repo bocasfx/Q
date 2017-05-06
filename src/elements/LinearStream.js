@@ -1,5 +1,4 @@
 import config from '../config/config';
-import Particle from './Particle';
 import { getPosition, calculateDistance } from '../utils/utils';
 import Stream from './Stream';
 
@@ -13,10 +12,6 @@ class LinearStream extends Stream {
     this.distance = 0;
     this.particleOffset = 0;
     this.class = 'linear';
-
-    for (let i=0; i < config.particle.count; i++) {
-      this.particles.push(new Particle(this.from));
-    }
   }
 
   onMouseDown(event) {

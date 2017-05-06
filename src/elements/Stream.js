@@ -1,9 +1,11 @@
 import uuidv1 from 'uuid/v1';
 import names from '../config/names';
 import config from '../config/config';
+import Particle from './Particle';
 
 class Stream {
-  constructor() {
+  constructor(position) {
+    this.position = position;
     this.id = uuidv1();
     this.name = names.generate();
     this.disabled = false;
@@ -12,7 +14,20 @@ class Stream {
     this.particles = [];
     this.speed = 1.0;
     this.selected = false;
+    this.angles = [];
     this.count = config.particle.count;
+  }
+
+  set count(value) {
+    this.particles = [];
+    for (let i = 0; i < value; i++) {
+      this.particles.push(new Particle(this.position));
+    }
+    this.space = this.distance / this.particles.length;
+  }
+
+  get count() {
+    return this.particles.length;
   }
 }
 

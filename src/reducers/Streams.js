@@ -69,6 +69,15 @@ const setStreamSpeed = (state, id, speed) => {
   });
 };
 
+const setStreamCount = (state, id, count) => {
+  return state.map((stream) => {
+    if (stream.id === id) {
+      stream.count = count;
+    }
+    return stream;
+  });
+};
+
 export default (state = streams, action) => {
   switch (action.type) {
 
@@ -95,6 +104,9 @@ export default (state = streams, action) => {
 
     case 'SET_STREAM_SPEED':
       return setStreamSpeed(state, action.id, action.speed);
+
+    case 'SET_STREAM_COUNT':
+      return setStreamCount(state, action.id, action.count);
 
     default:
       return state;
