@@ -59,3 +59,11 @@ export const setStreamSpeed = (id, speed) => {
     speed
   };
 };
+
+export const setStreamCount = (id, count) => {
+  return {
+    type: 'SET_STREAM_COUNT',
+    id,
+    count
+  };
+};

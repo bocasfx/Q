@@ -3,7 +3,7 @@ import './StreamPanel.css';
 import ElementPanelHeader from '../ElementPanelHeader';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setStreamName, setStreamDisabledStatus, setStreamSpeed } from '../../../actions/Streams';
+import { setStreamName, setStreamDisabledStatus, setStreamSpeed, setStreamCount } from '../../../actions/Streams';
 import Knob from '../../UI/Knob';
 
 class StreamPanel extends React.Component {
@@ -13,6 +13,7 @@ class StreamPanel extends React.Component {
     this.onToggle = this.onToggle.bind(this);
     this.onSpeedChange = this.onSpeedChange.bind(this);
     this.renderSpeedKnob = this.renderSpeedKnob.bind(this);
+    this.onCountChange = this.onCountChange.bind(this);
     this.state = {
       disabled: false
     };
@@ -47,7 +48,7 @@ class StreamPanel extends React.Component {
   }
 
   onCountChange(count) {
-    console.log(count);
+    this.props.setStreamCount(this.props.stream.id, count);
   }
 
   render() {
@@ -78,7 +79,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setStreamName: bindActionCreators(setStreamName, dispatch),
     setStreamDisabledStatus: bindActionCreators(setStreamDisabledStatus, dispatch),
-    setStreamSpeed: bindActionCreators(setStreamSpeed, dispatch)
+    setStreamSpeed: bindActionCreators(setStreamSpeed, dispatch),
+    setStreamCount: bindActionCreators(setStreamCount, dispatch)
   };
 };
 

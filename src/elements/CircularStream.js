@@ -12,20 +12,28 @@ class CircularStream extends Stream {
     this.cx = this.position[0] + this.radius;
     this.cy = this.position[0] + this.radius;
     this.deg2rad = Math.PI / 180;
-    this.angles = [];
     this.class = 'circular';
+  }
 
-    let space = 360 / config.particle.count;
+  set count(value) {
+    this.particles = [];
+    this.angles = [];
+
+    let space = 360 / value;
     let angle = 0;
 
-    for(let i=0; i < config.particle.count; i++) {
+    for(let i=0; i < value; i++) {
       this.angles.push(angle);
       angle += space;
     }
 
-    for (let i=0; i < config.particle.count; i++) {
+    for (let i=0; i < value; i++) {
       this.particles.push(new Particle([this.position[0] - this.radius, this.position[1] - this.radius]));
     }
+  }
+
+  get count() {
+    return this.particles.length;
   }
 
   onMouseDown() {
