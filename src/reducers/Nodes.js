@@ -79,7 +79,9 @@ const deleteNode = (state, id) => {
 
 const selectNode = (state, id) => {
   return state.map((node) => {
-    node.selected = node.id === id ? !node.selected : false;
+    if (node.id === id) {
+      node.selected = !node.selected;
+    }
     return node;
   });
 };

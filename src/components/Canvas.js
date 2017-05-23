@@ -70,8 +70,10 @@ class Canvas extends React.Component {
     } else if (this.props.devices.synthNodes || this.props.devices.midiNodes || this.props.devices.audioNodes) {
       this.addNode(position);
       this.selectNode(position, event.metaKey);
-    } else if (!event.metaKey) {
+    } else if (this.props.devices.grab) {
       this.selectNode(position, event.metaKey);
+    } else if (this.props.devices.clone) {
+      this.cloneNode(position);
     }
   }
 
@@ -138,9 +140,10 @@ class Canvas extends React.Component {
         let distance = calculateDistance(node.position, position);
         if (distance <= config.app.doubleClickDistance) {
           selectedNodeId = node.id;
-          if (!node.selected) {
-            this.props.selectNode(node.id);
+          if (!metaKey) {
+            this.props.deselectNodes();
           }
+          this.props.selectNode(node.id);
         }
       });
 
@@ -148,13 +151,20 @@ class Canvas extends React.Component {
         this.props.deselectNodes();
         return;
       }
-
-      if (metaKey) {
-        this.props.cloneNode(selectedNodeId);
-      }
       
       this.selectedNodeId = selectedNodeId;
     }, 0);
+  }
+
+  cloneNode(position) {
+    let selectedNodeId = null;
+    this.props.nodes.forEach((node) => {
+      let distance = calculateDistance(node.position, position);
+      if (distance <= config.app.doubleClickDistance) {
+        selectedNodeId = node.id;
+        this.props.cloneNode(selectedNodeId);
+      }
+    });
   }
 
   initiateNodeLink(position) {
