@@ -61,30 +61,24 @@ class SynthNodePanel extends React.Component {
             disabled={this.props.node.disabled}
             type={this.props.node.type}/>
           <div className="column">
-            <Slider
+            <Knob
+              label={'Attack'}
+              value={this.props.node.attack}
               min={0}
               max={2}
-              step={0.01}
-              marks={5}
-              value={this.props.node.attack}
               onChange={this.onAttackChange}
-              disabled={this.props.node.disabled}/>
-            <div className="synth-node-panel-adsr-icon">
-              <img src="./icons/control-panel/adsr/attack.svg" alt="attack"/>
-            </div>
+              disabled={this.props.node.disabled}
+              type={this.props.node.type}/>
           </div>
           <div className="column">
-            <Slider
+            <Knob
+              label={'Release'}
+              value={this.props.node.release}
               min={0}
               max={2}
-              step={0.01}
-              marks={5}
-              value={this.props.node.release}
               onChange={this.onReleaseChange}
-              disabled={this.props.node.disabled}/>
-            <div className="synth-node-panel-adsr-icon">
-              <img src="./icons/control-panel/adsr/release.svg" alt="release"/>
-            </div>
+              disabled={this.props.node.disabled}
+              type={this.props.node.type}/>
           </div>
         </div>
           

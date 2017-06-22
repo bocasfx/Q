@@ -3,6 +3,7 @@ import MidiNode from '../elements/MidiNode';
 import AudioNode from '../elements/AudioNode';
 import _ from 'lodash';
 import { nodes } from '../config/initial-state';
+import uuidv1 from 'uuid/v1';
 
 const addSynthNode = (state, position) => {
   let node = new SynthNode(position);
@@ -112,14 +113,20 @@ const setNodeOsc2WaveType = (state, id, waveType) => {
 };
 
 const cloneNode = (state, id) => {
-  let clonedNode = {}; // new empty object to clone into
-  return state.map((node, id) => { // iterate over the state array
-    if (node.id === id) {    // check to see if id matches
-      clonedNode[node.key] = node.value; // copy values from node into clonedNode
-      return clonedNode; 
-    }    
-    return node;
-  }); 
+  state.forEach((node) => {
+    if (node.id === id) {
+      let clonedNode = new SynthNode();
+      Object.keys(node).forEach((key) => {
+        clonedNode[key] = node[key];
+      });
+      clonedNode.name += ' (clone)';
+      clonedNode.id = uuidv1();
+      clonedNode.attack = node.attack;
+      cloneNode.release = node.release;
+      state.push(clonedNode);
+    }
+  });
+  return state; 
 };
 
 const setNodeAttack = (state, id, value) => {
