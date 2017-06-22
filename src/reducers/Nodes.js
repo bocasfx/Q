@@ -3,6 +3,7 @@ import MidiNode from '../elements/MidiNode';
 import AudioNode from '../elements/AudioNode';
 import _ from 'lodash';
 import { nodes } from '../config/initial-state';
+import uuidv1 from 'uuid/v1';
 
 const addSynthNode = (state, position) => {
   let node = new SynthNode(position);
