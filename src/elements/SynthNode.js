@@ -4,6 +4,7 @@ import Oscillator from './Oscillator';
 import Amplifier from './Amplifier';
 import EnvelopeGenerator from './EnvelopeGenerator';
 import audioContext from '../config/audio-context';
+import Delay from './Delay';
 
 class SynthNode extends Node {
 
@@ -13,12 +14,15 @@ class SynthNode extends Node {
     this.oscillator1 = new Oscillator();
     this.oscillator2 = new Oscillator();
     this.amplifier = new Amplifier();
+    this.delayFx = new Delay(0.5, 0.1, 500);
 
     this.envelopeGenerator = new EnvelopeGenerator(config.synth.envelope);
 
     this.oscillator1.connect(this.amplifier);
     this.oscillator2.connect(this.amplifier);
+    this.amplifier.connect(this.delayFx);
     this.envelopeGenerator.connect(this.amplifier.amplitudeL, this.amplifier.amplitudeR);
+    this.delayFx.connect(audioContext.destination);
     this.amplifier.connect(audioContext.destination);
 
     this.type = 'synth';
