@@ -4,9 +4,13 @@ import MidiNode from '../elements/MidiNode';
 import AudioNode from '../elements/AudioNode';
 
 const createNode = (node) => {
-  switch (node.type) {
+  switch (node.topLevel.type) {
     case 'synth':
-      return new SynthNode(node.position);
+      let newSynthNode = new SynthNode(node.topLevel.position);
+      newSynthNode = Object.assign(newSynthNode, node.topLevel);
+      newSynthNode.oscillator1.waveType = node.inner.oscillator1.waveType;
+      newSynthNode.oscillator2.waveType = node.inner.oscillator2.waveType;
+      return newSynthNode;
     case 'midi':
       return new MidiNode(node.position);
     case 'audio':
@@ -17,8 +21,14 @@ const createNode = (node) => {
 };
 
 const serializeSynthNode = (node) => {
-  return (({ id, type, name, position, selected, volume, attack, release, osc1Freq, osc2Freq, disabled, pan, links, delay }) => {
-    return { id, type, name, position, selected, volume, attack, release, osc1Freq, osc2Freq, disabled, pan, links, delay };
+  return (({ id, type, name, position, selected, volume, attack, release, osc1Freq, osc2Freq, disabled, pan, links, delay, probability, oscillator1, oscillator2 }) => {
+    return { 
+      topLevel: {id, type, name, position, selected, volume, attack, release, osc1Freq, osc2Freq, disabled, pan, links, delay, probability}, 
+      inner: {
+        oscillator1: {waveType: oscillator1.waveType},
+        oscillator2: {waveType: oscillator2.waveType}
+      }
+    };
   })(node);
 };
 
@@ -55,9 +65,7 @@ export const serialize = (payload) => {
 
 export const hydrate = (payload) => {
   let nodes = payload.nodes.map((node) => {
-    let newNode = createNode(node);
-    let extendedNode = Object.assign(newNode, node);
-    return extendedNode;
+    return createNode(node);
   });
   let newState = Object.assign({}, payload, {
     nodes: nodes,

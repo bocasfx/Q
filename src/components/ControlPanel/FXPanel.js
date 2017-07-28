@@ -39,7 +39,7 @@ class FXPanel extends React.Component {
           label={'Cutoff'}
           value={this.props.fx.delay.cutoff}
           min={0}
-          max={2000}
+          max={10000}
           onChange={this.props.setDelayCutoff}
           disabled={false}
           type="synth"/>
