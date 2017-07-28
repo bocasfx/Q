@@ -4,6 +4,7 @@ import nodes from './Nodes';
 import streams from './Streams';
 import selection from './Selection';
 import notifications from './Notifications';
+import fx from './FX';
 import initialState from '../config/initial-state';
 import { hydrate } from '../utils/serializer';
 
@@ -12,7 +13,8 @@ const reducers = combineReducers({
   nodes,
   streams,
   selection,
-  notifications
+  notifications,
+  fx
 });
 
 const mainReducer = (state = initialState, action) => {
