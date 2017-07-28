@@ -24,5 +24,12 @@ module.exports = {
     message: '',
     level: 'info',
     hidden: true
+  },
+  fx: {
+    delay: {
+      time: 0.5,
+      feedback: 0.0,
+      cutoff: 500
+    }
   }
 };

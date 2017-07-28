@@ -1,3 +1,2 @@
-
-const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-export default audioContext;
+import audioContext from '../elements/QAudioContext';
+export default audioContext.ctx;
