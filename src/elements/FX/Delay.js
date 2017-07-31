@@ -11,8 +11,8 @@ class Delay {
     this.gain.connect(this.filter);
     this.filter.connect(this.delay);
 
-    this.input = this.delay;
-    this.output = this.delay;
+    this.input = this.filter;
+    this.output = this.filter;
 
     this.delay.delayTime.value = settings.time;
     this.gain.gain.value = settings.feedback;

@@ -1,5 +1,5 @@
 import config from '../config/config';
-import Delay from './Delay';
+import Delay from './FX/Delay';
 
 class QAudioContext {
   constructor() {
