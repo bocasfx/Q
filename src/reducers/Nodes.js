@@ -248,10 +248,10 @@ const stopNode = (state, id) => {
   });
 };
 
-const setNodeDelay = (state, id, delay) => {
+const setNodeLag = (state, id, lag) => {
   return state.map((node) => {
     if (node.id === id) {
-      node.delay = delay;
+      node.lag = lag;
     }
     return node;
   });
@@ -344,8 +344,8 @@ export default (state = nodes, action) => {
     case 'STOP_NODE':
       return stopNode(state, action.id);
 
-    case 'SET_NODE_DELAY':
-      return setNodeDelay(state, action.id, action.delay);
+    case 'SET_NODE_LAG':
+      return setNodeLag(state, action.id, action.lag);
 
     case 'SET_NODE_PROBABILITY':
       return setNodeProbability(state, action.id, action.probability);

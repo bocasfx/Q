@@ -2,18 +2,18 @@ import React from 'react';
 import './NodePanelHeader.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setNodeDelay, setNodeProbability } from '../../actions/Nodes';
+import { setNodeLag, setNodeProbability } from '../../actions/Nodes';
 import Knob from '../UI/Knob';
 
 class NodePanelHeader extends React.Component {
   constructor(props) {
     super(props);
-    this.onDelayChange = this.onDelayChange.bind(this);
+    this.onLagChange = this.onLagChange.bind(this);
     this.onProbabilityChange = this.onProbabilityChange.bind(this);
   }
 
-  onDelayChange(value) {
-    this.props.setNodeDelay(this.props.node.id, value);
+  onLagChange(value) {
+    this.props.setNodeLag(this.props.node.id, value);
   }
 
   onProbabilityChange(value) {
@@ -24,11 +24,11 @@ class NodePanelHeader extends React.Component {
     return (
       <div className="node-panel-header-container">
         <Knob
-          label={'Delay'}
-          value={this.props.node.delay}
+          label={'Lag'}
+          value={this.props.node.lag}
           min={0}
           max={5000}
-          onChange={this.onDelayChange}
+          onChange={this.onLagChange}
           disabled={this.props.node.disabled}
           type={this.props.node.type}/>
         <Knob
@@ -52,7 +52,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setNodeDelay: bindActionCreators(setNodeDelay, dispatch),
+    setNodeLag: bindActionCreators(setNodeLag, dispatch),
     setNodeProbability: bindActionCreators(setNodeProbability, dispatch)
   };
 };
