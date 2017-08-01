@@ -15,7 +15,7 @@ class Node {
     this._disabled = false;
     this.pan = 0;
     this.links = [];
-    this.delay = 0;
+    this.lag = 0;
     this.probability = 1.0;
     this.ignoring = false;
 

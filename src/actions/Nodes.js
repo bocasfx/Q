@@ -189,11 +189,11 @@ export const stopNode = (id) => {
   };
 };
 
-export const setNodeDelay = (id, delay) => {
+export const setNodeLag = (id, lag) => {
   return {
-    type: 'SET_NODE_DELAY',
+    type: 'SET_NODE_LAG',
     id,
-    delay
+    lag
   };
 };
 
