@@ -44,3 +44,18 @@ export const calculateNodeBorderDistance = (a, b) => {
 export const getNodeColor = (type) => {
   return config[type].color;
 };
+
+export const toPolar = (x, y) => {
+  let r = Math.sqrt((x * x) + (y * y));
+
+  let theta = Math.atan2(-y, -x);
+  theta = (theta > 0 ? theta : (2 * Math.PI + theta)) * 360 / (2 * Math.PI);
+  return {
+    radius: r,
+    angle: theta
+  };
+};
+
+export const clip = (value, min, max) => {
+  return Math.min(Math.max(value, min), max);
+};
