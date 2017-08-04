@@ -49,8 +49,9 @@ export const toPolar = (x, y) => {
   let r = Math.sqrt((x * x) + (y * y));
 
   let theta = Math.atan2(-y, -x);
-  theta = (theta > 0 ? theta : (2 * Math.PI + theta)) * 360 / (2 * Math.PI);
-  theta = (theta + 360) % 360;
+  if (theta < 0) {
+    theta += 2 * Math.PI;
+  }
   return {
     radius: r,
     angle: theta
