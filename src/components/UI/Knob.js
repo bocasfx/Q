@@ -9,6 +9,7 @@ class Knob extends React.Component {
       dragging: false,
       angle: 0,
       value: 0,
+      label: 0,
       anchor: 0
     };
 
@@ -20,20 +21,15 @@ class Knob extends React.Component {
   }
 
   componentDidMount() {
-    let value = this.props.value;
-    this.setState({
-      value: parseFloat(value.toFixed(this.precision))
-    });
-  }
-
-  componentWillReceiveProps(nextProps) {
-
-    if (this.state.dragging) {
-      return;
-    }
+    let value = this.props.value / this.props.max;
+    let angle = value * 360.0;
+    let label = value * this.props.max;
+    label = parseFloat(label.toFixed(this.precision));
 
     this.setState({
-      value: parseFloat(nextProps.value.toFixed(this.precision))
+      value,
+      angle,
+      label
     });
   }
 
@@ -63,16 +59,21 @@ class Knob extends React.Component {
     }
 
     let anchor = this.convertPositionToValue(event);
-    let value = this.state.value / this.props.max + increment;
+    let value = this.state.value + increment;
     value = clip(value, 0, 1);
 
+    let angle = value * 360.0;
+    let label = value * this.props.max;
+    label = parseFloat(label.toFixed(this.precision));
+
     this.setState({
-      angle: value * 360,
-      anchor: anchor,
-      value: value * this.props.max
+      angle,
+      anchor,
+      value,
+      label
     });
 
-    this.props.onChange(parseFloat(value));
+    this.props.onChange(parseFloat(label));
   }
 
   onMouseUp(event) {
@@ -107,7 +108,7 @@ class Knob extends React.Component {
       <div className="knob-container" disabled={disabled}>
         <div className="knob-outer" ref="knobOuter">
           <div className="knob-dot" style={dotStyle} onMouseDown={this.onMouseDown} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp}>&middot;</div>
-          <div className="knob-dial">{parseFloat(this.state.value.toFixed(this.precision))}</div>
+          <div className="knob-dial">{this.state.label}</div>
         </div>
         <div className="knob-label">{this.props.label}</div>
       </div>
