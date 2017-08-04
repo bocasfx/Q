@@ -1,6 +1,6 @@
 import React from 'react';
 import './Knob.css';
-import { getNodeColor, toPolar } from '../../utils/utils';
+import { getNodeColor, toPolar, clip } from '../../utils/utils';
 
 class Knob extends React.Component {
   constructor(props) {
@@ -9,7 +9,7 @@ class Knob extends React.Component {
       dragging: false,
       angle: 0,
       value: 0,
-      mouseDownAngle: 0
+      anchor: 0
     };
 
     this.precision = props.precision !== undefined ? props.precision : 1;
@@ -42,10 +42,10 @@ class Knob extends React.Component {
       return;
     }
     event.preventDefault();
-    let mouseDownAngle = this.getAngle(event);
+    let anchor = this.convertPositionToValue(event);
     this.setState({
       dragging: true,
-      mouseDownAngle: mouseDownAngle
+      anchor: anchor
     });
     window.onmousemove = this.onMouseMove.bind(this);
     window.onmouseup = this.onMouseUp.bind(this);
@@ -57,19 +57,19 @@ class Knob extends React.Component {
       return;
     }
 
-    let newAngle = this.getAngle(event);
-    let angleDiff = newAngle - this.state.mouseDownAngle;
+    var increment = this.convertPositionToValue(event) - this.state.anchor;
+    if (Math.abs(increment) > 0.5) {
+      increment = 0;
+    }
 
-    let angle = this.state.angle + angleDiff;
-    angle = (angle + 360) % 360;
-
-    let value = ((angle / 360.0) * this.props.max);
-    value = parseFloat(value.toFixed(this.precision));
+    let anchor = this.convertPositionToValue(event);
+    let value = this.state.value / this.props.max + increment;
+    value = clip(value, 0, 1);
 
     this.setState({
-      angle: angle,
-      mouseDownAngle: newAngle,
-      value
+      angle: value * 360,
+      anchor: anchor,
+      value: value * this.props.max
     });
 
     this.props.onChange(parseFloat(value));
@@ -78,17 +78,21 @@ class Knob extends React.Component {
   onMouseUp(event) {
     event.preventDefault();
     this.setState({
-      dragging: false,
-      initialAngle: this.state.angle
+      dragging: false
     });
     window.onmousemove = null;
     window.onmouseup = null;
   }
 
-  getAngle(event) {
+  convertPositionToValue(event) {
     let x = event.clientX - this.refs.knobOuter.offsetLeft - 30;
     let y = event.clientY - this.refs.knobOuter.offsetTop - 30;
-    return toPolar(x, y).angle;
+
+    let angle = toPolar(x, y).angle;
+    angle /= (Math.PI * 2);
+    angle = (angle - 0.25 + 1) % 1;
+
+    return angle;
   }
 
   render() {
@@ -103,7 +107,7 @@ class Knob extends React.Component {
       <div className="knob-container" disabled={disabled}>
         <div className="knob-outer" ref="knobOuter">
           <div className="knob-dot" style={dotStyle} onMouseDown={this.onMouseDown} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp}>&middot;</div>
-          <div className="knob-dial">{this.state.value}</div>
+          <div className="knob-dial">{parseFloat(this.state.value.toFixed(this.precision))}</div>
         </div>
         <div className="knob-label">{this.props.label}</div>
       </div>
