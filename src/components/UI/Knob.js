@@ -61,15 +61,10 @@ class Knob extends React.Component {
     let angleDiff = newAngle - this.state.mouseDownAngle;
 
     let angle = this.state.angle + angleDiff;
-
-    if (!angle) {
-      return;
-    }
+    angle = (angle + 360) % 360;
 
     let value = ((angle / 360.0) * this.props.max);
     value = parseFloat(value.toFixed(this.precision));
-
-    console.log(this.state.mouseDownAngle, newAngle, angle);
 
     this.setState({
       angle: angle,
