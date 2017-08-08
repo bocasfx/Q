@@ -253,6 +253,15 @@ const setNodeProbability = (state, id, probability) => {
   });
 };
 
+const setNodeSendGain = (state, id, value) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.sendFXGain = value;
+    }
+    return node;
+  });
+};
+
 export default (state = nodes, action) => {
   switch (action.type) {
 
@@ -336,6 +345,9 @@ export default (state = nodes, action) => {
 
     case 'SET_NODE_PROBABILITY':
       return setNodeProbability(state, action.id, action.probability);
+
+    case 'SET_NODE_SEND_GAIN':
+      return setNodeSendGain(state, action.id, action.value);
 
     default:
       return state;

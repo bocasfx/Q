@@ -204,3 +204,11 @@ export const setNodeProbability = (id, probability) => {
     probability
   };
 };
+
+export const setNodeSendGain = (id, value) => {
+  return {
+    type: 'SET_NODE_SEND_GAIN',
+    id,
+    value
+  };
+};
