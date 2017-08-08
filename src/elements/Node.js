@@ -18,6 +18,7 @@ class Node {
     this.lag = 0;
     this.probability = 1.0;
     this.ignoring = false;
+    this.sendGain = 0.5;
 
     this.selectedNodeImg = new Image();
     this.selectedNodeImg.src = './icons/elements/node-selected.png';
@@ -38,6 +39,7 @@ class Node {
   get attack() {}
   set release(value) {}
   get release() {}
+  set sendFXGain(value) {}
 
   set disabled(value) {
     this._disabled = value;
