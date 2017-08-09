@@ -10,7 +10,7 @@ class FreehandStream extends Stream {
     this.headPosition = position;
     this.pathIndex = 0;
     this.path = [];
-    this.class ='freehand';
+    this.variety ='freehand';
 
     for (let i = 0; i < config.stream.size; i++) {
       this.queue.push(position);

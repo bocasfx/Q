@@ -32,8 +32,7 @@ const renderDom = (midiContext) => {
 
 const saveContent = () => {
   const state = store.getState();
-  let serializedState = serialize(state);
-  localStorage.QState = serializedState;
+  localStorage.QState = serialize(state);
 };
 
 const initialize = () => {

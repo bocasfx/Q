@@ -37,8 +37,9 @@
   line-height: 1.9em;
   cursor: pointer;
   transition: opacity 0.3s ease-in-out;
-  line-height: 2.5em;
-  text-align: center;
+  /*line-height: 2.5em;
+  text-align: center;*/
+  /*transform: rotate(290deg);*/
 }
 
 .knob-container[disabled] .knob-dot {
