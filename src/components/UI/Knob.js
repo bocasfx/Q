@@ -2,7 +2,7 @@ import React from 'react';
 import './Knob.css';
 import { getNodeColor } from '../../utils/utils';
 
-const _angle = 295.0;
+const _angle = 360;
 
 class Knob extends React.Component {
   constructor(props) {
@@ -35,6 +35,7 @@ class Knob extends React.Component {
       return;
     }
     event.preventDefault();
+    event.target.requestPointerLock();
     this.setState({
       dragging: true,
       y: event.pageY
@@ -45,11 +46,11 @@ class Knob extends React.Component {
 
   onMouseMove(event) {
     event.preventDefault();
-    if (!this.state.dragging) {
+    if (!this.state.dragging || !event.movementY) {
       return;
     }
 
-    let angle = this.state.angle + (this.state.y - event.pageY);
+    let angle = this.state.angle - event.movementY;
     angle = angle >= 2 * _angle ? 2 * _angle : angle;
     angle = angle <= _angle ? _angle : angle;
 
@@ -70,6 +71,7 @@ class Knob extends React.Component {
     this.setState({ dragging: false });
     window.onmousemove = null;
     window.onmouseup = null;
+    document.exitPointerLock();
   }
 
   render() {
