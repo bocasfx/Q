@@ -13,7 +13,7 @@ class SynthNode extends Node {
     this.oscillator1 = new Oscillator();
     this.oscillator2 = new Oscillator();
     this.amplifier = new Amplifier();
-    this.send = new Amplifier();
+    this.sendAmp = new Amplifier();
 
     this.envelopeGenerator = new EnvelopeGenerator(config.synth.envelope);
 
@@ -21,9 +21,9 @@ class SynthNode extends Node {
     this.oscillator2.connect(this.amplifier);
     this.envelopeGenerator.connect(this.amplifier.amplitudeL, this.amplifier.amplitudeR);
     this.amplifier.connect(qAudioContext.destination);
-    this.amplifier.connect(this.send);
-    this.send.connect(qAudioContext.delayDestination);
-    this.send.volume = 1;
+    this.amplifier.connect(this.sendAmp);
+    this.sendAmp.connect(qAudioContext.delayDestination);
+    this.sendAmp.volume = 0;
 
     this.type = 'synth';
 
@@ -78,7 +78,11 @@ class SynthNode extends Node {
   }
 
   set sendFXGain(value) {
-    this.send.volume = value;
+    this.sendAmp.volume = value;
+  }
+
+  get sendFXGain() {
+    return this.sendAmp.volume;
   }
 
   play() {

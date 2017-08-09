@@ -1,16 +1,17 @@
 import React from 'react';
 import './Knob.css';
-import { getNodeColor, toPolar, clip } from '../../utils/utils';
+import { getNodeColor } from '../../utils/utils';
+
+const _angle = 295.0;
 
 class Knob extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       dragging: false,
-      angle: 0,
-      value: 0,
-      label: 0,
-      anchor: 0
+      angle: _angle,
+      y: null,
+      value: 0
     };
 
     this.precision = props.precision !== undefined ? props.precision : 1;
@@ -21,15 +22,11 @@ class Knob extends React.Component {
   }
 
   componentDidMount() {
-    let value = this.props.value / this.props.max;
-    let angle = value * 360.0;
-    let label = value * this.props.max;
-    label = parseFloat(label.toFixed(this.precision));
-
+    let value = this.props.value;
+    let angle = (value * _angle / this.props.max) + _angle;
     this.setState({
-      value,
-      angle,
-      label
+      value: parseFloat(value.toFixed(this.precision)),
+      angle
     });
   }
 
@@ -38,10 +35,9 @@ class Knob extends React.Component {
       return;
     }
     event.preventDefault();
-    let anchor = this.convertPositionToValue(event);
     this.setState({
       dragging: true,
-      anchor: anchor
+      y: event.pageY
     });
     window.onmousemove = this.onMouseMove.bind(this);
     window.onmouseup = this.onMouseUp.bind(this);
@@ -53,47 +49,27 @@ class Knob extends React.Component {
       return;
     }
 
-    var increment = this.convertPositionToValue(event) - this.state.anchor;
-    if (Math.abs(increment) > 0.5) {
-      increment = 0;
-    }
+    let angle = this.state.angle + (this.state.y - event.pageY);
+    angle = angle >= 2 * _angle ? 2 * _angle : angle;
+    angle = angle <= _angle ? _angle : angle;
 
-    let anchor = this.convertPositionToValue(event);
-    let value = this.state.value + increment;
-    value = clip(value, 0, 1);
-
-    let angle = value * 360.0;
-    let label = value * this.props.max;
-    label = parseFloat(label.toFixed(this.precision));
+    let value = (((angle - _angle) / _angle) * this.props.max);
+    value = parseFloat(value.toFixed(this.precision));
 
     this.setState({
       angle,
-      anchor,
-      value,
-      label
+      y: event.pageY,
+      value
     });
 
-    this.props.onChange(parseFloat(label));
+    this.props.onChange(parseFloat(value));
   }
 
   onMouseUp(event) {
     event.preventDefault();
-    this.setState({
-      dragging: false
-    });
+    this.setState({ dragging: false });
     window.onmousemove = null;
     window.onmouseup = null;
-  }
-
-  convertPositionToValue(event) {
-    let x = event.clientX - this.refs.knobOuter.offsetLeft - 30;
-    let y = event.clientY - this.refs.knobOuter.offsetTop - 30;
-
-    let angle = toPolar(x, y).angle;
-    angle /= (Math.PI * 2);
-    angle = (angle - 0.25 + 1) % 1;
-
-    return angle;
   }
 
   render() {
@@ -106,9 +82,9 @@ class Knob extends React.Component {
 
     return (
       <div className="knob-container" disabled={disabled}>
-        <div className="knob-outer" ref="knobOuter">
+        <div className="knob-outer">
           <div className="knob-dot" style={dotStyle} onMouseDown={this.onMouseDown} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp}>&middot;</div>
-          <div className="knob-dial">{this.state.label}</div>
+          <div className="knob-dial">{this.state.value}</div>
         </div>
         <div className="knob-label">{this.props.label}</div>
       </div>

@@ -68,7 +68,7 @@ class SynthNodePanel extends React.Component {
             type={this.props.node.type}/>
           <Knob
             label={'FX Send'}
-            value={this.props.node.sendGain}
+            value={this.props.node.sendFXGain}
             min={0}
             max={1}
             onChange={this.onSendGainChange}
