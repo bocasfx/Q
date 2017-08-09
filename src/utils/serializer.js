@@ -2,6 +2,8 @@ import initialState from '../config/initial-state';
 import SynthNode from '../elements/SynthNode';
 import MidiNode from '../elements/MidiNode';
 import AudioNode from '../elements/AudioNode';
+import CircularStream from '../elements/CircularStream';
+import LinearStream from '../elements/LinearStream';
 
 const createNode = (node) => {
   switch (node.topLevel.type) {
@@ -12,9 +14,21 @@ const createNode = (node) => {
       newSynthNode.oscillator2.waveType = node.inner.oscillator2.waveType;
       return newSynthNode;
     case 'midi':
-      return new MidiNode(node.position);
+      return new MidiNode(node.topLevel.position);
     case 'audio':
-      return new AudioNode(node.position);
+      return new AudioNode(node.topLevel.position);
+    default:
+      return null;
+  }
+};
+
+const createStream = (stream) => {
+  switch (stream.topLevel.variety) {
+    case 'circular':
+      return new CircularStream(stream.topLevel);
+    case 'linear':
+      return new LinearStream(stream.topLevel);
+    case 'freehand':
     default:
       return null;
   }
@@ -34,19 +48,47 @@ const serializeSynthNode = (node) => {
 
 const serializeMidiNode = (node) => {
   return (({ id, type, name, position, selected, note, velocity, disabled, links, delay }) => {
-    return { id, type, name, position, selected, note, velocity, disabled, links, delay };
+    return {
+      topLevel: { id, type, name, position, selected, note, velocity, disabled, links, delay },
+      inner: {}
+    };
   })(node);
 };
 
 const serializeAudioNode = (node) => {
   return (({ id, type, name, position, selected, disabled, links, delay }) => {
-    return { id, type, name, position, selected, disabled, links, delay };
+    return {
+      topLevel: { id, type, name, position, selected, disabled, links, delay },
+      inner: {}
+    };
   })(node);
+};
+
+const serializeCircularStream = (stream) => {
+  return(({id, type, variety, name, position, radius, selected, disabled, speed, count}) => {
+    return {
+      topLevel: {id, type, variety, name, position, radius, selected, disabled, speed, count},
+      inner: {}
+    };
+  })(stream);
+};
+
+const serializeLinearStream = (stream) => {
+  console.log(stream);
+  return(({id, type, variety, name, position, from, to, selected, disabled, speed, count, distance, length, particleOffset}) => {
+    return {
+      topLevel: {id, type, variety, name, position, from, to, selected, disabled, speed, count, distance, length, particleOffset},
+      inner: {}
+    };
+  })(stream);
 };
 
 export const serialize = (payload) => {
   let nodes = payload.nodes;
+  let streams = payload.streams;
+
   let serializedNodes = nodes.map((node) => {
+    console.log(node);
     switch (node.type) {
       case 'synth':
         return serializeSynthNode(node);
@@ -58,8 +100,23 @@ export const serialize = (payload) => {
         return null;
     }
   });
+
+  let serializedStreams = streams.map((stream) => {
+    switch (stream.variety) {
+      case 'circular':
+        return serializeCircularStream(stream);
+      case 'linear':
+        return serializeLinearStream(stream);
+      case 'freehand':
+        return null;
+      default:
+        return null;
+    }
+  });
+
   return JSON.stringify({
-    nodes: serializedNodes
+    nodes: serializedNodes,
+    streams: serializedStreams
   });
 };
 
@@ -67,10 +124,15 @@ export const hydrate = (payload) => {
   let nodes = payload.nodes.map((node) => {
     return createNode(node);
   });
+
+  let streams = payload.streams.map((stream) => {
+    return createStream(stream);
+  });
+
   let newState = Object.assign({}, payload, {
     nodes: nodes,
     devices: initialState.devices,
-    streams: initialState.streams,
+    streams: streams,
     selection: initialState.selection,
     notifications: initialState.notifications
   });

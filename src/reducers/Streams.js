@@ -13,7 +13,7 @@ const addFreehandStream = (state, position, event) => {
 };
 
 const addCircularStream = (state, position, event) => {
-  let stream = new CircularStream(position);
+  let stream = new CircularStream({position});
   let streamList = state.splice(0);
   streamList.push(stream);
   stream.onMouseDown(event);
@@ -21,7 +21,7 @@ const addCircularStream = (state, position, event) => {
 };
 
 const addLinearStream = (state, position, event) => {
-  let stream = new LinearStream(position);
+  let stream = new LinearStream({position});
   let streamList = state.splice(0);
   streamList.push(stream);
   stream.onMouseDown(event);

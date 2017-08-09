@@ -62,7 +62,7 @@ class SynthNode extends Node {
   }
 
   set attack(value) {
-    this.envelopeGenerator.attack = value;
+    this.envelopeGenerator.attack = value === 0 ? config.synth.envelope.attack : value;
   }
 
   get attack() {
@@ -70,7 +70,7 @@ class SynthNode extends Node {
   }
 
   set release(value) {
-    this.envelopeGenerator.release = value;
+    this.envelopeGenerator.release = value === 0 ? config.synth.envelope.release : value;
   }
 
   get release() {

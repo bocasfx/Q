@@ -2,7 +2,7 @@ import React from 'react';
 import './Knob.css';
 import { getNodeColor } from '../../utils/utils';
 
-const _angle = 360;
+const _angle = 290;
 
 class Knob extends React.Component {
   constructor(props) {
@@ -14,7 +14,7 @@ class Knob extends React.Component {
       value: 0
     };
 
-    this.precision = props.precision !== undefined ? props.precision : 1;
+    this.precision = props.precision !== undefined ? props.precision : 2;
 
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
@@ -86,7 +86,7 @@ class Knob extends React.Component {
       <div className="knob-container" disabled={disabled}>
         <div className="knob-outer">
           <div className="knob-dot" style={dotStyle} onMouseDown={this.onMouseDown} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp}>&middot;</div>
-          <div className="knob-dial">{this.state.value}</div>
+          <div className="knob-dial"></div>
         </div>
         <div className="knob-label">{this.props.label}</div>
       </div>
