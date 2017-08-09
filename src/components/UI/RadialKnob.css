@@ -31,13 +31,13 @@
 
 .knob-dot {
   width: 43px;
-  height: 43px;
   position: absolute;
   font-size: 2.5em;
-  line-height: 1.9em;
-  transform: rotate(295deg);
   cursor: pointer;
   transition: opacity 0.3s ease-in-out;
+  text-align: center;
+  height: 43px;
+  line-height: 80px;
 }
 
 .knob-container[disabled] .knob-dot {
