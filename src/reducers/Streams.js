@@ -5,7 +5,7 @@ import _ from 'lodash';
 import { streams } from '../config/initial-state';
 
 const addFreehandStream = (state, position, event) => {
-  let stream = new FreehandStream(position);
+  let stream = new FreehandStream({position});
   let streamList = state.splice(0);
   streamList.push(stream);
   stream.onMouseDown(event);

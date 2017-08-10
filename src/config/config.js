@@ -65,6 +65,9 @@ export default {
   unlink: {
     strokeStyle: 'crimson'
   },
+  knob: {
+    zeroColor: 'dimgray'
+  },
   fader: {
     marks: {
       0: '-0',

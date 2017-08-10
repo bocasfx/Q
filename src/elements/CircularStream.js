@@ -4,8 +4,8 @@ import { getPosition, calculateDistance } from '../utils/utils';
 import Stream from './Stream';
 
 class CircularStream extends Stream {
-  constructor({position, radius = 0, speed = 1.0}) {
-    super(position);
+  constructor({position, radius = 0, speed = 1.0, count = 1}) {
+    super({position, speed, count});
     this.radius = radius;
     this.position = position;
     this.mousePosition = position;
@@ -13,7 +13,6 @@ class CircularStream extends Stream {
     this.cy = this.position[0] + this.radius;
     this.deg2rad = Math.PI / 180;
     this.variety = 'circular';
-    this.speed = speed;
   }
 
   set count(value) {
