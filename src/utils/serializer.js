@@ -87,7 +87,6 @@ export const serialize = (payload) => {
   let streams = payload.streams;
 
   let serializedNodes = nodes.map((node) => {
-    console.log(node);
     switch (node.type) {
       case 'synth':
         return serializeSynthNode(node);

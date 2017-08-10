@@ -3,8 +3,8 @@ import { getPosition } from '../utils/utils';
 import Stream from './Stream';
 
 class FreehandStream extends Stream {
-  constructor(position) {
-    super(position);
+  constructor({position}) {
+    super({position});
     this.queue = [];
     this.easing = '';
     this.headPosition = position;

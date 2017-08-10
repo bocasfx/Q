@@ -113,7 +113,37 @@ const setNodeOsc2WaveType = (state, id, waveType) => {
 };
 
 const cloneNode = (state, id) => {
-  console.log(state);
+  state.forEach((node) => {
+    if (node.id === id) {
+      console.log(node);
+      let clonedNode = new SynthNode();
+      clonedNode.active = false;
+      clonedNode.lag = node.lag;
+      clonedNode.links = [];
+      clonedNode.name = node.name;
+      clonedNode.pan = node.pan;
+      clonedNode.particleQueue = [];
+      clonedNode.position = node.position;
+      clonedNode.probability = node.probability;
+      clonedNode.selected = node.selected;
+      clonedNode.volume = node.volume;
+      clonedNode._disabled = node._disabled;
+      clonedNode.attack = node.attack;
+      clonedNode.disabled = node.disabled;
+      clonedNode.osc1Freq = node.osc1Freq;
+      clonedNode.osc2Freq = node.osc2Freq;
+      clonedNode.release = node.release;
+      clonedNode.sendFXGain = node.sendFXGain;
+      clonedNode.name = node.name + ' (clone)';
+      clonedNode.id = uuidv1();
+      clonedNode.oscillator1.frequency = node.oscillator1.frequency;
+      clonedNode.oscillator2.frequency = node.oscillator2.frequency;
+      clonedNode.oscillator1.waveType = node.oscillator1.waveType;
+      clonedNode.oscillator2.waveType = node.oscillator2.waveType;
+      state.push(clonedNode);
+    }
+  });
+  return state;
 };
 
 const setNodeAttack = (state, id, value) => {

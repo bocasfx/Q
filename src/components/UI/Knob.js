@@ -1,6 +1,7 @@
 import React from 'react';
 import './Knob.css';
 import { getNodeColor } from '../../utils/utils';
+import config from '../../config/config';
 
 const _angle = 290;
 
@@ -74,17 +75,27 @@ class Knob extends React.Component {
     document.exitPointerLock();
   }
 
+  ignoreMouseDown(event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
   render() {
     let dotStyle = {
       transform: 'rotate(' + this.state.angle + 'deg)',
       color: getNodeColor(this.props.type)
     };
 
+    if (this.state.value === 0) {
+      dotStyle.color = config.knob.zeroColor;
+    }
+
     let disabled = this.props.disabled;
 
     return (
       <div className="knob-container" disabled={disabled}>
         <div className="knob-outer">
+          <img className="knob-marks" src="./icons/control-panel/knob/marks.svg" alt="./icons/control-panel/knob/marks.svg" onMouseDown={this.ignoreMouseDown}/>
           <div className="knob-dot" style={dotStyle} onMouseDown={this.onMouseDown} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp}>&middot;</div>
           <div className="knob-dial"></div>
         </div>

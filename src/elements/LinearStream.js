@@ -4,7 +4,7 @@ import Stream from './Stream';
 
 class LinearStream extends Stream {
   constructor({position, to = null, distance = 0, particleOffset = 0, length = 0, count = 1, speed = 1.0}) {
-    super(position);
+    super({position, speed, count});
     this.length = length;
     this.from = position;
     this.to = to;
