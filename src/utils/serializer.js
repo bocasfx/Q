@@ -35,9 +35,9 @@ const createStream = (stream) => {
 };
 
 const serializeSynthNode = (node) => {
-  return (({ id, type, name, position, selected, volume, attack, release, osc1Freq, osc2Freq, disabled, pan, links, delay, probability, oscillator1, oscillator2 }) => {
+  return (({ id, type, name, position, selected, volume, attack, release, osc1Freq, osc2Freq, disabled, pan, links, lag, probability, sendFXGain, oscillator1, oscillator2 }) => {
     return { 
-      topLevel: {id, type, name, position, selected, volume, attack, release, osc1Freq, osc2Freq, disabled, pan, links, delay, probability}, 
+      topLevel: {id, type, name, position, selected, volume, attack, release, osc1Freq, osc2Freq, disabled, pan, links, lag, probability, sendFXGain},
       inner: {
         oscillator1: {waveType: oscillator1.waveType},
         oscillator2: {waveType: oscillator2.waveType}
@@ -47,18 +47,18 @@ const serializeSynthNode = (node) => {
 };
 
 const serializeMidiNode = (node) => {
-  return (({ id, type, name, position, selected, note, velocity, disabled, links, delay }) => {
+  return (({ id, type, name, position, selected, note, velocity, disabled, links, lag }) => {
     return {
-      topLevel: { id, type, name, position, selected, note, velocity, disabled, links, delay },
+      topLevel: { id, type, name, position, selected, note, velocity, disabled, links, lag },
       inner: {}
     };
   })(node);
 };
 
 const serializeAudioNode = (node) => {
-  return (({ id, type, name, position, selected, disabled, links, delay }) => {
+  return (({ id, type, name, position, selected, disabled, links, lag }) => {
     return {
-      topLevel: { id, type, name, position, selected, disabled, links, delay },
+      topLevel: { id, type, name, position, selected, disabled, links, lag },
       inner: {}
     };
   })(node);
@@ -74,7 +74,6 @@ const serializeCircularStream = (stream) => {
 };
 
 const serializeLinearStream = (stream) => {
-  console.log(stream);
   return(({id, type, variety, name, position, from, to, selected, disabled, speed, count, distance, length, particleOffset}) => {
     return {
       topLevel: {id, type, variety, name, position, from, to, selected, disabled, speed, count, distance, length, particleOffset},
