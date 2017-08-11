@@ -77,7 +77,14 @@ const initialize = () => {
         return;
       }
 
-      dialog.showSaveDialog((fileName) => {
+      let filters = {
+        filters: [{
+          name: 'text',
+          extensions: ['q']
+        }]
+      };
+
+      dialog.showSaveDialog(filters, (fileName) => {
         saveContent('file', fileName);
       });
     }
