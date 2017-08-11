@@ -11,6 +11,16 @@ import ControlPanel from './components/ControlPanel/ControlPanel';
 import Toaster from './components/UI/Toaster';
 import { serialize } from './utils/serializer';
 
+let electron = null;
+let dialog = null;
+let fs = null;
+
+if (window.require) {
+  electron = window.require('electron');
+  fs = window.require('fs-extra');
+  dialog = electron.remote.dialog;
+}
+
 const store = createStore(reducer);
 
 const renderDom = (midiContext) => {
@@ -30,7 +40,19 @@ const renderDom = (midiContext) => {
   );
 };
 
-const saveContent = () => {
+const saveContent = (type, fileName) => {
+  if (type === 'file') {
+    if (fileName === undefined) {
+      return;
+    }
+
+    fs.writeFile(fileName, serialize(store.getState()), (err) => {
+      if (err) {
+        // TODO: Show notification
+      }
+    });
+  }
+
   const state = store.getState();
   localStorage.QState = serialize(state);
 };
@@ -49,7 +71,15 @@ const initialize = () => {
 
   window.onkeypress = (event) => {
     if (event.ctrlKey && event.key ==='s') {
-      saveContent();
+
+      if (!dialog) {
+        saveContent();
+        return;
+      }
+
+      dialog.showSaveDialog((fileName) => {
+        saveContent('file', fileName);
+      });
     }
   };
 

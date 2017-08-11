@@ -4,6 +4,7 @@ import MidiNode from '../elements/MidiNode';
 import AudioNode from '../elements/AudioNode';
 import CircularStream from '../elements/CircularStream';
 import LinearStream from '../elements/LinearStream';
+import FreehandStream from '../elements/FreehandStream';
 
 const createNode = (node) => {
   switch (node.topLevel.type) {
@@ -29,6 +30,7 @@ const createStream = (stream) => {
     case 'linear':
       return new LinearStream(stream.topLevel);
     case 'freehand':
+      return new FreehandStream(stream.topLevel);
     default:
       return null;
   }
@@ -82,6 +84,15 @@ const serializeLinearStream = (stream) => {
   })(stream);
 };
 
+const serializeFreehandStream = (stream) => {
+  return (({id, variety, count, position, queue, easing, pathIndex, path}) => {
+    return {
+      topLevel: {id, variety, count, position, queue, easing, pathIndex, path},
+      inner: {}
+    };
+  })(stream);
+};
+
 export const serialize = (payload) => {
   let nodes = payload.nodes;
   let streams = payload.streams;
@@ -106,7 +117,7 @@ export const serialize = (payload) => {
       case 'linear':
         return serializeLinearStream(stream);
       case 'freehand':
-        return null;
+        return serializeFreehandStream(stream);
       default:
         return null;
     }
