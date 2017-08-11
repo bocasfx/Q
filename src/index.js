@@ -22,6 +22,12 @@ if (window.require) {
 }
 
 const store = createStore(reducer);
+const filters = {
+    filters: [{
+      name: 'text',
+      extensions: ['q']
+    }]
+  };
 
 const renderDom = (midiContext) => {
   ReactDOM.render(
@@ -49,12 +55,62 @@ const saveContent = (type, fileName) => {
     fs.writeFile(fileName, serialize(store.getState()), (err) => {
       if (err) {
         // TODO: Show notification
+        console.log(err);
+        return;
       }
     });
   }
 
   const state = store.getState();
   localStorage.QState = serialize(state);
+};
+
+const loadContent = (type, fileName) => {
+  if (type === 'file') {
+    if (fileName === undefined) {
+      return;
+    }
+
+    fs.readFile(fileName, 'utf-8', (err, data) => {
+      if (err) {
+        // TODO: Show notification
+        console.log(err);
+        return;
+      }
+
+      store.dispatch({
+        type: 'HYDRATE_STATE',
+        payload: JSON.parse(data)
+      });
+    });
+  }
+
+  store.dispatch({
+    type: 'HYDRATE_STATE',
+    payload: JSON.parse(localStorage.QState)
+  });
+};
+
+const serializeProject = () => {
+  if (!dialog) {
+    saveContent();
+    return;
+  }
+
+  dialog.showSaveDialog(filters, (fileName) => {
+    saveContent('file', fileName);
+  });
+};
+
+const hydrateProject = () => {
+  if (!dialog) {
+    loadContent();
+    return;
+  }
+
+  dialog.showOpenDialog(filters, (fileNames) => {
+    loadContent('file', fileNames[0]);
+  });
 };
 
 const initialize = () => {
@@ -70,23 +126,17 @@ const initialize = () => {
   }
 
   window.onkeypress = (event) => {
-    if (event.ctrlKey && event.key ==='s') {
+    if (event.ctrlKey) {
 
-      if (!dialog) {
-        saveContent();
-        return;
+      switch (event.key) {
+        case 's':
+          return serializeProject();
+
+        case 'o':
+          return hydrateProject();
+        default:
+          return null;
       }
-
-      let filters = {
-        filters: [{
-          name: 'text',
-          extensions: ['q']
-        }]
-      };
-
-      dialog.showSaveDialog(filters, (fileName) => {
-        saveContent('file', fileName);
-      });
     }
   };
 
