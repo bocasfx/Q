@@ -1,9 +1,10 @@
-import config from '../config/config';
-import Node from './Node';
+import config from '../../config/config';
+import Node from '../Node';
 import Oscillator from './Oscillator';
 import Amplifier from './Amplifier';
 import EnvelopeGenerator from './EnvelopeGenerator';
-import qAudioContext from './QAudioContext';
+import qAudioContext from '../QAudioContext';
+import NoiseGenerator from './NoiseGenerator';
 
 class SynthNode extends Node {
 
@@ -14,11 +15,14 @@ class SynthNode extends Node {
     this.oscillator2 = new Oscillator();
     this.amplifier = new Amplifier();
     this.sendAmp = new Amplifier();
+    this.noiseGenerator = new NoiseGenerator();
 
     this.envelopeGenerator = new EnvelopeGenerator(config.synth.envelope);
 
     this.oscillator1.connect(this.amplifier);
     this.oscillator2.connect(this.amplifier);
+    this.noiseGenerator.connect(this.amplifier);
+
     this.envelopeGenerator.connect(this.amplifier.amplitudeL, this.amplifier.amplitudeR);
     this.amplifier.connect(qAudioContext.destination);
     this.amplifier.connect(this.sendAmp);
@@ -35,6 +39,7 @@ class SynthNode extends Node {
 
     this.probabilityNodeImg = new Image();
     this.probabilityNodeImg.src = './icons/elements/synth-node-probability.png';
+
   }
 
   set osc1Freq(freq) {

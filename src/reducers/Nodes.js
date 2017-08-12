@@ -1,4 +1,4 @@
-import SynthNode from '../elements/SynthNode';
+import SynthNode from '../elements/SynthNode/SynthNode';
 import MidiNode from '../elements/MidiNode';
 import AudioNode from '../elements/AudioNode';
 import _ from 'lodash';

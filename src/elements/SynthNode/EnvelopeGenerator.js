@@ -1,4 +1,4 @@
-import audioContext from '../config/audio-context';
+import audioContext from '../../config/audio-context';
 
 class EnvelopeGenerator {
   constructor(envelope) {
