@@ -5,7 +5,6 @@
   align-items: center;
   height: 300px;
   width: 20px;
-  /*border: 1px solid rgba(127, 127, 127, 0.2);*/
   margin-top: 40px;
   padding: 10px;
 }
@@ -14,9 +13,9 @@
   margin-bottom: 30px;
   width: 20px;
   text-align: center;
-  border: 1px solid rgba(127, 127, 127, 0.5);
+  border: 1px solid dimgray;
   background-color: transparent;
-  color: rgba(127, 127, 127, 0.7);
+  color: dimgray;
   padding: 7px;
   outline: 0;
   user-select: none;
@@ -24,7 +23,7 @@
 
 .fader-container .rc-slider-rail {
   background-color: rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(127, 127, 127, 0.5);
+  border: 1px solid dimgray;
 }
 
 .fader-container .rc-slider-track {
@@ -51,5 +50,5 @@
 }
 
 .fader-container .rc-slider-mark-text {
-  color: rgba(127, 127, 127, 0.7);
+  color: dimgray;
 }

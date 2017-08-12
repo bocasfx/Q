@@ -31,10 +31,12 @@ class Mixer extends React.Component {
 
     return (
       <div className="mixer-container">
-        <div className="mixer-inner-container">
-          {this.renderChannels('audio')}
-          {this.renderChannels('synth')}
-          {this.renderChannels('midi')}
+        <div className="mixer-background">
+          <div className="mixer-inner-container">
+            {this.renderChannels('audio')}
+            {this.renderChannels('synth')}
+            {this.renderChannels('midi')}
+          </div>
         </div>
       </div>
     );
