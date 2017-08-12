@@ -20,6 +20,11 @@ class Menu extends React.Component {
           active={this.props.devices.grab}
           separator={true}/>
         <MenuButton
+          icon="./icons/menu/mixer.svg"
+          onClick={this.onClick.bind(this, 'mixer')}
+          active={this.props.devices.mixer}
+          separator={true}/>
+        <MenuButton
           icon="./icons/menu/clone.svg"
           onClick={this.onClick.bind(this, 'clone')}
           active={this.props.devices.clone}

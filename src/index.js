@@ -113,6 +113,13 @@ const hydrateProject = () => {
   });
 };
 
+const toggleDevice = (device) => {
+  store.dispatch({
+    type: 'TOGGLE_DEVICE',
+    device
+  });
+};
+
 const initialize = () => {
   if (navigator.requestMIDIAccess) {
     navigator.requestMIDIAccess({sysex: false})
@@ -129,11 +136,26 @@ const initialize = () => {
     if (event.ctrlKey) {
 
       switch (event.key) {
+
+        // Save
         case 's':
+        case 'S':
           return serializeProject();
 
+        // Open
         case 'o':
+        case 'O':
           return hydrateProject();
+
+        // Mixer
+        case 'm':
+        case 'M':
+          return toggleDevice('mixer');
+
+        // Grab
+        case 'g':
+        case 'G':
+          return toggleDevice('grab');
         default:
           return null;
       }
