@@ -14,20 +14,33 @@ class SynthNode extends Node {
     this.oscillator1 = new Oscillator();
     this.oscillator2 = new Oscillator();
     this.amplifier = new Amplifier();
-    this.sendAmp = new Amplifier();
+    this._sendFXGain = qAudioContext.ctx.createGain();
     this.noiseGenerator = new NoiseGenerator();
-
     this.envelopeGenerator = new EnvelopeGenerator(config.synth.envelope);
 
-    this.oscillator1.connect(this.amplifier);
-    this.oscillator2.connect(this.amplifier);
-    this.noiseGenerator.connect(this.amplifier);
+    this._noiseGain = qAudioContext.ctx.createGain();
+    this._noiseGain.gain.value = 0.0;
+
+    this._osc1Gain = qAudioContext.ctx.createGain();
+    this._osc1Gain.gain.value = 1.0;
+
+    this._osc2Gain = qAudioContext.ctx.createGain();
+    this._osc2Gain.gain.value = 1.0;
+
+    this.oscillator1.connect(this._osc1Gain);
+    this._osc1Gain.connect(this.amplifier.splitter);
+
+    this.oscillator2.connect(this._osc2Gain);
+    this._osc2Gain.connect(this.amplifier.splitter);
+
+    this.noiseGenerator.connect(this._noiseGain);
+    this._noiseGain.connect(this.amplifier.splitter);
 
     this.envelopeGenerator.connect(this.amplifier.amplitudeL, this.amplifier.amplitudeR);
     this.amplifier.connect(qAudioContext.destination);
-    this.amplifier.connect(this.sendAmp);
-    this.sendAmp.connect(qAudioContext.delayDestination);
-    this.sendAmp.volume = 0;
+    this.amplifier.connect(this._sendFXGain);
+    this._sendFXGain.connect(qAudioContext.delayDestination.filter);
+    this._sendFXGain.volume = 0;
 
     this.type = 'synth';
 
@@ -83,11 +96,35 @@ class SynthNode extends Node {
   }
 
   set sendFXGain(value) {
-    this.sendAmp.volume = value;
+    this._sendFXGain.gain.value = value;
   }
 
   get sendFXGain() {
-    return this.sendAmp.volume;
+    return this._sendFXGain.gain.value;
+  }
+
+  set noiseGain(value) {
+    this._noiseGain.gain.value = value;
+  }
+
+  get noiseGain() {
+    return this._noiseGain.gain.value;
+  }
+
+  set osc1Gain(value) {
+    this._osc1Gain.gain.value = value;
+  }
+
+  get osc1Gain() {
+    return this._osc1Gain.gain.value;
+  }
+
+  set osc2Gain(value) {
+    this._osc2Gain.gain.value = value;
+  }
+
+  get osc2Gain() {
+    return this._osc2Gain.gain.value;
   }
 
   play() {
