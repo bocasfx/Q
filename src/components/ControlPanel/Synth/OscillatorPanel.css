@@ -10,6 +10,10 @@
   margin-bottom: 20px;
 }
 
+.oscillator-panel-gain{
+  margin-top: 30px;
+}
+
 .oscillator-panel-freq {
   margin-top: 20px;
 }

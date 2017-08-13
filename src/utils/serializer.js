@@ -37,9 +37,9 @@ const createStream = (stream) => {
 };
 
 const serializeSynthNode = (node) => {
-  return (({ id, type, name, position, selected, volume, attack, release, osc1Freq, osc2Freq, disabled, pan, links, lag, probability, sendFXGain, oscillator1, oscillator2 }) => {
+  return (({ id, type, name, position, selected, volume, attack, release, noiseGain, osc1Freq, osc2Freq, disabled, pan, links, lag, probability, sendFXGain, oscillator1, oscillator2 }) => {
     return { 
-      topLevel: {id, type, name, position, selected, volume, attack, release, osc1Freq, osc2Freq, disabled, pan, links, lag, probability, sendFXGain},
+      topLevel: {id, type, name, position, selected, volume, attack, release, noiseGain, osc1Freq, osc2Freq, disabled, pan, links, lag, probability, sendFXGain},
       inner: {
         oscillator1: {waveType: oscillator1.waveType},
         oscillator2: {waveType: oscillator2.waveType}

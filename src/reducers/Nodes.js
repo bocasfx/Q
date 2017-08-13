@@ -140,6 +140,7 @@ const cloneNode = (state, id) => {
       clonedNode.oscillator2.frequency = node.oscillator2.frequency;
       clonedNode.oscillator1.waveType = node.oscillator1.waveType;
       clonedNode.oscillator2.waveType = node.oscillator2.waveType;
+      clonedNode.noiseGain = node.noiseGain;
       state.push(clonedNode);
     }
   });
@@ -292,6 +293,33 @@ const setNodeSendGain = (state, id, value) => {
   });
 };
 
+const setNodeNoiseGain = (state, id, value) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.noiseGain = value;
+    }
+    return node;
+  });
+};
+
+const setNodeOsc1Gain = (state, id, value) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.osc1Gain = value;
+    }
+    return node;
+  });
+};
+
+const setNodeOsc2Gain = (state, id, value) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.osc2Gain = value;
+    }
+    return node;
+  });
+};
+
 export default (state = nodes, action) => {
   switch (action.type) {
 
@@ -378,6 +406,15 @@ export default (state = nodes, action) => {
 
     case 'SET_NODE_SEND_GAIN':
       return setNodeSendGain(state, action.id, action.value);
+
+    case 'SET_NODE_NOISE_GAIN':
+      return setNodeNoiseGain(state, action.id, action.value);
+
+    case 'SET_NODE_OSC1_GAIN':
+      return setNodeOsc1Gain(state, action.id, action.value);
+
+    case 'SET_NODE_OSC2_GAIN':
+      return setNodeOsc2Gain(state, action.id, action.value);
 
     default:
       return state;

@@ -20,6 +20,7 @@ class OscillatorPanel extends React.Component {
     this.onWaveTypeChange = this.onWaveTypeChange.bind(this);
     this.onNoteChange = this.onNoteChange.bind(this);
     this.onOctaveChange = this.onOctaveChange.bind(this);
+    this.onGainChange = this.onGainChange.bind(this);
 
     let waveType = _.findKey(waveTypes, (type) => {
       return props.oscillator.waveType === type;
@@ -102,6 +103,10 @@ class OscillatorPanel extends React.Component {
     this.props.onFreqChange(this.props.nodeId, note.frequency);
   }
 
+  onGainChange(value) {
+    this.props.onGainChange(this.props.nodeId, value);
+  }
+
   render() {
 
     let forNote = this.props.name + '-note';
@@ -135,6 +140,16 @@ class OscillatorPanel extends React.Component {
             onChange={this.onFreqChange}
             disabled={!this.state.checked || this.state.disabled}
             type={this.props.type}/>
+          <div className="oscillator-panel-gain">
+            <Knob
+              label={'Gain'}
+              value={this.props.gain}
+              min={0}
+              max={1}
+              onChange={this.onGainChange}
+              disabled={!this.state.checked || this.state.disabled}
+              type={this.props.type}/>
+          </div>
         </div>
 
         <div className="oscillator-panel-freq">

@@ -15,7 +15,10 @@ import {
   setNodeAttack,
   setNodeRelease,
   setNodePan,
-  setNodeSendGain } from '../../../actions/Nodes';
+  setNodeSendGain,
+  setNodeNoiseGain,
+  setNodeOsc1Gain,
+  setNodeOsc2Gain } from '../../../actions/Nodes';
 
 class SynthNodePanel extends React.Component {
 
@@ -27,6 +30,7 @@ class SynthNodePanel extends React.Component {
     this.onReleaseChange = this.onReleaseChange.bind(this);
     this.onPanChange = this.onPanChange.bind(this);
     this.onSendGainChange = this.onSendGainChange.bind(this);
+    this.onNoiseChange = this.onNoiseChange.bind(this);
   }
 
   onGainChange(value) {
@@ -47,6 +51,10 @@ class SynthNodePanel extends React.Component {
 
   onSendGainChange(value) {
     this.props.setNodeSendGain(this.props.node.id, value);
+  }
+
+  onNoiseChange(value) {
+    this.props.setNodeNoiseGain(this.props.node.id, value);
   }
 
   render() {
@@ -93,6 +101,16 @@ class SynthNodePanel extends React.Component {
             disabled={this.props.node.disabled}
             type={this.props.node.type}/>
         </div>
+        <div className="row">
+          <Knob
+            label={'Noise'}
+            value={this.props.node.noiseGain}
+            min={0}
+            max={1}
+            onChange={this.onNoiseChange}
+            disabled={this.props.node.disabled}
+            type={this.props.node.type}/>
+        </div>
           
         <div className="row synth-node-panel-pan synth-node-panel-pan-labels">
           <div>L</div>
@@ -113,8 +131,10 @@ class SynthNodePanel extends React.Component {
             name="osc1"
             nodeId={this.props.node.id}
             oscillator={this.props.node.oscillator1}
+            gain={this.props.node.osc1Gain}
             onFreqChange={this.props.setNodeOsc1Frequency}
             onWaveTypeChange={this.props.setNodeOsc1WaveType}
+            onGainChange={this.props.setNodeOsc1Gain}
             label="Osc. 1"
             disabled={this.props.node.disabled}
             type={this.props.node.type}/>
@@ -122,8 +142,10 @@ class SynthNodePanel extends React.Component {
             name="osc2"
             nodeId={this.props.node.id}
             oscillator={this.props.node.oscillator2}
+            gain={this.props.node.osc2Gain}
             onFreqChange={this.props.setNodeOsc2Frequency}
             onWaveTypeChange={this.props.setNodeOsc2WaveType}
+            onGainChange={this.props.setNodeOsc2Gain}
             label="Osc. 2"
             disabled={this.props.node.disabled}
             type={this.props.node.type}/>
@@ -149,7 +171,10 @@ const mapDispatchToProps = (dispatch) => {
     setNodeAttack: bindActionCreators(setNodeAttack, dispatch),
     setNodeRelease: bindActionCreators(setNodeRelease, dispatch),
     setNodePan: bindActionCreators(setNodePan, dispatch),
-    setNodeSendGain: bindActionCreators(setNodeSendGain, dispatch)
+    setNodeSendGain: bindActionCreators(setNodeSendGain, dispatch),
+    setNodeNoiseGain: bindActionCreators(setNodeNoiseGain, dispatch),
+    setNodeOsc1Gain: bindActionCreators(setNodeOsc1Gain, dispatch),
+    setNodeOsc2Gain: bindActionCreators(setNodeOsc2Gain, dispatch)
   };
 };
 

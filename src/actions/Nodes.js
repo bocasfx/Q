@@ -212,3 +212,27 @@ export const setNodeSendGain = (id, value) => {
     value
   };
 };
+
+export const setNodeNoiseGain = (id, value) => {
+  return {
+    type: 'SET_NODE_NOISE_GAIN',
+    id,
+    value
+  };
+};
+
+export const setNodeOsc1Gain = (id, value) => {
+  return {
+    type: 'SET_NODE_OSC1_GAIN',
+    id,
+    value
+  };
+};
+
+export const setNodeOsc2Gain = (id, value) => {
+  return {
+    type: 'SET_NODE_OSC2_GAIN',
+    id,
+    value
+  };
+};
