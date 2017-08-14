@@ -35,8 +35,8 @@ module.exports = {
       q: 0,
       detune: 0,
       cutoffFrequency: 2000,
-      attack: 0.5,
-      release: 0.5
+      attack: 0,
+      release: 0
     }
   }
 };

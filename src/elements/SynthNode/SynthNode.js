@@ -39,7 +39,7 @@ class SynthNode extends Node {
     this.ampEnvelopeGenerator.connect(this.amplifier.amplitudeL, this.amplifier.amplitudeR);
     this.amplifier.connect(qAudioContext.destination);
     this.amplifier.connect(this._sendFXGain);
-    this._sendFXGain.connect(qAudioContext.fxDestination.filter);
+    this._sendFXGain.connect(qAudioContext.fxDestination.input);
     this._sendFXGain.volume = 0;
 
     this.type = 'synth';

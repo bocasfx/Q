@@ -11,6 +11,13 @@ import qAudioContext from '../../elements/QAudioContext';
 
 class FXPanel extends React.Component {
 
+  constructor(props) {
+    super(props);
+    qAudioContext.time = props.fx.delay.time;
+    qAudioContext.feedback = props.fx.delay.feedback;
+    qAudioContext.cutoffFrequency = props.fx.delay.cutoffFrequency;
+  }
+
   componentWillReceiveProps(nextProps) {
     qAudioContext.time = nextProps.fx.delay.time;
     qAudioContext.feedback = nextProps.fx.delay.feedback;
