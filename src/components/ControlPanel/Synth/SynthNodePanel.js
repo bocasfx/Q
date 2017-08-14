@@ -117,7 +117,7 @@ class SynthNodePanel extends React.Component {
           <Slider
             min={-1}
             max={1}
-            step={0.1}
+            step={0.001}
             marks={0}
             value={this.props.node.pan}
             onChange={this.onPanChange}
