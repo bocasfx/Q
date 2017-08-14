@@ -110,7 +110,7 @@ class SelectorPanel extends React.Component {
           <Panel label="Streams">
             {this.renderStreams()}
           </Panel>
-          <Panel label="FX">
+          <Panel label="Delay">
             {this.renderFx()}
           </Panel>
           <Panel label="Filter">

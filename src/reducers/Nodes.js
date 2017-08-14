@@ -136,10 +136,12 @@ const cloneNode = (state, id) => {
       clonedNode.sendFXGain = node.sendFXGain;
       clonedNode.name = node.name + ' (clone)';
       clonedNode.id = uuidv1();
-      clonedNode.oscillator1.frequency = node.oscillator1.frequency;
-      clonedNode.oscillator2.frequency = node.oscillator2.frequency;
-      clonedNode.oscillator1.waveType = node.oscillator1.waveType;
-      clonedNode.oscillator2.waveType = node.oscillator2.waveType;
+      clonedNode.osc1Freq = node.osc1Freq;
+      clonedNode.osc2Freq = node.osc2Freq;
+      clonedNode.osc1WaveType = node.osc1WaveType;
+      clonedNode.osc2WaveType = node.osc2WaveType;
+      clonedNode.osc1Gain = node.osc1Gain;
+      clonedNode.osc2Gain = node.osc2Gain;
       clonedNode.noiseGain = node.noiseGain;
       state.push(clonedNode);
     }

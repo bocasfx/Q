@@ -11,8 +11,10 @@ const createNode = (node) => {
     case 'synth':
       let newSynthNode = new SynthNode(node.topLevel.position);
       newSynthNode = Object.assign(newSynthNode, node.topLevel);
-      newSynthNode.oscillator1.waveType = node.inner.oscillator1.waveType;
-      newSynthNode.oscillator2.waveType = node.inner.oscillator2.waveType;
+      newSynthNode.osc1WaveType = node.inner.oscillator1.waveType;
+      newSynthNode.osc2WaveType = node.inner.oscillator2.waveType;
+      newSynthNode.osc1Gain = node.inner.oscillator1.gain;
+      newSynthNode.osc2Gain = node.inner.oscillator2.gain;
       return newSynthNode;
     case 'midi':
       return new MidiNode(node.topLevel.position);
@@ -37,12 +39,18 @@ const createStream = (stream) => {
 };
 
 const serializeSynthNode = (node) => {
-  return (({ id, type, name, position, selected, volume, attack, release, noiseGain, osc1Freq, osc2Freq, disabled, pan, links, lag, probability, sendFXGain, oscillator1, oscillator2 }) => {
+  return (({ id, type, name, position, selected, volume, attack, release, noiseGain, osc1Freq, osc2Freq, disabled, pan, links, lag, probability, sendFXGain, oscillator1, oscillator2, osc1Gain, osc2Gain }) => {
     return { 
       topLevel: {id, type, name, position, selected, volume, attack, release, noiseGain, osc1Freq, osc2Freq, disabled, pan, links, lag, probability, sendFXGain},
       inner: {
-        oscillator1: {waveType: oscillator1.waveType},
-        oscillator2: {waveType: oscillator2.waveType}
+        oscillator1: {
+          waveType: oscillator1.waveType,
+          gain: osc1Gain
+        },
+        oscillator2: {
+          waveType: oscillator2.waveType,
+          gain: osc2Gain
+        }
       }
     };
   })(node);
@@ -96,6 +104,7 @@ const serializeFreehandStream = (stream) => {
 export const serialize = (payload) => {
   let nodes = payload.nodes;
   let streams = payload.streams;
+  let fx = payload.fx;
 
   let serializedNodes = nodes.map((node) => {
     switch (node.type) {
@@ -125,7 +134,8 @@ export const serialize = (payload) => {
 
   return JSON.stringify({
     nodes: serializedNodes,
-    streams: serializedStreams
+    streams: serializedStreams,
+    fx
   });
 };
 
@@ -143,7 +153,8 @@ export const hydrate = (payload) => {
     devices: initialState.devices,
     streams: streams,
     selection: initialState.selection,
-    notifications: initialState.notifications
+    notifications: initialState.notifications,
+    fx: payload.fx
   });
   return newState;
 };
