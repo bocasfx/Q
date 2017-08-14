@@ -1,6 +1,6 @@
 import audioContext from '../../config/audio-context';
 
-class EnvelopeGenerator {
+class AmpEnvelopeGenerator {
   constructor(envelope) {
     this.attack = envelope.attack;
     this.release = envelope.release;
@@ -35,4 +35,4 @@ class EnvelopeGenerator {
   }
 }
 
-module.exports = EnvelopeGenerator;
+module.exports = AmpEnvelopeGenerator;

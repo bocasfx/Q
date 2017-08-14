@@ -22,6 +22,13 @@ export default {
       time: 0.5,
       feedback: 0.0,
       cutoff: 500
+    },
+    filter: {
+      q: 100,
+      detune: 0,
+      cutoff: 2000,
+      attack: 0.5,
+      release: 0.5
     }
   },
   midi: {
