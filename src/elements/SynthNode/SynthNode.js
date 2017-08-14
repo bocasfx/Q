@@ -2,7 +2,7 @@ import config from '../../config/config';
 import Node from '../Node';
 import Oscillator from './Oscillator';
 import Amplifier from './Amplifier';
-import EnvelopeGenerator from './EnvelopeGenerator';
+import AmpEnvelopeGenerator from './AmpEnvelopeGenerator';
 import qAudioContext from '../QAudioContext';
 import NoiseGenerator from './NoiseGenerator';
 
@@ -16,7 +16,7 @@ class SynthNode extends Node {
     this.amplifier = new Amplifier();
     this._sendFXGain = qAudioContext.ctx.createGain();
     this.noiseGenerator = new NoiseGenerator();
-    this.envelopeGenerator = new EnvelopeGenerator(config.synth.envelope);
+    this.ampEnvelopeGenerator = new AmpEnvelopeGenerator(config.synth.envelope);
 
     this._noiseGain = qAudioContext.ctx.createGain();
     this._noiseGain.gain.value = 0.0;
@@ -28,18 +28,18 @@ class SynthNode extends Node {
     this._osc2Gain.gain.value = 1.0;
 
     this.oscillator1.connect(this._osc1Gain);
-    this._osc1Gain.connect(this.amplifier.splitter);
+    this._osc1Gain.connect(this.amplifier.input);
 
     this.oscillator2.connect(this._osc2Gain);
-    this._osc2Gain.connect(this.amplifier.splitter);
+    this._osc2Gain.connect(this.amplifier.input);
 
     this.noiseGenerator.connect(this._noiseGain);
-    this._noiseGain.connect(this.amplifier.splitter);
+    this._noiseGain.connect(this.amplifier.input);
 
-    this.envelopeGenerator.connect(this.amplifier.amplitudeL, this.amplifier.amplitudeR);
+    this.ampEnvelopeGenerator.connect(this.amplifier.amplitudeL, this.amplifier.amplitudeR);
     this.amplifier.connect(qAudioContext.destination);
     this.amplifier.connect(this._sendFXGain);
-    this._sendFXGain.connect(qAudioContext.delayDestination.filter);
+    this._sendFXGain.connect(qAudioContext.fxDestination.filter);
     this._sendFXGain.volume = 0;
 
     this.type = 'synth';
@@ -80,19 +80,19 @@ class SynthNode extends Node {
   }
 
   set attack(value) {
-    this.envelopeGenerator.attack = value === 0 ? config.synth.envelope.attack : value;
+    this.ampEnvelopeGenerator.attack = value === 0 ? config.synth.envelope.attack : value;
   }
 
   get attack() {
-    return this.envelopeGenerator.attack;
+    return this.ampEnvelopeGenerator.attack;
   }
 
   set release(value) {
-    this.envelopeGenerator.release = value === 0 ? config.synth.envelope.release : value;
+    this.ampEnvelopeGenerator.release = value === 0 ? config.synth.envelope.release : value;
   }
 
   get release() {
-    return this.envelopeGenerator.release;
+    return this.ampEnvelopeGenerator.release;
   }
 
   set sendFXGain(value) {
@@ -132,7 +132,8 @@ class SynthNode extends Node {
       return;
     }
     this.active = true;
-    this.envelopeGenerator.trigger(this.volume, this.pan);
+    this.ampEnvelopeGenerator.trigger(this.volume, this.pan);
+    qAudioContext.triggerFilter();
   }
 
   stop() {
@@ -140,7 +141,8 @@ class SynthNode extends Node {
       return;
     }
     this.active = false;
-    this.envelopeGenerator.close();
+    this.ampEnvelopeGenerator.close();
+    // qAudioContext.closeFilter();
   }
 }
 
