@@ -28,8 +28,28 @@ class QAudioContext {
     this.delay.feedback = value;
   }
 
-  set cutoff(value) {
-    this.delay.cutoff = value;
+  set cutoffFrequency(value) {
+    this.delay.cutoffFrequency = value;
+  }
+
+  set filterCutoffFrequency(value) {
+    this.filter.frequency = value;
+  }
+
+  set filterDetune(value) {
+    this.filter.detune = value;
+  }
+
+  set filterQ(value) {
+    this.filter.q = value;
+  }
+
+  set filterAttack(value) {
+    this.filter.attack = value;
+  }
+
+  set filterRelease(value) {
+    this.filter.release = value;
   }
 
   triggerFilter() {
