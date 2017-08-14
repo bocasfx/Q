@@ -16,7 +16,7 @@ class Delay {
 
     this.delay.delayTime.value = settings.time;
     this.gain.gain.value = settings.feedback;
-    this.filter.frequency.value = settings.cutoff;
+    this.filter.frequency.value = settings.cutoffFrequency;
   }
 
   set time(value) {
@@ -27,7 +27,7 @@ class Delay {
     this.gain.gain.value = value;
   }
 
-  set cutoff(value) {
+  set cutoffFrequency(value) {
     this.filter.frequency.value = value;
   }
 

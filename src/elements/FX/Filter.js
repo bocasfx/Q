@@ -7,7 +7,7 @@ class Filter {
     this.filter = audioContext.createBiquadFilter();
     this.input = this.filter;
     this.output = this.filter;
-    this.frequency = settings.cutoff;
+    this.frequency = settings.cutoffFrequency;
     this.filterEnvelopeGenerator = new FilterEnvelopeGenerator(config.fx.filter);
     this.filterEnvelopeGenerator.connect(this.filter.frequency);
     this.filterEnvelopeGenerator.attack = settings.attack;
@@ -15,19 +15,19 @@ class Filter {
   }
 
   set q(value) {
-    this.filter.q.value = value;
+    this.filter.Q.value = value;
   }
 
   set detune(value) {
     this.filter.detune.value = value;
   }
 
-  set cutoff(value) {
+  set cutoffFrequency(value) {
     this.filter.frequency.value = value;
   }
 
   set attack(value) {
-    this.filterEnvelopeGenerator.attack = value === 0 ? config.fx.filter.attack : value;
+    this.filterEnvelopeGenerator.attack = value;
   }
 
   get attack() {
@@ -35,7 +35,7 @@ class Filter {
   }
 
   set release(value) {
-    this.filterEnvelopeGenerator.release = value === 0 ? config.fx.filter.release : value;
+    this.filterEnvelopeGenerator.release = value;
   }
 
   get release() {
