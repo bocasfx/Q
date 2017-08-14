@@ -1,4 +1,4 @@
-import SynthNode from '../elements/SynthNode';
+import SynthNode from '../elements/SynthNode/SynthNode';
 import MidiNode from '../elements/MidiNode';
 import AudioNode from '../elements/AudioNode';
 import _ from 'lodash';
@@ -115,14 +115,34 @@ const setNodeOsc2WaveType = (state, id, waveType) => {
 const cloneNode = (state, id) => {
   state.forEach((node) => {
     if (node.id === id) {
+      console.log(node);
       let clonedNode = new SynthNode();
-      Object.keys(node).forEach((key) => {
-        clonedNode[key] = node[key];
-      });
-      clonedNode.name += ' (clone)';
-      clonedNode.id = uuidv1();
+      clonedNode.active = false;
+      clonedNode.lag = node.lag;
+      clonedNode.links = [];
+      clonedNode.name = node.name;
+      clonedNode.pan = node.pan;
+      clonedNode.particleQueue = [];
+      clonedNode.position = node.position;
+      clonedNode.probability = node.probability;
+      clonedNode.selected = node.selected;
+      clonedNode.volume = node.volume;
+      clonedNode._disabled = node._disabled;
       clonedNode.attack = node.attack;
-      cloneNode.release = node.release;
+      clonedNode.disabled = node.disabled;
+      clonedNode.osc1Freq = node.osc1Freq;
+      clonedNode.osc2Freq = node.osc2Freq;
+      clonedNode.release = node.release;
+      clonedNode.sendFXGain = node.sendFXGain;
+      clonedNode.name = node.name + ' (clone)';
+      clonedNode.id = uuidv1();
+      clonedNode.osc1Freq = node.osc1Freq;
+      clonedNode.osc2Freq = node.osc2Freq;
+      clonedNode.osc1WaveType = node.osc1WaveType;
+      clonedNode.osc2WaveType = node.osc2WaveType;
+      clonedNode.osc1Gain = node.osc1Gain;
+      clonedNode.osc2Gain = node.osc2Gain;
+      clonedNode.noiseGain = node.noiseGain;
       state.push(clonedNode);
     }
   });
@@ -266,6 +286,42 @@ const setNodeProbability = (state, id, probability) => {
   });
 };
 
+const setNodeSendGain = (state, id, value) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.sendFXGain = value;
+    }
+    return node;
+  });
+};
+
+const setNodeNoiseGain = (state, id, value) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.noiseGain = value;
+    }
+    return node;
+  });
+};
+
+const setNodeOsc1Gain = (state, id, value) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.osc1Gain = value;
+    }
+    return node;
+  });
+};
+
+const setNodeOsc2Gain = (state, id, value) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.osc2Gain = value;
+    }
+    return node;
+  });
+};
+
 export default (state = nodes, action) => {
   switch (action.type) {
 
@@ -349,6 +405,18 @@ export default (state = nodes, action) => {
 
     case 'SET_NODE_PROBABILITY':
       return setNodeProbability(state, action.id, action.probability);
+
+    case 'SET_NODE_SEND_GAIN':
+      return setNodeSendGain(state, action.id, action.value);
+
+    case 'SET_NODE_NOISE_GAIN':
+      return setNodeNoiseGain(state, action.id, action.value);
+
+    case 'SET_NODE_OSC1_GAIN':
+      return setNodeOsc1Gain(state, action.id, action.value);
+
+    case 'SET_NODE_OSC2_GAIN':
+      return setNodeOsc2Gain(state, action.id, action.value);
 
     default:
       return state;

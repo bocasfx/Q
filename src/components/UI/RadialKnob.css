@@ -4,11 +4,10 @@
   align-items: center;
   user-select: none;
   transition: opacity 0.3s ease-in-out;
-  margin-bottom: 10px;
 }
 
 .knob-label {
-  margin-top: 12px;
+  margin-top: 5px;
   cursor: default;
 }
 
@@ -32,13 +31,13 @@
 
 .knob-dot {
   width: 43px;
-  height: 43px;
   position: absolute;
   font-size: 2.5em;
-  line-height: 1.9em;
   cursor: pointer;
   transition: opacity 0.3s ease-in-out;
-  z-index: 1;
+  text-align: center;
+  height: 43px;
+  line-height: 80px;
 }
 
 .knob-container[disabled] .knob-dot {
@@ -57,10 +56,4 @@
   vertical-align: middle;
   line-height: 4.5em;
   box-shadow: 3px 3px 3px 0px rgba(0,0,0,0.75);
-}
-
-.knob-marks {
-  width: 75px;
-  position: absolute;
-  z-index: 0;
 }

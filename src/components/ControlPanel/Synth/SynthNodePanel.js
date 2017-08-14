@@ -14,7 +14,11 @@ import {
   setNodeVolume,
   setNodeAttack,
   setNodeRelease,
-  setNodePan } from '../../../actions/Nodes';
+  setNodePan,
+  setNodeSendGain,
+  setNodeNoiseGain,
+  setNodeOsc1Gain,
+  setNodeOsc2Gain } from '../../../actions/Nodes';
 
 class SynthNodePanel extends React.Component {
 
@@ -25,6 +29,8 @@ class SynthNodePanel extends React.Component {
     this.onAttackChange = this.onAttackChange.bind(this);
     this.onReleaseChange = this.onReleaseChange.bind(this);
     this.onPanChange = this.onPanChange.bind(this);
+    this.onSendGainChange = this.onSendGainChange.bind(this);
+    this.onNoiseChange = this.onNoiseChange.bind(this);
   }
 
   onGainChange(value) {
@@ -41,6 +47,14 @@ class SynthNodePanel extends React.Component {
 
   onPanChange(value) {
     this.props.setNodePan(this.props.node.id, value);
+  }
+
+  onSendGainChange(value) {
+    this.props.setNodeSendGain(this.props.node.id, value);
+  }
+
+  onNoiseChange(value) {
+    this.props.setNodeNoiseGain(this.props.node.id, value);
   }
 
   render() {
@@ -60,26 +74,42 @@ class SynthNodePanel extends React.Component {
             onChange={this.onGainChange}
             disabled={this.props.node.disabled}
             type={this.props.node.type}/>
-          <div className="column">
-            <Knob
-              label={'Attack'}
-              value={this.props.node.attack}
-              min={0}
-              max={2}
-              onChange={this.onAttackChange}
-              disabled={this.props.node.disabled}
-              type={this.props.node.type}/>
-          </div>
-          <div className="column">
-            <Knob
-              label={'Release'}
-              value={this.props.node.release}
-              min={0}
-              max={2}
-              onChange={this.onReleaseChange}
-              disabled={this.props.node.disabled}
-              type={this.props.node.type}/>
-          </div>
+          <Knob
+            label={'FX Send'}
+            value={this.props.node.sendFXGain}
+            min={0}
+            max={1}
+            onChange={this.onSendGainChange}
+            disabled={this.props.node.disabled}
+            type={this.props.node.type}/>
+        </div>
+        <div className="row synth-node-panel-gain">
+          <Knob
+            label={'Attack'}
+            value={this.props.node.attack}
+            min={0}
+            max={2}
+            onChange={this.onAttackChange}
+            disabled={this.props.node.disabled}
+            type={this.props.node.type}/>
+          <Knob
+            label={'Release'}
+            value={this.props.node.release}
+            min={0}
+            max={2}
+            onChange={this.onReleaseChange}
+            disabled={this.props.node.disabled}
+            type={this.props.node.type}/>
+        </div>
+        <div className="row">
+          <Knob
+            label={'Noise'}
+            value={this.props.node.noiseGain}
+            min={0}
+            max={1}
+            onChange={this.onNoiseChange}
+            disabled={this.props.node.disabled}
+            type={this.props.node.type}/>
         </div>
           
         <div className="row synth-node-panel-pan synth-node-panel-pan-labels">
@@ -87,7 +117,7 @@ class SynthNodePanel extends React.Component {
           <Slider
             min={-1}
             max={1}
-            step={0.1}
+            step={0.001}
             marks={0}
             value={this.props.node.pan}
             onChange={this.onPanChange}
@@ -101,8 +131,10 @@ class SynthNodePanel extends React.Component {
             name="osc1"
             nodeId={this.props.node.id}
             oscillator={this.props.node.oscillator1}
+            gain={this.props.node.osc1Gain}
             onFreqChange={this.props.setNodeOsc1Frequency}
             onWaveTypeChange={this.props.setNodeOsc1WaveType}
+            onGainChange={this.props.setNodeOsc1Gain}
             label="Osc. 1"
             disabled={this.props.node.disabled}
             type={this.props.node.type}/>
@@ -110,8 +142,10 @@ class SynthNodePanel extends React.Component {
             name="osc2"
             nodeId={this.props.node.id}
             oscillator={this.props.node.oscillator2}
+            gain={this.props.node.osc2Gain}
             onFreqChange={this.props.setNodeOsc2Frequency}
             onWaveTypeChange={this.props.setNodeOsc2WaveType}
+            onGainChange={this.props.setNodeOsc2Gain}
             label="Osc. 2"
             disabled={this.props.node.disabled}
             type={this.props.node.type}/>
@@ -136,7 +170,11 @@ const mapDispatchToProps = (dispatch) => {
     setNodeVolume: bindActionCreators(setNodeVolume, dispatch),
     setNodeAttack: bindActionCreators(setNodeAttack, dispatch),
     setNodeRelease: bindActionCreators(setNodeRelease, dispatch),
-    setNodePan: bindActionCreators(setNodePan, dispatch)
+    setNodePan: bindActionCreators(setNodePan, dispatch),
+    setNodeSendGain: bindActionCreators(setNodeSendGain, dispatch),
+    setNodeNoiseGain: bindActionCreators(setNodeNoiseGain, dispatch),
+    setNodeOsc1Gain: bindActionCreators(setNodeOsc1Gain, dispatch),
+    setNodeOsc2Gain: bindActionCreators(setNodeOsc2Gain, dispatch)
   };
 };
 

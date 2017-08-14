@@ -33,7 +33,7 @@ class StreamPanel extends React.Component {
   }
 
   renderSpeedKnob() {
-    if (this.props.stream.class === 'freehand') {
+    if (this.props.stream.variety === 'freehand') {
       return null;
     }
 
@@ -48,7 +48,9 @@ class StreamPanel extends React.Component {
   }
 
   onCountChange(count) {
+    this.props.setStreamDisabledStatus(this.props.stream.id, true);
     this.props.setStreamCount(this.props.stream.id, count);
+    this.props.setStreamDisabledStatus(this.props.stream.id, false);
   }
 
   render() {

@@ -3,15 +3,17 @@ import { getPosition, calculateDistance } from '../utils/utils';
 import Stream from './Stream';
 
 class LinearStream extends Stream {
-  constructor(position) {
-    super(position);
-    this.length = 0;
+  constructor({position, to = null, distance = 0, particleOffset = 0, length = 0, count = 1, speed = 1.0}) {
+    super({position, speed, count});
+    this.length = length;
     this.from = position;
-    this.to = null;
+    this.to = to;
     this.angles = [];
-    this.distance = 0;
-    this.particleOffset = 0;
-    this.class = 'linear';
+    this.distance = distance;
+    this.particleOffset = particleOffset;
+    this.variety = 'linear';
+    this.count = count;
+    this.speed = speed;
   }
 
   onMouseDown(event) {

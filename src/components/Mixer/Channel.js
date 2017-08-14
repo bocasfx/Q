@@ -1,13 +1,13 @@
 import React from 'react';
 import './Channel.css';
-import LED from './LED';
 import Fader from './Fader';
+import ActivityIndicator from '../UI/ActivityIndicator';
 
 class Channel extends React.Component {
   render() {
     return (
       <div className="channel-container">
-        <LED on={this.props.node.active} type={this.props.type}/>
+        <ActivityIndicator item={this.props.node}/>
         <Fader node={this.props.node}/>
       </div>
     );

@@ -38,6 +38,14 @@ class Node {
   get attack() {}
   set release(value) {}
   get release() {}
+  set sendFXGain(value) {}
+  get sendFXGain() {}
+  set noiseGain(value) {}
+  get noiseGain() {}
+  set osc1Gain(value) {}
+  get osc1Gain() {}
+  set osc2Gain(value) {}
+  get osc2Gain() {}
 
   set disabled(value) {
     this._disabled = value;

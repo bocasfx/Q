@@ -1,14 +1,20 @@
 .mixer-container {
   position: absolute;
+  left: 56px;
+  width: calc(100% - 356px);
+  height: 100%;
+  overflow-x: scroll;
+  z-index: 2;
+  background-image: url(../../../public/backgrounds/concrete_wall.png);
+}
+
+.mixer-background {
   width: 100%;
-  height: calc(100% - 53px);
-  max-height: calc(100% - 53px);
-  background-color: rgb(15, 15, 15);
-  transition: 1s ease-in-out;
+  height: 100%;
   display: flex;
   align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
   overflow-x: scroll;
-  z-index: 1;
 }
 
 .mixer-inner-container {

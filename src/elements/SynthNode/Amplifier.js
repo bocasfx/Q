@@ -1,4 +1,4 @@
-import audioContext from '../config/audio-context';
+import audioContext from '../../config/audio-context';
 
 class Amplifier {
   constructor() {
@@ -25,7 +25,7 @@ class Amplifier {
   }
 
   get volume() {
-    return this.gain.gain.value;
+    return (this.gainL.gain.value + this.gainR.gain.value) / 2;
   }
 
   connect(node) {

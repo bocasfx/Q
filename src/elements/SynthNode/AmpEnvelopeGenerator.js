@@ -1,6 +1,6 @@
-import audioContext from '../config/audio-context';
+import audioContext from '../../config/audio-context';
 
-class EnvelopeGenerator {
+class AmpEnvelopeGenerator {
   constructor(envelope) {
     this.attack = envelope.attack;
     this.release = envelope.release;
@@ -12,11 +12,11 @@ class EnvelopeGenerator {
     let panR = pan >= 0 ? 1 : 1 - (-1 * pan);
     let now = audioContext.currentTime;
     this.paramL.cancelScheduledValues(now);
-    this.paramL.linearRampToValueAtTime(0, now);
+    this.paramL.linearRampToValueAtTime(0.01, now);
     this.paramL.linearRampToValueAtTime(volume * panL, now + this.attack);
 
     this.paramR.cancelScheduledValues(now);
-    this.paramR.linearRampToValueAtTime(0, now);
+    this.paramR.linearRampToValueAtTime(0.01, now);
     this.paramR.linearRampToValueAtTime(volume * panR, now + this.attack);
   }
 
@@ -35,4 +35,4 @@ class EnvelopeGenerator {
   }
 }
 
-module.exports = EnvelopeGenerator;
+module.exports = AmpEnvelopeGenerator;

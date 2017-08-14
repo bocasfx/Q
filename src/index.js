@@ -11,7 +11,23 @@ import ControlPanel from './components/ControlPanel/ControlPanel';
 import Toaster from './components/UI/Toaster';
 import { serialize } from './utils/serializer';
 
+let electron = null;
+let dialog = null;
+let fs = null;
+
+if (window.require) {
+  electron = window.require('electron');
+  fs = window.require('fs-extra');
+  dialog = electron.remote.dialog;
+}
+
 const store = createStore(reducer);
+const filters = {
+    filters: [{
+      name: 'text',
+      extensions: ['q']
+    }]
+  };
 
 const renderDom = (midiContext) => {
   ReactDOM.render(
@@ -30,10 +46,78 @@ const renderDom = (midiContext) => {
   );
 };
 
-const saveContent = () => {
+const saveContent = (type, fileName) => {
+  if (type === 'file') {
+    if (fileName === undefined) {
+      return;
+    }
+
+    fs.writeFile(fileName, serialize(store.getState()), (err) => {
+      if (err) {
+        // TODO: Show notification
+        console.log(err);
+        return;
+      }
+    });
+  }
+
   const state = store.getState();
-  let serializedState = serialize(state);
-  localStorage.QState = serializedState;
+  localStorage.QState = serialize(state);
+};
+
+const loadContent = (type, fileName) => {
+  if (type === 'file') {
+    if (fileName === undefined) {
+      return;
+    }
+
+    fs.readFile(fileName, 'utf-8', (err, data) => {
+      if (err) {
+        // TODO: Show notification
+        console.log(err);
+        return;
+      }
+
+      store.dispatch({
+        type: 'HYDRATE_STATE',
+        payload: JSON.parse(data)
+      });
+    });
+  }
+
+  store.dispatch({
+    type: 'HYDRATE_STATE',
+    payload: JSON.parse(localStorage.QState)
+  });
+};
+
+const serializeProject = () => {
+  if (!dialog) {
+    saveContent();
+    return;
+  }
+
+  dialog.showSaveDialog(filters, (fileName) => {
+    saveContent('file', fileName);
+  });
+};
+
+const hydrateProject = () => {
+  if (!dialog) {
+    loadContent();
+    return;
+  }
+
+  dialog.showOpenDialog(filters, (fileNames) => {
+    loadContent('file', fileNames[0]);
+  });
+};
+
+const toggleDevice = (device) => {
+  store.dispatch({
+    type: 'TOGGLE_DEVICE',
+    device
+  });
 };
 
 const initialize = () => {
@@ -49,8 +133,32 @@ const initialize = () => {
   }
 
   window.onkeypress = (event) => {
-    if (event.ctrlKey && event.key ==='s') {
-      saveContent();
+    if (event.ctrlKey) {
+
+      switch (event.key) {
+
+        // Save
+        case 's':
+        case 'S':
+          return serializeProject();
+
+        // Open
+        case 'o':
+        case 'O':
+          return hydrateProject();
+
+        // Mixer
+        case 'm':
+        case 'M':
+          return toggleDevice('mixer');
+
+        // Grab
+        case 'g':
+        case 'G':
+          return toggleDevice('grab');
+        default:
+          return null;
+      }
     }
   };
 

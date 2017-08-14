@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import { deleteStream, selectStream, setStreamDisabledStatus } from '../../actions/Streams';
 import { deleteNode, selectNode, setNodeDisabledStatus, deselectNodes } from '../../actions/Nodes';
 import FXPanel from './FXPanel';
+import FilterPanel from './FilterPanel';
 import './SelectorPanel.css';
 
 class SelectorPanel extends React.Component {
@@ -95,6 +96,10 @@ class SelectorPanel extends React.Component {
     return <FXPanel />;
   }
 
+  renderFilter() {
+    return <FilterPanel />;
+  }
+
   render() {
     return (
       <div className="selector-panel-container">
@@ -105,8 +110,11 @@ class SelectorPanel extends React.Component {
           <Panel label="Streams">
             {this.renderStreams()}
           </Panel>
-          <Panel label="FX">
+          <Panel label="Delay">
             {this.renderFx()}
+          </Panel>
+          <Panel label="Filter">
+            {this.renderFilter()}
           </Panel>
         </Tabs>
       </div>

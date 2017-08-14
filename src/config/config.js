@@ -21,7 +21,14 @@ export default {
     delay: {
       time: 0.5,
       feedback: 0.0,
-      cutoff: 500
+      cutoffFrequency: 500
+    },
+    filter: {
+      q: 0,
+      detune: 0,
+      cutoffFrequency: 2000,
+      attack: 0,
+      release: 0
     }
   },
   midi: {
@@ -64,6 +71,9 @@ export default {
   },
   unlink: {
     strokeStyle: 'crimson'
+  },
+  knob: {
+    zeroColor: 'dimgray'
   },
   fader: {
     marks: {

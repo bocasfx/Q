@@ -1,8 +1,9 @@
 import React from 'react';
 import './Knob.css';
 import { getNodeColor } from '../../utils/utils';
+import config from '../../config/config';
 
-const _angle = 295.0;
+const _angle = 290;
 
 class Knob extends React.Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class Knob extends React.Component {
       value: 0
     };
 
-    this.precision = props.precision !== undefined ? props.precision : 1;
+    this.precision = props.precision !== undefined ? props.precision : 2;
 
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
@@ -30,24 +31,12 @@ class Knob extends React.Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
-
-    if (this.state.dragging) {
-      return;
-    }
-
-    let angle = (nextProps.value * _angle / nextProps.max) + _angle;
-    this.setState({
-      value: parseFloat(nextProps.value.toFixed(this.precision)),
-      angle
-    });
-  }
-
   onMouseDown(event) {
     if (this.props.disabled) {
       return;
     }
     event.preventDefault();
+    event.target.requestPointerLock();
     this.setState({
       dragging: true,
       y: event.pageY
@@ -58,11 +47,11 @@ class Knob extends React.Component {
 
   onMouseMove(event) {
     event.preventDefault();
-    if (!this.state.dragging) {
+    if (!this.state.dragging || !event.movementY) {
       return;
     }
 
-    let angle = this.state.angle + (this.state.y - event.pageY);
+    let angle = this.state.angle - event.movementY;
     angle = angle >= 2 * _angle ? 2 * _angle : angle;
     angle = angle <= _angle ? _angle : angle;
 
@@ -83,6 +72,12 @@ class Knob extends React.Component {
     this.setState({ dragging: false });
     window.onmousemove = null;
     window.onmouseup = null;
+    document.exitPointerLock();
+  }
+
+  ignoreMouseDown(event) {
+    event.preventDefault();
+    event.stopPropagation();
   }
 
   render() {
@@ -91,13 +86,18 @@ class Knob extends React.Component {
       color: getNodeColor(this.props.type)
     };
 
+    if (this.state.value === 0) {
+      dotStyle.color = config.knob.zeroColor;
+    }
+
     let disabled = this.props.disabled;
 
     return (
       <div className="knob-container" disabled={disabled}>
         <div className="knob-outer">
+          <img className="knob-marks" src="./icons/control-panel/knob/marks.svg" alt="./icons/control-panel/knob/marks.svg" onMouseDown={this.ignoreMouseDown}/>
           <div className="knob-dot" style={dotStyle} onMouseDown={this.onMouseDown} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp}>&middot;</div>
-          <div className="knob-dial">{this.state.value}</div>
+          <div className="knob-dial"></div>
         </div>
         <div className="knob-label">{this.props.label}</div>
       </div>

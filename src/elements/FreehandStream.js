@@ -3,14 +3,14 @@ import { getPosition } from '../utils/utils';
 import Stream from './Stream';
 
 class FreehandStream extends Stream {
-  constructor(position) {
-    super(position);
-    this.queue = [];
-    this.easing = '';
+  constructor({position, queue = [], easing = '', pathIndex = 0, path = [], count = 1}) {
+    super({position, speed: 1, count});
+    this.queue = queue;
+    this.easing = easing;
     this.headPosition = position;
-    this.pathIndex = 0;
-    this.path = [];
-    this.class ='freehand';
+    this.pathIndex = pathIndex;
+    this.path = path;
+    this.variety ='freehand';
 
     for (let i = 0; i < config.stream.size; i++) {
       this.queue.push(position);
