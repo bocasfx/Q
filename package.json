@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "license": {
-    "type" : "CC",
-    "url" : "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+    "type": "CC",
+    "url": "https://creativecommons.org/licenses/by-nc-sa/4.0/"
   },
   "author": {
     "name": "Rodolfo Palacios",
@@ -12,7 +12,6 @@
     "url": "r.palacios.ca"
   },
   "dependencies": {
-    "fs-extra": "^4.0.1",
     "rc-slider": "^6.3.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
