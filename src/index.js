@@ -17,7 +17,7 @@ let fs = null;
 
 if (window.require) {
   electron = window.require('electron');
-  fs = window.require('fs-extra');
+  fs = window.require('fs');
   dialog = electron.remote.dialog;
 }
 
