@@ -2,6 +2,15 @@
   "name": "Q",
   "version": "0.1.0",
   "private": true,
+  "license": {
+    "type" : "CC",
+    "url" : "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+  },
+  "author": {
+    "name": "Rodolfo Palacios",
+    "email": "mintcreamseashell@gmail.com",
+    "url": "r.palacios.ca"
+  },
   "dependencies": {
     "fs-extra": "^4.0.1",
     "rc-slider": "^6.3.1",
