@@ -36,5 +36,8 @@ module.exports = {
       cutoffFrequency: 2000,
       attack: 0
     }
+  },
+  transport: {
+    playing: false
   }
 };

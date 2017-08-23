@@ -156,6 +156,25 @@ const initialize = () => {
         case 'g':
         case 'G':
           return toggleDevice('grab');
+
+        default:
+          return null;
+      }
+    } else {
+
+      switch (event.key) {
+        //Play/Pause
+        case ' ':
+          store.dispatch({
+            type: 'TOGGLE_TRANSPORT'
+          });
+          if (!store.getState().transport.playing) {
+            store.dispatch({
+              type: 'STOP_NODES'
+            });
+          }
+          return; 
+
         default:
           return null;
       }
