@@ -268,6 +268,13 @@ const stopNode = (state, id) => {
   });
 };
 
+const stopNodes = (state) => {
+  return state.map((node) => {
+    node.stop();
+    return node;
+  });
+};
+
 const setNodeLag = (state, id, lag) => {
   return state.map((node) => {
     if (node.id === id) {
@@ -399,6 +406,9 @@ export default (state = nodes, action) => {
 
     case 'STOP_NODE':
       return stopNode(state, action.id);
+
+    case 'STOP_NODES':
+      return stopNodes(state);
 
     case 'SET_NODE_LAG':
       return setNodeLag(state, action.id, action.lag);

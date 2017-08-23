@@ -53,6 +53,7 @@ class Canvas extends React.Component {
   componentDidMount() {
     this.canvasContext = this.refs.canvas.getContext('2d');
     this.executedAt = Date.now();
+    this.draw();
     this.flow();
   }
 
@@ -250,6 +251,20 @@ class Canvas extends React.Component {
   };
 
   flow() {
+    if (!this.props.transport || !this.props.transport.playing) {
+      this.draw();
+      this.now = timestamp();
+      this.last = this.now;
+      this.props.nodes.forEach((node) => {
+        this.props.streams.forEach((stream) => {
+          stream.particles.forEach((particle) => {
+            this.stopLinks(node, node.id, particle.id, false);
+          });
+        });
+      });
+      setTimeout(this.flow);
+      return;
+    }
 
     this.now = timestamp();
     this.dt = this.dt + Math.min(1, (this.now - this.last) / 1000);
@@ -271,9 +286,7 @@ class Canvas extends React.Component {
 
     this.last = this.now;
 
-    setTimeout(() => {
-      this.flow();
-    });
+    setTimeout(this.flow);
   }
 
   renderLinks(node) {
@@ -375,7 +388,8 @@ const mapStateToProps = (state) => {
     devices: state.devices,
     nodes: state.nodes,
     streams: state.streams,
-    collisions: state.Collisions
+    collisions: state.Collisions,
+    transport: state.transport
   };
 };
 

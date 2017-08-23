@@ -63,8 +63,6 @@ class Knob extends React.Component {
       value = (Math.exp(value) - 1) / (Math.E - 1);
     }
 
-    console.log(value);
-
     value *= this.props.max;
     value = parseFloat(value.toFixed(this.precision));
 
