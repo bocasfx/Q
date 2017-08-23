@@ -9,15 +9,10 @@ class FilterEnvelopeGenerator {
 
   trigger(frequency) {
     let now = audioContext.currentTime;
+    let freq = frequency;
     this.param.cancelScheduledValues(now);
     this.param.linearRampToValueAtTime(0.01, now);
-    this.param.linearRampToValueAtTime(frequency, now + this.attack);
-  }
-
-  close() {
-    let now = audioContext.currentTime;
-    this.param.cancelScheduledValues(now);
-    this.param.linearRampToValueAtTime(0, now + this.release); 
+    this.param.linearRampToValueAtTime(freq, now + this.attack);
   }
 
   connect(param) {

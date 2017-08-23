@@ -36,10 +36,6 @@ class QAudioContext {
     this.filter.frequency = value;
   }
 
-  set filterDetune(value) {
-    this.filter.detune = value;
-  }
-
   set filterQ(value) {
     this.filter.q = value;
   }
@@ -54,10 +50,6 @@ class QAudioContext {
 
   triggerFilter() {
     this.filter.trigger();
-  }
-
-  closeFilter() {
-    this.filter.close();
   }
 }
 

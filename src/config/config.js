@@ -25,10 +25,8 @@ export default {
     },
     filter: {
       q: 0,
-      detune: 0,
       cutoffFrequency: 2000,
-      attack: 0,
-      release: 0
+      attack: 0
     }
   },
   midi: {
