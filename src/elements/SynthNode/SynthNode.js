@@ -142,7 +142,6 @@ class SynthNode extends Node {
     }
     this.active = false;
     this.ampEnvelopeGenerator.close();
-    // qAudioContext.closeFilter();
   }
 }
 

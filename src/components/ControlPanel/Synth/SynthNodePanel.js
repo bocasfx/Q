@@ -73,7 +73,8 @@ class SynthNodePanel extends React.Component {
             max={1}
             onChange={this.onGainChange}
             disabled={this.props.node.disabled}
-            type={this.props.node.type}/>
+            type={this.props.node.type}
+            log={true}/>
           <Knob
             label={'FX Send'}
             value={this.props.node.sendFXGain}
@@ -81,7 +82,8 @@ class SynthNodePanel extends React.Component {
             max={1}
             onChange={this.onSendGainChange}
             disabled={this.props.node.disabled}
-            type={this.props.node.type}/>
+            type={this.props.node.type}
+            log={true}/>
         </div>
         <div className="row synth-node-panel-gain">
           <Knob
@@ -109,7 +111,8 @@ class SynthNodePanel extends React.Component {
             max={1}
             onChange={this.onNoiseChange}
             disabled={this.props.node.disabled}
-            type={this.props.node.type}/>
+            type={this.props.node.type}
+            log={true}/>
         </div>
           
         <div className="row synth-node-panel-pan synth-node-panel-pan-labels">

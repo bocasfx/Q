@@ -13,15 +13,17 @@ class FXPanel extends React.Component {
 
   constructor(props) {
     super(props);
-    qAudioContext.time = props.fx.delay.time;
-    qAudioContext.feedback = props.fx.delay.feedback;
-    qAudioContext.cutoffFrequency = props.fx.delay.cutoffFrequency;
+    this.setProps(props);
   }
 
   componentWillReceiveProps(nextProps) {
-    qAudioContext.time = nextProps.fx.delay.time;
-    qAudioContext.feedback = nextProps.fx.delay.feedback;
-    qAudioContext.cutoffFrequency = nextProps.fx.delay.cutoffFrequency;
+    this.setProps(nextProps);
+  }
+
+  setProps(props) {
+    qAudioContext.time = props.fx.delay.time;
+    qAudioContext.feedback = props.fx.delay.feedback;
+    qAudioContext.cutoffFrequency = props.fx.delay.cutoffFrequency;
   }
 
   render() {

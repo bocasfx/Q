@@ -148,7 +148,8 @@ class OscillatorPanel extends React.Component {
               max={1}
               onChange={this.onGainChange}
               disabled={!this.state.checked || this.state.disabled}
-              type={this.props.type}/>
+              type={this.props.type}
+              log={true}/>
           </div>
         </div>
 
