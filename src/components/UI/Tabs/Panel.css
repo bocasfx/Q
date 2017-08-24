@@ -1,8 +1,9 @@
 .panel-container {
   height: 100%;
   box-sizing: border-box;
-  padding: 0 15px;
+  padding: 15px;
   overflow-y: auto;
+  outline: none;
 }
 
 .panel-container:last-child {

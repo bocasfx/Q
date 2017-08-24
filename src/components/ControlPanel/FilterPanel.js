@@ -30,22 +30,22 @@ class FXPanel extends React.Component {
     return (
       <div>
         <div className="fx-panel-container">
-          <Knob
-            label={'Cutoff'}
-            value={this.props.fx.filter.cutoffFrequency}
-            min={1}
-            max={20000}
-            onChange={this.props.setFilterCutoffFrequency}
-            disabled={false}
-            type="synth"/>
-          <Knob
-            label={'Attack'}
-            value={this.props.fx.filter.attack}
-            min={0}
-            max={1}
-            onChange={this.props.setFilterAttack}
-            disabled={false}
-            type="synth"/>
+            <Knob
+              label={'Cutoff'}
+              value={this.props.fx.filter.cutoffFrequency}
+              min={1}
+              max={20000}
+              onChange={this.props.setFilterCutoffFrequency}
+              disabled={false}
+              type="synth"/>
+            <Knob
+              label={'Attack'}
+              value={this.props.fx.filter.attack}
+              min={0}
+              max={1}
+              onChange={this.props.setFilterAttack}
+              disabled={false}
+              type="synth"/>
         </div>
         <div className="row">
           <Knob

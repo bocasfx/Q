@@ -30,24 +30,24 @@ class FXPanel extends React.Component {
     return (
       <div>
         <div className="fx-panel-container">
-          <div>
-            <Knob
-              label={'Time'}
-              value={this.props.fx.delay.time}
-              min={0}
-              max={1}
-              onChange={this.props.setDelayTime}
-              disabled={false}
-              type="synth"/>
-            <Knob
-              label={'Feedback'}
-              value={this.props.fx.delay.feedback}
-              min={0}
-              max={1}
-              onChange={this.props.setDelayFeedback}
-              disabled={false}
-              type="synth"/>
-          </div>
+          <Knob
+            label={'Time'}
+            value={this.props.fx.delay.time}
+            min={0}
+            max={1}
+            onChange={this.props.setDelayTime}
+            disabled={false}
+            type="synth"/>
+          <Knob
+            label={'Feedback'}
+            value={this.props.fx.delay.feedback}
+            min={0}
+            max={1}
+            onChange={this.props.setDelayFeedback}
+            disabled={false}
+            type="synth"/>
+        </div>
+        <div className="row">
           <Knob
             label={'Cutoff'}
             value={this.props.fx.delay.cutoffFrequency}
