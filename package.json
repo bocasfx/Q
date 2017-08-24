@@ -29,6 +29,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "package": "react-scripts build; electron-packager . Q --icon ./resources/icon/icon.icns --overwrite",
+    "clean": "rm -rf ./build; rm -rf ./Q-darwin-x64",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "electron": "electron .",

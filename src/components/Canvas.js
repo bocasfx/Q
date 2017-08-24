@@ -252,6 +252,9 @@ class Canvas extends React.Component {
 
   flow() {
     if (!this.props.transport || !this.props.transport.playing) {
+      // Transport is paused
+      // Draw changes (new/delete nodes/streams)
+      // Stop links
       this.draw();
       this.now = timestamp();
       this.last = this.now;
