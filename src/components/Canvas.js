@@ -256,8 +256,8 @@ class Canvas extends React.Component {
       this.flow();
       return;
     }
-
-    setTimeout(this.dummyFlow, 500);
+    this.draw();
+    setTimeout(this.dummyFlow);
   }
 
   flow() {

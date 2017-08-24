@@ -46,9 +46,9 @@ class ListItem extends React.Component {
 
     return (
       <div className={itemClass} onClick={this.props.onClick}>
-        <div>
+        <div className="list-item-info">
           <ActivityIndicator item={this.props.item}/>
-          <span className="list-item-name">{this.props.item.name}</span>
+          <span className="list-item-name" title={this.props.item.name}>{this.props.item.name}</span>
         </div>
         <div>
           <span className="list-item-icon" onClick={this.props.onToggle}>
