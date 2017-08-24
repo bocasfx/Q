@@ -7,10 +7,6 @@
   border: 1px solid rgba(0, 0, 0, 0);
 }
 
-.list-item-container:first-child {
-  margin-top: 15px;
-}
-
 .list-item-container:last-child {
   margin-bottom: 15px;
 }
