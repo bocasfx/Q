@@ -31,6 +31,7 @@ class Canvas extends React.Component {
     this.selectNode = this.selectNode.bind(this);
     this.draw = this.draw.bind(this);
     this.flow = this.flow.bind(this);
+    this.dummyFlow = this.dummyFlow.bind(this);
 
     this.selectedNodeId = null;
     this.calculating = false;
@@ -250,6 +251,15 @@ class Canvas extends React.Component {
     });
   };
 
+  dummyFlow() {
+    if (this.props && this.props.transport && this.props.transport.playing) {
+      this.flow();
+      return;
+    }
+
+    setTimeout(this.dummyFlow, 500);
+  }
+
   flow() {
     if (!this.props.transport || !this.props.transport.playing) {
       // Transport is paused
@@ -265,7 +275,7 @@ class Canvas extends React.Component {
           });
         });
       });
-      setTimeout(this.flow);
+      setTimeout(this.dummyFlow);
       return;
     }
 
