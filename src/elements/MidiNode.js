@@ -7,7 +7,7 @@ class MidiNode extends Node {
     super(position);
 
     this.type = 'midi';
-    this.note = 30;
+    this.note = 0;
     this.velocity = 127;
 
     this.nodeImg = new Image();
