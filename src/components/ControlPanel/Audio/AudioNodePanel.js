@@ -11,12 +11,12 @@ class AudioNodePanel extends React.Component {
     this.onFileChange = this.onFileChange.bind(this);
   }
 
-  onFileChange(filePath) {
-    this.props.setNodeSource(this.props.node.id, filePath);
+  onFileChange(dataBuffer) {
+    this.props.setNodeSource(this.props.node.id, dataBuffer);
 
-    let name = filePath.split('/');
-    name = name[name.length -1];
-    this.props.setNodeName(this.props.node.id, name);
+    // let name = filePath.split('/');
+    // name = name[name.length -1];
+    // this.props.setNodeName(this.props.node.id, name);
   }
 
   render() {
