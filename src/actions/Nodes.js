@@ -241,3 +241,19 @@ export const setNodeOsc2Gain = (id, value) => {
     value
   };
 };
+
+export const setNodeVelocity = (id, value) => {
+  return {
+    type: 'SET_NODE_VELOCITY',
+    id,
+    value
+  };
+};
+
+export const setNodeNote = (id, value) => {
+  return {
+    type: 'SET_NODE_NOTE',
+    id,
+    value
+  };
+};

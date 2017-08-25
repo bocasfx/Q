@@ -329,6 +329,24 @@ const setNodeOsc2Gain = (state, id, value) => {
   });
 };
 
+const setNodeVelocity = (state, id, value) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.velocity = value;
+    }
+    return node;
+  });
+};
+
+const setNodeNote = (state, id, value) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.note = value;
+    }
+    return node;
+  });
+};
+
 export default (state = nodes, action) => {
   switch (action.type) {
 
@@ -427,6 +445,12 @@ export default (state = nodes, action) => {
 
     case 'SET_NODE_OSC2_GAIN':
       return setNodeOsc2Gain(state, action.id, action.value);
+
+    case 'SET_NODE_VELOCITY':
+      return setNodeVelocity(state, action.id, action.value);
+
+    case 'SET_NODE_NOTE':
+      return setNodeNote(state, action.id, action.value);
 
     default:
       return state;

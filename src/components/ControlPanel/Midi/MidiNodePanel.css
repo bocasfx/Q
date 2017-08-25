@@ -1,0 +1,11 @@
+.midi-node-selector label {
+  margin-right: 10px;
+}
+
+.midi-node-output-selector label {
+  margin-right: 10px;
+}
+
+.midi-node-output-selector select {
+  width: 170px;
+}

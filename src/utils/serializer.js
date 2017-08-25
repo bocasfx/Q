@@ -18,9 +18,13 @@ const createNode = (node) => {
       newSynthNode.osc2Gain = node.inner.oscillator2.gain;
       return newSynthNode;
     case 'midi':
-      return new MidiNode(node.topLevel.position);
+      let newMidiNode = new MidiNode(node.topLevel.position);
+      newMidiNode = Object.assign(newMidiNode, node.topLevel);
+      return newMidiNode;
     case 'audio':
-      return new AudioNode(node.topLevel.position);
+      let newAudioNode = new AudioNode(node.topLevel.position);
+      newAudioNode = Object.assign(newAudioNode, node.topLevel);
+      return newAudioNode;
     default:
       return null;
   }
