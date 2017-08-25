@@ -2,9 +2,11 @@ import React from 'react';
 import './FileButton.css';
 let electron = null;
 let dialog = null;
+let fs = null;
 
 if (window.require) {
   electron = window.require('electron');
+  fs = window.require('fs');
   dialog = electron.remote.dialog;
 }
 
@@ -15,13 +17,20 @@ class FileButton extends React.Component {
   }
 
   onClick() {
-    if (!dialog) {
+    if (!dialog || !fs) {
       console.error('This feature is not available on the browser version of Q.');
       return;
     }
 
     dialog.showOpenDialog({properties: ['openFile']}, (files) => {
-      this.props.onChange(files[0]);
+      fs.readFile(files[0], (err, dataBuffer) => {
+        if (err) {
+          // TODO: Show notification
+          console.log(err);
+          return;
+        }
+        this.props.onChange(dataBuffer);
+      });
     });
   }
 
