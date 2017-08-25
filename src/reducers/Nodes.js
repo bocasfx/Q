@@ -12,8 +12,8 @@ const addSynthNode = (state, position) => {
   return nodeList;
 };
 
-const addMidiNode = (state, position, midiContext) => {
-  let midiNode = new MidiNode(position, midiContext);
+const addMidiNode = (state, position) => {
+  let midiNode = new MidiNode(position);
   let nodeList = state.splice(0);
   nodeList.push(midiNode);
   return nodeList;
@@ -336,10 +336,10 @@ export default (state = nodes, action) => {
       return addSynthNode(state, action.position);
 
     case 'ADD_MIDI_NODE':
-      return addMidiNode(state, action.position, action.midiContext);
+      return addMidiNode(state, action.position);
 
     case 'ADD_AUDIO_NODE':
-      return addAudioNode(state, action.position, action.midiContext);
+      return addAudioNode(state, action.position);
 
     case 'SET_NODE_POSITION':
       return setNodePosition(state, action.id, action.position);

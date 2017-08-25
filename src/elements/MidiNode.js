@@ -1,16 +1,11 @@
 import Node from './Node';
-import midiContext from '../config/midi-context';
+import midiContext from '../config/MIDIContext';
 
 class MidiNode extends Node {
 
   constructor(position) {
     super(position);
-    midiContext.then((ctx) => {
-      let outputs = ctx.outputs;
-      let output = outputs.values().next();
-      this.midiOut = output.value;
-    });
-    
+
     this.type = 'midi';
     this.note = 30;
     this.velocity = 127;
@@ -23,6 +18,8 @@ class MidiNode extends Node {
 
     this.probabilityNodeImg = new Image();
     this.probabilityNodeImg.src = './icons/elements/midi-node-probability.png';
+
+    this.midiOut = midiContext.outputs.values().next().value;
   }
 
   play() {

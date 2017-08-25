@@ -5,11 +5,10 @@ export const addSynthNode = (position) => {
   };
 };
 
-export const addMidiNode = (position, midiContext) => {
+export const addMidiNode = (position) => {
   return {
     type: 'ADD_MIDI_NODE',
-    position,
-    midiContext
+    position
   };
 };
 
