@@ -4,60 +4,48 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
   setFilterCutoffFrequency,
-  setFilterDetune,
   setFilterQ,
-  setFilterAttack,
-  setFilterRelease } from '../../actions/FX';
+  setFilterAttack } from '../../actions/FX';
 import qAudioContext from '../../elements/QAudioContext';
 
 class FXPanel extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.setProps(props);
+  }
+
   componentWillReceiveProps(nextProps) {
-    qAudioContext.filterCutoffFrequency = nextProps.fx.filter.cutoffFrequency;
-    qAudioContext.filterDetune = nextProps.fx.filter.detune;
-    qAudioContext.filterQ = nextProps.fx.filter.q;
-    qAudioContext.filterAttack = nextProps.fx.filter.attack;
-    qAudioContext.filterRelease = nextProps.fx.filter.release;
+    this.setProps(nextProps);
+  }
+
+  setProps(props) {
+    qAudioContext.filterCutoffFrequency = props.fx.filter.cutoffFrequency;
+    qAudioContext.filterQ = props.fx.filter.q;
+    qAudioContext.filterAttack = props.fx.filter.attack;
+    qAudioContext.filterRelease = props.fx.filter.release;
   }
 
   render() {
     return (
       <div>
         <div className="fx-panel-container">
-          <Knob
-            label={'Cutoff'}
-            value={this.props.fx.filter.cutoffFrequency}
-            min={0}
-            max={20000}
-            onChange={this.props.setFilterCutoffFrequency}
-            disabled={false}
-            type="synth"/>
-          <Knob
-            label={'Detune'}
-            value={this.props.fx.filter.detune}
-            min={0}
-            max={100}
-            onChange={this.props.setFilterDetune}
-            disabled={false}
-            type="synth"/>
-        </div>
-        <div className="row">
-          <Knob
-            label={'Attack'}
-            value={this.props.fx.filter.attack}
-            min={0}
-            max={1}
-            onChange={this.props.setFilterAttack}
-            disabled={false}
-            type="synth"/>
-          <Knob
-            label={'Release'}
-            value={this.props.fx.filter.release}
-            min={0}
-            max={100}
-            onChange={this.props.setFilterRelease}
-            disabled={true}
-            type="synth"/>
+            <Knob
+              label={'Cutoff'}
+              value={this.props.fx.filter.cutoffFrequency}
+              min={1}
+              max={20000}
+              onChange={this.props.setFilterCutoffFrequency}
+              disabled={false}
+              type="synth"/>
+            <Knob
+              label={'Attack'}
+              value={this.props.fx.filter.attack}
+              min={0}
+              max={1}
+              onChange={this.props.setFilterAttack}
+              disabled={false}
+              type="synth"/>
         </div>
         <div className="row">
           <Knob
@@ -83,11 +71,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setFilterCutoffFrequency: bindActionCreators(setFilterCutoffFrequency, dispatch),
-    setFilterDetune: bindActionCreators(setFilterDetune, dispatch),
     setFilterQ: bindActionCreators(setFilterQ, dispatch),
-    setFilterAttack: bindActionCreators(setFilterAttack, dispatch),
-    setFilterRelease: bindActionCreators(setFilterRelease, dispatch)
-
+    setFilterAttack: bindActionCreators(setFilterAttack, dispatch)
   };
 };
 

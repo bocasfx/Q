@@ -61,3 +61,7 @@ export const toPolar = (x, y) => {
 export const clip = (value, min, max) => {
   return Math.min(Math.max(value, min), max);
 };
+
+export const timestamp = () => {
+  return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
+};

@@ -5,7 +5,7 @@ import config from '../config/config';
 import { connect } from 'react-redux';
 import { addFreehandStream, addCircularStream, addLinearStream } from '../actions/Streams';
 import { bindActionCreators } from 'redux';
-import { calculateDistance, getPosition, calculateNodeBorderDistance } from '../utils/utils';
+import { calculateDistance, getPosition, calculateNodeBorderDistance, timestamp } from '../utils/utils';
 import { addSynthNode,
   addMidiNode,
   addAudioNode,
@@ -31,6 +31,7 @@ class Canvas extends React.Component {
     this.selectNode = this.selectNode.bind(this);
     this.draw = this.draw.bind(this);
     this.flow = this.flow.bind(this);
+    this.dummyFlow = this.dummyFlow.bind(this);
 
     this.selectedNodeId = null;
     this.calculating = false;
@@ -40,6 +41,11 @@ class Canvas extends React.Component {
     this.linkAnchorImg = new Image();
     this.linkAnchorImg.src = './icons/elements/link-anchor.png';
 
+    this.now = null;
+    this.dt = 0;
+    this.last = timestamp();
+    this.step = 1 / 60;
+
     this.state = {
       mouseDown: false
     };
@@ -47,9 +53,9 @@ class Canvas extends React.Component {
   
   componentDidMount() {
     this.canvasContext = this.refs.canvas.getContext('2d');
-    requestAnimationFrame(() => {
-      this.flow();
-    });
+    this.executedAt = Date.now();
+    this.draw();
+    this.flow();
   }
 
   onMouseDown(event) {
@@ -245,21 +251,55 @@ class Canvas extends React.Component {
     });
   };
 
-  flow() {
-    this.props.streams.forEach((stream) => {
-      stream.flow();
-    });
+  dummyFlow() {
+    if (this.props && this.props.transport && this.props.transport.playing) {
+      this.flow();
+      return;
+    }
+    this.draw();
+    setTimeout(this.dummyFlow);
+  }
 
-    this.detectCollisions();
+  flow() {
+    if (!this.props.transport || !this.props.transport.playing) {
+      // Transport is paused
+      // Draw changes (new/delete nodes/streams)
+      // Stop links
+      this.draw();
+      this.now = timestamp();
+      this.last = this.now;
+      this.props.nodes.forEach((node) => {
+        this.props.streams.forEach((stream) => {
+          stream.particles.forEach((particle) => {
+            this.stopLinks(node, node.id, particle.id, false);
+          });
+        });
+      });
+      setTimeout(this.dummyFlow);
+      return;
+    }
+
+    this.now = timestamp();
+    this.dt = this.dt + Math.min(1, (this.now - this.last) / 1000);
+
+    while (this.dt > this.step) {
+      this.dt = this.dt - this.step;
+
+      this.props.streams.forEach((stream) => {
+        stream.flow();
+      });
+
+      this.detectCollisions();
+    }
 
     // No need to render when the mixer is visible.
     if (!this.props.devices.mixer) {
       this.draw();
-    } else {
-      requestAnimationFrame(() => {
-        this.flow();
-      });
     }
+
+    this.last = this.now;
+
+    setTimeout(this.flow);
   }
 
   renderLinks(node) {
@@ -322,10 +362,6 @@ class Canvas extends React.Component {
     this.props.nodes.forEach((node) => {
       node.render(this.canvasContext);
     });
-
-    requestAnimationFrame(() => {
-      this.flow();
-    });
   }
 
   render() {
@@ -365,7 +401,8 @@ const mapStateToProps = (state) => {
     devices: state.devices,
     nodes: state.nodes,
     streams: state.streams,
-    collisions: state.Collisions
+    collisions: state.Collisions,
+    transport: state.transport
   };
 };
 

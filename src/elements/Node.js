@@ -11,7 +11,7 @@ class Node {
     this.selected = false;
     this.activeStatus = false;
     this.particleQueue = [];
-    this.volume = 0.8;
+    this.volume = 0.2;
     this._disabled = false;
     this.pan = 0;
     this.links = [];

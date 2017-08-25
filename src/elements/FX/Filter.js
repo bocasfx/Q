@@ -12,14 +12,11 @@ class Filter {
     this.filterEnvelopeGenerator.connect(this.filter.frequency);
     this.filterEnvelopeGenerator.attack = settings.attack;
     this.filterEnvelopeGenerator.release = settings.release;
+    this._frequency = this.filter.frequency;
   }
 
   set q(value) {
     this.filter.Q.value = value;
-  }
-
-  set detune(value) {
-    this.filter.detune.value = value;
   }
 
   set cutoffFrequency(value) {
@@ -43,7 +40,7 @@ class Filter {
   }
 
   set frequency(value) {
-    this.filter.frequency.value = value;
+    this._frequency = value;
   }
 
   get frequency() {
@@ -51,11 +48,11 @@ class Filter {
   }
 
   trigger() {
-    this.filterEnvelopeGenerator.trigger(this.frequency.value);
-  }
-
-  close() {
-    this.filterEnvelopeGenerator.close();
+    if (this.attack > 0) {
+      this.filterEnvelopeGenerator.trigger(this._frequency);
+    } else {
+      this.filter.frequency.value = this._frequency;
+    }
   }
 
   connect(node) {

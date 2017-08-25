@@ -7,10 +7,6 @@
   border: 1px solid rgba(0, 0, 0, 0);
 }
 
-.list-item-container:first-child {
-  margin-top: 15px;
-}
-
 .list-item-container:last-child {
   margin-bottom: 15px;
 }
@@ -34,6 +30,13 @@
   transition: 0.1s ease-in-out;
   width: 10px;
   height: 10px;
+}
+
+.list-item-info {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 180px;
 }
 
 .list-item-container:hover .list-item-icon {

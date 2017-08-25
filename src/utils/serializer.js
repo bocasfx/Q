@@ -5,6 +5,7 @@ import AudioNode from '../elements/AudioNode';
 import CircularStream from '../elements/CircularStream';
 import LinearStream from '../elements/LinearStream';
 import FreehandStream from '../elements/FreehandStream';
+import qAudioContext from '../elements/QAudioContext';
 
 const createNode = (node) => {
   switch (node.topLevel.type) {
@@ -139,6 +140,17 @@ export const serialize = (payload) => {
   });
 };
 
+const hydrateFx = (props) => {
+  qAudioContext.filterCutoffFrequency = props.filter.cutoffFrequency;
+  qAudioContext.filterQ = props.filter.q;
+  qAudioContext.filterAttack = props.filter.attack;
+  qAudioContext.filterRelease = props.filter.release;
+
+  qAudioContext.time = props.delay.time;
+  qAudioContext.feedback = props.delay.feedback;
+  qAudioContext.cutoffFrequency = props.delay.cutoffFrequency;
+};
+
 export const hydrate = (payload) => {
   let nodes = payload.nodes.map((node) => {
     return createNode(node);
@@ -147,6 +159,8 @@ export const hydrate = (payload) => {
   let streams = payload.streams.map((stream) => {
     return createStream(stream);
   });
+
+  hydrateFx(payload.fx);
 
   let newState = Object.assign({}, payload, {
     nodes: nodes,

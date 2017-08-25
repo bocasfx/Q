@@ -189,6 +189,12 @@ export const stopNode = (id) => {
   };
 };
 
+export const stopNodes = () => {
+  return {
+    type: 'STOP_NODES'
+  };
+};
+
 export const setNodeLag = (id, lag) => {
   return {
     type: 'SET_NODE_LAG',

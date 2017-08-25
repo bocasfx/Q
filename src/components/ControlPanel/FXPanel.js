@@ -13,39 +13,41 @@ class FXPanel extends React.Component {
 
   constructor(props) {
     super(props);
-    qAudioContext.time = props.fx.delay.time;
-    qAudioContext.feedback = props.fx.delay.feedback;
-    qAudioContext.cutoffFrequency = props.fx.delay.cutoffFrequency;
+    this.setProps(props);
   }
 
   componentWillReceiveProps(nextProps) {
-    qAudioContext.time = nextProps.fx.delay.time;
-    qAudioContext.feedback = nextProps.fx.delay.feedback;
-    qAudioContext.cutoffFrequency = nextProps.fx.delay.cutoffFrequency;
+    this.setProps(nextProps);
+  }
+
+  setProps(props) {
+    qAudioContext.time = props.fx.delay.time;
+    qAudioContext.feedback = props.fx.delay.feedback;
+    qAudioContext.cutoffFrequency = props.fx.delay.cutoffFrequency;
   }
 
   render() {
     return (
       <div>
         <div className="fx-panel-container">
-          <div>
-            <Knob
-              label={'Time'}
-              value={this.props.fx.delay.time}
-              min={0}
-              max={1}
-              onChange={this.props.setDelayTime}
-              disabled={false}
-              type="synth"/>
-            <Knob
-              label={'Feedback'}
-              value={this.props.fx.delay.feedback}
-              min={0}
-              max={1}
-              onChange={this.props.setDelayFeedback}
-              disabled={false}
-              type="synth"/>
-          </div>
+          <Knob
+            label={'Time'}
+            value={this.props.fx.delay.time}
+            min={0}
+            max={1}
+            onChange={this.props.setDelayTime}
+            disabled={false}
+            type="synth"/>
+          <Knob
+            label={'Feedback'}
+            value={this.props.fx.delay.feedback}
+            min={0}
+            max={1}
+            onChange={this.props.setDelayFeedback}
+            disabled={false}
+            type="synth"/>
+        </div>
+        <div className="row">
           <Knob
             label={'Cutoff'}
             value={this.props.fx.delay.cutoffFrequency}

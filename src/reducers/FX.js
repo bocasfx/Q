@@ -20,11 +20,6 @@ const setFilterCutoffFrequency = (state, value) => {
   return Object.assign({}, state, {filter: newFilter});
 };
 
-const setFilterDetune = (state, value) => {
-  let newFilter = Object.assign({}, state.filter, { detune: value }); 
-  return Object.assign({}, state, {filter: newFilter});
-};
-
 const setFilterQ = (state, value) => {
   let newFilter = Object.assign({}, state.filter, { q: value }); 
   return Object.assign({}, state, {filter: newFilter});
@@ -32,11 +27,6 @@ const setFilterQ = (state, value) => {
 
 const setFilterAttack = (state, value) => {
   let newFilter = Object.assign({}, state.filter, { attack: value }); 
-  return Object.assign({}, state, {filter: newFilter});
-};
-
-const setFilterRelease = (state, value) => {
-  let newFilter = Object.assign({}, state.filter, { release: value }); 
   return Object.assign({}, state, {filter: newFilter});
 };
 
@@ -55,17 +45,11 @@ export default (state = fx, action) => {
     case 'SET_FILTER_CUTOFF_FREQUENCY':
       return setFilterCutoffFrequency(state, action.value);
 
-    case 'SET_FILTER_DETUNE':
-      return setFilterDetune(state, action.value);
-
     case 'SET_FILTER_Q':
       return setFilterQ(state, action.value);
 
     case 'SET_FILTER_ATTACK':
       return setFilterAttack(state, action.value);
-
-    case 'SET_FILTER_RELEASE':
-      return setFilterRelease(state, action.value);
 
     default:
       return state;

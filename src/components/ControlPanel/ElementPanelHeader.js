@@ -9,6 +9,7 @@ class NodePanelHeader extends React.Component {
     super(props);
 
     this.onChange = this.onChange.bind(this);
+    this.onKeyPress = this.onKeyPress.bind(this);
     this.onToggle = this.onToggle.bind(this);
   }
 
@@ -20,6 +21,10 @@ class NodePanelHeader extends React.Component {
   onToggle() {
     let disabled = !this.props.element.disabled;
     this.props.onToggle(disabled);
+  }
+
+  onKeyPress(event) {
+    event.stopPropagation();
   }
 
   render() {
@@ -39,7 +44,8 @@ class NodePanelHeader extends React.Component {
             name="node-name"
             value={this.props.element.name}
             onChange={this.onChange}
-            disabled={this.props.element.disabled}/>
+            disabled={this.props.element.disabled}
+            onKeyPress={this.onKeyPress}/>
           <div className={toggleClass} style={style} onClick={this.onToggle}>
             <i className="fa fa-power-off"></i>
           </div>
