@@ -1,11 +1,19 @@
+.midi-node-panel-container .row {
+  margin-top: 40px;
+}
+
 .midi-node-selector label {
   margin-right: 10px;
 }
 
-.midi-node-output-selector label {
+.midi-node-destination-selector label {
   margin-right: 10px;
 }
 
-.midi-node-output-selector select {
-  width: 170px;
+.midi-node-destination-selector select {
+  width: 145px;
+}
+
+.midi-node-velocity {
+  margin-top: 20px;
 }

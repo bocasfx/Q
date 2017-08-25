@@ -115,7 +115,6 @@ const setNodeOsc2WaveType = (state, id, waveType) => {
 const cloneNode = (state, id) => {
   state.forEach((node) => {
     if (node.id === id) {
-      console.log(node);
       let clonedNode = new SynthNode();
       clonedNode.active = false;
       clonedNode.lag = node.lag;

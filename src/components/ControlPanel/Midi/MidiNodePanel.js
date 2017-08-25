@@ -17,8 +17,9 @@ class MidiNodePanel extends React.Component {
     this.onVelocityChange = this.onVelocityChange.bind(this);
     this.onNoteChange = this.onNoteChange.bind(this);
     this.onOctaveChange = this.onOctaveChange.bind(this);
+    this.onDestinationChange = this.onDestinationChange.bind(this);
     this.renderMidiNotesSelect = this.renderMidiNotesSelect.bind(this);
-    this.renderMidiOutputSelect = this.renderMidiOutputSelect.bind(this);
+    this.renderMidiDestinationSelect = this.renderMidiDestinationSelect.bind(this);
 
     this.state = {
       note: 'C',
@@ -37,7 +38,6 @@ class MidiNodePanel extends React.Component {
     this.setState({
       note: note.note
     });
-    console.log(note.midi);
     this.props.setNodeNote(this.props.node.id, note.midi);
   }
 
@@ -48,12 +48,20 @@ class MidiNodePanel extends React.Component {
     this.setState({
       octave: note.octave
     });
-    console.log(note.midi);
     this.props.setNodeNote(this.props.node.id, note.midi);
   }
 
-  renderMidiOutputSelect() {
-    return <option value="test">test</option>;
+  onDestinationChange(event) {
+    console.log(event.target.value);
+  }
+
+  renderMidiDestinationSelect() {
+    if (!this.props.midi) {
+      return null;
+    }
+    return this.props.midi.destinations.map((destination, idx) => {
+      return <option key={idx} value={destination.id}>{destination.name}</option>;
+    });
   }
 
   renderNoteSelect() {
@@ -80,15 +88,17 @@ class MidiNodePanel extends React.Component {
     return (
       <div className="midi-node-panel-container" disabled={this.props.node.disabled}>
         <NodePanelHeader node={this.props.node}/>
-        <Knob
-          label={'Velocity'}
-          value={this.props.node.velocity}
-          min={0}
-          max={127}
-          onChange={this.onVelocityChange}
-          disabled={this.props.node.disabled}
-          type={this.props.node.type}
-          log={true}/>
+        <div className="midi-node-velocity">
+          <Knob
+            label={'Velocity'}
+            value={this.props.node.velocity}
+            min={0}
+            max={127}
+            onChange={this.onVelocityChange}
+            disabled={this.props.node.disabled}
+            type={this.props.node.type}
+            log={true}/>
+        </div>
         <div className="row">
           <div className="midi-node-selector">
             <label htmlFor="midiNote" disabled={this.props.node.disabled}>Note</label>
@@ -104,11 +114,11 @@ class MidiNodePanel extends React.Component {
             </select>
           </div>
         </div>
-        <div className="row midi-node-output-selector">
+        <div className="row midi-node-destination-selector">
           <div>
-            <label htmlFor="midiTest" disabled={this.props.node.disabled}>Output</label>
-            <select name="midiTest" disabled={this.props.node.disabled}>
-              {this.renderMidiOutputSelect()}
+            <label htmlFor="midiTest" disabled={this.props.node.disabled}>Destination</label>
+            <select name="midiTest" disabled={this.props.node.disabled} onChange={this.onDestinationChange}>
+              {this.renderMidiDestinationSelect()}
             </select>
           </div>
         </div>
@@ -119,7 +129,8 @@ class MidiNodePanel extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    nodes: state.nodes
+    nodes: state.nodes,
+    midi: state.midi
   };
 };
 

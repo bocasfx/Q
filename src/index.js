@@ -122,14 +122,27 @@ const toggleDevice = (device) => {
 };
 
 const initialize = () => {
-  midiContext.initialize()
+  midiContext.initialize(store)
     .then(() => {
+
       renderDom();
+
       if (localStorage.QState) {
         store.dispatch({
           type: 'HYDRATE_STATE',
           payload: JSON.parse(localStorage.QState)
         });
+      }
+
+      for (let entry of midiContext.outputs.entries()) {
+        for (let destination of entry) {
+          if (destination.state && destination.state === 'connected' && destination.name) {
+            store.dispatch({
+              type: 'ADD_DESTINATION',
+              destination
+            });
+          }
+        }
       }
     }
   );

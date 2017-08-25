@@ -33,7 +33,7 @@ class FXPanel extends React.Component {
             <Knob
               label={'Cutoff'}
               value={this.props.fx.filter.cutoffFrequency}
-              min={1}
+              min={100}
               max={20000}
               onChange={this.props.setFilterCutoffFrequency}
               disabled={false}
