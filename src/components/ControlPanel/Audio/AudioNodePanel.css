@@ -1,0 +1,12 @@
+.audio-node-panel-container .slider::-webkit-slider-thumb {
+  background: deepskyblue;
+}
+
+.audio-node-panel-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.audio-node-panel-buttons div:first-child {
+  padding-right: 10px;
+}
