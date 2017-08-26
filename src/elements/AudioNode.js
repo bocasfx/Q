@@ -48,8 +48,32 @@ class AudioNode extends Node {
     this._src.start();
   }
 
+  set sendFXGain(value) {
+    this._sendFXGain.gain.value = value;
+  }
+
+  get sendFXGain() {
+    return this._sendFXGain.gain.value;
+  }
+
+  set attack(value) {
+    this.ampEnvelopeGenerator.attack = value === 0 ? config.synth.envelope.attack : value;
+  }
+
+  get attack() {
+    return this.ampEnvelopeGenerator.attack;
+  }
+
+  set release(value) {
+    this.ampEnvelopeGenerator.release = value === 0 ? config.synth.envelope.release : value;
+  }
+
+  get release() {
+    return this.ampEnvelopeGenerator.release;
+  }
+
   play() {
-    if (this.active || !this.shouldPlay) {
+    if (this.active || !this.decodedAudioData || !this.shouldPlay) {
       return;
     }
     this.createDataSource();
