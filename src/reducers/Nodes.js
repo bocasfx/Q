@@ -1,6 +1,6 @@
-import SynthNode from '../elements/SynthNode/SynthNode';
-import MidiNode from '../elements/MidiNode';
-import AudioNode from '../elements/AudioNode';
+import SynthNode from '../elements/nodes/SynthNode';
+import MidiNode from '../elements/nodes/MidiNode';
+import AudioNode from '../elements/nodes/AudioNode';
 import _ from 'lodash';
 import { nodes } from '../config/initial-state';
 import uuidv1 from 'uuid/v1';

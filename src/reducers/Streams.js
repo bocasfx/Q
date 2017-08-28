@@ -1,6 +1,6 @@
-import FreehandStream from '../elements/FreehandStream';
-import CircularStream from '../elements/CircularStream';
-import LinearStream from '../elements/LinearStream';
+import FreehandStream from '../elements/streams/FreehandStream';
+import CircularStream from '../elements/streams/CircularStream';
+import LinearStream from '../elements/streams/LinearStream';
 import _ from 'lodash';
 import { streams } from '../config/initial-state';
 

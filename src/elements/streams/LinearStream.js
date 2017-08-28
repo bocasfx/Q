@@ -1,5 +1,5 @@
-import config from '../config/config';
-import { getPosition, calculateDistance } from '../utils/utils';
+import config from '../../config/config';
+import { getPosition, calculateDistance } from '../../utils/utils';
 import Stream from './Stream';
 
 class LinearStream extends Stream {

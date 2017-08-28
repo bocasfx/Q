@@ -1,6 +1,6 @@
 import uuidv1 from 'uuid/v1';
-import names from '../config/names';
-import config from '../config/config';
+import names from '../../config/names';
+import config from '../../config/config';
 import Particle from './Particle';
 
 class Stream {

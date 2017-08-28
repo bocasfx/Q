@@ -1,8 +1,8 @@
 import Node from './Node';
-import qAudioContext from './QAudioContext';
-import Amplifier from './SynthNode/Amplifier';
-import AmpEnvelopeGenerator from './SynthNode/AmpEnvelopeGenerator';
-import config from '../config/config';
+import qAudioContext from '../../config/context/QAudioContext';
+import Amplifier from '../FX/Amplifier';
+import AmpEnvelopeGenerator from '../FX/AmpEnvelopeGenerator';
+import config from '../../config/config';
 
 class AudioNode extends Node {
 
