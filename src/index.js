@@ -10,7 +10,7 @@ import Mixer from './components/Mixer/Mixer';
 import ControlPanel from './components/ControlPanel/ControlPanel';
 import Toaster from './components/UI/Toaster';
 import { serialize } from './utils/serializer';
-import midiContext from './config/MIDIContext';
+import midiContext from './config/context/MIDIContext';
 
 let electron = null;
 let dialog = null;

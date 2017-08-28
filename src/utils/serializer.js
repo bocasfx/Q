@@ -1,11 +1,11 @@
 import initialState from '../config/initial-state';
-import SynthNode from '../elements/SynthNode/SynthNode';
-import MidiNode from '../elements/MidiNode';
-import AudioNode from '../elements/AudioNode';
-import CircularStream from '../elements/CircularStream';
-import LinearStream from '../elements/LinearStream';
-import FreehandStream from '../elements/FreehandStream';
-import qAudioContext from '../elements/QAudioContext';
+import SynthNode from '../elements/nodes/SynthNode';
+import MidiNode from '../elements/nodes/MidiNode';
+import AudioNode from '../elements/nodes/AudioNode';
+import CircularStream from '../elements/streams/CircularStream';
+import LinearStream from '../elements/streams/LinearStream';
+import FreehandStream from '../elements/streams/FreehandStream';
+import qAudioContext from '../config/context/QAudioContext';
 
 const createNode = (node) => {
   switch (node.topLevel.type) {
