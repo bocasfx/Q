@@ -27,6 +27,10 @@ export default {
       q: 0,
       cutoffFrequency: 2000,
       attack: 0
+    },
+    waveShaper: {
+      amount: 400,
+      oversample: '4x'
     }
   },
   midi: {

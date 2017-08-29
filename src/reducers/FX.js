@@ -30,6 +30,11 @@ const setFilterAttack = (state, value) => {
   return Object.assign({}, state, {filter: newFilter});
 };
 
+const setWaveShaperAmount = (state, value) => {
+  let newFilter = Object.assign({}, state.waveShaper, { amount: value }); 
+  return Object.assign({}, state, {waveShaper: newFilter});
+};
+
 export default (state = fx, action) => {
   switch (action.type) {
 
@@ -50,6 +55,9 @@ export default (state = fx, action) => {
 
     case 'SET_FILTER_ATTACK':
       return setFilterAttack(state, action.value);
+
+    case 'SET_WAVE_SHAPER_AMOUNT':
+      return setWaveShaperAmount(state, action.value);
 
     default:
       return state;

@@ -1,19 +1,22 @@
 import config from '../config';
 import Delay from '../../elements/FX/Delay';
 import Filter from '../../elements/FX/Filter';
+import WaveShaper from '../../elements/FX/WaveShaper';
 
 class QAudioContext {
   constructor() {
     this.ctx = new (window.AudioContext || window.webkitAudioContext)();
     this.delay = new Delay(this.ctx, config.fx.delay);
+    this.waveShaper = new WaveShaper(this.ctx, config.fx.waveShaper);
     this.filter = new Filter(this.ctx, config.fx.filter);
 
+    this.waveShaper.connect(this.delay);
     this.delay.connect(this.filter);
     this.filter.connect(this.ctx.destination);
   }
 
   get fxDestination() {
-    return this.delay;
+    return this.waveShaper;
   }
 
   get destination() {
@@ -46,6 +49,10 @@ class QAudioContext {
 
   set filterRelease(value) {
     this.filter.release = value;
+  }
+
+  set waveShaperAmount(value) {
+    this.waveShaper.amount = value;
   }
 
   triggerFilter() {

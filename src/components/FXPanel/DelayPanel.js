@@ -2,7 +2,6 @@ import React from 'react';
 import Knob from '../UI/Knob';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import './DelayPanel.css';
 import {
   setDelayTime,
   setDelayFeedback,
@@ -28,34 +27,37 @@ class DelayPanel extends React.Component {
 
   render() {
     return (
-      <div className="fx-panel">
-        <div>
-          <Knob
-            label={'Time'}
-            value={this.props.fx.delay.time}
-            min={0}
-            max={1}
-            onChange={this.props.setDelayTime}
-            disabled={false}
-            type="synth"/>
-          <Knob
-            label={'Feedback'}
-            value={this.props.fx.delay.feedback}
-            min={0}
-            max={1}
-            onChange={this.props.setDelayFeedback}
-            disabled={false}
-            type="synth"/>
-        </div>
-        <div className="row">
-          <Knob
-            label={'Cutoff'}
-            value={this.props.fx.delay.cutoffFrequency}
-            min={0}
-            max={20000}
-            onChange={this.props.setDelayCutoffFrequency}
-            disabled={false}
-            type="synth"/>
+      <div>
+        <div className="fx-panel-title">Delay</div>
+        <div className="fx-panel">
+          <div>
+            <Knob
+              label={'Time'}
+              value={this.props.fx.delay.time}
+              min={0}
+              max={1}
+              onChange={this.props.setDelayTime}
+              disabled={false}
+              type="synth"/>
+            <Knob
+              label={'Feedback'}
+              value={this.props.fx.delay.feedback}
+              min={0}
+              max={1}
+              onChange={this.props.setDelayFeedback}
+              disabled={false}
+              type="synth"/>
+          </div>
+          <div className="fx-panel-knob-container">
+            <Knob
+              label={'Cutoff'}
+              value={this.props.fx.delay.cutoffFrequency}
+              min={0}
+              max={20000}
+              onChange={this.props.setDelayCutoffFrequency}
+              disabled={false}
+              type="synth"/>
+          </div>
         </div>
       </div>
     );

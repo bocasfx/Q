@@ -1,5 +1,6 @@
-.fx-panel-container {
-  overflow: auto;
+.fx-panel-main-container {
+  overflow-x: auto;
+  overflow-y: hidden;
   background-color: rgba(0, 0, 0, 0.3);
   border-top: 1px solid dimgray;
   display: flex;
@@ -8,6 +9,7 @@
 
 .fx-panel {
   width: 225px;
+  height: 170px;
   padding-top: 15px;
   display: flex;
   align-items: top;
@@ -17,4 +19,18 @@
 
 .fx-panel > div {
   margin-top: 5px;
+}
+
+.fx-panel-title {
+  text-align: center;
+  padding-top: 5px;
+  background-color: #222;
+  border: 1px solid #333;
+  padding: 3px;
+}
+
+.fx-panel-knob-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
