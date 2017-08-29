@@ -62,10 +62,10 @@ const setNodeVolume = (state, id, volume) => {
   });
 };
 
-const setNodeSource = (state, id, path) => {
+const setNodeSource = (state, id, buffer, path) => {
   return state.map((node) => {
     if (node.id === id) {
-      node.src = path;
+      node.setAudioSrc(buffer, path);
     }
     return node;
   });
@@ -176,9 +176,13 @@ const setNodeName = (state, id, name) => {
 };
 
 const setNodeDisabledStatus = (state, id, status) => {
+  console.log(state);
   return state.map((node) => {
     if (node.id === id) {
       node.disabled = status;
+      node.links.forEach((link) => {
+        setNodeDisabledStatus(state, link.id, status);
+      });
     }
     return node;
   });
@@ -371,7 +375,7 @@ export default (state = nodes, action) => {
       return setNodeVolume(state, action.id, action.volume);
 
     case 'SET_NODE_SOURCE':
-      return setNodeSource(state, action.id, action.path);
+      return setNodeSource(state, action.id, action.buffer, action.path);
 
     case 'DELETE_NODE':
       return deleteNode(state, action.id);

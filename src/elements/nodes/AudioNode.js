@@ -25,11 +25,13 @@ class AudioNode extends Node {
     this.ampEnvelopeGenerator = new AmpEnvelopeGenerator(config.synth.envelope);
     this._sendFXGain = qAudioContext.ctx.createGain();
     this.decodedAudioData = null;
+    this.path = '';
   }
 
-  set src(dataBuffer) {
+  setAudioSrc(dataBuffer, path) {
     qAudioContext.ctx.decodeAudioData(dataBuffer.buffer, (buffer) => {
       this.decodedAudioData = buffer;
+      this.path = path;
       this.createDataSource();
     }, () => {
       // TODO: notification.

@@ -7,6 +7,12 @@ import LinearStream from '../elements/streams/LinearStream';
 import FreehandStream from '../elements/streams/FreehandStream';
 import qAudioContext from '../config/context/QAudioContext';
 
+let fs = null;
+
+if (window.require) {
+  fs = window.require('fs');
+}
+
 const createNode = (node) => {
   switch (node.topLevel.type) {
     case 'synth':
@@ -24,6 +30,20 @@ const createNode = (node) => {
     case 'audio':
       let newAudioNode = new AudioNode(node.topLevel.position);
       newAudioNode = Object.assign(newAudioNode, node.topLevel);
+      if (node.topLevel.path) {
+        fs.readFile(node.topLevel.path, (err, dataBuffer) => {
+          if (err) {
+            // TODO: Show notification
+            console.log(err);
+            return;
+          }
+          newAudioNode.setAudioSrc(dataBuffer, node.topLevel.path);
+
+          let name = node.topLevel.path.split('/');
+          name = name[name.length -1];
+          newAudioNode.name = name;
+        });
+      }
       return newAudioNode;
     default:
       return null;
@@ -62,18 +82,18 @@ const serializeSynthNode = (node) => {
 };
 
 const serializeMidiNode = (node) => {
-  return (({ id, type, name, position, selected, note, velocity, disabled, links, lag }) => {
+  return (({ id, type, name, position, selected, note, velocity, disabled, links, lag, probability }) => {
     return {
-      topLevel: { id, type, name, position, selected, note, velocity, disabled, links, lag },
+      topLevel: { id, type, name, position, selected, note, velocity, disabled, links, lag, probability },
       inner: {}
     };
   })(node);
 };
 
 const serializeAudioNode = (node) => {
-  return (({ id, type, name, position, selected, disabled, links, lag }) => {
+  return (({ id, type, name, position, selected, disabled, links, lag, path, volume, attack, release, probability, sendFXGain }) => {
     return {
-      topLevel: { id, type, name, position, selected, disabled, links, lag },
+      topLevel: { id, type, name, position, selected, disabled, links, lag, path, volume, attack, release, probability, sendFXGain },
       inner: {}
     };
   })(node);

@@ -51,10 +51,11 @@ export const setNodeVolume = (id, volume) => {
   };
 };
 
-export const setNodeSource = (id, path) => {
+export const setNodeSource = (id, buffer, path) => {
   return {
     type: 'SET_NODE_SOURCE',
     id,
+    buffer,
     path
   };
 };

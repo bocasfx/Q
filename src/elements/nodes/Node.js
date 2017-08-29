@@ -49,9 +49,6 @@ class Node {
 
   set disabled(value) {
     this._disabled = value;
-    this.links.forEach((link) => {
-      link.disabled = value;
-    });
   }
 
   get disabled() {
