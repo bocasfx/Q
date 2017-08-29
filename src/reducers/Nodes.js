@@ -176,7 +176,6 @@ const setNodeName = (state, id, name) => {
 };
 
 const setNodeDisabledStatus = (state, id, status) => {
-  console.log(state);
   return state.map((node) => {
     if (node.id === id) {
       node.disabled = status;

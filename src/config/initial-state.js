@@ -37,7 +37,7 @@ module.exports = {
       attack: 0
     },
     waveShaper: {
-      amount: 400,
+      amount: 0,
       oversample: '4x'
     }
   },
