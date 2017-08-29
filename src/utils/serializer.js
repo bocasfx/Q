@@ -131,6 +131,8 @@ export const serialize = (payload) => {
   let streams = payload.streams;
   let fx = payload.fx;
 
+  console.log(fx);
+
   let serializedNodes = nodes.map((node) => {
     switch (node.type) {
       case 'synth':
@@ -169,6 +171,8 @@ const hydrateFx = (props) => {
   qAudioContext.filterQ = props.filter.q;
   qAudioContext.filterAttack = props.filter.attack;
   qAudioContext.filterRelease = props.filter.release;
+
+  qAudioContext.waveShaperAmount = 400;
 
   qAudioContext.time = props.delay.time;
   qAudioContext.feedback = props.delay.feedback;

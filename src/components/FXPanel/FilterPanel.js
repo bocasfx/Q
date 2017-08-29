@@ -8,7 +8,7 @@ import {
   setFilterAttack } from '../../actions/FX';
 import qAudioContext from '../../config/context/QAudioContext';
 
-class FXPanel extends React.Component {
+class FilterPanel extends React.Component {
 
   constructor(props) {
     super(props);
@@ -28,34 +28,37 @@ class FXPanel extends React.Component {
 
   render() {
     return (
-      <div className="fx-panel">
-        <div>
+      <div>
+        <div className="fx-panel-title">Filter</div>
+        <div className="fx-panel">
+          <div>
+              <Knob
+                label={'Cutoff'}
+                value={this.props.fx.filter.cutoffFrequency}
+                min={100}
+                max={20000}
+                onChange={this.props.setFilterCutoffFrequency}
+                disabled={false}
+                type="synth"/>
+              <Knob
+                label={'Attack'}
+                value={this.props.fx.filter.attack}
+                min={0}
+                max={1}
+                onChange={this.props.setFilterAttack}
+                disabled={false}
+                type="synth"/>
+          </div>
+          <div className="fx-panel-knob-container">
             <Knob
-              label={'Cutoff'}
-              value={this.props.fx.filter.cutoffFrequency}
-              min={100}
-              max={20000}
-              onChange={this.props.setFilterCutoffFrequency}
-              disabled={false}
-              type="synth"/>
-            <Knob
-              label={'Attack'}
-              value={this.props.fx.filter.attack}
+              label={'Q'}
+              value={this.props.fx.filter.q}
               min={0}
-              max={1}
-              onChange={this.props.setFilterAttack}
+              max={50}
+              onChange={this.props.setFilterQ}
               disabled={false}
               type="synth"/>
-        </div>
-        <div className="row">
-          <Knob
-            label={'Q'}
-            value={this.props.fx.filter.q}
-            min={0}
-            max={50}
-            onChange={this.props.setFilterQ}
-            disabled={false}
-            type="synth"/>
+          </div>
         </div>
       </div>
     );
@@ -76,5 +79,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(FXPanel);
-export default FXPanel;
+module.exports = connect(mapStateToProps, mapDispatchToProps)(FilterPanel);

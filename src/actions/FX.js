@@ -39,3 +39,10 @@ export const setFilterAttack = (value) => {
     value
   };
 };
+
+export const setWaveShaperAmount = (value) => {
+  return {
+    type: 'SET_WAVE_SHAPER_AMOUNT',
+    value
+  };
+};
