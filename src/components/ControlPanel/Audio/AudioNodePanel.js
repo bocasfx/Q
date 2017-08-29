@@ -69,7 +69,7 @@ class AudioNodePanel extends React.Component {
           console.log(err);
           return;
         }
-        this.props.setNodeSource(this.props.node.id, dataBuffer);
+        this.props.setNodeSource(this.props.node.id, dataBuffer, files[0]);
 
         let name = files[0].split('/');
         name = name[name.length -1];
