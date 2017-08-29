@@ -114,6 +114,9 @@ export default {
       }
     }
   },
+  fxPanel: {
+    height: 225
+  },
   menu: {
     width: 56
   }

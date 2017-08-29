@@ -28,8 +28,8 @@ class FXPanel extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className="fx-panel-container">
+      <div className="fx-panel">
+        <div>
             <Knob
               label={'Cutoff'}
               value={this.props.fx.filter.cutoffFrequency}

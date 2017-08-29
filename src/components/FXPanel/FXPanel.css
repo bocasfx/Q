@@ -1,0 +1,20 @@
+.fx-panel-container {
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-top: 1px solid dimgray;
+  display: flex;
+  height: 220px;
+}
+
+.fx-panel {
+  width: 225px;
+  padding-top: 15px;
+  display: flex;
+  align-items: top;
+  justify-content: space-around;
+  border-right: 1px solid #333;
+}
+
+.fx-panel > div {
+  margin-top: 5px;
+}

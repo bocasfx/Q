@@ -2,14 +2,14 @@ import React from 'react';
 import Knob from '../UI/Knob';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import './FXPanel.css';
+import './DelayPanel.css';
 import {
   setDelayTime,
   setDelayFeedback,
   setDelayCutoffFrequency } from '../../actions/FX';
 import qAudioContext from '../../config/context/QAudioContext';
 
-class FXPanel extends React.Component {
+class DelayPanel extends React.Component {
 
   constructor(props) {
     super(props);
@@ -28,8 +28,8 @@ class FXPanel extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className="fx-panel-container">
+      <div className="fx-panel">
+        <div>
           <Knob
             label={'Time'}
             value={this.props.fx.delay.time}
@@ -76,5 +76,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(FXPanel);
-export default FXPanel;
+module.exports = connect(mapStateToProps, mapDispatchToProps)(DelayPanel);

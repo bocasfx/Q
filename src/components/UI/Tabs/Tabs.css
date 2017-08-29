@@ -11,10 +11,9 @@
 .tabs-labels a {
   color: darkgray;
   text-decoration: none;
-}
-
-.tabs-labels a {
   border-right: 1px solid dimgray;
+  width: fill;
+  text-align: center;
 }
 
 .tabs-labels a:last-child {
