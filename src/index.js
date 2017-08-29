@@ -8,6 +8,7 @@ import reducer from './reducers';
 import Menu from './components/Menu/Menu';
 import Mixer from './components/Mixer/Mixer';
 import ControlPanel from './components/ControlPanel/ControlPanel';
+import FXPanel from './components/FXPanel/FXPanel';
 import Toaster from './components/UI/Toaster';
 import { serialize } from './utils/serializer';
 
@@ -37,7 +38,10 @@ const renderDom = (midiContext) => {
         <Mixer/>
         <div className="main-container">
           <Menu midi={midiContext !== null}/>
-          <Canvas midiContext={midiContext}/>
+          <div>
+            <Canvas midiContext={midiContext}/>
+            <FXPanel/>
+          </div>
           <ControlPanel/>
         </div>
       </div>
