@@ -349,6 +349,14 @@ const setNodeNote = (state, id, value) => {
   });
 };
 
+
+const updateNodePositionByDelta = (state, dx, dy) => {
+  return state.map((node) => {
+    node.position = [node.position[0] + dx, node.position[1] + dy];
+    return node;
+  });
+};
+
 export default (state = nodes, action) => {
   switch (action.type) {
 
@@ -453,6 +461,9 @@ export default (state = nodes, action) => {
 
     case 'SET_NODE_NOTE':
       return setNodeNote(state, action.id, action.value);
+
+    case 'UPDATE_NODE_POSITION_BY_DELTA':
+      return updateNodePositionByDelta(state, action.dx, action.dy);
 
     default:
       return state;

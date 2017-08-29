@@ -258,3 +258,11 @@ export const setNodeNote = (id, value) => {
     value
   };
 };
+
+export const updateNodePositionByDelta = (dx, dy) => {
+  return {
+    type: 'UPDATE_NODE_POSITION_BY_DELTA',
+    dx,
+    dy
+  };
+};
