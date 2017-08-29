@@ -9,6 +9,7 @@ body {
 }
 
 input[type="text"],
+input[type="number"],
 select {
   background-color: rgba(0, 0, 0, 0.1);
   border: 1px solid dimgray;

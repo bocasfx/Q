@@ -1,6 +1,6 @@
-import config from '../config/config';
+import config from '../../config/config';
 import Particle from './Particle';
-import { getPosition, calculateDistance } from '../utils/utils';
+import { getPosition, calculateDistance } from '../../utils/utils';
 import Stream from './Stream';
 
 class CircularStream extends Stream {

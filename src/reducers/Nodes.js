@@ -1,6 +1,6 @@
-import SynthNode from '../elements/SynthNode/SynthNode';
-import MidiNode from '../elements/MidiNode';
-import AudioNode from '../elements/AudioNode';
+import SynthNode from '../elements/nodes/SynthNode';
+import MidiNode from '../elements/nodes/MidiNode';
+import AudioNode from '../elements/nodes/AudioNode';
 import _ from 'lodash';
 import { nodes } from '../config/initial-state';
 import uuidv1 from 'uuid/v1';
@@ -12,8 +12,8 @@ const addSynthNode = (state, position) => {
   return nodeList;
 };
 
-const addMidiNode = (state, position, midiContext) => {
-  let midiNode = new MidiNode(position, midiContext);
+const addMidiNode = (state, position) => {
+  let midiNode = new MidiNode(position);
   let nodeList = state.splice(0);
   nodeList.push(midiNode);
   return nodeList;
@@ -62,10 +62,10 @@ const setNodeVolume = (state, id, volume) => {
   });
 };
 
-const setNodeSource = (state, id, path) => {
+const setNodeSource = (state, id, buffer, path) => {
   return state.map((node) => {
     if (node.id === id) {
-      node.src = path;
+      node.setAudioSrc(buffer, path);
     }
     return node;
   });
@@ -115,7 +115,6 @@ const setNodeOsc2WaveType = (state, id, waveType) => {
 const cloneNode = (state, id) => {
   state.forEach((node) => {
     if (node.id === id) {
-      console.log(node);
       let clonedNode = new SynthNode();
       clonedNode.active = false;
       clonedNode.lag = node.lag;
@@ -177,9 +176,13 @@ const setNodeName = (state, id, name) => {
 };
 
 const setNodeDisabledStatus = (state, id, status) => {
+  console.log(state);
   return state.map((node) => {
     if (node.id === id) {
       node.disabled = status;
+      node.links.forEach((link) => {
+        setNodeDisabledStatus(state, link.id, status);
+      });
     }
     return node;
   });
@@ -329,6 +332,24 @@ const setNodeOsc2Gain = (state, id, value) => {
   });
 };
 
+const setNodeVelocity = (state, id, value) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.velocity = value;
+    }
+    return node;
+  });
+};
+
+const setNodeNote = (state, id, value) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.note = value;
+    }
+    return node;
+  });
+};
+
 export default (state = nodes, action) => {
   switch (action.type) {
 
@@ -336,10 +357,10 @@ export default (state = nodes, action) => {
       return addSynthNode(state, action.position);
 
     case 'ADD_MIDI_NODE':
-      return addMidiNode(state, action.position, action.midiContext);
+      return addMidiNode(state, action.position);
 
     case 'ADD_AUDIO_NODE':
-      return addAudioNode(state, action.position, action.midiContext);
+      return addAudioNode(state, action.position);
 
     case 'SET_NODE_POSITION':
       return setNodePosition(state, action.id, action.position);
@@ -354,7 +375,7 @@ export default (state = nodes, action) => {
       return setNodeVolume(state, action.id, action.volume);
 
     case 'SET_NODE_SOURCE':
-      return setNodeSource(state, action.id, action.path);
+      return setNodeSource(state, action.id, action.buffer, action.path);
 
     case 'DELETE_NODE':
       return deleteNode(state, action.id);
@@ -427,6 +448,12 @@ export default (state = nodes, action) => {
 
     case 'SET_NODE_OSC2_GAIN':
       return setNodeOsc2Gain(state, action.id, action.value);
+
+    case 'SET_NODE_VELOCITY':
+      return setNodeVelocity(state, action.id, action.value);
+
+    case 'SET_NODE_NOTE':
+      return setNodeNote(state, action.id, action.value);
 
     default:
       return state;

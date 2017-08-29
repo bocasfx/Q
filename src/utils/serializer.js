@@ -1,11 +1,17 @@
 import initialState from '../config/initial-state';
-import SynthNode from '../elements/SynthNode/SynthNode';
-import MidiNode from '../elements/MidiNode';
-import AudioNode from '../elements/AudioNode';
-import CircularStream from '../elements/CircularStream';
-import LinearStream from '../elements/LinearStream';
-import FreehandStream from '../elements/FreehandStream';
-import qAudioContext from '../elements/QAudioContext';
+import SynthNode from '../elements/nodes/SynthNode';
+import MidiNode from '../elements/nodes/MidiNode';
+import AudioNode from '../elements/nodes/AudioNode';
+import CircularStream from '../elements/streams/CircularStream';
+import LinearStream from '../elements/streams/LinearStream';
+import FreehandStream from '../elements/streams/FreehandStream';
+import qAudioContext from '../config/context/QAudioContext';
+
+let fs = null;
+
+if (window.require) {
+  fs = window.require('fs');
+}
 
 const createNode = (node) => {
   switch (node.topLevel.type) {
@@ -18,9 +24,27 @@ const createNode = (node) => {
       newSynthNode.osc2Gain = node.inner.oscillator2.gain;
       return newSynthNode;
     case 'midi':
-      return new MidiNode(node.topLevel.position);
+      let newMidiNode = new MidiNode(node.topLevel.position);
+      newMidiNode = Object.assign(newMidiNode, node.topLevel);
+      return newMidiNode;
     case 'audio':
-      return new AudioNode(node.topLevel.position);
+      let newAudioNode = new AudioNode(node.topLevel.position);
+      newAudioNode = Object.assign(newAudioNode, node.topLevel);
+      if (node.topLevel.path) {
+        fs.readFile(node.topLevel.path, (err, dataBuffer) => {
+          if (err) {
+            // TODO: Show notification
+            console.log(err);
+            return;
+          }
+          newAudioNode.setAudioSrc(dataBuffer, node.topLevel.path);
+
+          let name = node.topLevel.path.split('/');
+          name = name[name.length -1];
+          newAudioNode.name = name;
+        });
+      }
+      return newAudioNode;
     default:
       return null;
   }
@@ -58,18 +82,18 @@ const serializeSynthNode = (node) => {
 };
 
 const serializeMidiNode = (node) => {
-  return (({ id, type, name, position, selected, note, velocity, disabled, links, lag }) => {
+  return (({ id, type, name, position, selected, note, velocity, disabled, links, lag, probability }) => {
     return {
-      topLevel: { id, type, name, position, selected, note, velocity, disabled, links, lag },
+      topLevel: { id, type, name, position, selected, note, velocity, disabled, links, lag, probability },
       inner: {}
     };
   })(node);
 };
 
 const serializeAudioNode = (node) => {
-  return (({ id, type, name, position, selected, disabled, links, lag }) => {
+  return (({ id, type, name, position, selected, disabled, links, lag, path, volume, attack, release, probability, sendFXGain }) => {
     return {
-      topLevel: { id, type, name, position, selected, disabled, links, lag },
+      topLevel: { id, type, name, position, selected, disabled, links, lag, path, volume, attack, release, probability, sendFXGain },
       inner: {}
     };
   })(node);

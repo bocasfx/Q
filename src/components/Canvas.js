@@ -53,7 +53,6 @@ class Canvas extends React.Component {
   
   componentDidMount() {
     this.canvasContext = this.refs.canvas.getContext('2d');
-    this.executedAt = Date.now();
     this.draw();
     this.flow();
   }
@@ -131,7 +130,7 @@ class Canvas extends React.Component {
 
     // MIDI Nodes
     } else if (this.props.devices.midiNodes) {
-      this.props.addMidiNode(position, this.props.midiContext);
+      this.props.addMidiNode(position);
 
     // Audio Nodes
     } else if (this.props.devices.audioNodes) {
@@ -256,6 +255,8 @@ class Canvas extends React.Component {
       this.flow();
       return;
     }
+    this.now = timestamp();
+    this.last = this.now;
     this.draw();
     setTimeout(this.dummyFlow);
   }

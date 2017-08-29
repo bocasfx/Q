@@ -1,4 +1,4 @@
-import names from '../config/names';
+import names from '../../config/names';
 import uuidv1 from 'uuid/v1';
 import _ from 'lodash';
 
@@ -49,9 +49,6 @@ class Node {
 
   set disabled(value) {
     this._disabled = value;
-    this.links.forEach((link) => {
-      link.disabled = value;
-    });
   }
 
   get disabled() {

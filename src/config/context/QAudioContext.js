@@ -1,6 +1,6 @@
-import config from '../config/config';
-import Delay from './FX/Delay';
-import Filter from './FX/Filter';
+import config from '../config';
+import Delay from '../../elements/FX/Delay';
+import Filter from '../../elements/FX/Filter';
 
 class QAudioContext {
   constructor() {

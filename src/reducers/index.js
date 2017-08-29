@@ -6,6 +6,7 @@ import selection from './Selection';
 import notifications from './Notifications';
 import fx from './FX';
 import transport from './Transport';
+import midi from './MIDI';
 import initialState from '../config/initial-state';
 import { hydrate } from '../utils/serializer';
 
@@ -16,7 +17,8 @@ const reducers = combineReducers({
   selection,
   notifications,
   fx,
-  transport
+  transport,
+  midi
 });
 
 const mainReducer = (state = initialState, action) => {

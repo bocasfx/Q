@@ -7,7 +7,7 @@ import {
   setDelayTime,
   setDelayFeedback,
   setDelayCutoffFrequency } from '../../actions/FX';
-import qAudioContext from '../../elements/QAudioContext';
+import qAudioContext from '../../config/context/QAudioContext';
 
 class DelayPanel extends React.Component {
 

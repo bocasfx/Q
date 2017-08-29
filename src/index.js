@@ -11,6 +11,7 @@ import ControlPanel from './components/ControlPanel/ControlPanel';
 import FXPanel from './components/FXPanel/FXPanel';
 import Toaster from './components/UI/Toaster';
 import { serialize } from './utils/serializer';
+import midiContext from './config/context/MIDIContext';
 
 let electron = null;
 let dialog = null;
@@ -30,14 +31,14 @@ const filters = {
     }]
   };
 
-const renderDom = (midiContext) => {
+const renderDom = () => {
   ReactDOM.render(
     <Provider store={store}>
       <div>
         <Toaster/>
         <Mixer/>
         <div className="main-container">
-          <Menu midi={midiContext !== null}/>
+          <Menu/>
           <div>
             <Canvas midiContext={midiContext}/>
             <FXPanel/>
@@ -125,16 +126,30 @@ const toggleDevice = (device) => {
 };
 
 const initialize = () => {
-  if (navigator.requestMIDIAccess) {
-    navigator.requestMIDIAccess({sysex: false})
-      .then((midiContext) => {
-        renderDom(midiContext);
-      }, () => {
-        renderDom(null);
-      });
-  } else {
-    renderDom(null);
-  }
+  midiContext.initialize(store)
+    .then(() => {
+
+      renderDom();
+
+      if (localStorage.QState) {
+        store.dispatch({
+          type: 'HYDRATE_STATE',
+          payload: JSON.parse(localStorage.QState)
+        });
+      }
+
+      for (let entry of midiContext.outputs.entries()) {
+        for (let destination of entry) {
+          if (destination.state && destination.state === 'connected' && destination.name) {
+            store.dispatch({
+              type: 'ADD_DESTINATION',
+              destination
+            });
+          }
+        }
+      }
+    }
+  );
 
   window.onkeypress = (event) => {
     if (event.ctrlKey) {
@@ -189,13 +204,6 @@ const initialize = () => {
     saveContent();
     location.reload();
   };
-
-  if (localStorage.QState) {
-    store.dispatch({
-      type: 'HYDRATE_STATE',
-      payload: JSON.parse(localStorage.QState)
-    });
-  }
 };
 
 initialize();

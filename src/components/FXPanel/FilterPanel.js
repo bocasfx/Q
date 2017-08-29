@@ -6,7 +6,7 @@ import {
   setFilterCutoffFrequency,
   setFilterQ,
   setFilterAttack } from '../../actions/FX';
-import qAudioContext from '../../elements/QAudioContext';
+import qAudioContext from '../../config/context/QAudioContext';
 
 class FXPanel extends React.Component {
 
@@ -33,7 +33,7 @@ class FXPanel extends React.Component {
             <Knob
               label={'Cutoff'}
               value={this.props.fx.filter.cutoffFrequency}
-              min={1}
+              min={100}
               max={20000}
               onChange={this.props.setFilterCutoffFrequency}
               disabled={false}

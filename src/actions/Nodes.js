@@ -5,11 +5,10 @@ export const addSynthNode = (position) => {
   };
 };
 
-export const addMidiNode = (position, midiContext) => {
+export const addMidiNode = (position) => {
   return {
     type: 'ADD_MIDI_NODE',
-    position,
-    midiContext
+    position
   };
 };
 
@@ -52,10 +51,11 @@ export const setNodeVolume = (id, volume) => {
   };
 };
 
-export const setNodeSource = (id, path) => {
+export const setNodeSource = (id, buffer, path) => {
   return {
     type: 'SET_NODE_SOURCE',
     id,
+    buffer,
     path
   };
 };
@@ -238,6 +238,22 @@ export const setNodeOsc1Gain = (id, value) => {
 export const setNodeOsc2Gain = (id, value) => {
   return {
     type: 'SET_NODE_OSC2_GAIN',
+    id,
+    value
+  };
+};
+
+export const setNodeVelocity = (id, value) => {
+  return {
+    type: 'SET_NODE_VELOCITY',
+    id,
+    value
+  };
+};
+
+export const setNodeNote = (id, value) => {
+  return {
+    type: 'SET_NODE_NOTE',
     id,
     value
   };

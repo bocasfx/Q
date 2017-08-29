@@ -39,5 +39,8 @@ module.exports = {
   },
   transport: {
     playing: false
+  },
+  midi: {
+    destinations: []
   }
 };

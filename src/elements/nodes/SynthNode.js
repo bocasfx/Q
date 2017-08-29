@@ -1,10 +1,10 @@
 import config from '../../config/config';
-import Node from '../Node';
-import Oscillator from './Oscillator';
-import Amplifier from './Amplifier';
-import AmpEnvelopeGenerator from './AmpEnvelopeGenerator';
-import qAudioContext from '../QAudioContext';
-import NoiseGenerator from './NoiseGenerator';
+import Node from './Node';
+import Oscillator from '../FX/Oscillator';
+import Amplifier from '../FX/Amplifier';
+import AmpEnvelopeGenerator from '../FX/AmpEnvelopeGenerator';
+import qAudioContext from '../../config/context/QAudioContext';
+import NoiseGenerator from '../FX/NoiseGenerator';
 
 class SynthNode extends Node {
 
