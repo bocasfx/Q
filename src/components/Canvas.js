@@ -19,6 +19,7 @@ import { addSynthNode,
   dequeueParticle,
   playNode,
   stopNode,
+  updateSelectedNodePositionByDelta,
   updateNodePositionByDelta } from '../actions/Nodes';
 
 class Canvas extends React.Component {
@@ -34,7 +35,6 @@ class Canvas extends React.Component {
     this.flow = this.flow.bind(this);
     this.dummyFlow = this.dummyFlow.bind(this);
 
-    this.selectedNodeId = null;
     this.calculating = false;
     this.linkSrc = null;
     this.linkPosition = null;
@@ -102,20 +102,20 @@ class Canvas extends React.Component {
       this.linkPosition = getPosition(event);
     } else if (!this.props.devices.synthNodes && !this.props.devices.midiNodes && !this.props.devices.audioNodes) {
       let position = getPosition(event);
-      if (this.selectedNodeId) {
-        this.props.setNodePosition(this.selectedNodeId, position);
-      } else {
-        console.log('dragging canvas');
-        this.dragCanvas(this.canvasPosition, position);
-        this.canvasPosition = position;
+      let dx = position[0] - this.canvasPosition[0];
+      let dy = position[1] - this.canvasPosition[1];
+      if (this.getSelectedNodeCount()) {
+        this.props.updateSelectedNodePositionByDelta(dx, dy);
+      } else if (event.metaKey) {
+        this.props.updateNodePositionByDelta(dx, dy);
       }
+      this.canvasPosition = position;
     }
   }
 
   onMouseUp(event) {
     event.preventDefault();
     this.setState({mouseDown: false});
-    this.selectedNodeId = null;
     if (this.props.devices.streams || this.props.devices.circularStreams || this.props.devices.linearStreams) {
       let streams = this.props.streams;
       let stream = streams[streams.length - 1];
@@ -133,10 +133,14 @@ class Canvas extends React.Component {
     }
   }
 
-  dragCanvas(oldPosition, newPosition) {
-    let dx = newPosition[0] - oldPosition[0];
-    let dy = newPosition[1] - oldPosition[1];
-    this.props.updateNodePositionByDelta(dx, dy);
+  getSelectedNodeCount() {
+    let selectedCount = 0;
+    this.props.nodes.forEach((node) => {
+      if (node.selected) {
+        selectedCount++;
+      }
+    });
+    return selectedCount;
   }
 
   addNode(position) {
@@ -156,34 +160,36 @@ class Canvas extends React.Component {
 
   selectNode(position, metaKey) {
     setTimeout(() => {
-      let selectedNodeId = null;
+      let selectedNodes = this.getSelectedNodeCount();
+      if (!metaKey && selectedNodes === 1) {
+        this.props.deselectNodes();
+      }
+      let selectionChanged = false;
+      let alreadySelected = false;
       this.props.nodes.forEach((node) => {
         let distance = calculateDistance(node.position, position);
         if (distance <= config.app.doubleClickDistance) {
-          selectedNodeId = node.id;
-          if (!metaKey) {
-            this.props.deselectNodes();
+          if (node.selected) {
+            alreadySelected = true;
+          } else {
+            this.props.selectNode(node.id);
+            selectionChanged = true;
+            selectedNodes++;
           }
-          this.props.selectNode(node.id);
-        }
+        } 
       });
 
-      if (!selectedNodeId && !this.props.devices.streams) {
+      if (!selectionChanged && !alreadySelected) {
         this.props.deselectNodes();
-        return;
       }
-      
-      this.selectedNodeId = selectedNodeId;
     }, 0);
   }
 
   cloneNode(position) {
-    let selectedNodeId = null;
     this.props.nodes.forEach((node) => {
       let distance = calculateDistance(node.position, position);
       if (distance <= config.app.doubleClickDistance) {
-        selectedNodeId = node.id;
-        this.props.cloneNode(selectedNodeId);
+        this.props.cloneNode(node.id);
       }
     });
   }
@@ -441,6 +447,7 @@ const mapDispatchToProps = (dispatch) => {
     dequeueParticle: bindActionCreators(dequeueParticle, dispatch),
     playNode: bindActionCreators(playNode, dispatch),
     stopNode: bindActionCreators(stopNode, dispatch),
+    updateSelectedNodePositionByDelta: bindActionCreators(updateSelectedNodePositionByDelta, dispatch),
     updateNodePositionByDelta: bindActionCreators(updateNodePositionByDelta, dispatch)
   };
 };

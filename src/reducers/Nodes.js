@@ -87,6 +87,13 @@ const selectNode = (state, id) => {
   });
 };
 
+const selectAllNodes = (state, id) => {
+  return state.map((node) => {
+    node.selected = true;
+    return node;
+  });
+};
+
 const deselectNodes = (state) => {
   return state.map((node) => {
     node.selected = false;
@@ -350,6 +357,15 @@ const setNodeNote = (state, id, value) => {
 };
 
 
+const updateSelectedNodePositionByDelta = (state, dx, dy) => {
+  return state.map((node) => {
+    if (node.selected) {
+      node.position = [node.position[0] + dx, node.position[1] + dy];
+    }
+    return node;
+  });
+};
+
 const updateNodePositionByDelta = (state, dx, dy) => {
   return state.map((node) => {
     node.position = [node.position[0] + dx, node.position[1] + dy];
@@ -392,6 +408,9 @@ export default (state = nodes, action) => {
 
     case 'DESELECT_NODES':
       return deselectNodes(state);
+
+    case 'SELECT_ALL_NODES':
+      return selectAllNodes(state);
 
     case 'SET_NODE_OSC1_WAVE_TYPE':
       return setNodeOsc1WaveType(state, action.id, action.waveType);
@@ -461,6 +480,9 @@ export default (state = nodes, action) => {
 
     case 'SET_NODE_NOTE':
       return setNodeNote(state, action.id, action.value);
+
+    case 'UPDATE_SELECTED_NODE_POSITION_BY_DELTA':
+      return updateSelectedNodePositionByDelta(state, action.dx, action.dy);
 
     case 'UPDATE_NODE_POSITION_BY_DELTA':
       return updateNodePositionByDelta(state, action.dx, action.dy);

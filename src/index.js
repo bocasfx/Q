@@ -156,6 +156,14 @@ const initialize = () => {
 
       switch (event.key) {
 
+        // Select All
+        case 'a':
+        case 'A':
+          store.dispatch({
+            type: 'SELECT_ALL_NODES'
+          });
+          return;
+
         // Save
         case 's':
         case 'S':
