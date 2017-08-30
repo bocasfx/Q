@@ -35,6 +35,17 @@ class LinearStream extends Stream {
     this.mouseDown = false;
   }
 
+  set position(value) {
+    let dx = value[0] - this.from[0];
+    let dy = value[1] - this.from[1];
+    this.from = [this.from[0] + dx, this.from[1] + dy];
+    this.to = [this.to[0] + dx, this.to[1] + dy];
+  }
+
+  get position() {
+    return this.from;
+  }
+
   flow() {
     if (this.disabled) {
       return;

@@ -5,6 +5,7 @@ import Stream from './Stream';
 class FreehandStream extends Stream {
   constructor({position, queue = [], easing = '', pathIndex = 0, path = [], count = 1}) {
     super({position, speed: 1, count});
+    this._position = position;
     this.queue = queue;
     this.easing = easing;
     this.headPosition = position;
@@ -36,6 +37,25 @@ class FreehandStream extends Stream {
     easing = [easing[0], easing[1] + (dy * config.stream.easingFactor)];
 
     return easing;
+  }
+
+  set position(value) {
+    let dx = value[0] - this._position[0];
+    let dy = value[1] - this._position[1];
+    this._position = [this._position[0] + dx, this._position[1] + dy];
+    for (let i = 0; i < config.stream.size; i++) {
+      let item = this.queue[i];
+      this.queue[i] = [item[0] + dx, item[1] + dy];
+    }
+
+    for (let i = 0; i < this.path.length; i++) {
+      let item = this.path[i];
+      this.path[i] = [item[0] + dx, item[1] + dy];
+    }
+  }
+
+  get position() {
+    return this._position;
   }
 
   onMouseDown(event) {
