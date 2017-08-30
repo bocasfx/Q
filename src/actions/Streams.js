@@ -67,3 +67,19 @@ export const setStreamCount = (id, count) => {
     count
   };
 };
+
+export const updateSelectedStreamPositionByDelta = (dx, dy) => {
+  return {
+    type: 'UPDATE_SELECTED_STREAM_POSITION_BY_DELTA',
+    dx,
+    dy
+  };
+};
+
+export const updateStreamPositionByDelta = (dx, dy) => {
+  return {
+    type: 'UPDATE_STREAM_POSITION_BY_DELTA',
+    dx,
+    dy
+  };
+};

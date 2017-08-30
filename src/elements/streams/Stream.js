@@ -5,7 +5,7 @@ import Particle from './Particle';
 
 class Stream {
   constructor({position, speed = 1.0, count = 1}) {
-    this.position = position;
+    this._position = position;
     this.id = uuidv1();
     this.name = names.generate();
     this.disabled = false;
@@ -16,6 +16,14 @@ class Stream {
     this.selected = false;
     this.angles = [];
     this.count = count || config.particle.count;
+  }
+
+  set position(value) {
+    this._position = value;
+  }
+
+  get position() {
+    return this._position;
   }
 
   set count(value) {

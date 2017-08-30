@@ -3,7 +3,7 @@ import './Canvas.css';
 import _ from 'lodash';
 import config from '../config/config';
 import { connect } from 'react-redux';
-import { addFreehandStream, addCircularStream, addLinearStream } from '../actions/Streams';
+import { addFreehandStream, addCircularStream, addLinearStream, updateStreamPositionByDelta } from '../actions/Streams';
 import { bindActionCreators } from 'redux';
 import { calculateDistance, getPosition, calculateNodeBorderDistance, timestamp } from '../utils/utils';
 import { addSynthNode,
@@ -107,6 +107,7 @@ class Canvas extends React.Component {
         this.props.updateSelectedNodePositionByDelta(dx, dy);
       } else if (event.metaKey) {
         this.props.updateNodePositionByDelta(dx, dy);
+        this.props.updateStreamPositionByDelta(dx, dy);
       }
       this.canvasPosition = position;
     }
@@ -446,7 +447,8 @@ const mapDispatchToProps = (dispatch) => {
     playNode: bindActionCreators(playNode, dispatch),
     stopNode: bindActionCreators(stopNode, dispatch),
     updateSelectedNodePositionByDelta: bindActionCreators(updateSelectedNodePositionByDelta, dispatch),
-    updateNodePositionByDelta: bindActionCreators(updateNodePositionByDelta, dispatch)
+    updateNodePositionByDelta: bindActionCreators(updateNodePositionByDelta, dispatch),
+    updateStreamPositionByDelta: bindActionCreators(updateStreamPositionByDelta, dispatch)
   };
 };
 

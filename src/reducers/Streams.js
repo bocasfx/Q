@@ -78,6 +78,26 @@ const setStreamCount = (state, id, count) => {
   });
 };
 
+const updateSelectedStreamPositionByDelta = (state, dx, dy) => {
+  return state.map((stream) => {
+    if (stream.selected) {
+      stream.position = [stream.position[0] + dx, stream.position[1] + dy];
+    }
+    return stream;
+  });
+};
+
+const updateStreamPositionByDelta = (state, dx, dy) => {
+  return state.map((stream) => {
+    stream.position = [stream.position[0] + dx, stream.position[1] + dy];
+    stream.particles = stream.particles.map((particle) => {
+      particle.position = [particle.position[0] + dx, particle.position[1] + dy];
+      return particle;
+    });
+    return stream;
+  });
+};
+
 export default (state = streams, action) => {
   switch (action.type) {
 
@@ -107,6 +127,12 @@ export default (state = streams, action) => {
 
     case 'SET_STREAM_COUNT':
       return setStreamCount(state, action.id, action.count);
+
+    case 'UPDATE_SELECTED_STREAM_POSITION_BY_DELTA':
+      return updateSelectedStreamPositionByDelta(state, action.dx, action.dy);
+
+    case 'UPDATE_STREAM_POSITION_BY_DELTA':
+      return updateStreamPositionByDelta(state, action.dx, action.dy);
 
     default:
       return state;
