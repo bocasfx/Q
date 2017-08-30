@@ -26,15 +26,6 @@ const addAudioNode = (state, position) => {
   return nodeList;
 };
 
-const setNodePosition = (state, id, position) => {
-  return state.map((node) => {
-    if (node.id === id) {
-      node.position = position;
-    }
-    return node;
-  });
-};
-
 const setNodeOsc1Frequency = (state, id, frequency) => {
   return state.map((node) => {
     if (node.id === id) {
@@ -384,9 +375,6 @@ export default (state = nodes, action) => {
 
     case 'ADD_AUDIO_NODE':
       return addAudioNode(state, action.position);
-
-    case 'SET_NODE_POSITION':
-      return setNodePosition(state, action.id, action.position);
 
     case 'SET_NODE_OSC1_FREQUENCY':
       return setNodeOsc1Frequency(state, action.id, action.frequency);

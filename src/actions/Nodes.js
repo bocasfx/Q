@@ -19,14 +19,6 @@ export const addAudioNode = (position) => {
   };
 };
 
-export const setNodePosition = (id, position) => {
-  return {
-    type: 'SET_NODE_POSITION',
-    id,
-    position
-  };
-};
-
 export const setNodeOsc1Frequency = (id, frequency) => {
   return {
     type: 'SET_NODE_OSC1_FREQUENCY',
