@@ -80,6 +80,12 @@ export const deselectNodes = () => {
   };
 };
 
+export const selectAllNodes = () => {
+  return {
+    type: 'SELECT_ALL_NODES'
+  };
+};
+
 export const setNodeOsc1WaveType = (id, waveType) => {
   return {
     type: 'SET_NODE_OSC1_WAVE_TYPE',
@@ -256,6 +262,14 @@ export const setNodeNote = (id, value) => {
     type: 'SET_NODE_NOTE',
     id,
     value
+  };
+};
+
+export const updateSelectedNodePositionByDelta = (dx, dy) => {
+  return {
+    type: 'UPDATE_SELECTED_NODE_POSITION_BY_DELTA',
+    dx,
+    dy
   };
 };
 
