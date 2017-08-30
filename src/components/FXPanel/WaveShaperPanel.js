@@ -24,7 +24,7 @@ class WaveShaperPanel extends React.Component {
     return (
       <div>
         <div className="fx-panel-title">WaveShaper</div>
-        <div className="fx-panel">
+        <div className="fx-panel fx-panel-border-left fx-panel-border-right">
           <div className="fx-panel-knob-container">
             <Knob
               label={'Amount'}

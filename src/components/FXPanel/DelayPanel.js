@@ -29,7 +29,7 @@ class DelayPanel extends React.Component {
     return (
       <div>
         <div className="fx-panel-title">Delay</div>
-        <div className="fx-panel">
+        <div className="fx-panel fx-panel-border-left">
           <div>
             <Knob
               label={'Time'}
