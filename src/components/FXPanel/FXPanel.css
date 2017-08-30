@@ -4,17 +4,17 @@
   background-color: rgba(0, 0, 0, 0.3);
   border-top: 1px solid dimgray;
   display: flex;
+  justify-content: center;
   height: 220px;
 }
 
 .fx-panel {
   width: 225px;
-  height: 170px;
+  height: 180px;
   padding-top: 15px;
   display: flex;
   align-items: top;
   justify-content: space-around;
-  border-right: 1px solid #333;
 }
 
 .fx-panel > div {
@@ -33,4 +33,12 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.fx-panel-border-left {
+  border-left: 1px solid #333;
+}
+
+.fx-panel-border-right {
+  border-right: 1px solid #333;
 }
