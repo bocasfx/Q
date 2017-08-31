@@ -22,15 +22,6 @@ class Knob extends React.Component {
     this.onMouseUp = this.onMouseUp.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    let value = nextProps.value;
-    let angle = (value * _angle / nextProps.max) + _angle;
-    this.setState({
-      value: parseFloat(value.toFixed(this.precision)),
-      angle
-    });
-  }
-
   componentDidMount() {
     let value = this.props.value;
     let angle = (value * _angle / this.props.max) + _angle;
