@@ -68,13 +68,16 @@ canvas {
   /*background-image: url('/backgrounds/tasky.png');*/
   /*background-image: url('/backgrounds/fake_brick.png');*/
   /*background-image: url('/backgrounds/black_scales.png');*/
-  background-image: url(../public/backgrounds/inflicted.png);
+  /*background-image: url(../public/backgrounds/inflicted.png);*/
+  background-image: url(../public/backgrounds/batthern.png);
   /*background-image: url('/backgrounds/crissXcross.png');*/
   /*background-image: url('/backgrounds/carbon_fibre_v2.png');*/
   /*background-image: url('/backgrounds/concrete_wall.png');*/
-  -webkit-box-shadow: inset 0px 0px 34px 5px rgba(0,0,0,0.3);
-  -moz-box-shadow: inset 0px 0px 34px 5px rgba(0,0,0,0.3);
-  box-shadow: inset 0px 0px 34px 5px rgba(0,0,0,0.3);
+  background-color: rgba(0, 0, 0, 0.3);
+  
+  -webkit-box-shadow: inset 0px 0px 34px 5px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: inset 0px 0px 34px 5px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0px 0px 34px 5px rgba(0, 0, 0, 0.4);
 }
 
 .main-container {
