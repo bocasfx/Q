@@ -71,7 +71,10 @@ canvas {
   background-image: url(../public/backgrounds/inflicted.png);
   /*background-image: url('/backgrounds/crissXcross.png');*/
   /*background-image: url('/backgrounds/carbon_fibre_v2.png');*/
-  /*background-image: url('/backgrounds/black_linen_v2.png');*/
+  /*background-image: url('/backgrounds/concrete_wall.png');*/
+  -webkit-box-shadow: inset 0px 0px 34px 5px rgba(0,0,0,0.3);
+  -moz-box-shadow: inset 0px 0px 34px 5px rgba(0,0,0,0.3);
+  box-shadow: inset 0px 0px 34px 5px rgba(0,0,0,0.3);
 }
 
 .main-container {

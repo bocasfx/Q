@@ -47,8 +47,8 @@ class Canvas extends React.Component {
     this.step = 1 / 60;
 
     this.canvasPosition = null;
-
-    this.selectedCount = 0;
+    this.backgroundX = 0;
+    this.backgroundY = 0;
 
     this.state = {
       mouseDown: false
@@ -67,8 +67,6 @@ class Canvas extends React.Component {
 
     let position = getPosition(event);
     this.canvasPosition = position;
-
-    this.selectedCount = this.getSelectedNodeCount();
 
     if (this.props.devices.streams) {
       this.props.addFreehandStream(position, event);
@@ -107,9 +105,12 @@ class Canvas extends React.Component {
       let position = getPosition(event);
       let dx = position[0] - this.canvasPosition[0];
       let dy = position[1] - this.canvasPosition[1];
-      if (this.selectedCount) {
+      if (this.getSelectedNodeCount()) {
         this.props.updateSelectedNodePositionByDelta(dx, dy);
+        console.log('here');
       } else if (event.metaKey) {
+        this.backgroundX += dx;
+        this.backgroundY += dy;
         this.props.updateNodePositionByDelta(dx, dy);
         this.props.updateStreamPositionByDelta(dx, dy);
       }
@@ -404,19 +405,16 @@ class Canvas extends React.Component {
   }
 
   render() {
-    let cursorStyle = {
-      cursor: 'crosshair'
+    let canvasStyle = {
+      cursor: 'crosshair',
+      backgroundPosition: this.backgroundX + 'px ' + this.backgroundY + 'px'
     };
 
     if (this.props.devices.grab) {
       if (this.state.mouseDown) {
-        cursorStyle = {
-          cursor: '-webkit-grabbing'
-        };
+        canvasStyle.cursor = '-webkit-grabbing';
       } else {
-        cursorStyle = {
-          cursor: '-webkit-grab'
-        };
+        canvasStyle.cursor = '-webkit-grab';
       }
     }
 
@@ -429,7 +427,7 @@ class Canvas extends React.Component {
         onMouseMove={this.onMouseMove}
         onMouseDown={this.onMouseDown}
         onMouseUp={this.onMouseUp}
-        style={cursorStyle}
+        style={canvasStyle}
       />
     );
   }
