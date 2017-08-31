@@ -48,6 +48,8 @@ class Canvas extends React.Component {
 
     this.canvasPosition = null;
 
+    this.selectedCount = 0;
+
     this.state = {
       mouseDown: false
     };
@@ -65,6 +67,8 @@ class Canvas extends React.Component {
 
     let position = getPosition(event);
     this.canvasPosition = position;
+
+    this.selectedCount = this.getSelectedNodeCount();
 
     if (this.props.devices.streams) {
       this.props.addFreehandStream(position, event);
@@ -103,7 +107,7 @@ class Canvas extends React.Component {
       let position = getPosition(event);
       let dx = position[0] - this.canvasPosition[0];
       let dy = position[1] - this.canvasPosition[1];
-      if (this.getSelectedNodeCount()) {
+      if (this.selectedCount) {
         this.props.updateSelectedNodePositionByDelta(dx, dy);
       } else if (event.metaKey) {
         this.props.updateNodePositionByDelta(dx, dy);
@@ -277,9 +281,21 @@ class Canvas extends React.Component {
       this.flow();
       return;
     }
-    this.now = timestamp();
-    this.last = this.now;
     this.draw();
+
+    // Freehand streams must flow when they are being created
+    // even if the app is not currently playing.
+    this.now = timestamp();
+    this.dt = this.dt + Math.min(1, (this.now - this.last) / 1000);
+    while (this.dt > this.step) {
+      this.dt = this.dt - this.step;
+      this.props.streams.forEach((stream) => {
+        if (stream.creating) {
+          stream.flow();
+        }
+      });
+    }
+    this.last = this.now;
     setTimeout(this.dummyFlow);
   }
 

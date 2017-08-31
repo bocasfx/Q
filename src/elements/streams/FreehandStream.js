@@ -19,6 +19,7 @@ class FreehandStream extends Stream {
 
     this.markerImage = new Image();
     this.markerImage.src = './icons/elements/stream-marker.png';
+    this.creating = true;
   }
 
   advancePathIndex() {
@@ -73,6 +74,7 @@ class FreehandStream extends Stream {
     event.preventDefault();
     this.mouseDown = false;
     this.showMarker = false;
+    this.creating = false;
   }
 
   onMouseMove(event) {
