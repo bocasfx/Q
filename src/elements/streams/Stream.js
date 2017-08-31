@@ -16,6 +16,7 @@ class Stream {
     this.selected = false;
     this.angles = [];
     this.count = count || config.particle.count;
+    this.creating = false;
   }
 
   set position(value) {
