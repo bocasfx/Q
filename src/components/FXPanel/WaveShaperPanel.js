@@ -30,10 +30,11 @@ class WaveShaperPanel extends React.Component {
               label={'Amount'}
               value={this.props.fx.waveShaper.amount}
               min={0}
-              max={1000}
+              max={200}
               onChange={this.props.setWaveShaperAmount}
               disabled={false}
-              type="synth"/>
+              type="synth"
+              log={true}/>
           </div>
         </div>
       </div>
