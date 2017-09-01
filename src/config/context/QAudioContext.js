@@ -2,6 +2,7 @@ import config from '../config';
 import Delay from '../../elements/FX/Delay';
 import Filter from '../../elements/FX/Filter';
 import WaveShaper from '../../elements/FX/WaveShaper';
+import Reverb from '../../elements/FX/Reverb';
 
 class QAudioContext {
   constructor() {
@@ -9,10 +10,13 @@ class QAudioContext {
     this.delay = new Delay(this.ctx, config.fx.delay);
     this.waveShaper = new WaveShaper(this.ctx, config.fx.waveShaper);
     this.filter = new Filter(this.ctx, config.fx.filter);
+    this.reverb = new Reverb(this.ctx, null);
 
     this.waveShaper.connect(this.delay);
     this.delay.connect(this.filter);
+    this.filter.connect(this.reverb);
     this.filter.connect(this.ctx.destination);
+    this.reverb.connect(this.ctx.destination);
   }
 
   get fxDestination() {
@@ -53,6 +57,10 @@ class QAudioContext {
 
   set waveShaperAmount(value) {
     this.waveShaper.amount = value;
+  }
+
+  set reverbAmount(value) {
+    this.reverb.amount = value;
   }
 
   triggerFilter() {

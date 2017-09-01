@@ -31,6 +31,9 @@ export default {
     waveShaper: {
       amount: 400,
       oversample: '4x'
+    },
+    reverb: {
+      amount: 0
     }
   },
   midi: {

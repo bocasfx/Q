@@ -52,12 +52,14 @@ const renderDom = () => {
 };
 
 const saveContent = (type, fileName) => {
+  const state = store.getState();
+
   if (type === 'file') {
     if (fileName === undefined) {
       return;
     }
 
-    fs.writeFile(fileName, serialize(store.getState()), (err) => {
+    fs.writeFile(fileName, serialize(state), (err) => {
       if (err) {
         // TODO: Show notification
         console.log(err);
@@ -66,7 +68,6 @@ const saveContent = (type, fileName) => {
     });
   }
 
-  const state = store.getState();
   localStorage.QState = serialize(state);
 };
 

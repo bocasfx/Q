@@ -46,3 +46,10 @@ export const setWaveShaperAmount = (value) => {
     value
   };
 };
+
+export const setReverbAmount = (value) => {
+  return {
+    type: 'SET_REVERB_AMOUNT',
+    value
+  };
+};
