@@ -39,6 +39,9 @@ module.exports = {
     waveShaper: {
       amount: 0,
       oversample: '4x'
+    },
+    reverb: {
+      amount: 0
     }
   },
   transport: {

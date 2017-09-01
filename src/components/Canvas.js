@@ -107,7 +107,6 @@ class Canvas extends React.Component {
       let dy = position[1] - this.canvasPosition[1];
       if (this.getSelectedNodeCount()) {
         this.props.updateSelectedNodePositionByDelta(dx, dy);
-        console.log('here');
       } else if (event.metaKey) {
         this.backgroundX += dx;
         this.backgroundY += dy;

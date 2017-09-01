@@ -170,7 +170,8 @@ const hydrateFx = (props) => {
   qAudioContext.filterAttack = props.filter.attack;
   qAudioContext.filterRelease = props.filter.release;
 
-  qAudioContext.waveShaperAmount = 400;
+  qAudioContext.waveShaperAmount = props.waveShaper.amount;
+  qAudioContext.reverbAmount = props.reverb.amount;
 
   qAudioContext.time = props.delay.time;
   qAudioContext.feedback = props.delay.feedback;

@@ -31,6 +31,15 @@ class Knob extends React.Component {
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    let value = nextProps.value;
+    let angle = (value * _angle / nextProps.max) + _angle;
+    this.setState({
+      value: parseFloat(value.toFixed(this.precision)),
+      angle
+    });
+  }
+
   onMouseDown(event) {
     if (this.props.disabled) {
       return;
@@ -59,9 +68,9 @@ class Knob extends React.Component {
 
     let value = (angle - _angle) / _angle;
 
-    if (this.props.log) {
-      value = (Math.exp(value) - 1) / (Math.E - 1);
-    }
+    // if (this.props.log) {
+    //   value = (Math.exp(value) - 1) / (Math.E - 1);
+    // }
 
     value *= this.props.max;
     value = parseFloat(value.toFixed(this.precision));

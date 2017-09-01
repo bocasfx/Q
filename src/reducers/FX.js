@@ -35,6 +35,11 @@ const setWaveShaperAmount = (state, value) => {
   return Object.assign({}, state, {waveShaper: newFilter});
 };
 
+const setReverbAmount = (state, value) => {
+  let newFilter = Object.assign({}, state.reverb, { amount: value }); 
+  return Object.assign({}, state, {reverb: newFilter});
+};
+
 export default (state = fx, action) => {
   switch (action.type) {
 
@@ -58,6 +63,9 @@ export default (state = fx, action) => {
 
     case 'SET_WAVE_SHAPER_AMOUNT':
       return setWaveShaperAmount(state, action.value);
+
+    case 'SET_REVERB_AMOUNT':
+      return setReverbAmount(state, action.value);
 
     default:
       return state;

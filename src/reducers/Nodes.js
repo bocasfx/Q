@@ -78,7 +78,7 @@ const selectNode = (state, id) => {
   });
 };
 
-const selectAllNodes = (state, id) => {
+const selectAllNodes = (state) => {
   return state.map((node) => {
     node.selected = true;
     return node;
