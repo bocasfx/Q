@@ -6,6 +6,7 @@
   display: flex;
   justify-content: center;
   height: 220px;
+  margin: -3px 0;
 }
 
 .fx-panel {

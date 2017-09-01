@@ -423,7 +423,7 @@ class Canvas extends React.Component {
         draggable="true"
         ref="canvas"
         width={window.innerWidth - config.controlPanel.width - config.menu.width}
-        height={window.innerHeight - config.fxPanel.height}
+        height={window.innerHeight - config.fxPanel.height + 5}
         onMouseMove={this.onMouseMove}
         onMouseDown={this.onMouseDown}
         onMouseUp={this.onMouseUp}
