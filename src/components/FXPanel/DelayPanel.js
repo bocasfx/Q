@@ -30,16 +30,6 @@ class DelayPanel extends React.Component {
       <div>
         <div className="fx-panel-title">Delay</div>
         <div className="fx-panel fx-panel-border-left">
-          <div className="fx-panel-knob-container">
-            <Knob
-              label={'Cutoff'}
-              value={this.props.fx.delay.cutoffFrequency}
-              min={0}
-              max={20000}
-              onChange={this.props.setDelayCutoffFrequency}
-              disabled={false}
-              type="synth"/>
-          </div>
           <div>
             <Knob
               label={'Time'}

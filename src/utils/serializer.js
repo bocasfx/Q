@@ -175,7 +175,6 @@ const hydrateFx = (props) => {
 
   qAudioContext.time = props.delay.time;
   qAudioContext.feedback = props.delay.feedback;
-  qAudioContext.cutoffFrequency = props.delay.cutoffFrequency;
 };
 
 export const hydrate = (payload) => {

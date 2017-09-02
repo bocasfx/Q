@@ -4,12 +4,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setReverbAmount } from '../../actions/FX';
 import qAudioContext from '../../config/context/QAudioContext';
+import config from '../../config/config';
 
 class ReverbPanel extends React.Component {
 
   constructor(props) {
     super(props);
     this.setProps(props);
+    this.urls = config.fx.reverb.urls;
+    this.labels = config.fx.reverb.labels;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -20,11 +23,26 @@ class ReverbPanel extends React.Component {
     qAudioContext.reverbAmount = props.fx.reverb.amount;
   }
 
+  onIRChange(value) {
+    console.log(value);
+  }
+
+  renderIRSelect() {
+    return this.urls.map((item, key) => {
+      return <option key={key}>{this.labels[key]}</option>;
+    });
+  }
+
   render() {
     return (
       <div>
         <div className="fx-panel-title">Reverb</div>
-        <div className="fx-panel fx-panel-border-left fx-panel-border-right">
+        <div className="fx-panel fx-panel-border-left fx-panel-border-right fx-panel-vertical">
+          <div>
+            <select onChange={this.onIRChange}>
+              {this.renderIRSelect()}
+            </select>
+          </div>
           <div className="fx-panel-knob-container">
             <Knob
               label={'Amount'}

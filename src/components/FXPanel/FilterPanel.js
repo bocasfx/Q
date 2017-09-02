@@ -30,7 +30,7 @@ class FilterPanel extends React.Component {
     return (
       <div>
         <div className="fx-panel-title">Filter</div>
-        <div className="fx-panel fx-panel-border-right">
+        <div className="fx-panel fx-panel-border-left">
           <div>
               <Knob
                 label={'Cutoff'}

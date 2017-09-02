@@ -9,8 +9,8 @@ class FXPanel extends React.Component {
   render() {
     return (
       <div className="fx-panel-main-container">
-        <DelayPanel/>
         <WaveShaperPanel/>
+        <DelayPanel/>
         <FilterPanel/>
         <ReverbPanel/>
       </div>

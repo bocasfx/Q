@@ -10,13 +10,14 @@ class QAudioContext {
     this.delay = new Delay(this.ctx, config.fx.delay);
     this.waveShaper = new WaveShaper(this.ctx, config.fx.waveShaper);
     this.filter = new Filter(this.ctx, config.fx.filter);
-    this.reverb = new Reverb(this.ctx, null);
+    this.reverb = new Reverb(this.ctx, config.fx.reverb);
 
-    this.waveShaper.connect(this.delay);
-    this.delay.connect(this.filter);
+    this.waveShaper.connect(this.filter);
     this.filter.connect(this.reverb);
+    this.filter.connect(this.delay);
     this.filter.connect(this.ctx.destination);
     this.reverb.connect(this.ctx.destination);
+    this.delay.connect(this.ctx.destination);
   }
 
   get fxDestination() {
@@ -24,7 +25,7 @@ class QAudioContext {
   }
 
   get destination() {
-    return this.filter;
+    return this.ctx.destination;
   }
 
   set time(value) {

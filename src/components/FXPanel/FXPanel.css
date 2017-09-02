@@ -10,7 +10,7 @@
 }
 
 .fx-panel {
-  width: 225px;
+  width: 270px;
   height: 180px;
   padding-top: 15px;
   display: flex;
@@ -20,6 +20,11 @@
 
 .fx-panel > div {
   margin-top: 5px;
+}
+
+.fx-panel-vertical {
+  flex-direction: column;
+  align-items: center;
 }
 
 .fx-panel-title {
