@@ -1,0 +1,31 @@
+Abernyte Grain Silo
+A concrete structure standing approximately 20m in height by by 5m in diameter the silo proved to have a fantastic reverberation quality close to 6 seconds from initial impulse to the sound dying away. Opportunist recording of balloon burst IR captured using an Alesis Palmtrack portbale recorder. Having passed this disused grain silo on the way to Errol brickworks I made a mental note to stop and explore on the way home. The silo probably a structure from the 60's or 70's is a typical cylindrical building but with a flat roof.
+http://www.openairlib.net/auralizationdb/content/abernyte-grain-silo
+
+Cripta di San Sebastiano - Sternatia
+Ipogeum space carved into the rock. It's with the presence of the humidity, unconfined and influenced by weather conditions.
+http://www.openairlib.net/auralizationdb/content/cripta-di-san-sebastiano-sternatia
+
+Domestic Living Room
+Domestic living room, recorded in front of speaker, at the back of the room, and in the adjacent room. Cutoff at 16kHz due to hardware constraints.
+http://www.openairlib.net/auralizationdb/content/domestic-living-room
+
+Falkland Palace Bottle Dungeon
+An Impulse Response recorded in the bottle dungeon found in Falkland Palace.
+http://www.openairlib.net/auralizationdb/content/falkland-palace-bottle-dungeon
+
+R1 Nuclear Reactor Hall
+Built in 1954, the R1 Nuclear Reactor has not been used since 1970. However, the reactor hall still remains. It is found 25 metres underneath the KTH Royal Institute of Technology, near to Stolkholm.
+http://www.openairlib.net/auralizationdb/content/r1-nuclear-reactor-hall
+
+Slinky
+Impulse response created from a Slinky toy being plucked. Audio was recorded using an attached contact microphone.
+http://www.openairlib.net/auralizationdb/content/slinky-ir
+
+Tvísöngur Sound Sculpture, Iceland
+Opened to the public in 2012 and situated in the mountains above Seydisfjordur, north east Iceland, Tvísöngur is a sound sculpture designed by German artist Lukas Kuhne. Constructed entirely of smooth unpainted concrete at 100mm thick throughout, it consists of five interconnected domes - nicknamed "Fa", "La", "Si", "Do" and "Mi" in order of decreasing size. Each dome’s distinct size produces an individual resonant frequency corresponding to a tone in traditional Icelandic five-part harmony. Rounded archway openings built into the walls of each dome allow visitors to enter the structure and experience the unique acoustical characteristics of the space. These arched openings also act as Helmholtz resonators, as wind blowing in off the cliffs rushes into and across the openings, the air within the structure resonates. Nicknamed the ‘singing concrete’, Tvísöngur was designed for several voices in order to preserve Iceland’s musical heritage, which was one of the first and now only surviving forms of improvised polyphonic chants in Europe. In collaboration with the artist Lukas Kühne, using ODEON acoustic simulation software, an acoustic model replica of the structure was built in order to visualise how sound propagates through the structure, investigate how certain frequencies are resonated by each individual dome, and produce simulated impulse responses to create auralizations.
+http://www.openairlib.net/auralizationdb/content/tv%C3%ADs%C3%B6ngur-sound-sculpture-iceland-model
+
+York Minster
+York Minster is the largest medieval gothic cathedral in the UK and one of the finest in Europe, built between the 12th and 15th centuries on the foundations of the previous Norman church that was in turn constructed on the foundations of the original Roman fortress. It is approximately 160m long, 76m wide and 27m high to the vaulted ceiling, constructed predominantly of stone with extensive, large panels of stained glass windows. Its beautiful acoustic and setting make it a sought after and highly popular music performance venue.
+http://www.openairlib.net/auralizationdb/content/york-minster

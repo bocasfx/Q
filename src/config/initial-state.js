@@ -28,8 +28,7 @@ module.exports = {
   fx: {
     delay: {
       time: 0.5,
-      feedback: 0.0,
-      cutoffFrequency: 500
+      feedback: 0.0
     },
     filter: {
       q: 0,

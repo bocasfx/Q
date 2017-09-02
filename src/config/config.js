@@ -20,8 +20,7 @@ export default {
   fx: {
     delay: {
       time: 0.5,
-      feedback: 0.0,
-      cutoffFrequency: 500
+      feedback: 0.0
     },
     filter: {
       q: 0,
@@ -33,7 +32,29 @@ export default {
       oversample: '4x'
     },
     reverb: {
-      amount: 0
+      amount: 0,
+      urls: [
+        '/audio/ir/hamilton-mausoleum.wav',
+        '/audio/ir/abernyte-grain-silo.wav',
+        '/audio/ir/cripta-di-san-sebastiano-sternatia.wav',
+        '/audio/ir/domestic-living-room.wav',
+        '/audio/ir/falkland-palace-bottle-dungeon.wav',
+        '/audio/ir/r1-nuclear-reactor-hall.wav',
+        '/audio/ir/slinky.wav',
+        '/audio/ir/tvísöngur-sound-sculpture.wav',
+        '/audio/ir/york-minster.wav'
+      ],
+      labels: [
+        'Hamilton Mausoleum',
+        'Abernyte Grain Silo',
+        'Cripta di San Sebastiano Sternatia',
+        'Domestic Living Room',
+        'Falkland Palace Bottle Dungeon',
+        'R1 Nuclear Reactor Hall',
+        'Slinky',
+        'Tvísöngur Sound Sculpture',
+        'York Minster'
+      ]
     }
   },
   midi: {

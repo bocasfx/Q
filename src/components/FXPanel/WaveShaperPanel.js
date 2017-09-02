@@ -24,13 +24,13 @@ class WaveShaperPanel extends React.Component {
     return (
       <div>
         <div className="fx-panel-title">WaveShaper</div>
-        <div className="fx-panel fx-panel-border-left fx-panel-border-right">
+        <div className="fx-panel fx-panel-border-left">
           <div className="fx-panel-knob-container">
             <Knob
               label={'Amount'}
               value={this.props.fx.waveShaper.amount}
               min={0}
-              max={200}
+              max={100}
               onChange={this.props.setWaveShaperAmount}
               disabled={false}
               type="synth"

@@ -8,11 +8,11 @@ class Reverb {
 
     this.output = this.convolver;
     this.input = this.gain;
-    this.gain.gain.value = 1;
+    this.gain.gain.value = settings.amount;
 
     axios({
       method: 'get',
-      url: '/audio/ir.wav',
+      url: settings.urls[7],
       responseType: 'arraybuffer'
     }).then((response) => {
       let audioData = response.data;

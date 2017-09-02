@@ -5,18 +5,15 @@ class Delay {
 
     this.delay = audioContext.createDelay();
     this.gain = audioContext.createGain();
-    this.filter = audioContext.createBiquadFilter();
 
     this.delay.connect(this.gain);
-    this.gain.connect(this.filter);
-    this.filter.connect(this.delay);
+    this.gain.connect(this.delay);
 
-    this.output = this.filter;
-    this.input = this.filter;
+    this.output = this.delay;
+    this.input = this.gain;
 
     this.delay.delayTime.value = settings.time;
     this.gain.gain.value = settings.feedback;
-    this.filter.frequency.value = settings.cutoffFrequency;
   }
 
   set time(value) {
@@ -25,10 +22,6 @@ class Delay {
 
   set feedback(value) {
     this.gain.gain.value = value;
-  }
-
-  set cutoffFrequency(value) {
-    this.filter.frequency.value = value;
   }
 
   connect(node) {
