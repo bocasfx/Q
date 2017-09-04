@@ -1,4 +1,4 @@
-import { serialize } from '../utils/serializer';
+import { serialize } from '../app/serializer';
 import hydrator from './Hydrator';
 
 let electron = null;
