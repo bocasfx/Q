@@ -12,6 +12,7 @@ import FXPanel from './components/FXPanel/FXPanel';
 import Toaster from './components/UI/Toaster';
 import midiContext from './config/context/MIDIContext';
 import EventHandler from './app/EventHandler';
+import hydrator from './app/Hydrator';
 
 const store = createStore(reducer);
 
@@ -45,24 +46,7 @@ const initialize = () => {
 
       if (localStorage.QState) {
         let payload = JSON.parse(localStorage.QState);
-        if (payload.nodes) {
-          store.dispatch({
-            type: 'HYDRATE_NODES',
-            payload: payload.nodes
-          });
-        }
-        if (payload.streams) {
-          store.dispatch({
-            type: 'HYDRATE_STREAMS',
-            payload: payload.streams
-          });
-        }
-        if (payload.fx) {
-          store.dispatch({
-            type: 'HYDRATE_FX',
-            payload: payload.fx
-          });
-        }
+        hydrator.hydrate(store, payload);
       }
 
       for (let entry of midiContext.outputs.entries()) {
