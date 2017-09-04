@@ -1,5 +1,6 @@
 import serializer from '../app/Serializer';
 import hydrator from './Hydrator';
+import store from '../app/Store';
 
 let electron = null;
 let dialog = null;
@@ -20,10 +21,6 @@ const filters = {
 
 class EventHandler {
 
-  constructor(store) {
-    this.store = store;
-  }
-
   initialize() {
     window.onkeypress = (event) => {
       if (event.ctrlKey) {
@@ -33,7 +30,7 @@ class EventHandler {
           // Select All
           case 'a':
           case 'A':
-            this.store.dispatch({
+            store.dispatch({
               type: 'SELECT_ALL_NODES'
             });
             return;
@@ -66,11 +63,11 @@ class EventHandler {
         switch (event.key) {
           //Play/Pause
           case ' ':
-            this.store.dispatch({
+            store.dispatch({
               type: 'TOGGLE_TRANSPORT'
             });
-            if (!this.store.getState().transport.playing) {
-              this.store.dispatch({
+            if (!store.getState().transport.playing) {
+              store.dispatch({
                 type: 'STOP_NODES'
               });
             }
@@ -111,7 +108,7 @@ class EventHandler {
   };
 
   toggleDevice(device) {
-    this.store.dispatch({
+    store.dispatch({
       type: 'TOGGLE_DEVICE',
       device
     });
@@ -132,15 +129,15 @@ class EventHandler {
 
         let payload = JSON.parse(data);
 
-        hydrator.hydrate(this.store, payload);
+        hydrator.hydrate(store, payload);
       });
     } else {
-      hydrator.hydrate(this.store, localStorage.QState);
+      hydrator.hydrate(store, localStorage.QState);
     }
   };
 
   saveContent(type, fileName) {
-    const state = this.store.getState();
+    const state = store.getState();
 
     if (type === 'file') {
       if (fileName === undefined) {
