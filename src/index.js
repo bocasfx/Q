@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import store from './app/Store';
 import Canvas from './components/Canvas';
 import './index.css';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import reducer from './reducers';
 import Menu from './components/Menu/Menu';
 import Mixer from './components/Mixer/Mixer';
 import ControlPanel from './components/ControlPanel/ControlPanel';
@@ -13,8 +12,6 @@ import Toaster from './components/UI/Toaster';
 import midiContext from './config/context/MIDIContext';
 import EventHandler from './app/EventHandler';
 import hydrator from './app/Hydrator';
-
-const store = createStore(reducer);
 
 const renderDom = () => {
   ReactDOM.render(
