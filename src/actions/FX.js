@@ -53,3 +53,10 @@ export const setReverbAmount = (value) => {
     value
   };
 };
+
+export const hydrateFx = (payload) => {
+  return {
+    type: 'HYDRATE_FX',
+    payload
+  };
+};

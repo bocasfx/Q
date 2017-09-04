@@ -12,7 +12,7 @@ class Reverb {
 
     axios({
       method: 'get',
-      url: settings.urls[7],
+      url: settings.urls[0],
       responseType: 'arraybuffer'
     }).then((response) => {
       let audioData = response.data;

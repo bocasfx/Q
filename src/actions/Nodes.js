@@ -272,3 +272,10 @@ export const updateNodePositionByDelta = (dx, dy) => {
     dy
   };
 };
+
+export const hydrateNodes = (payload) => {
+  return {
+    type: 'HYDRATE_NODES',
+    payload
+  };
+};

@@ -5,6 +5,12 @@ import _ from 'lodash';
 import { nodes } from '../config/initial-state';
 import uuidv1 from 'uuid/v1';
 
+let fs = null;
+
+if (window.require) {
+  fs = window.require('fs');
+}
+
 const addSynthNode = (state, position) => {
   let node = new SynthNode(position);
   let nodeList = state.splice(0);
@@ -364,6 +370,49 @@ const updateNodePositionByDelta = (state, dx, dy) => {
   });
 };
 
+const createNode = (node) => {
+  switch (node.topLevel.type) {
+    case 'synth':
+      let newSynthNode = new SynthNode(node.topLevel.position);
+      newSynthNode = Object.assign(newSynthNode, node.topLevel);
+      newSynthNode.osc1WaveType = node.inner.oscillator1.waveType;
+      newSynthNode.osc2WaveType = node.inner.oscillator2.waveType;
+      newSynthNode.osc1Gain = node.inner.oscillator1.gain;
+      newSynthNode.osc2Gain = node.inner.oscillator2.gain;
+      return newSynthNode;
+    case 'midi':
+      let newMidiNode = new MidiNode(node.topLevel.position);
+      newMidiNode = Object.assign(newMidiNode, node.topLevel);
+      return newMidiNode;
+    case 'audio':
+      let newAudioNode = new AudioNode(node.topLevel.position);
+      newAudioNode = Object.assign(newAudioNode, node.topLevel);
+      if (node.topLevel.path) {
+        fs.readFile(node.topLevel.path, (err, dataBuffer) => {
+          if (err) {
+            // TODO: Show notification
+            console.log(err);
+            return;
+          }
+          newAudioNode.setAudioSrc(dataBuffer, node.topLevel.path);
+
+          let name = node.topLevel.path.split('/');
+          name = name[name.length -1];
+          newAudioNode.name = name;
+        });
+      }
+      return newAudioNode;
+    default:
+      return null;
+  }
+};
+
+const hydrateNodes = (state, payload) => {
+  return payload.map((node) => {
+    return createNode(node);
+  });
+};
+
 export default (state = nodes, action) => {
   switch (action.type) {
 
@@ -474,6 +523,9 @@ export default (state = nodes, action) => {
 
     case 'UPDATE_NODE_POSITION_BY_DELTA':
       return updateNodePositionByDelta(state, action.dx, action.dy);
+
+    case 'HYDRATE_NODES':
+      return hydrateNodes(state, action.payload);
 
     default:
       return state;

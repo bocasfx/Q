@@ -1,4 +1,7 @@
 module.exports = {
+  app: {
+    hydrating: false
+  },
   devices: {
     streams: false,
     circularStreams: false,

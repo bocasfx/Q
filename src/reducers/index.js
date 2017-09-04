@@ -7,8 +7,8 @@ import notifications from './Notifications';
 import fx from './FX';
 import transport from './Transport';
 import midi from './MIDI';
+import app from './App';
 import initialState from '../config/initial-state';
-import { hydrate } from '../utils/serializer';
 
 const reducers = combineReducers({
   devices,
@@ -18,11 +18,12 @@ const reducers = combineReducers({
   notifications,
   fx,
   transport,
-  midi
+  midi,
+  app
 });
 
 const mainReducer = (state = initialState, action) => {
-  return action.type === 'HYDRATE_STATE' ? hydrate(action.payload) : reducers(state, action);
+  return reducers(state, action);
 };
 
 export default mainReducer;
