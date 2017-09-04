@@ -1,4 +1,4 @@
-import { serialize } from '../app/serializer';
+import serializer from '../app/Serializer';
 import hydrator from './Hydrator';
 
 let electron = null;
@@ -147,7 +147,7 @@ class EventHandler {
         return;
       }
 
-      fs.writeFile(fileName, serialize(state), (err) => {
+      fs.writeFile(fileName, serializer.serialize(state), (err) => {
         if (err) {
           // TODO: Show notification
           console.log(err);
@@ -156,7 +156,7 @@ class EventHandler {
       });
     }
 
-    localStorage.QState = serialize(state);
+    localStorage.QState = serializer.serialize(state);
   };
 }
 
