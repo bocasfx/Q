@@ -34,9 +34,9 @@ const renderDom = () => {
 };
 
 const initialize = () => {
-  let eventHandler = new EventHandler(store);
+  let eventHandler = new EventHandler();
   eventHandler.initialize();
-  midiContext.initialize(store)
+  midiContext.initialize()
     .then(() => {
 
       renderDom();
