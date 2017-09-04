@@ -1,3 +1,4 @@
+import qAudioContext from '../config/context/QAudioContext';
 import { fx } from '../config/initial-state';
 
 const setDelayTime = (state, value) => {
@@ -40,6 +41,21 @@ const setReverbAmount = (state, value) => {
   return Object.assign({}, state, {reverb: newFilter});
 };
 
+const hydrateFx = (state, payload) => {
+  qAudioContext.filterCutoffFrequency = payload.filter.cutoffFrequency;
+  qAudioContext.filterQ = payload.filter.q;
+  qAudioContext.filterAttack = payload.filter.attack;
+  qAudioContext.filterRelease = payload.filter.release;
+
+  qAudioContext.waveShaperAmount = payload.waveShaper.amount;
+  qAudioContext.reverbAmount = payload.reverb.amount;
+
+  qAudioContext.time = payload.delay.time;
+  qAudioContext.feedback = payload.delay.feedback;
+
+  return Object.assign({}, state, payload);
+};
+
 export default (state = fx, action) => {
   switch (action.type) {
 
@@ -66,6 +82,9 @@ export default (state = fx, action) => {
 
     case 'SET_REVERB_AMOUNT':
       return setReverbAmount(state, action.value);
+
+    case 'HYDRATE_FX':
+      return hydrateFx(state, action.payload);
 
     default:
       return state;

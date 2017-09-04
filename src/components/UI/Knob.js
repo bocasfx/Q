@@ -1,5 +1,6 @@
 import React from 'react';
 import './Knob.css';
+import { connect } from 'react-redux';
 import { getNodeColor } from '../../utils/utils';
 import config from '../../config/config';
 
@@ -32,6 +33,9 @@ class Knob extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    if (!this.props.app || !this.props.app.hydrating) {
+      return;
+    }
     let value = nextProps.value;
     let angle = (value * _angle / nextProps.max) + _angle;
     this.setState({
@@ -122,4 +126,10 @@ class Knob extends React.Component {
   }
 }
 
-module.exports = Knob;
+const mapStateToProps = (state) => {
+  return {
+    app: state.app
+  };
+};
+
+module.exports = connect(mapStateToProps)(Knob);

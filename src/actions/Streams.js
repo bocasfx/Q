@@ -83,3 +83,10 @@ export const updateStreamPositionByDelta = (dx, dy) => {
     dy
   };
 };
+
+export const hydrateStreams = (payload) => {
+  return {
+    type: 'HYDRATE_STREAMS',
+    payload
+  };
+};

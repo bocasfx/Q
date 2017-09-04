@@ -98,6 +98,25 @@ const updateStreamPositionByDelta = (state, dx, dy) => {
   });
 };
 
+const createStream = (stream) => {
+  switch (stream.topLevel.variety) {
+    case 'circular':
+      return new CircularStream(stream.topLevel);
+    case 'linear':
+      return new LinearStream(stream.topLevel);
+    case 'freehand':
+      return new FreehandStream(stream.topLevel);
+    default:
+      return null;
+  }
+};
+
+const hydrateStreams = (state, payload) => {
+  return payload.map((stream) => {
+    return createStream(stream);
+  });
+};
+
 export default (state = streams, action) => {
   switch (action.type) {
 
@@ -133,6 +152,9 @@ export default (state = streams, action) => {
 
     case 'UPDATE_STREAM_POSITION_BY_DELTA':
       return updateStreamPositionByDelta(state, action.dx, action.dy);
+
+    case 'HYDRATE_STREAMS':
+      return hydrateStreams(state, action.payload);
 
     default:
       return state;
