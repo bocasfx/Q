@@ -4,6 +4,9 @@ export default {
     doubleClickDistance: 20,
     maxFrequency: 1500
   },
+  transport: {
+    height: 35
+  },
   canvas: {
     backgroundColor: 'rgba(0, 0, 0, 0.0)'
   },

@@ -1,0 +1,19 @@
+.transport-container {
+  height: 35px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid dimgray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.transport-stats {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.transport-stats div {
+  margin-left: 20px;
+  color: dimgray;
+}
