@@ -1,11 +1,11 @@
 import React from 'react';
 import './Canvas.css';
 import _ from 'lodash';
-import config from '../config/config';
+import config from '../../config/config';
 import { connect } from 'react-redux';
-import { addFreehandStream, addCircularStream, addLinearStream, updateStreamPositionByDelta } from '../actions/Streams';
+import { addFreehandStream, addCircularStream, addLinearStream, updateStreamPositionByDelta } from '../../actions/Streams';
 import { bindActionCreators } from 'redux';
-import { calculateDistance, getPosition, calculateNodeBorderDistance, timestamp } from '../utils/utils';
+import { calculateDistance, getPosition, calculateNodeBorderDistance, timestamp } from '../../utils/utils';
 import { addSynthNode,
   addMidiNode,
   addAudioNode,
@@ -19,7 +19,7 @@ import { addSynthNode,
   playNode,
   stopNode,
   updateSelectedNodePositionByDelta,
-  updateNodePositionByDelta } from '../actions/Nodes';
+  updateNodePositionByDelta } from '../../actions/Nodes';
 
 class Canvas extends React.Component {
 
@@ -422,7 +422,7 @@ class Canvas extends React.Component {
         draggable="true"
         ref="canvas"
         width={window.innerWidth - config.controlPanel.width - config.menu.width}
-        height={window.innerHeight - config.fxPanel.height + 5}
+        height={window.innerHeight - config.fxPanel.height - config.transport.height}
         onMouseMove={this.onMouseMove}
         onMouseDown={this.onMouseDown}
         onMouseUp={this.onMouseUp}

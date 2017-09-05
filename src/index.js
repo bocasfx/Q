@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import store from './app/Store';
-import Canvas from './components/Canvas';
+import Canvas from './components/Canvas/Canvas';
 import './index.css';
 import { Provider } from 'react-redux';
 import Menu from './components/Menu/Menu';
 import Mixer from './components/Mixer/Mixer';
 import ControlPanel from './components/ControlPanel/ControlPanel';
 import FXPanel from './components/FXPanel/FXPanel';
+import Transport from './components/Transport/Transport';
 import Toaster from './components/UI/Toaster';
 import midiContext from './app/context/MIDIContext';
 import EventHandler from './app/EventHandler';
@@ -22,6 +23,7 @@ const renderDom = () => {
         <div className="main-container">
           <Menu/>
           <div>
+            <Transport/>
             <Canvas midiContext={midiContext}/>
             <FXPanel/>
           </div>
