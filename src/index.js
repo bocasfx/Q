@@ -9,7 +9,7 @@ import Mixer from './components/Mixer/Mixer';
 import ControlPanel from './components/ControlPanel/ControlPanel';
 import FXPanel from './components/FXPanel/FXPanel';
 import Toaster from './components/UI/Toaster';
-import midiContext from './config/context/MIDIContext';
+import midiContext from './app/context/MIDIContext';
 import EventHandler from './app/EventHandler';
 import hydrator from './app/Hydrator';
 

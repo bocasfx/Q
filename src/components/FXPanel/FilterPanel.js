@@ -6,7 +6,7 @@ import {
   setFilterCutoffFrequency,
   setFilterQ,
   setFilterAttack } from '../../actions/FX';
-import qAudioContext from '../../config/context/QAudioContext';
+import qAudioContext from '../../app/context/QAudioContext';
 
 class FilterPanel extends React.Component {
 

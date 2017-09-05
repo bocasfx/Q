@@ -1,4 +1,4 @@
-import qAudioContext from '../config/context/QAudioContext';
+import qAudioContext from '../app/context/QAudioContext';
 import { fx } from '../config/initial-state';
 
 const setDelayTime = (state, value) => {

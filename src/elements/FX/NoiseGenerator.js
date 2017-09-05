@@ -1,4 +1,4 @@
-import qAudioContext from '../../config/context/QAudioContext';
+import qAudioContext from '../../app/context/QAudioContext';
 
 class NoiseGenerator {
 

@@ -1,4 +1,4 @@
-import audioContext from '../../config/context/AudioContext';
+import audioContext from '../../app/context/AudioContext';
 
 class FilterEnvelopeGenerator {
   constructor(envelope) {

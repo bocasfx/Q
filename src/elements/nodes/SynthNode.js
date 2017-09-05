@@ -3,7 +3,7 @@ import Node from './Node';
 import Oscillator from '../FX/Oscillator';
 import Amplifier from '../FX/Amplifier';
 import AmpEnvelopeGenerator from '../FX/AmpEnvelopeGenerator';
-import qAudioContext from '../../config/context/QAudioContext';
+import qAudioContext from '../../app/context/QAudioContext';
 import NoiseGenerator from '../FX/NoiseGenerator';
 
 class SynthNode extends Node {

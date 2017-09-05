@@ -6,7 +6,7 @@ import {
   setDelayTime,
   setDelayFeedback,
   setDelayCutoffFrequency } from '../../actions/FX';
-import qAudioContext from '../../config/context/QAudioContext';
+import qAudioContext from '../../app/context/QAudioContext';
 
 class DelayPanel extends React.Component {
 
@@ -30,7 +30,7 @@ class DelayPanel extends React.Component {
       <div className="fx-panel-item">
         <div className="fx-panel-title">Delay</div>
         <div className="fx-panel fx-panel-border-left">
-          <div>
+          <div className="fx-panel-knob-container fx-panel-full-height">
             <Knob
               label={'Time'}
               value={this.props.fx.delay.time}
