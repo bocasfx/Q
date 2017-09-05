@@ -4,6 +4,7 @@ import _ from 'lodash';
 import config from '../../config/config';
 import { connect } from 'react-redux';
 import { addFreehandStream, addCircularStream, addLinearStream, updateStreamPositionByDelta } from '../../actions/Streams';
+import { updateFPSCount } from '../../actions/Transport';
 import { bindActionCreators } from 'redux';
 import { calculateDistance, getPosition, calculateNodeBorderDistance, timestamp } from '../../utils/utils';
 import { addSynthNode,
@@ -44,7 +45,12 @@ class Canvas extends React.Component {
     this.now = null;
     this.dt = 0;
     this.last = timestamp();
-    this.step = 1 / 60;
+    this.fps = 60;
+    this.step = 1 / this.fps;
+
+    this.framesThisSecond = 0;
+    this.lastFpsUpdate = 0;
+    this.fpsCount = 60;
 
     this.canvasPosition = null;
     this.backgroundX = 0;
@@ -318,6 +324,16 @@ class Canvas extends React.Component {
       return;
     }
 
+    if (this.now > this.lastFpsUpdate + 1000) { // update every second
+        this.fpsCount = 0.25 * this.framesThisSecond + (1 - 0.25) * this.fps; // compute the new FPS
+ 
+        this.lastFpsUpdate = this.now;
+        this.framesThisSecond = 0;
+    }
+    this.framesThisSecond++;
+
+    this.props.updateFPSCount(this.fpsCount);
+
     this.now = timestamp();
     this.dt = this.dt + Math.min(1, (this.now - this.last) / 1000);
 
@@ -461,7 +477,8 @@ const mapDispatchToProps = (dispatch) => {
     stopNode: bindActionCreators(stopNode, dispatch),
     updateSelectedNodePositionByDelta: bindActionCreators(updateSelectedNodePositionByDelta, dispatch),
     updateNodePositionByDelta: bindActionCreators(updateNodePositionByDelta, dispatch),
-    updateStreamPositionByDelta: bindActionCreators(updateStreamPositionByDelta, dispatch)
+    updateStreamPositionByDelta: bindActionCreators(updateStreamPositionByDelta, dispatch),
+    updateFPSCount: bindActionCreators(updateFPSCount, dispatch)
   };
 };
 

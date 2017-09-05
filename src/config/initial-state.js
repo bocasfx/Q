@@ -2,6 +2,9 @@ module.exports = {
   app: {
     hydrating: false
   },
+  transport: {
+    fpsCount: 0
+  },
   devices: {
     streams: false,
     circularStreams: false,
