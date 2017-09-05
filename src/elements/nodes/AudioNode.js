@@ -1,5 +1,5 @@
 import Node from './Node';
-import qAudioContext from '../../config/context/QAudioContext';
+import qAudioContext from '../../app/context/QAudioContext';
 import Amplifier from '../FX/Amplifier';
 import AmpEnvelopeGenerator from '../FX/AmpEnvelopeGenerator';
 import config from '../../config/config';

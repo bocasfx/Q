@@ -27,9 +27,12 @@
   margin-top: 5px;
 }
 
-.fx-panel-vertical {
-  flex-direction: column;
-  align-items: center;
+.fx-panel-full-height {
+  height: 100%;
+}
+
+.fx-panel-centered {
+  text-align: center;
 }
 
 .fx-panel-title {

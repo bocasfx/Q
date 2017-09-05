@@ -1,4 +1,4 @@
-import config from '../config';
+import config from '../../config/config';
 import Delay from '../../elements/FX/Delay';
 import Filter from '../../elements/FX/Filter';
 import WaveShaper from '../../elements/FX/WaveShaper';

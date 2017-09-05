@@ -3,7 +3,7 @@ import Knob from '../UI/Knob';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setWaveShaperAmount } from '../../actions/FX';
-import qAudioContext from '../../config/context/QAudioContext';
+import qAudioContext from '../../app/context/QAudioContext';
 
 class WaveShaperPanel extends React.Component {
 
@@ -25,7 +25,7 @@ class WaveShaperPanel extends React.Component {
       <div className="fx-panel-item">
         <div className="fx-panel-title">WaveShaper</div>
         <div className="fx-panel fx-panel-border-left">
-          <div className="fx-panel-knob-container">
+          <div className="fx-panel-knob-container fx-panel-full-height">
             <Knob
               label={'Amount'}
               value={this.props.fx.waveShaper.amount}
