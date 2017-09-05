@@ -35,7 +35,7 @@ class ReverbPanel extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="fx-panel-item">
         <div className="fx-panel-title">Reverb</div>
         <div className="fx-panel fx-panel-border-left fx-panel-border-right fx-panel-vertical">
           <div>

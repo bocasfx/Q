@@ -28,26 +28,26 @@ class FilterPanel extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="fx-panel-item">
         <div className="fx-panel-title">Filter</div>
         <div className="fx-panel fx-panel-border-left">
-          <div>
-              <Knob
-                label={'Cutoff'}
-                value={this.props.fx.filter.cutoffFrequency}
-                min={100}
-                max={20000}
-                onChange={this.props.setFilterCutoffFrequency}
-                disabled={false}
-                type="synth"/>
-              <Knob
-                label={'Attack'}
-                value={this.props.fx.filter.attack}
-                min={0}
-                max={1}
-                onChange={this.props.setFilterAttack}
-                disabled={false}
-                type="synth"/>
+          <div className="fx-panel-knob-container">
+            <Knob
+              label={'Cutoff'}
+              value={this.props.fx.filter.cutoffFrequency}
+              min={100}
+              max={20000}
+              onChange={this.props.setFilterCutoffFrequency}
+              disabled={false}
+              type="synth"/>
+            <Knob
+              label={'Attack'}
+              value={this.props.fx.filter.attack}
+              min={0}
+              max={1}
+              onChange={this.props.setFilterAttack}
+              disabled={false}
+              type="synth"/>
           </div>
           <div className="fx-panel-knob-container">
             <Knob
