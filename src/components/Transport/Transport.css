@@ -17,3 +17,10 @@
   margin-left: 20px;
   color: dimgray;
 }
+
+.transport-fps-count {
+  width: 100%;
+  color: dimgray;
+  text-align: right;
+  margin-right: 20px;
+}

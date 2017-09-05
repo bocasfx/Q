@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 
 class Transport extends React.Component {
   render() {
+    let fpsCount = this.props.transport.fpsCount || 0;
+    fpsCount = parseFloat(fpsCount).toFixed(2);
     return (
       <div className="transport-container">
         <div className="transport-stats">
@@ -12,6 +14,9 @@ class Transport extends React.Component {
           <div>Streams: {this.props.streams.length}</div>
         </div>
         <PlayButton/>
+        <div className="transport-fps-count">
+          FPS: {fpsCount}
+        </div>
       </div>
     );
   }
@@ -20,7 +25,8 @@ class Transport extends React.Component {
 const mapStateToProps = (state) => {
   return {
     nodes: state.nodes,
-    streams: state.streams
+    streams: state.streams,
+    transport: state.transport
   };
 };
 
