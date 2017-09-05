@@ -27,7 +27,7 @@ class DelayPanel extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="fx-panel-item">
         <div className="fx-panel-title">Delay</div>
         <div className="fx-panel fx-panel-border-left">
           <div>

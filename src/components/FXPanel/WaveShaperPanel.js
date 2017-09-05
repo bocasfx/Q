@@ -22,7 +22,7 @@ class WaveShaperPanel extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="fx-panel-item">
         <div className="fx-panel-title">WaveShaper</div>
         <div className="fx-panel fx-panel-border-left">
           <div className="fx-panel-knob-container">

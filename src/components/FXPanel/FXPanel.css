@@ -1,21 +1,26 @@
 .fx-panel-main-container {
-  overflow-x: auto;
-  overflow-y: hidden;
   background-color: rgba(0, 0, 0, 0.3);
   border-top: 1px solid dimgray;
-  display: flex;
-  justify-content: center;
+  display: block;
   height: 220px;
+  width: 100%;
   margin: -3px 0;
+  overflow-x: auto;
+  white-space: nowrap;
+  overflow-y: hidden;
+}
+
+.fx-panel-item {
+  display: inline-block;
 }
 
 .fx-panel {
   width: 270px;
   height: 180px;
   padding-top: 15px;
-  display: flex;
-  align-items: top;
-  justify-content: space-around;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
 }
 
 .fx-panel > div {
@@ -37,8 +42,8 @@
 
 .fx-panel-knob-container {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .fx-panel-border-left {
