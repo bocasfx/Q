@@ -54,6 +54,13 @@ export const setReverbAmount = (value) => {
   };
 };
 
+export const setReverbImpulseResponse = (value) => {
+  return {
+    type: 'SET_REVERB_IMPULSE_RESPONSE',
+    value
+  };
+};
+
 export const hydrateFx = (payload) => {
   return {
     type: 'HYDRATE_FX',

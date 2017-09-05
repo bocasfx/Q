@@ -2,9 +2,6 @@ module.exports = {
   app: {
     hydrating: false
   },
-  transport: {
-    fpsCount: 0
-  },
   devices: {
     streams: false,
     circularStreams: false,
@@ -46,11 +43,13 @@ module.exports = {
       oversample: '4x'
     },
     reverb: {
-      amount: 0
+      amount: 0,
+      impulseResponse: '/audio/ir/hamilton-mausoleum.wav'
     }
   },
   transport: {
-    playing: false
+    playing: false,
+    fpsCount: 0
   },
   midi: {
     destinations: []

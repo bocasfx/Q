@@ -41,6 +41,11 @@ const setReverbAmount = (state, value) => {
   return Object.assign({}, state, {reverb: newFilter});
 };
 
+const setReverbImpulseResponse = (state, value) => {
+  let newFilter = Object.assign({}, state.reverb, { impulseResponse: value }); 
+  return Object.assign({}, state, {reverb: newFilter});
+};
+
 const hydrateFx = (state, payload) => {
   qAudioContext.filterCutoffFrequency = payload.filter.cutoffFrequency;
   qAudioContext.filterQ = payload.filter.q;
@@ -85,6 +90,9 @@ export default (state = fx, action) => {
 
     case 'HYDRATE_FX':
       return hydrateFx(state, action.payload);
+
+    case 'SET_REVERB_IMPULSE_RESPONSE':
+      return setReverbImpulseResponse(state, action.value);
 
     default:
       return state;

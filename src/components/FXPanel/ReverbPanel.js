@@ -2,7 +2,7 @@ import React from 'react';
 import Knob from '../UI/Knob';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setReverbAmount } from '../../actions/FX';
+import { setReverbAmount, setReverbImpulseResponse } from '../../actions/FX';
 import qAudioContext from '../../app/context/QAudioContext';
 import config from '../../config/config';
 
@@ -13,6 +13,7 @@ class ReverbPanel extends React.Component {
     this.setProps(props);
     this.urls = config.fx.reverb.urls;
     this.labels = config.fx.reverb.labels;
+    this.onIRChange = this.onIRChange.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -21,15 +22,17 @@ class ReverbPanel extends React.Component {
 
   setProps(props) {
     qAudioContext.reverbAmount = props.fx.reverb.amount;
+    qAudioContext.reverbImpulseResponse = props.fx.reverb.impulseResponse;
   }
 
-  onIRChange(value) {
-    console.log(value);
+  onIRChange(event) {
+    console.log(event.target.value);
+    this.props.setReverbImpulseResponse(event.target.value);
   }
 
   renderIRSelect() {
     return this.urls.map((item, key) => {
-      return <option key={key}>{this.labels[key]}</option>;
+      return <option key={key} value={this.urls[key]}>{this.labels[key]}</option>;
     });
   }
 
@@ -68,7 +71,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setReverbAmount: bindActionCreators(setReverbAmount, dispatch)
+    setReverbAmount: bindActionCreators(setReverbAmount, dispatch),
+    setReverbImpulseResponse: bindActionCreators(setReverbImpulseResponse, dispatch)
   };
 };
 
