@@ -68,6 +68,10 @@ class QAudioContext {
     this.reverb.impulseResponse = value;
   }
 
+  get reverbImpulseResponse() {
+    return this.reverb.impulseResponse;
+  }
+
   triggerFilter() {
     this.filter.trigger();
   }

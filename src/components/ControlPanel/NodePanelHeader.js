@@ -27,7 +27,7 @@ class NodePanelHeader extends React.Component {
           label={'Lag'}
           value={this.props.node.lag}
           min={0}
-          max={500}
+          max={5000}
           onChange={this.onLagChange}
           disabled={this.props.node.disabled}
           type={this.props.node.type}/>
