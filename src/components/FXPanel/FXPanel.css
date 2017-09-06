@@ -8,10 +8,12 @@
   overflow-x: auto;
   white-space: nowrap;
   overflow-y: hidden;
+  text-align: center;
 }
 
 .fx-panel-item {
   display: inline-block;
+  position: relative;
 }
 
 .fx-panel {
@@ -55,4 +57,42 @@
 
 .fx-panel-border-right {
   border-right: 1px solid #333;
+}
+
+.fx-panel-info-icon {
+  margin-left: 10px;
+  color: dimgray;
+  cursor: pointer;
+}
+
+.fx-panel-info {
+  max-height: 100%;
+  padding: 40px 20px; 
+  position: relative;
+  height: 100%;
+  top: 17px;
+  position: absolute;
+  width: 100%;
+  overflow: auto;
+  white-space: normal;
+  box-sizing: border-box;
+  border: 1px solid #333;
+  background-color: #222;
+  z-index: 2;
+}
+
+.fx-panel-info i {
+  float: right;
+  color: darkorange;
+  cursor: pointer;
+  margin-top: -25px;
+}
+
+.fx-panel-info h1 {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.fx-panel-info a {
+  color: darkorange;
 }
