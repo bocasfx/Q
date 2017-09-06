@@ -23,6 +23,8 @@ class EventHandler {
 
   initialize() {
     window.onkeypress = (event) => {
+      event.stopPropagation();
+      event.returnValue = false;
       if (event.ctrlKey) {
 
         switch (event.key) {
