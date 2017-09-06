@@ -6,13 +6,27 @@ import { setReverbAmount, setReverbImpulseResponse } from '../../actions/FX';
 import qAudioContext from '../../app/context/QAudioContext';
 import config from '../../config/config';
 
+let shell = null;
+
+if (window.require) {
+  shell = window.require('electron').shell;
+}
+
+
 class ReverbPanel extends React.Component {
 
   constructor(props) {
     super(props);
     this.setProps(props);
     this.impulseResponses = config.fx.reverb.impulseResponses;
-    this.onIRChange = this.onIRChange.bind(this);
+    this.onImpulseResponseChange = this.onImpulseResponseChange.bind(this);
+    this.state = {
+      showReverbInfo: false
+    };
+
+    this.showReverbInfo = this.showReverbInfo.bind(this);
+    this.hideReverbInfo = this.hideReverbInfo.bind(this);
+    this.renderImpulseResponseInfo = this.renderImpulseResponseInfo.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -27,7 +41,7 @@ class ReverbPanel extends React.Component {
     }
   }
 
-  onIRChange(event) {
+  onImpulseResponseChange(event) {
     event.stopPropagation();
     this.props.setReverbImpulseResponse(event.target.value);
   }
@@ -38,15 +52,61 @@ class ReverbPanel extends React.Component {
     });
   }
 
+  showReverbInfo() {
+    this.setState({
+      showReverbInfo: true
+    });
+  }
+
+  hideReverbInfo() {
+    this.setState({
+      showReverbInfo: false
+    });
+  }
+
+  openLinkInBrowser(event) {
+    let url = event.target.attributes['data-url'].nodeValue;
+    if (shell) {
+      console.log(url);
+      shell.openExternal(url);
+    }
+  }
+
+  renderImpulseResponseInfo() {
+    let info = null;
+    let label = null;
+    let link = null;
+    this.impulseResponses.forEach((response) => {
+      if (response.url === this.props.fx.reverb.impulseResponse && response.info) {
+        info = response.info.map((paragraph, key) => {
+          return <p key={key}>{paragraph}</p>;
+        });
+        label = <h1 key="title">{response.label}</h1>;
+        link = <a key="link" href="#" data-url={response.infoUrl} onClick={this.openLinkInBrowser}>More info</a>;
+      }
+    });
+
+    return [label, info, link];
+  }
+
   render() {
     return (
       <div className="fx-panel-item">
         <div className="fx-panel-title">Reverb</div>
         <div className="fx-panel fx-panel-border-left fx-panel-border-right">
+          <div className="fx-panel-info" hidden={!this.state.showReverbInfo}>
+            <i className="fa fa-close" onClick={this.hideReverbInfo}></i>
+            
+            {this.renderImpulseResponseInfo()}
+            
+          </div>
           <div className="fx-panel-centered">
-            <select onChange={this.onIRChange}>
+            <select onChange={this.onImpulseResponseChange}>
               {this.renderIRSelect()}
             </select>
+            <i className="fx-panel-info-icon fa fa-info-circle" onClick={this.showReverbInfo}>
+              
+            </i>
           </div>
           <div className="fx-panel-knob-container fx-panel-full-height">
             <Knob
