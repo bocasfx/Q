@@ -36,45 +36,37 @@ export default {
     },
     reverb: {
       amount: 0,
-      impulseResponses: [
-        {
+      impulseResponses: [{
           url: '/audio/ir/hamilton-mausoleum.wav',
           label: 'Hamilton Mausoleum'
         }, {
           url: '/audio/ir/abernyte-grain-silo.wav',
-          label:         'Abernyte Grain Silo'
-        }, {
-          url: '/audio/ir/cripta-di-san-sebastiano-sternatia.wav',
-          label:         'Cripta di San Sebastiano Sternatia'
-        }, {
-          url: '/audio/ir/domestic-living-room.wav',
-          label:         'Domestic Living Room'
-        }, {
+          label: 'Abernyte Grain Silo'
+        } , {
           url: '/audio/ir/falkland-palace-bottle-dungeon.wav',
-          label:         'Falkland Palace Bottle Dungeon'
+          label: 'Falkland Palace Bottle Dungeon'
         }, {
           url: '/audio/ir/r1-nuclear-reactor-hall.wav',
-          label:         'R1 Nuclear Reactor Hall'
-        }, {
-          url: '/audio/ir/slinky.wav',
-          label:         'Slinky'
+          label: 'R1 Nuclear Reactor Hall'
         }, {
           url: '/audio/ir/tvísöngur-sound-sculpture.wav',
-          label:         'Tvísöngur Sound Sculpture'
+          label: 'Tvísöngur Sound Sculpture'
         }, {
           url: '/audio/ir/york-minster.wav',
           label: 'York Minster'
-      }],
-      labels: [
-        
-
-
-
-
-
-
-
-
+        }, {
+          url: '/audio/ir/st-marys-abbey-reconstruction.wav',
+          label: 'St. Mary\'s Abbey Reconstruction'
+        }, {
+          url: '/audio/ir/terrys-typing-room.wav',
+          label: 'Terry\'s Typing Room'
+        }, {
+          url: '/audio/ir/errol-brickworks-kiln.wav',
+          label: 'Errol Brickworks Kiln'
+        }, {
+          url: '/audio/ir/dromagorteen-stone-circle.wav',
+          label: 'Dromagorteen Stone Circle'
+        }
       ]
     }
   },
