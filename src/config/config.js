@@ -36,27 +36,45 @@ export default {
     },
     reverb: {
       amount: 0,
-      urls: [
-        '/audio/ir/hamilton-mausoleum.wav',
-        '/audio/ir/abernyte-grain-silo.wav',
-        '/audio/ir/cripta-di-san-sebastiano-sternatia.wav',
-        '/audio/ir/domestic-living-room.wav',
-        '/audio/ir/falkland-palace-bottle-dungeon.wav',
-        '/audio/ir/r1-nuclear-reactor-hall.wav',
-        '/audio/ir/slinky.wav',
-        '/audio/ir/tvísöngur-sound-sculpture.wav',
-        '/audio/ir/york-minster.wav'
-      ],
+      impulseResponses: [
+        {
+          url: '/audio/ir/hamilton-mausoleum.wav',
+          label: 'Hamilton Mausoleum'
+        }, {
+          url: '/audio/ir/abernyte-grain-silo.wav',
+          label:         'Abernyte Grain Silo'
+        }, {
+          url: '/audio/ir/cripta-di-san-sebastiano-sternatia.wav',
+          label:         'Cripta di San Sebastiano Sternatia'
+        }, {
+          url: '/audio/ir/domestic-living-room.wav',
+          label:         'Domestic Living Room'
+        }, {
+          url: '/audio/ir/falkland-palace-bottle-dungeon.wav',
+          label:         'Falkland Palace Bottle Dungeon'
+        }, {
+          url: '/audio/ir/r1-nuclear-reactor-hall.wav',
+          label:         'R1 Nuclear Reactor Hall'
+        }, {
+          url: '/audio/ir/slinky.wav',
+          label:         'Slinky'
+        }, {
+          url: '/audio/ir/tvísöngur-sound-sculpture.wav',
+          label:         'Tvísöngur Sound Sculpture'
+        }, {
+          url: '/audio/ir/york-minster.wav',
+          label: 'York Minster'
+      }],
       labels: [
-        'Hamilton Mausoleum',
-        'Abernyte Grain Silo',
-        'Cripta di San Sebastiano Sternatia',
-        'Domestic Living Room',
-        'Falkland Palace Bottle Dungeon',
-        'R1 Nuclear Reactor Hall',
-        'Slinky',
-        'Tvísöngur Sound Sculpture',
-        'York Minster'
+        
+
+
+
+
+
+
+
+
       ]
     }
   },

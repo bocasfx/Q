@@ -11,8 +11,7 @@ class ReverbPanel extends React.Component {
   constructor(props) {
     super(props);
     this.setProps(props);
-    this.urls = config.fx.reverb.urls;
-    this.labels = config.fx.reverb.labels;
+    this.impulseResponses = config.fx.reverb.impulseResponses;
     this.onIRChange = this.onIRChange.bind(this);
   }
 
@@ -23,16 +22,19 @@ class ReverbPanel extends React.Component {
   setProps(props) {
     qAudioContext.reverbAmount = props.fx.reverb.amount;
     qAudioContext.reverbImpulseResponse = props.fx.reverb.impulseResponse;
+    if (this.refs[props.fx.reverb.impulseResponse]) {
+      this.refs[props.fx.reverb.impulseResponse].selected = true;
+    }
   }
 
   onIRChange(event) {
-    console.log(event.target.value);
+    event.stopPropagation();
     this.props.setReverbImpulseResponse(event.target.value);
   }
 
   renderIRSelect() {
-    return this.urls.map((item, key) => {
-      return <option key={key} value={this.urls[key]}>{this.labels[key]}</option>;
+    return this.impulseResponses.map((item, key) => {
+      return <option ref={this.impulseResponses[key].url} key={key} value={this.impulseResponses[key].url}>{this.impulseResponses[key].label}</option>;
     });
   }
 
@@ -65,7 +67,8 @@ class ReverbPanel extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    fx: state.fx
+    fx: state.fx,
+    app: state.app
   };
 };
 

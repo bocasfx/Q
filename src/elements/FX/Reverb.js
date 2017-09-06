@@ -12,9 +12,10 @@ class Reverb {
     this.input = this.gain;
     this.gain.gain.value = settings.amount;
 
-    this.loadImpulseResponse(settings.urls[0]);
+    this.loadImpulseResponse(settings.impulseResponses[0].url);
 
     this.gain.connect(this.convolver);
+    this._impulseResponse = settings.impulseResponses[0].url;
   }
 
   set amount(value) {
@@ -30,12 +31,11 @@ class Reverb {
   }
 
   get impulseResponse() {
-    return null;
+    return this._impulseResponse;
   }
 
   loadImpulseResponse(url) {
-    console.log(url);
-    if (!url) {
+    if (!url || url === this._impulseResponse) {
       return;
     }
     axios({
@@ -43,12 +43,9 @@ class Reverb {
       url,
       responseType: 'arraybuffer'
     }).then((response) => {
-      console.log('done');
-      // this.convolver = this.audioContext.createConvolver();
-      // this.output = this.convolver;
-      // this.gain.connect(this.convolver);
       this.audioContext.decodeAudioData(response.data, (buffer) => {
         this.convolver.buffer = buffer;
+        this._impulseResponse = url;
       }, (error) => {
         console.log('Error with decoding audio data: ' + error);
       });
