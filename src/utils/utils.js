@@ -66,3 +66,12 @@ export const clip = (value, min, max) => {
 export const timestamp = () => {
   return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
 };
+
+export const buffer2ArrayBuffer = (buffer) => {
+  let arrayBuffer = new ArrayBuffer(buffer.length);
+  let view = new Uint8Array(arrayBuffer);
+  for (let i = 0; i < buffer.length; ++i) {
+      view[i] = buffer[i];
+  }
+  return arrayBuffer;
+};

@@ -124,8 +124,7 @@ class EventHandler {
 
       fs.readFile(fileName, 'utf-8', (err, data) => {
         if (err) {
-          // TODO: Show notification
-          console.log(err);
+          alert(err);
           return;
         }
 
@@ -148,8 +147,7 @@ class EventHandler {
 
       fs.writeFile(fileName, serializer.serialize(state), (err) => {
         if (err) {
-          // TODO: Show notification
-          console.log(err);
+          alert(err);
           return;
         }
       });

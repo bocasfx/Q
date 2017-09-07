@@ -33,8 +33,8 @@ class AudioNode extends Node {
       this.decodedAudioData = buffer;
       this.path = path;
       this.createDataSource();
-    }, () => {
-      // TODO: notification.
+    }, (error) => {
+      alert(error);
     });
   }
 

@@ -1,4 +1,14 @@
-import axios from 'axios';
+import { buffer2ArrayBuffer } from '../../utils/utils';
+
+let fs = null;
+let path = null;
+let remote = null;
+
+if (window.require) {
+  fs = window.require('fs');
+  path = window.require('path');
+  remote = window.require('electron').remote;
+}
 
 class Reverb {
   constructor(audioContext, settings) {
@@ -35,23 +45,24 @@ class Reverb {
   }
 
   loadImpulseResponse(url) {
-    if (!url || url === this._impulseResponse) {
+    if (!url || url === this._impulseResponse || !window.require) {
       return;
     }
-    axios({
-      method: 'get',
-      url,
-      responseType: 'arraybuffer'
-    }).then((response) => {
-      this.audioContext.decodeAudioData(response.data, (buffer) => {
+
+    let filePath = path.join(remote.app.getAppPath(), 'public', url );
+
+    fs.readFile(filePath, (err, dataBuffer) => {
+      if (err) {
+        alert('Unable to load impulse response.\n\n' + err.message);
+        return;
+      }
+      let arrayBuffer = buffer2ArrayBuffer(dataBuffer);
+      this.audioContext.decodeAudioData(arrayBuffer, (buffer) => {
         this.convolver.buffer = buffer;
         this._impulseResponse = url;
       }, (error) => {
-        console.log('Error with decoding audio data: ' + error);
+        alert('Error with decoding audio data: ' + error);
       });
-    })
-    .catch(function (error) {
-      console.log('Unable to load impulse response: ', error);
     });
   }
 

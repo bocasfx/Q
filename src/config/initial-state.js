@@ -23,11 +23,6 @@ module.exports = {
   selection: {
     objType: 'nodes'
   },
-  notifications: {
-    message: '',
-    level: 'info',
-    hidden: true
-  },
   fx: {
     delay: {
       time: 0.5,
@@ -44,7 +39,7 @@ module.exports = {
     },
     reverb: {
       amount: 0,
-      impulseResponse: '/audio/ir/hamilton-mausoleum.wav'
+      impulseResponse: 'audio/ir/hamilton-mausoleum.wav'
     }
   },
   transport: {
