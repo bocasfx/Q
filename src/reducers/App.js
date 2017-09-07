@@ -10,6 +10,11 @@ const hydrationComplete = (state) => {
   return newState;
 };
 
+const setWindowSize = (state, width, height) => {
+  let newState = Object.assign({}, state, {width, height});
+  return newState;
+};
+
 export default (state = app, action) => {
   switch (action.type) {
 
@@ -18,6 +23,9 @@ export default (state = app, action) => {
 
     case 'HYDRATION_COMPLETE':
       return hydrationComplete(state);
+
+    case 'SET_WINDOW_SIZE':
+      return setWindowSize(state, action.width, action.height);
 
     default:
       return state;

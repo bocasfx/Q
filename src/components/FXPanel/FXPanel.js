@@ -5,11 +5,12 @@ import WaveShaperPanel from './WaveShaperPanel';
 import FilterPanel from './FilterPanel';
 import ReverbPanel from './ReverbPanel';
 import config from '../../config/config';
+import { connect } from 'react-redux';
 
 class FXPanel extends React.Component {
   render() {
     let style = {
-      width: window.innerWidth - config.controlPanel.width - config.menu.width
+      width: this.props.app.width - config.controlPanel.width - config.menu.width
     };
     return (
       <div className="fx-panel-main-container" style={style}>
@@ -22,4 +23,10 @@ class FXPanel extends React.Component {
   }
 }
 
-export default FXPanel;
+const mapStateToProps = (state) => {
+  return {
+    app: state.app
+  };
+};
+
+module.exports = connect(mapStateToProps)(FXPanel);

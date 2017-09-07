@@ -437,8 +437,8 @@ class Canvas extends React.Component {
       <canvas
         draggable="true"
         ref="canvas"
-        width={window.innerWidth - config.controlPanel.width - config.menu.width}
-        height={window.innerHeight - config.fxPanel.height - config.transport.height}
+        width={this.props.app.width - config.controlPanel.width - config.menu.width}
+        height={this.props.app.height - config.fxPanel.height - config.transport.height}
         onMouseMove={this.onMouseMove}
         onMouseDown={this.onMouseDown}
         onMouseUp={this.onMouseUp}
@@ -454,7 +454,8 @@ const mapStateToProps = (state) => {
     nodes: state.nodes,
     streams: state.streams,
     collisions: state.Collisions,
-    transport: state.transport
+    transport: state.transport,
+    app: state.app
   };
 };
 
