@@ -9,7 +9,6 @@ import Mixer from './components/Mixer/Mixer';
 import ControlPanel from './components/ControlPanel/ControlPanel';
 import FXPanel from './components/FXPanel/FXPanel';
 import Transport from './components/Transport/Transport';
-import Toaster from './components/UI/Toaster';
 import midiContext from './app/context/MIDIContext';
 import EventHandler from './app/EventHandler';
 import hydrator from './app/Hydrator';
@@ -18,7 +17,6 @@ const renderDom = () => {
   ReactDOM.render(
     <Provider store={store}>
       <div>
-        <Toaster/>
         <Mixer/>
         <div className="main-container">
           <Menu/>

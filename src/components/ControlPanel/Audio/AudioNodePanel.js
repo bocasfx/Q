@@ -58,15 +58,14 @@ class AudioNodePanel extends React.Component {
 
   onFileOpen() {
     if (!dialog || !fs) {
-      console.error('This feature is not available on the browser version of Q.');
+      alert('This feature is not available on the browser version of Q.');
       return;
     }
 
     dialog.showOpenDialog({properties: ['openFile']}, (files) => {
       fs.readFile(files[0], (err, dataBuffer) => {
         if (err) {
-          // TODO: Show notification
-          console.log(err);
+          alert(err);
           return;
         }
         this.props.setNodeSource(this.props.node.id, dataBuffer, files[0]);

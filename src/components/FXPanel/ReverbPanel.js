@@ -67,7 +67,6 @@ class ReverbPanel extends React.Component {
   openLinkInBrowser(event) {
     let url = event.target.attributes['data-url'].nodeValue;
     if (shell) {
-      console.log(url);
       shell.openExternal(url);
     }
   }

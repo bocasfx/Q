@@ -390,8 +390,7 @@ const createNode = (node) => {
       if (node.topLevel.path) {
         fs.readFile(node.topLevel.path, (err, dataBuffer) => {
           if (err) {
-            // TODO: Show notification
-            console.log(err);
+            alert(err);
             return;
           }
           newAudioNode.setAudioSrc(dataBuffer, node.topLevel.path);

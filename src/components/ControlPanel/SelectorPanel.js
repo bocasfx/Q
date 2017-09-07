@@ -43,7 +43,7 @@ class SelectorPanel extends React.Component {
 
   onCloneNode(id, event) {
     event.preventDefault();
-    console.log('TODO');
+    alert('TODO');
     event.stopPropagation();
   }
 
