@@ -12,7 +12,6 @@
     "url": "r.palacios.ca"
   },
   "dependencies": {
-    "axios": "^0.16.2",
     "rc-slider": "^6.3.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
