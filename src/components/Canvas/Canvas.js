@@ -30,6 +30,8 @@ class Canvas extends React.Component {
     this.onMouseDown = this.onMouseDown.bind(this);
     this.onMouseMove = this.onMouseMove.bind(this);
     this.onMouseUp = this.onMouseUp.bind(this);
+    this.onMouseLeave = this.onMouseLeave.bind(this);
+    this.onMouseUpOrLeaveHandler = this.onMouseUpOrLeaveHandler.bind(this);
     this.selectNode = this.selectNode.bind(this);
     this.draw = this.draw.bind(this);
     this.flow = this.flow.bind(this);
@@ -125,6 +127,16 @@ class Canvas extends React.Component {
 
   onMouseUp(event) {
     event.preventDefault();
+    this.onMouseUpOrLeaveHandler(event);
+  }
+
+  onMouseLeave(event) {
+    if (this.state.mouseDown) {
+      this.onMouseUpOrLeaveHandler(event);
+    }
+  }
+
+  onMouseUpOrLeaveHandler(event) {
     this.setState({mouseDown: false});
     if (this.props.devices.streams || this.props.devices.circularStreams || this.props.devices.linearStreams) {
       let streams = this.props.streams;
@@ -442,6 +454,7 @@ class Canvas extends React.Component {
         onMouseMove={this.onMouseMove}
         onMouseDown={this.onMouseDown}
         onMouseUp={this.onMouseUp}
+        onMouseLeave={this.onMouseLeave}
         style={canvasStyle}
       />
     );
