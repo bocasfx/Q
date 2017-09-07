@@ -82,8 +82,11 @@ class EventHandler {
     };
 
     window.onresize = () => {
-      this.saveContent();
-      location.reload();
+      store.dispatch({
+        type: 'SET_WINDOW_SIZE',
+        width: window.innerWidth,
+        height: window.innerHeight
+      });
     };
   }
 

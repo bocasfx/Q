@@ -9,3 +9,11 @@ export const hydrationComplete = () => {
     type: 'HYDRATION_COMPLETE'
   };
 };
+
+export const setWindowSize = (width, height) => {
+  return {
+    type: 'SET_WINDOW_SIZE',
+    width,
+    height
+  };
+};
