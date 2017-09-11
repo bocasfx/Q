@@ -2,6 +2,8 @@
 
 The Q Nodular Bass Synthesizer/Sequencer is a musical instrument controlled by interactions between nodes and particle streams.
 
+![Q](./resources/docs/ui.png)
+
 ## Nodes
 
 - **Synth**
