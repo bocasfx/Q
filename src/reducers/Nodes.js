@@ -126,7 +126,7 @@ const cloneNode = (state, id) => {
       clonedNode.name = node.name;
       clonedNode.pan = node.pan;
       clonedNode.particleQueue = [];
-      clonedNode.position = node.position;
+      clonedNode.position = [node.position[0] + 25, node.position[1] - 25];
       clonedNode.probability = node.probability;
       clonedNode.selected = node.selected;
       clonedNode.volume = node.volume;
@@ -141,8 +141,8 @@ const cloneNode = (state, id) => {
       clonedNode.id = uuidv1();
       clonedNode.osc1Freq = node.osc1Freq;
       clonedNode.osc2Freq = node.osc2Freq;
-      clonedNode.osc1WaveType = node.osc1WaveType;
-      clonedNode.osc2WaveType = node.osc2WaveType;
+      clonedNode.osc1WaveType = node.oscillator1.oscillator.type;
+      clonedNode.osc2WaveType = node.oscillator2.oscillator.type;
       clonedNode.osc1Gain = node.osc1Gain;
       clonedNode.osc2Gain = node.osc2Gain;
       clonedNode.noiseGain = node.noiseGain;
