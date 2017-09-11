@@ -62,7 +62,7 @@ The Q Nodular Bass Synthesizer/Sequencer is a musical instrument controlled by i
 - **Reverb**
 
   - Amount control
-  - The following impulse responses are available:
+  - Impulse responses:
     - [Hamilton Mausoleum](http://www.openairlib.net/auralizationdb/content/hamilton-mausoleum)
     - [Abernyte Grain Silo](http://www.openairlib.net/auralizationdb/content/abernyte-grain-silo)
     - [Falkland Palace Bottle Dungeon](http://www.openairlib.net/auralizationdb/content/falkland-palace-bottle-dungeon)
