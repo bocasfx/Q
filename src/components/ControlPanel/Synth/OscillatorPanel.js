@@ -135,8 +135,8 @@ class OscillatorPanel extends React.Component {
           <Knob
             label={'Frequency'}
             value={this.props.oscillator.frequency}
-            min={20}
-            max={2000}
+            min={30.868}
+            max={391.995}
             onChange={this.onFreqChange}
             disabled={!this.state.checked || this.state.disabled}
             type={this.props.type}/>

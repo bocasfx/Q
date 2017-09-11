@@ -1,7 +1,7 @@
 const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
-// const electronMenu = require('./electron-menu');
+const electronMenu = require('./electron-menu');
 
 const url = require('url');
 const path = require('path');
@@ -24,7 +24,7 @@ function createWindow() {
     slashes: true
   });
   mainWindow.loadURL(startUrl);
-  // electronMenu.setMainMenu();
+  electronMenu.setMainMenu();
 
   if (process.env.ELECTRON_START_URL) {
     mainWindow.webContents.openDevTools();

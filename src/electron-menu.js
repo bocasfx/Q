@@ -1,4 +1,6 @@
 const { app, Menu } = require('electron');
+const path = require('path');
+const openAboutWindow = require('about-window');
 
 function setMainMenu() {
 
@@ -54,7 +56,7 @@ function setMainMenu() {
         {
           label: 'Learn More',
           click() { 
-            require('electron').shell.openExternal('https://electron.atom.io');
+            require('electron').shell.openExternal('https://github.com/bocasfx/Q');
           }
         }
       ]
@@ -64,7 +66,15 @@ function setMainMenu() {
   template.unshift({
     label: app.getName(),
     submenu: [
-      {role: 'about'},
+      {
+        role: 'aboot',
+        label: 'Aboot Q',
+        click: () => openAboutWindow.default({
+          'icon_path': path.join(app.getAppPath(), 'resources/icon/icon.png'),
+          license: 'Creative Commons (BY-NC-SA 4.0)',
+          description: 'Nodular Synthesizer/Sequencer'
+        })
+      },
       {type: 'separator'},
       {role: 'services', submenu: []},
       {type: 'separator'},
