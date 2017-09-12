@@ -8,6 +8,7 @@ class WaveShaper {
 
     this.output = this.shaper;
     this.input = this.shaper;
+    this.disabled = false;
   }
 
   set amount(value) {

@@ -13,6 +13,7 @@ class Filter {
     this.filterEnvelopeGenerator.attack = settings.attack;
     this.filterEnvelopeGenerator.release = settings.release;
     this._frequency = this.filter.frequency;
+    this.disabled = false;
   }
 
   set q(value) {

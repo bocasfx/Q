@@ -5,7 +5,8 @@ import { bindActionCreators } from 'redux';
 import {
   setFilterCutoffFrequency,
   setFilterQ,
-  setFilterAttack } from '../../actions/FX';
+  setFilterAttack,
+  setFilterDisabled } from '../../actions/FX';
 import qAudioContext from '../../app/context/QAudioContext';
 import Switch from '../UI/Switch';
 
@@ -14,10 +15,23 @@ class FilterPanel extends React.Component {
   constructor(props) {
     super(props);
     this.setProps(props);
+    this.onBypassChange = this.onBypassChange.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     this.setProps(nextProps);
+    if (nextProps.fx.filter.disabled !== this.props.fx.filter.disabled) {
+      let previousOutput = nextProps.fx.waveShaper.disabled ? qAudioContext.fxDestination : qAudioContext.waveShaper.output;
+      let nextInput = nextProps.fx.delay.disabled ? (nextProps.fx.reverb.disabled ? qAudioContext.ctx.destination : qAudioContext.reverb.input) : qAudioContext.delay.input;
+      previousOutput.disconnect();
+      if (nextProps.fx.filter.disabled) {
+        previousOutput.connect(nextInput);
+      } else {
+        qAudioContext.filter.output.disconnect;
+        qAudioContext.filter.connect(nextInput);
+        previousOutput.connect(qAudioContext.filter.input);
+      }
+    }
   }
 
   setProps(props) {
@@ -28,7 +42,7 @@ class FilterPanel extends React.Component {
   }
 
   onBypassChange(event) {
-    console.log(!event.target.checked);
+    this.props.setFilterDisabled(!event.target.checked);
   }
 
   render() {
@@ -36,23 +50,23 @@ class FilterPanel extends React.Component {
       <div className="fx-panel-item">
         <div className="fx-panel-title">Filter</div>
         <div className="fx-panel fx-panel-border-left">
-          <div className="fx-panel-knob-container">
+          <div className="fx-panel-knob-container fx-panel-align-top">
             <Knob
               label={'Cutoff'}
               value={this.props.fx.filter.cutoffFrequency}
               min={100}
               max={20000}
               onChange={this.props.setFilterCutoffFrequency}
-              disabled={false}
+              disabled={this.props.fx.filter.disabled}
               type="synth"/>
-            <Switch onChange={this.onBypassChange}/>
+            <Switch onChange={this.onBypassChange} checked={!this.props.fx.filter.disabled}/>
             <Knob
               label={'Attack'}
               value={this.props.fx.filter.attack}
               min={0}
               max={1}
               onChange={this.props.setFilterAttack}
-              disabled={false}
+              disabled={this.props.fx.filter.disabled}
               type="synth"/>
           </div>
           <div className="fx-panel-knob-container">
@@ -62,7 +76,7 @@ class FilterPanel extends React.Component {
               min={0}
               max={50}
               onChange={this.props.setFilterQ}
-              disabled={false}
+              disabled={this.props.fx.filter.disabled}
               type="synth"/>
           </div>
         </div>
@@ -81,7 +95,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setFilterCutoffFrequency: bindActionCreators(setFilterCutoffFrequency, dispatch),
     setFilterQ: bindActionCreators(setFilterQ, dispatch),
-    setFilterAttack: bindActionCreators(setFilterAttack, dispatch)
+    setFilterAttack: bindActionCreators(setFilterAttack, dispatch),
+    setFilterDisabled: bindActionCreators(setFilterDisabled, dispatch)
   };
 };
 

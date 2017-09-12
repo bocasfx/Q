@@ -28,20 +28,24 @@ module.exports = {
   fx: {
     delay: {
       time: 0.5,
-      feedback: 0.0
+      feedback: 0.0,
+      disabled: false
     },
     filter: {
       q: 0,
       cutoffFrequency: 2000,
-      attack: 0
+      attack: 0,
+      disabled: false
     },
     waveShaper: {
       amount: 0,
-      oversample: '4x'
+      oversample: '4x',
+      disabled: false
     },
     reverb: {
       amount: 0,
-      impulseResponse: 'audio/ir/hamilton-mausoleum.wav'
+      impulseResponse: 'audio/ir/hamilton-mausoleum.wav',
+      disabled: false
     }
   },
   transport: {

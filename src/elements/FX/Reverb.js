@@ -26,6 +26,7 @@ class Reverb {
 
     this.gain.connect(this.convolver);
     this._impulseResponse = settings.impulseResponses[0].url;
+    this.disabled = false;
   }
 
   set amount(value) {

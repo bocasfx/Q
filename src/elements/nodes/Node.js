@@ -11,7 +11,6 @@ class Node {
     this.selected = false;
     this.activeStatus = false;
     this.particleQueue = [];
-    this.volume = 0.2;
     this._disabled = false;
     this.pan = 0;
     this.links = [];
@@ -46,6 +45,8 @@ class Node {
   get osc1Gain() {}
   set osc2Gain(value) {}
   get osc2Gain() {}
+  set volume(value) {}
+  get volume() {}
 
   set disabled(value) {
     this._disabled = value;
