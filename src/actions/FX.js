@@ -47,6 +47,13 @@ export const setWaveShaperAmount = (value) => {
   };
 };
 
+export const setWaveShaperDisabled = (value) => {
+  return {
+    type: 'SET_WAVE_SHAPER_DISABLED',
+    value
+  };
+};
+
 export const setReverbAmount = (value) => {
   return {
     type: 'SET_REVERB_AMOUNT',

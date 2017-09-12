@@ -7,6 +7,7 @@ import {
   setFilterQ,
   setFilterAttack } from '../../actions/FX';
 import qAudioContext from '../../app/context/QAudioContext';
+import Switch from '../UI/Switch';
 
 class FilterPanel extends React.Component {
 
@@ -26,6 +27,10 @@ class FilterPanel extends React.Component {
     qAudioContext.filterRelease = props.fx.filter.release;
   }
 
+  onBypassChange(event) {
+    console.log(!event.target.checked);
+  }
+
   render() {
     return (
       <div className="fx-panel-item">
@@ -40,6 +45,7 @@ class FilterPanel extends React.Component {
               onChange={this.props.setFilterCutoffFrequency}
               disabled={false}
               type="synth"/>
+            <Switch onChange={this.onBypassChange}/>
             <Knob
               label={'Attack'}
               value={this.props.fx.filter.attack}
