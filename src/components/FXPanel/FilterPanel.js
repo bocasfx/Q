@@ -27,7 +27,7 @@ class FilterPanel extends React.Component {
       if (nextProps.fx.filter.disabled) {
         previousOutput.connect(nextInput);
       } else {
-        qAudioContext.filter.output.disconnect;
+        qAudioContext.filter.output.disconnect();
         qAudioContext.filter.connect(nextInput);
         previousOutput.connect(qAudioContext.filter.input);
       }

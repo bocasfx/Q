@@ -19,6 +19,13 @@ export const setDelayCutoffFrequency = (value) => {
   };
 };
 
+export const setDelayDisabled = (value) => {
+  return {
+    type: 'SET_DELAY_DISABLED',
+    value
+  };
+};
+
 export const setFilterCutoffFrequency = (value) => {
   return {
     type: 'SET_FILTER_CUTOFF_FREQUENCY',
