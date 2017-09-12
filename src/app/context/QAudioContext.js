@@ -17,8 +17,9 @@ class QAudioContext {
     this.fxDestination.connect(this.waveShaper.input, 0, 0);
     this.waveShaper.connect(this.filter);
     this.filter.connect(this.delay.input);
+    this.filter.connect(this.destination);
     this.delay.connect(this.reverb.input);
-    this.reverb.connect(this.ctx.destination);
+    this.reverb.connect(this.destination);
   }
 
   get destination() {

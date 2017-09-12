@@ -61,6 +61,11 @@ const setReverbImpulseResponse = (state, value) => {
   return Object.assign({}, state, {reverb: newFilter});
 };
 
+const setReverbDisabled = (state, value) => {
+  let newFilter = Object.assign({}, state.reverb, { disabled: value }); 
+  return Object.assign({}, state, {reverb: newFilter});
+};
+
 const hydrateFx = (state, payload) => {
   qAudioContext.filterCutoffFrequency = payload.filter.cutoffFrequency;
   qAudioContext.filterQ = payload.filter.q;
@@ -117,6 +122,9 @@ export default (state = fx, action) => {
 
     case 'SET_REVERB_IMPULSE_RESPONSE':
       return setReverbImpulseResponse(state, action.value);
+
+    case 'SET_REVERB_DISABLED':
+      return setReverbDisabled(state, action.value);
 
     default:
       return state;

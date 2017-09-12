@@ -41,7 +41,7 @@ class SynthNode extends Node {
     this.amplifier.connect(this._sendFXGain);
     this.amplifier.connect(this._mainGain);
 
-    this._mainGain.connect(qAudioContext.ctx.destination);
+    this._mainGain.connect(qAudioContext.destination);
     this._mainGain.gain.value = 0.2;
 
     this._sendFXGain.connect(qAudioContext.fxDestination);
