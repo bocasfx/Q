@@ -16,6 +16,11 @@ const setDelayCutoffFrequency = (state, value) => {
   return Object.assign({}, state, {delay: newDelay});
 };
 
+const setDelayDisabled = (state, value) => {
+  let newDelay = Object.assign({}, state.delay, { disabled: value }); 
+  return Object.assign({}, state, {delay: newDelay});
+};
+
 const setFilterCutoffFrequency = (state, value) => {
   let newFilter = Object.assign({}, state.filter, { cutoffFrequency: value }); 
   return Object.assign({}, state, {filter: newFilter});
@@ -82,6 +87,9 @@ export default (state = fx, action) => {
 
     case 'SET_DELAY_CUTOFF_FREQUENCY':
       return setDelayCutoffFrequency(state, action.value);
+
+    case 'SET_DELAY_DISABLED':
+      return setDelayDisabled(state, action.value);
 
     case 'SET_FILTER_CUTOFF_FREQUENCY':
       return setFilterCutoffFrequency(state, action.value);

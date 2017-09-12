@@ -5,7 +5,8 @@ import { bindActionCreators } from 'redux';
 import {
   setDelayTime,
   setDelayFeedback,
-  setDelayCutoffFrequency } from '../../actions/FX';
+  setDelayCutoffFrequency,
+  setDelayDisabled } from '../../actions/FX';
 import qAudioContext from '../../app/context/QAudioContext';
 import Switch from '../UI/Switch';
 
@@ -14,10 +15,23 @@ class DelayPanel extends React.Component {
   constructor(props) {
     super(props);
     this.setProps(props);
+    this.onBypassChange = this.onBypassChange.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     this.setProps(nextProps);
+    if (nextProps.fx.delay.disabled !== this.props.fx.delay.disabled) {
+      let previousOutput = nextProps.fx.filter.disabled ? (nextProps.fx.waveShaper.disabled ? qAudioContext.fxDestination : qAudioContext.waveShaper.output) : qAudioContext.filter.output;
+      let nextInput = nextProps.fx.reverb.disabled ? qAudioContext.ctx.destination : qAudioContext.reverb.input;
+      previousOutput.disconnect();
+      if (nextProps.fx.delay.disabled) {
+        previousOutput.connect(nextInput);
+      } else {
+        qAudioContext.delay.output.disconnect();
+        qAudioContext.delay.connect(nextInput);
+        previousOutput.connect(qAudioContext.delay.input);
+      }
+    }
   }
 
   setProps(props) {
@@ -27,7 +41,7 @@ class DelayPanel extends React.Component {
   }
 
   onBypassChange(event) {
-    console.log(!event.target.checked);
+    this.props.setDelayDisabled(!event.target.checked);
   }
 
   render() {
@@ -72,7 +86,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     setDelayTime: bindActionCreators(setDelayTime, dispatch),
     setDelayFeedback: bindActionCreators(setDelayFeedback, dispatch),
-    setDelayCutoffFrequency: bindActionCreators(setDelayCutoffFrequency, dispatch)
+    setDelayCutoffFrequency: bindActionCreators(setDelayCutoffFrequency, dispatch),
+    setDelayDisabled: bindActionCreators(setDelayDisabled, dispatch)
   };
 };
 
