@@ -7,6 +7,7 @@ import {
   setDelayFeedback,
   setDelayCutoffFrequency } from '../../actions/FX';
 import qAudioContext from '../../app/context/QAudioContext';
+import Switch from '../UI/Switch';
 
 class DelayPanel extends React.Component {
 
@@ -25,11 +26,18 @@ class DelayPanel extends React.Component {
     qAudioContext.cutoffFrequency = props.fx.delay.cutoffFrequency;
   }
 
+  onBypassChange(event) {
+    console.log(!event.target.checked);
+  }
+
   render() {
     return (
       <div className="fx-panel-item">
         <div className="fx-panel-title">Delay</div>
         <div className="fx-panel fx-panel-border-left">
+          <div className="fx-panel-centered">
+            <Switch onChange={this.onBypassChange}/>
+          </div>
           <div className="fx-panel-knob-container fx-panel-full-height">
             <Knob
               label={'Time'}

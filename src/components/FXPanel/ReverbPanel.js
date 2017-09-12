@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { setReverbAmount, setReverbImpulseResponse } from '../../actions/FX';
 import qAudioContext from '../../app/context/QAudioContext';
 import config from '../../config/config';
+import Switch from '../UI/Switch';
 
 let shell = null;
 
@@ -88,11 +89,18 @@ class ReverbPanel extends React.Component {
     return [label, info, link];
   }
 
+  onBypassChange(event) {
+    console.log(!event.target.checked);
+  }
+
   render() {
     return (
       <div className="fx-panel-item">
         <div className="fx-panel-title">Reverb</div>
         <div className="fx-panel fx-panel-border-left fx-panel-border-right">
+          <div className="fx-panel-centered">
+            <Switch onChange={this.onBypassChange}/>
+          </div>
           <div className="fx-panel-info" hidden={!this.state.showReverbInfo}>
             <i className="fa fa-close" onClick={this.hideReverbInfo}></i>
             

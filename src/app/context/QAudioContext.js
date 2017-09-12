@@ -8,6 +8,7 @@ class QAudioContext {
   constructor() {
     this.ctx = new (window.AudioContext || window.webkitAudioContext)();
 
+    this.fxDestination = this.ctx.createChannelMerger(2);
     this.waveShaper = new WaveShaper(this.ctx, config.fx.waveShaper);
     this.filter = new Filter(this.ctx, config.fx.filter);
     this.filterSplitter = this.ctx.createChannelSplitter(2);
@@ -15,16 +16,7 @@ class QAudioContext {
     this.delaySplitter = this.ctx.createChannelSplitter(2);
     this.reverb = new Reverb(this.ctx, config.fx.reverb);
 
-    //                                                     +-------+                            +--------+
-    //                                                     |       |                            |        |
-    // +------------+     +--------+    +-------+     +----+ Delay +-----+    +-------+    +----> Reverb +----+    +-----+
-    // |            |     |        |    |       |     |    |       |     |    |       |    |    |        |    |    |     |
-    // | Distortion +-----> Filter +----+ Split +----->    +-------+     +----> Split +----+    +--------+    +----> CTX |
-    // |            |     |        |    |       |     |                  |    |       |    |                  |    |     |
-    // +------------+     +--------+    +-------+     +------------------+    +-------+    +------------------+    +-----+
-    //
-    //
-
+    this.fxDestination.connect(this.waveShaper.input, 0, 0);
     this.waveShaper.connect(this.filter);
     this.filter.connect(this.filterSplitter);
     this.filterSplitter.connect(this.delay.input, 0);
@@ -33,10 +25,6 @@ class QAudioContext {
     this.delaySplitter.connect(this.reverb.input, 0);
     this.delaySplitter.connect(this.ctx.destination);
     this.reverb.connect(this.ctx.destination);
-  }
-
-  get fxDestination() {
-    return this.waveShaper;
   }
 
   get destination() {
