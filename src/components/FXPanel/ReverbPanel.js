@@ -2,7 +2,7 @@ import React from 'react';
 import Knob from '../UI/Knob';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setReverbAmount, setReverbImpulseResponse } from '../../actions/FX';
+import { setReverbAmount, setReverbImpulseResponse, setReverbDisabled } from '../../actions/FX';
 import qAudioContext from '../../app/context/QAudioContext';
 import config from '../../config/config';
 import Switch from '../UI/Switch';
@@ -28,10 +28,26 @@ class ReverbPanel extends React.Component {
     this.showReverbInfo = this.showReverbInfo.bind(this);
     this.hideReverbInfo = this.hideReverbInfo.bind(this);
     this.renderImpulseResponseInfo = this.renderImpulseResponseInfo.bind(this);
+    this.onBypassChange = this.onBypassChange.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     this.setProps(nextProps);
+    if (nextProps.fx.reverb.disabled !== this.props.fx.reverb.disabled) {
+      let previousOutput = nextProps.fx.delay.disabled ? (nextProps.fx.filter.disabled ? (nextProps.fx.waveShaper.disabled ? qAudioContext.fxDestination : qAudioContext.waveShaper.output) : qAudioContext.filter.output) : qAudioContext.delay.output;
+      let nextInput = qAudioContext.destination;
+      previousOutput.disconnect();
+      qAudioContext.reverb.output.disconnect();
+      if (nextProps.fx.reverb.disabled) {
+        previousOutput.connect(nextInput);
+      } else {
+        qAudioContext.reverb.connect(nextInput);
+        previousOutput.connect(qAudioContext.reverb.input);
+      }
+      if (!nextProps.fx.delay.disabled) {
+        previousOutput.connect(qAudioContext.delay.input);
+      }
+    }
   }
 
   setProps(props) {
@@ -90,7 +106,7 @@ class ReverbPanel extends React.Component {
   }
 
   onBypassChange(event) {
-    console.log(!event.target.checked);
+    this.props.setReverbDisabled(!event.target.checked);
   }
 
   render() {
@@ -142,7 +158,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     setReverbAmount: bindActionCreators(setReverbAmount, dispatch),
-    setReverbImpulseResponse: bindActionCreators(setReverbImpulseResponse, dispatch)
+    setReverbImpulseResponse: bindActionCreators(setReverbImpulseResponse, dispatch),
+    setReverbDisabled: bindActionCreators(setReverbDisabled, dispatch)
   };
 };
 

@@ -82,6 +82,13 @@ export const setReverbImpulseResponse = (value) => {
   };
 };
 
+export const setReverbDisabled = (value) => {
+  return {
+    type: 'SET_REVERB_DISABLED',
+    value
+  };
+};
+
 export const hydrateFx = (payload) => {
   return {
     type: 'HYDRATE_FX',

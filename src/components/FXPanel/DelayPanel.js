@@ -22,13 +22,14 @@ class DelayPanel extends React.Component {
     this.setProps(nextProps);
     if (nextProps.fx.delay.disabled !== this.props.fx.delay.disabled) {
       let previousOutput = nextProps.fx.filter.disabled ? (nextProps.fx.waveShaper.disabled ? qAudioContext.fxDestination : qAudioContext.waveShaper.output) : qAudioContext.filter.output;
-      let nextInput = nextProps.fx.reverb.disabled ? qAudioContext.ctx.destination : qAudioContext.reverb.input;
+      let nextInput = nextProps.fx.reverb.disabled ? qAudioContext.destination : qAudioContext.reverb.input;
       previousOutput.disconnect();
+      qAudioContext.delay.output.disconnect();
       if (nextProps.fx.delay.disabled) {
         previousOutput.connect(nextInput);
       } else {
-        qAudioContext.delay.output.disconnect();
         qAudioContext.delay.connect(nextInput);
+        qAudioContext.delay.connect(qAudioContext.delay.input);
         previousOutput.connect(qAudioContext.delay.input);
       }
     }
