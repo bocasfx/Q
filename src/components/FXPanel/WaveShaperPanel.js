@@ -16,12 +16,26 @@ class WaveShaperPanel extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setProps(nextProps);
-    // qAudioContext.fxDestination.disconnect();
-    // if (nextProps.fx.waveShaper.disabled) {
-    //   qAudioContext.fxDestination.connect(qAudioContext.filter.input);
-    // } else {
-    //   qAudioContext.fxDestination.connect(qAudioContext.waveShaper.input);
-    // }
+    if (nextProps.fx.waveShaper.disabled !== this.props.fx.waveShaper.disabled) {
+
+      let previousOutput = qAudioContext.fxDestination;
+      let nextInput = nextProps.fx.filter.disabled ? (nextProps.fx.delay.disabled ? (nextProps.fx.reverb.disabled ? qAudioContext.ctx.destination : qAudioContext.reverb.input) : qAudioContext.delay.input) : qAudioContext.filter.input;
+      previousOutput.disconnect();
+      if (nextProps.fx.waveShaper.disabled) {
+        previousOutput.connect(nextInput);
+      } else {
+        qAudioContext.waveShaper.output.disconnect();
+        qAudioContext.waveShaper.connect(nextInput);
+        previousOutput.connect(qAudioContext.waveShaper.input);
+      }
+
+      // qAudioContext.fxDestination.disconnect();
+      // if (nextProps.fx.waveShaper.disabled) {
+      //   qAudioContext.fxDestination.connect(qAudioContext.filter.input);
+      // } else {
+      //   qAudioContext.fxDestination.connect(qAudioContext.waveShaper.input);
+      // }
+    }
   }
 
   setProps(props) {
@@ -39,7 +53,7 @@ class WaveShaperPanel extends React.Component {
         <div className="fx-panel fx-panel-border-left">
           <div className="fx-panel-full-height">
             <div className="fx-panel-centered">
-              <Switch onChange={this.onBypassChange}/>
+              <Switch onChange={this.onBypassChange} checked={!this.props.fx.waveShaper.disabled}/>
             </div>
             <div className="fx-panel-knob-container fx-panel-full-height">
               <Knob

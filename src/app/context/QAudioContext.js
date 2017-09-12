@@ -8,22 +8,16 @@ class QAudioContext {
   constructor() {
     this.ctx = new (window.AudioContext || window.webkitAudioContext)();
 
-    this.fxDestination = this.ctx.createChannelMerger(2);
+    this.fxDestination = this.ctx.createGain();
     this.waveShaper = new WaveShaper(this.ctx, config.fx.waveShaper);
     this.filter = new Filter(this.ctx, config.fx.filter);
-    this.filterSplitter = this.ctx.createChannelSplitter(2);
     this.delay = new Delay(this.ctx, config.fx.delay);
-    this.delaySplitter = this.ctx.createChannelSplitter(2);
     this.reverb = new Reverb(this.ctx, config.fx.reverb);
 
     this.fxDestination.connect(this.waveShaper.input, 0, 0);
     this.waveShaper.connect(this.filter);
-    this.filter.connect(this.filterSplitter);
-    this.filterSplitter.connect(this.delay.input, 0);
-    this.filterSplitter.connect(this.delaySplitter, 1);
-    this.delay.connect(this.delaySplitter);
-    this.delaySplitter.connect(this.reverb.input, 0);
-    this.delaySplitter.connect(this.ctx.destination);
+    this.filter.connect(this.delay.input);
+    this.delay.connect(this.reverb.input);
     this.reverb.connect(this.ctx.destination);
   }
 

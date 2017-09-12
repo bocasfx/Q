@@ -40,6 +40,13 @@ export const setFilterAttack = (value) => {
   };
 };
 
+export const setFilterDisabled = (value) => {
+  return {
+    type: 'SET_FILTER_DISABLED',
+    value
+  };
+};
+
 export const setWaveShaperAmount = (value) => {
   return {
     type: 'SET_WAVE_SHAPER_AMOUNT',

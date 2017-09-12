@@ -7,17 +7,17 @@ class AmpEnvelopeGenerator {
     this.decay = envelope.decay;
   }
 
-  trigger(volume, pan) {
+  trigger(pan) {
     let panL = pan <= 0 ? 1 : 1 - pan;
     let panR = pan >= 0 ? 1 : 1 - (-1 * pan);
     let now = audioContext.currentTime;
     this.paramL.cancelScheduledValues(now);
     this.paramL.linearRampToValueAtTime(0.01, now);
-    this.paramL.linearRampToValueAtTime(volume * panL, now + this.attack);
+    this.paramL.linearRampToValueAtTime(panL, now + this.attack);
 
     this.paramR.cancelScheduledValues(now);
     this.paramR.linearRampToValueAtTime(0.01, now);
-    this.paramR.linearRampToValueAtTime(volume * panR, now + this.attack);
+    this.paramR.linearRampToValueAtTime(panR, now + this.attack);
   }
 
   close() {

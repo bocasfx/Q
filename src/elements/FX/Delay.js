@@ -14,6 +14,8 @@ class Delay {
 
     this.delay.delayTime.value = settings.time;
     this.gain.gain.value = settings.feedback;
+
+    this.disabled = false;
   }
 
   set time(value) {

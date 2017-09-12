@@ -36,7 +36,7 @@ class DelayPanel extends React.Component {
         <div className="fx-panel-title">Delay</div>
         <div className="fx-panel fx-panel-border-left">
           <div className="fx-panel-centered">
-            <Switch onChange={this.onBypassChange}/>
+            <Switch onChange={this.onBypassChange} checked={!this.props.fx.delay.disabled}/>
           </div>
           <div className="fx-panel-knob-container fx-panel-full-height">
             <Knob
@@ -45,7 +45,7 @@ class DelayPanel extends React.Component {
               min={0}
               max={1}
               onChange={this.props.setDelayTime}
-              disabled={false}
+              disabled={this.props.fx.delay.disabled}
               type="synth"/>
             <Knob
               label={'Feedback'}
@@ -53,7 +53,7 @@ class DelayPanel extends React.Component {
               min={0}
               max={1}
               onChange={this.props.setDelayFeedback}
-              disabled={false}
+              disabled={this.props.fx.delay.disabled}
               type="synth"/>
           </div>
         </div>

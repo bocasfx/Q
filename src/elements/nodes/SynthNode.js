@@ -15,6 +15,7 @@ class SynthNode extends Node {
     this.oscillator2 = new Oscillator();
     this.amplifier = new Amplifier();
     this._sendFXGain = qAudioContext.ctx.createGain();
+    this._mainGain = qAudioContext.ctx.createGain();
     this.noiseGenerator = new NoiseGenerator();
     this.ampEnvelopeGenerator = new AmpEnvelopeGenerator(config.synth.envelope);
 
@@ -37,10 +38,14 @@ class SynthNode extends Node {
     this._noiseGain.connect(this.amplifier.input);
 
     this.ampEnvelopeGenerator.connect(this.amplifier.amplitudeL, this.amplifier.amplitudeR);
-    this.amplifier.connect(qAudioContext.destination);
     this.amplifier.connect(this._sendFXGain);
+    this.amplifier.connect(this._mainGain);
+
+    this._mainGain.connect(qAudioContext.ctx.destination);
+    this._mainGain.gain.value = 0.2;
+
     this._sendFXGain.connect(qAudioContext.fxDestination);
-    this._sendFXGain.volume = 0;
+    this._sendFXGain.gain.value = 0.2;
 
     this.type = 'synth';
 
@@ -127,12 +132,20 @@ class SynthNode extends Node {
     return this._osc2Gain.gain.value;
   }
 
+  set volume(value) {
+    this._mainGain.gain.value = value;
+  }
+
+  get volume() {
+    return this._mainGain.gain.value;
+  }
+
   play() {
     if (this.active || this._disabled || !this.shouldPlay) {
       return;
     }
     this.active = true;
-    this.ampEnvelopeGenerator.trigger(this.volume, this.pan);
+    this.ampEnvelopeGenerator.trigger(this.pan);
     qAudioContext.triggerFilter();
   }
 

@@ -96,3 +96,7 @@
 .fx-panel-info a {
   color: darkorange;
 }
+
+.fx-panel-align-top {
+  align-items: flex-start;;
+}

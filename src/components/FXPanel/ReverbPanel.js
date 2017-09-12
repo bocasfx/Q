@@ -99,7 +99,7 @@ class ReverbPanel extends React.Component {
         <div className="fx-panel-title">Reverb</div>
         <div className="fx-panel fx-panel-border-left fx-panel-border-right">
           <div className="fx-panel-centered">
-            <Switch onChange={this.onBypassChange}/>
+            <Switch onChange={this.onBypassChange} checked={!this.props.fx.reverb.disabled}/>
           </div>
           <div className="fx-panel-info" hidden={!this.state.showReverbInfo}>
             <i className="fa fa-close" onClick={this.hideReverbInfo}></i>
