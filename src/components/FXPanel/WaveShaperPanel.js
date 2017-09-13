@@ -19,16 +19,19 @@ class WaveShaperPanel extends React.Component {
     if (nextProps.fx.waveShaper.disabled !== this.props.fx.waveShaper.disabled) {
 
       let previousOutput = qAudioContext.fxDestination;
-      let nextInput = nextProps.fx.filter.disabled ? (nextProps.fx.delay.disabled ? (nextProps.fx.reverb.disabled ? qAudioContext.destination : qAudioContext.reverb.input) : qAudioContext.delay.input) : qAudioContext.filter.input;
+      let nextInput = nextProps.fx.filter.disabled ? (nextProps.fx.delay.disabled ? qAudioContext.destination : qAudioContext.delay.input) : qAudioContext.filter.input;
+      let nextInput2 = nextProps.fx.filter.disabled ? (nextProps.fx.reverb.disabled ? qAudioContext.destination : qAudioContext.reverb.input) : qAudioContext.filter.input;
       previousOutput.disconnect();
       qAudioContext.waveShaper.output.disconnect();
       if (nextProps.fx.waveShaper.disabled) {
         previousOutput.connect(nextInput);
+        previousOutput.connect(nextInput2);
         if (nextProps.fx.filter.disabled) {
           previousOutput.connect(qAudioContext.destination);
         }
       } else {
         qAudioContext.waveShaper.connect(nextInput);
+        qAudioContext.waveShaper.connect(nextInput2);
         previousOutput.connect(qAudioContext.waveShaper.input);
         if (nextProps.fx.filter.disabled) {
           qAudioContext.waveShaper.connect(qAudioContext.destination);

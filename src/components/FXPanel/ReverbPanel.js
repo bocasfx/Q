@@ -34,7 +34,7 @@ class ReverbPanel extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.setProps(nextProps);
     if (nextProps.fx.reverb.disabled !== this.props.fx.reverb.disabled) {
-      let previousOutput = nextProps.fx.delay.disabled ? (nextProps.fx.filter.disabled ? (nextProps.fx.waveShaper.disabled ? qAudioContext.fxDestination : qAudioContext.waveShaper.output) : qAudioContext.filter.output) : qAudioContext.delay.output;
+      let previousOutput = nextProps.fx.filter.disabled ? (nextProps.fx.waveShaper.disabled ? qAudioContext.fxDestination : qAudioContext.waveShaper.output) : qAudioContext.filter.output;
       let nextInput = qAudioContext.destination;
       previousOutput.disconnect();
       qAudioContext.reverb.output.disconnect();
@@ -43,14 +43,12 @@ class ReverbPanel extends React.Component {
       } else {
         qAudioContext.reverb.connect(nextInput);
         previousOutput.connect(qAudioContext.reverb.input);
-        if (nextProps.fx.delay.disabled) {
-          if (!nextProps.fx.filter.disabled) {
-            qAudioContext.filter.connect(qAudioContext.destination);
-          } else if (!nextProps.fx.waveShaper.disabled) {
-            qAudioContext.waveShaper.connect(qAudioContext.destination);
-          } else {
-            qAudioContext.fxDestination.connect(qAudioContext.destination);
-          }
+        if (!nextProps.fx.filter.disabled) {
+          qAudioContext.filter.connect(qAudioContext.destination);
+        } else if (!nextProps.fx.waveShaper.disabled) {
+          qAudioContext.waveShaper.connect(qAudioContext.destination);
+        } else {
+          qAudioContext.fxDestination.connect(qAudioContext.destination);
         }
       }
       if (!nextProps.fx.delay.disabled) {

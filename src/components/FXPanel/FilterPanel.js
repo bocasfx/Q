@@ -22,16 +22,19 @@ class FilterPanel extends React.Component {
     this.setProps(nextProps);
     if (nextProps.fx.filter.disabled !== this.props.fx.filter.disabled) {
       let previousOutput = nextProps.fx.waveShaper.disabled ? qAudioContext.fxDestination : qAudioContext.waveShaper.output;
-      let nextInput = nextProps.fx.delay.disabled ? (nextProps.fx.reverb.disabled ? qAudioContext.destination : qAudioContext.reverb.input) : qAudioContext.delay.input;
+      let nextInput1 = nextProps.fx.delay.disabled ? qAudioContext.destination : qAudioContext.delay.input;
+      let nextInput2 = nextProps.fx.reverb.disabled ? qAudioContext.destination : qAudioContext.reverb.input;
       previousOutput.disconnect();
       qAudioContext.filter.output.disconnect();
       if (nextProps.fx.filter.disabled) {
-        previousOutput.connect(nextInput);
+        previousOutput.connect(nextInput1);
+        previousOutput.connect(nextInput2);
         if (!nextProps.fx.waveShaper.disabled) {
           qAudioContext.waveShaper.connect(qAudioContext.destination);
         }
       } else {
-        qAudioContext.filter.connect(nextInput);
+        qAudioContext.filter.connect(nextInput1);
+        qAudioContext.filter.connect(nextInput2);
         previousOutput.connect(qAudioContext.filter.input);
         qAudioContext.filter.connect(qAudioContext.destination);
       }
