@@ -29,6 +29,7 @@ class DelayPanel extends React.Component {
         previousOutput.connect(nextInput);
       } else {
         previousOutput.connect(qAudioContext.delay.input);
+        previousOutput.connect(qAudioContext.destination);
         qAudioContext.delay.connect(nextInput);
         qAudioContext.delay.connect(qAudioContext.delay.input);
       }
