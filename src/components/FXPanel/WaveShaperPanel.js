@@ -24,17 +24,16 @@ class WaveShaperPanel extends React.Component {
       qAudioContext.waveShaper.output.disconnect();
       if (nextProps.fx.waveShaper.disabled) {
         previousOutput.connect(nextInput);
+        if (nextProps.fx.filter.disabled) {
+          previousOutput.connect(qAudioContext.destination);
+        }
       } else {
         qAudioContext.waveShaper.connect(nextInput);
         previousOutput.connect(qAudioContext.waveShaper.input);
+        if (nextProps.fx.filter.disabled) {
+          qAudioContext.waveShaper.connect(qAudioContext.destination);
+        }
       }
-
-      // qAudioContext.fxDestination.disconnect();
-      // if (nextProps.fx.waveShaper.disabled) {
-      //   qAudioContext.fxDestination.connect(qAudioContext.filter.input);
-      // } else {
-      //   qAudioContext.fxDestination.connect(qAudioContext.waveShaper.input);
-      // }
     }
   }
 

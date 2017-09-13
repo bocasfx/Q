@@ -43,6 +43,15 @@ class ReverbPanel extends React.Component {
       } else {
         qAudioContext.reverb.connect(nextInput);
         previousOutput.connect(qAudioContext.reverb.input);
+        if (nextProps.fx.delay.disabled) {
+          if (!nextProps.fx.filter.disabled) {
+            qAudioContext.filter.connect(qAudioContext.destination);
+          } else if (!nextProps.fx.waveShaper.disabled) {
+            qAudioContext.waveShaper.connect(qAudioContext.destination);
+          } else {
+            qAudioContext.fxDestination.connect(qAudioContext.destination);
+          }
+        }
       }
       if (!nextProps.fx.delay.disabled) {
         previousOutput.connect(qAudioContext.delay.input);
