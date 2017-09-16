@@ -22,10 +22,14 @@ const filters = {
 class EventHandler {
 
   initialize() {
-    window.onkeypress = (event) => {
+    window.addEventListener('keyup', (event) => {
+      console.log(event);
+    }, true);
+
+    window.onkeydown = (event) => {
       event.stopPropagation();
       event.returnValue = false;
-      if (event.ctrlKey) {
+      if (event.metaKey) {
 
         switch (event.key) {
 
@@ -160,4 +164,6 @@ class EventHandler {
   };
 }
 
-export default EventHandler;
+let handler = new EventHandler();
+
+export default handler;

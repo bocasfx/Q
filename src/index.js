@@ -10,7 +10,7 @@ import ControlPanel from './components/ControlPanel/ControlPanel';
 import FXPanel from './components/FXPanel/FXPanel';
 import Transport from './components/Transport/Transport';
 import midiContext from './app/context/MIDIContext';
-import EventHandler from './app/EventHandler';
+import eventHandler from './app/EventHandler';
 import hydrator from './app/Hydrator';
 
 const renderDom = () => {
@@ -34,7 +34,6 @@ const renderDom = () => {
 };
 
 const initialize = () => {
-  let eventHandler = new EventHandler();
   eventHandler.initialize();
   midiContext.initialize()
     .then(() => {
