@@ -2,7 +2,8 @@ module.exports = {
   app: {
     hydrating: false,
     width: window.innerWidth,
-    height: window.innerHeight
+    height: window.innerHeight,
+    dirty: false
   },
   devices: {
     streams: false,

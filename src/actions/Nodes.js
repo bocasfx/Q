@@ -59,6 +59,12 @@ export const deleteNode = (id) => {
   };
 };
 
+export const deleteAllNodes = () => {
+  return {
+    type: 'DELETE_ALL_NODES'
+  };
+};
+
 export const selectNode = (id) => {
   return {
     type: 'SELECT_NODE',

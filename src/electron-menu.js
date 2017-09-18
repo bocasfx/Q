@@ -2,28 +2,46 @@ const { app, Menu } = require('electron');
 const path = require('path');
 const openAboutWindow = require('about-window');
 
-function setMainMenu() {
+function setMainMenu(mainWindow) {
 
   const template = [
     {
-      label: 'Edit',
+      label: 'File',
       submenu: [
-        {role: 'undo'},
-        {role: 'redo'},
-        {type: 'separator'},
-        {role: 'cut'},
-        {role: 'copy'},
-        {role: 'paste'},
-        {role: 'pasteandmatchstyle'},
-        {role: 'delete'},
         {
-          role: 'selectall',
-          accelerator: 'CmdOrCtrl+A',
-          click: () => {}
+          label: 'New',
+          accelerator: 'CmdOrCtrl+N',
+          click: () => {
+            mainWindow.webContents.send('QEvents', 'new');
+          }
+        }, {
+          label: 'Open',
+          accelerator: 'CmdOrCtrl+O',
+          click: () => {
+            mainWindow.webContents.send('QEvents', 'open');
+          }
+        }, {
+          type: 'separator'
+        }, {
+          label: 'Save As...',
+          accelerator: 'CmdOrCtrl+S',
+          click: () => {
+            mainWindow.webContents.send('QEvents', 'saveAs');
+          }
         }
       ]
-    },
-    {
+    }, {
+      label: 'Edit',
+      submenu: [
+        {
+          label: 'Select All',
+          accelerator: 'CmdOrCtrl+A',
+          click: () => {
+            mainWindow.webContents.send('QEvents', 'selectAll');
+          }
+        }
+      ]
+    }, {
       role: 'window',
       submenu: [
         {role: 'close'},
@@ -32,8 +50,7 @@ function setMainMenu() {
         {type: 'separator'},
         {role: 'front'},
       ]
-    },
-    {
+    }, {
       role: 'help',
       submenu: [
         {

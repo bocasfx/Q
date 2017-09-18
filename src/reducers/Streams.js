@@ -35,6 +35,10 @@ const deleteStream = (state, id) => {
   });
 };
 
+const deleteAllStreams = () => {
+  return [];
+};
+
 const selectStream = (state, id) => {
   return state.map((stream) => {
     stream.selected = stream.id === id ? !stream.selected : false;
@@ -131,6 +135,9 @@ export default (state = streams, action) => {
 
     case 'DELETE_STREAM':
       return deleteStream(state, action.id);
+
+    case 'DELETE_ALL_STREAMS':
+      return deleteAllStreams();
 
     case 'SELECT_STREAM':
       return selectStream(state, action.id);

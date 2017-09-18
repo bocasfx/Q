@@ -5,11 +5,13 @@ import store from '../app/Store';
 let electron = null;
 let dialog = null;
 let fs = null;
+let ipcRenderer = null;
 
 if (window.require) {
   electron = window.require('electron');
   fs = window.require('fs');
   dialog = electron.remote.dialog;
+  ipcRenderer = window.require('electron').ipcRenderer;
 }
 
 const filters = {
@@ -22,9 +24,22 @@ const filters = {
 class EventHandler {
 
   initialize() {
-    window.addEventListener('keyup', (event) => {
-      console.log(event);
-    }, true);
+    ipcRenderer.on('QEvents', (event, message) => {
+      switch (message) {
+        case 'selectAll':
+          return store.dispatch({
+            type: 'SELECT_ALL_NODES'
+          });
+        case 'saveAs':
+          return this.serializeProject();
+        case 'open':
+          return this.hydrateProject();
+        case 'new':
+          return this.newProject();
+        default:
+          return null;
+      }
+    });
 
     window.onkeydown = (event) => {
       event.stopPropagation();
@@ -60,6 +75,11 @@ class EventHandler {
           case 'g':
           case 'G':
             return this.toggleDevice('grab');
+
+          // New
+          case 'n':
+          case 'N':
+            return this.newProject();
 
           default:
             return null;
@@ -112,9 +132,26 @@ class EventHandler {
     }
 
     dialog.showOpenDialog(filters, (fileNames) => {
-      this.loadContent('file', fileNames[0]);
+      if (fileNames && fileNames.length) {
+        this.loadContent('file', fileNames[0]);
+      }
     });
   };
+
+  newProject() {
+    let response = true;
+    if (store.getState().app.dirty) {
+      response = window.confirm('Discard changes?');
+    }
+
+    if (response) {
+      store.dispatch({type: 'HYDRATION_STARTED'});
+      store.dispatch({type: 'DELETE_ALL_NODES'});
+      store.dispatch({type: 'DELETE_ALL_STREAMS'});
+      store.dispatch({type: 'RESET_FX_CONFIGURATION'});
+      store.dispatch({type: 'HYDRATION_COMPLETE'});
+    }
+  }
 
   toggleDevice(device) {
     store.dispatch({

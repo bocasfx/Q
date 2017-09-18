@@ -75,6 +75,10 @@ const deleteNode = (state, id) => {
   });
 };
 
+const deleteAllNodes = () => {
+  return [];
+};
+
 const selectNode = (state, id) => {
   return state.map((node) => {
     if (node.id === id) {
@@ -438,6 +442,9 @@ export default (state = nodes, action) => {
 
     case 'DELETE_NODE':
       return deleteNode(state, action.id);
+
+    case 'DELETE_ALL_NODES':
+      return deleteAllNodes();
 
     case 'SELECT_NODE':
       return selectNode(state, action.id);

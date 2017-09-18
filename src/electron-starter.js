@@ -24,7 +24,7 @@ function createWindow() {
     slashes: true
   });
   mainWindow.loadURL(startUrl);
-  electronMenu.setMainMenu();
+  electronMenu.setMainMenu(mainWindow);
 
   if (process.env.ELECTRON_START_URL) {
     mainWindow.webContents.openDevTools();
