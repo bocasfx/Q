@@ -85,7 +85,7 @@ class AudioNodePanel extends React.Component {
           <IconButton icon="refresh" active={false}/>
         </div>
         <div className="row">
-          <NodePanelHeader node={this.props.node}/>
+          <NodePanelHeader/>
         </div>
         <div className="row audio-node-panel-row">
           <Knob

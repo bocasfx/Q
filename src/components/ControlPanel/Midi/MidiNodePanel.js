@@ -87,7 +87,7 @@ class MidiNodePanel extends React.Component {
   render() {
     return (
       <div className="midi-node-panel-container" disabled={this.props.node.disabled}>
-        <NodePanelHeader node={this.props.node}/>
+        <NodePanelHeader/>
         <div className="midi-node-velocity">
           <Knob
             label={'Velocity'}

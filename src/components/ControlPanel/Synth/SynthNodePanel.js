@@ -62,7 +62,7 @@ class SynthNodePanel extends React.Component {
       <div className="synth-node-panel-container">
 
         <div className="row">
-          <NodePanelHeader node={this.props.node}/>
+          <NodePanelHeader/>
         </div>
 
         <div className="row synth-node-panel-gain">
