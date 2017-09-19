@@ -80,7 +80,7 @@ class AudioNode extends Node {
     }
     this.createDataSource();
     this.active = true;
-    this.ampEnvelopeGenerator.trigger(this.volume, this.pan);
+    this.ampEnvelopeGenerator.trigger(this.pan);
     qAudioContext.triggerFilter();
   }
 
