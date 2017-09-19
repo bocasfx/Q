@@ -8,25 +8,18 @@ import Slider from '../../UI/Slider';
 import NodePanelHeader from '../NodePanelHeader';
 import { getSelectedElements } from '../../../utils/utils';
 import {
-  setNodeOsc1Frequency,
-  setNodeOsc2Frequency,
-  setNodeOsc1WaveType,
-  setNodeOsc2WaveType,
   setNodeVolume,
   setNodeAttack,
   setNodeRelease,
   setNodePan,
   setNodeSendGain,
-  setNodeNoiseGain,
-  setNodeOsc1Gain,
-  setNodeOsc2Gain } from '../../../actions/Nodes';
+  setNodeNoiseGain } from '../../../actions/Nodes';
 
 class SynthNodePanel extends React.Component {
 
   constructor(props) {
     super(props);
 
-    this.onGainChange = this.onGainChange.bind(this);
     this.onAttackChange = this.onAttackChange.bind(this);
     this.onReleaseChange = this.onReleaseChange.bind(this);
     this.onPanChange = this.onPanChange.bind(this);
@@ -153,23 +146,11 @@ class SynthNodePanel extends React.Component {
         <div className="row-between">
           <OscillatorPanel
             name="osc1"
-            nodeId={this.node.id}
-            oscillator={this.node.oscillator1}
-            gain={this.node.osc1Gain}
-            onFreqChange={this.props.setNodeOsc1Frequency}
-            onWaveTypeChange={this.props.setNodeOsc1WaveType}
-            onGainChange={this.props.setNodeOsc1Gain}
             label="Osc. 1"
             disabled={this.node.disabled}
             type={this.node.type}/>
           <OscillatorPanel
             name="osc2"
-            nodeId={this.node.id}
-            oscillator={this.node.oscillator2}
-            gain={this.node.osc2Gain}
-            onFreqChange={this.props.setNodeOsc2Frequency}
-            onWaveTypeChange={this.props.setNodeOsc2WaveType}
-            onGainChange={this.props.setNodeOsc2Gain}
             label="Osc. 2"
             disabled={this.node.disabled}
             type={this.node.type}/>
@@ -187,18 +168,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setNodeOsc1Frequency: bindActionCreators(setNodeOsc1Frequency, dispatch),
-    setNodeOsc2Frequency: bindActionCreators(setNodeOsc2Frequency, dispatch),
-    setNodeOsc1WaveType: bindActionCreators(setNodeOsc1WaveType, dispatch),
-    setNodeOsc2WaveType: bindActionCreators(setNodeOsc2WaveType, dispatch),
     setNodeVolume: bindActionCreators(setNodeVolume, dispatch),
     setNodeAttack: bindActionCreators(setNodeAttack, dispatch),
     setNodeRelease: bindActionCreators(setNodeRelease, dispatch),
     setNodePan: bindActionCreators(setNodePan, dispatch),
     setNodeSendGain: bindActionCreators(setNodeSendGain, dispatch),
-    setNodeNoiseGain: bindActionCreators(setNodeNoiseGain, dispatch),
-    setNodeOsc1Gain: bindActionCreators(setNodeOsc1Gain, dispatch),
-    setNodeOsc2Gain: bindActionCreators(setNodeOsc2Gain, dispatch)
+    setNodeNoiseGain: bindActionCreators(setNodeNoiseGain, dispatch)
   };
 };
 
