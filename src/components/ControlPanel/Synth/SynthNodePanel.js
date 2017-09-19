@@ -6,6 +6,7 @@ import OscillatorPanel from './OscillatorPanel';
 import Knob from '../../UI/Knob';
 import Slider from '../../UI/Slider';
 import NodePanelHeader from '../NodePanelHeader';
+import { getSelectedElements } from '../../../utils/utils';
 import {
   setNodeOsc1Frequency,
   setNodeOsc2Frequency,
@@ -31,30 +32,50 @@ class SynthNodePanel extends React.Component {
     this.onPanChange = this.onPanChange.bind(this);
     this.onSendGainChange = this.onSendGainChange.bind(this);
     this.onNoiseChange = this.onNoiseChange.bind(this);
+
+    this.nodes = getSelectedElements(props.nodes);
+    this.node = this.nodes[0];
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.nodes = getSelectedElements(nextProps.nodes);
+    this.node = this.nodes[0];
   }
 
   onGainChange(value) {
-    this.props.setNodeVolume(this.props.node.id, value);
+    this.nodes.forEach((node) => {
+      this.props.setNodeVolume(node.id, value);  
+    });
   }
 
   onAttackChange(value) {
-    this.props.setNodeAttack(this.props.node.id, value);
+    this.nodes.forEach((node) => {
+      this.props.setNodeAttack(node.id, value);
+    });
   }
 
   onReleaseChange(value) {
-    this.props.setNodeRelease(this.props.node.id, value);
+    this.nodes.forEach((node) => {
+      this.props.setNodeRelease(node.id, value);
+    });
   }
 
   onPanChange(value) {
-    this.props.setNodePan(this.props.node.id, value);
+    this.nodes.forEach((node) => {
+      this.props.setNodePan(node.id, value);
+    });
   }
 
   onSendGainChange(value) {
-    this.props.setNodeSendGain(this.props.node.id, value);
+    this.nodes.forEach((node) => {
+      this.props.setNodeSendGain(node.id, value);
+    });
   }
 
   onNoiseChange(value) {
-    this.props.setNodeNoiseGain(this.props.node.id, value);
+    this.nodes.forEach((node) => {
+      this.props.setNodeNoiseGain(node.id, value);
+    });
   }
 
   render() {
@@ -68,50 +89,50 @@ class SynthNodePanel extends React.Component {
         <div className="row synth-node-panel-gain">
           <Knob
             label={'Gain'}
-            value={this.props.node.volume}
+            value={this.node.volume}
             min={0}
             max={1}
             onChange={this.onGainChange}
-            disabled={this.props.node.disabled}
-            type={this.props.node.type}
+            disabled={this.node.disabled}
+            type={this.node.type}
             log={true}/>
           <Knob
             label={'FX Send'}
-            value={this.props.node.sendFXGain}
+            value={this.node.sendFXGain}
             min={0}
             max={1}
             onChange={this.onSendGainChange}
-            disabled={this.props.node.disabled}
-            type={this.props.node.type}
+            disabled={this.node.disabled}
+            type={this.node.type}
             log={true}/>
         </div>
         <div className="row synth-node-panel-gain">
           <Knob
             label={'Attack'}
-            value={this.props.node.attack}
+            value={this.node.attack}
             min={0}
             max={2}
             onChange={this.onAttackChange}
-            disabled={this.props.node.disabled}
-            type={this.props.node.type}/>
+            disabled={this.node.disabled}
+            type={this.node.type}/>
           <Knob
             label={'Release'}
-            value={this.props.node.release}
+            value={this.node.release}
             min={0}
             max={2}
             onChange={this.onReleaseChange}
-            disabled={this.props.node.disabled}
-            type={this.props.node.type}/>
+            disabled={this.node.disabled}
+            type={this.node.type}/>
         </div>
         <div className="row">
           <Knob
             label={'Noise'}
-            value={this.props.node.noiseGain}
+            value={this.node.noiseGain}
             min={0}
             max={1}
             onChange={this.onNoiseChange}
-            disabled={this.props.node.disabled}
-            type={this.props.node.type}
+            disabled={this.node.disabled}
+            type={this.node.type}
             log={true}/>
         </div>
           
@@ -122,9 +143,9 @@ class SynthNodePanel extends React.Component {
             max={1}
             step={0.001}
             marks={0}
-            value={this.props.node.pan}
+            value={this.node.pan}
             onChange={this.onPanChange}
-            disabled={this.props.node.disabled}
+            disabled={this.node.disabled}
             horizontal={true}/>
           <div>R</div>
         </div>
@@ -132,26 +153,26 @@ class SynthNodePanel extends React.Component {
         <div className="row-between">
           <OscillatorPanel
             name="osc1"
-            nodeId={this.props.node.id}
-            oscillator={this.props.node.oscillator1}
-            gain={this.props.node.osc1Gain}
+            nodeId={this.node.id}
+            oscillator={this.node.oscillator1}
+            gain={this.node.osc1Gain}
             onFreqChange={this.props.setNodeOsc1Frequency}
             onWaveTypeChange={this.props.setNodeOsc1WaveType}
             onGainChange={this.props.setNodeOsc1Gain}
             label="Osc. 1"
-            disabled={this.props.node.disabled}
-            type={this.props.node.type}/>
+            disabled={this.node.disabled}
+            type={this.node.type}/>
           <OscillatorPanel
             name="osc2"
-            nodeId={this.props.node.id}
-            oscillator={this.props.node.oscillator2}
-            gain={this.props.node.osc2Gain}
+            nodeId={this.node.id}
+            oscillator={this.node.oscillator2}
+            gain={this.node.osc2Gain}
             onFreqChange={this.props.setNodeOsc2Frequency}
             onWaveTypeChange={this.props.setNodeOsc2WaveType}
             onGainChange={this.props.setNodeOsc2Gain}
             label="Osc. 2"
-            disabled={this.props.node.disabled}
-            type={this.props.node.type}/>
+            disabled={this.node.disabled}
+            type={this.node.type}/>
         </div>
       </div>
     );

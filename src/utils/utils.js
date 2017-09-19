@@ -20,10 +20,10 @@ export const getPosition = (event) => {
   return [x, y];
 };
 
-export const getSelectedElement = (elements) => {
+export const getSelectedElements = (elements) => {
   return _.filter(elements, (element) => {
     return element.selected;
-  })[0];
+  });
 };
 
 export const calculateNodeBorderDistance = (a, b) => {

@@ -24,22 +24,24 @@ const filters = {
 class EventHandler {
 
   initialize() {
-    ipcRenderer.on('QEvents', (event, message) => {
-      switch (message) {
-        case 'selectAll':
-          return store.dispatch({
-            type: 'SELECT_ALL_NODES'
-          });
-        case 'saveAs':
-          return this.serializeProject();
-        case 'open':
-          return this.hydrateProject();
-        case 'new':
-          return this.newProject();
-        default:
-          return null;
-      }
-    });
+    if (ipcRenderer) {
+      ipcRenderer.on('QEvents', (event, message) => {
+        switch (message) {
+          case 'selectAll':
+            return store.dispatch({
+              type: 'SELECT_ALL_NODES'
+            });
+          case 'saveAs':
+            return this.serializeProject();
+          case 'open':
+            return this.hydrateProject();
+          case 'new':
+            return this.newProject();
+          default:
+            return null;
+        }
+      });
+    }
 
     window.onkeydown = (event) => {
       event.stopPropagation();

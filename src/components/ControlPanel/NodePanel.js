@@ -18,11 +18,11 @@ class NodePanel extends React.Component {
 
   renderNodePanel() {
     if (this.props.node.type === 'synth') {
-      return <SynthNodePanel node={this.props.node}/>;
+      return <SynthNodePanel/>;
     } else if (this.props.node.type === 'audio') {
-      return <AudioNodePanel node={this.props.node}/>;
+      return <AudioNodePanel/>;
     } else if (this.props.node.type === 'midi') {
-      return <MidiNodePanel node={this.props.node}/>;
+      return <MidiNodePanel/>;
     }
     return null;
   }

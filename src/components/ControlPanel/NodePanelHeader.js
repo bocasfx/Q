@@ -4,27 +4,18 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setNodeLag, setNodeProbability } from '../../actions/Nodes';
 import Knob from '../UI/Knob';
+import { getSelectedElements } from '../../utils/utils';
 
 class NodePanelHeader extends React.Component {
   constructor(props) {
     super(props);
     this.onLagChange = this.onLagChange.bind(this);
     this.onProbabilityChange = this.onProbabilityChange.bind(this);
-    this.nodes = [];
-    this.props.nodes.forEach((node) => {
-      if (node.selected) {
-        this.nodes.push(node);
-      }
-    });
+    this.nodes = getSelectedElements(props.nodes);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.nodes = [];
-    nextProps.nodes.forEach((node) => {
-      if (node.selected) {
-        this.nodes.push(node);
-      }
-    });
+    this.nodes = getSelectedElements(nextProps.nodes);
   }
 
   onLagChange(value) {

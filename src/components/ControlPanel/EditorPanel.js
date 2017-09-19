@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import NodePanel from './NodePanel';
 import StreamPanel from './Stream/StreamPanel';
-import { getSelectedElement } from '../../utils/utils';
+import { getSelectedElements } from '../../utils/utils';
 
 class EditorPanel extends React.Component {
   constructor(props) {
@@ -13,21 +13,15 @@ class EditorPanel extends React.Component {
     this.onScroll = this.onScroll.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
     this.state = {
-      scrolling: false,
-      node: null
+      scrolling: false
     };
-  }
-
-  componentDidMount() {
-    this.setState({
-      node: getSelectedElement(this.props.nodes)
-    });
+    this.node = getSelectedElements(props.nodes)[0];
+    this.stream = getSelectedElements(props.streams)[0];
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      node: getSelectedElement(nextProps.nodes)
-    });
+    this.node = getSelectedElements(nextProps.nodes)[0];
+    this.stream = getSelectedElements(nextProps.streams)[0];
   }
 
   renderObject() {
@@ -35,26 +29,20 @@ class EditorPanel extends React.Component {
   }
 
   renderStream() {
-    let stream = this.getSelectedStream();
-    if (!stream) {
+    
+    if (!this.stream) {
       return null;
     }
     return (
-      <StreamPanel stream={stream}/>
+      <StreamPanel stream={this.stream}/>
     );
   }
 
   renderNode() {
-    if (!this.state.node) {
+    if (!this.node) {
       return null;
     }
-    return <NodePanel node={this.state.node}/>;
-  }
-
-  getSelectedStream() {
-    return _.filter(this.props.streams, (stream) => {
-      return stream.selected;
-    })[0];
+    return <NodePanel node={this.node}/>;
   }
 
   onScroll(event) {
