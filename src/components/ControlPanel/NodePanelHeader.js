@@ -10,14 +10,33 @@ class NodePanelHeader extends React.Component {
     super(props);
     this.onLagChange = this.onLagChange.bind(this);
     this.onProbabilityChange = this.onProbabilityChange.bind(this);
+    this.nodes = [];
+    this.props.nodes.forEach((node) => {
+      if (node.selected) {
+        this.nodes.push(node);
+      }
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.nodes = [];
+    nextProps.nodes.forEach((node) => {
+      if (node.selected) {
+        this.nodes.push(node);
+      }
+    });
   }
 
   onLagChange(value) {
-    this.props.setNodeLag(this.props.node.id, value);
+    this.nodes.forEach((node) => {
+      this.props.setNodeLag(node.id, value);
+    });
   }
 
   onProbabilityChange(value) {
-    this.props.setNodeProbability(this.props.node.id, value);
+    this.nodes.forEach((node) => {
+      this.props.setNodeProbability(node.id, value);
+    });
   }
 
   render() {
@@ -25,20 +44,20 @@ class NodePanelHeader extends React.Component {
       <div className="node-panel-header-container">
         <Knob
           label={'Lag'}
-          value={this.props.node.lag}
+          value={this.nodes[0].lag}
           min={0}
           max={5000}
           onChange={this.onLagChange}
-          disabled={this.props.node.disabled}
-          type={this.props.node.type}/>
+          disabled={this.nodes[0].disabled}
+          type={this.nodes[0].type}/>
         <Knob
           label={'Probability'}
-          value={this.props.node.probability}
+          value={this.nodes[0].probability}
           min={0}
           max={1}
           onChange={this.onProbabilityChange}
-          disabled={this.props.node.disabled}
-          type={this.props.node.type}/>
+          disabled={this.nodes[0].disabled}
+          type={this.nodes[0].type}/>
       </div>
     );
   }
