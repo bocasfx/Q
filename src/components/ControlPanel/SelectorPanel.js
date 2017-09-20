@@ -41,12 +41,6 @@ class SelectorPanel extends React.Component {
     event.stopPropagation();
   }
 
-  onCloneNode(id, event) {
-    event.preventDefault();
-    alert('TODO');
-    event.stopPropagation();
-  }
-
   onClickNode(node, event) {
     event.preventDefault();
     if (!event.metaKey) {
@@ -88,7 +82,6 @@ class SelectorPanel extends React.Component {
         idx={idx}
         onToggle={this.onToggleNode.bind(this, node)}
         onDelete={this.onDeleteNode.bind(this, node.id)}
-        onClone={this.onCloneNode.bind(this, node.id)}
         onClick={this.onClickNode.bind(this, node)}/>;
     });
   }

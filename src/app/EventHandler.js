@@ -99,7 +99,13 @@ class EventHandler {
                 type: 'STOP_NODES'
               });
             }
-            return; 
+            return;
+
+          // Backspace
+          case 'Backspace':
+            return store.dispatch({
+              type: 'DELETE_SELECTED_NODES'
+            });
 
           default:
             return null;

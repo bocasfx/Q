@@ -76,6 +76,13 @@ const deleteNode = (state, id) => {
   });
 };
 
+const deleteSelectedNodes = (state) => {
+  let nodeList = state.splice(0);
+  return _.remove(nodeList, (node) => {
+    return !node.selected;
+  });
+};
+
 const deleteAllNodes = () => {
   return [];
 };
@@ -448,6 +455,9 @@ export default (state = nodes, action) => {
 
     case 'DELETE_ALL_NODES':
       return deleteAllNodes();
+
+    case 'DELETE_SELECTED_NODES':
+      return deleteSelectedNodes(state);
 
     case 'SELECT_NODE':
       return selectNode(state, action.id);
