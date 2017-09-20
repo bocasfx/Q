@@ -15,12 +15,14 @@ class EditorPanel extends React.Component {
     this.state = {
       scrolling: false
     };
-    this.node = getSelectedElements(props.nodes)[0];
+    this.nodes = getSelectedElements(props.nodes);
+    this.node = this.nodes[0];
     this.stream = getSelectedElements(props.streams)[0];
   }
 
   componentWillReceiveProps(nextProps) {
-    this.node = getSelectedElements(nextProps.nodes)[0];
+    this.nodes = getSelectedElements(nextProps.nodes);
+    this.node = this.nodes[0];
     this.stream = getSelectedElements(nextProps.streams)[0];
   }
 

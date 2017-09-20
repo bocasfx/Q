@@ -31,7 +31,6 @@ class MidiNodePanel extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.nodes = getSelectedElements(nextProps.nodes);
-    console.log(this.nodes);
     this.node = this.nodes[0];
   }
 
