@@ -10,7 +10,8 @@ const path = require('path');
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
-function createWindow() {
+function initialize() {
+  
   mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
@@ -28,6 +29,9 @@ function createWindow() {
 
   if (process.env.ELECTRON_START_URL) {
     mainWindow.webContents.openDevTools();
+
+    let webAudioExtension = '/Users/rpalacios/Library/Application\ Support/Google/Chrome/Default/Extensions/cmhomipkklckpomafalojobppmmidlgl/0.1.4_0/';
+    BrowserWindow.addDevToolsExtension(webAudioExtension);
   }
 
   mainWindow.on('closed', function () {
@@ -37,7 +41,7 @@ function createWindow() {
 
 app.commandLine.appendSwitch('disable-renderer-backgrounding');
 
-app.on('ready', createWindow);
+app.on('ready', initialize);
 
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') {
@@ -47,6 +51,6 @@ app.on('window-all-closed', function () {
 
 app.on('activate', function () {
   if (mainWindow === null) {
-    createWindow();
+    initialize();
   }
 });

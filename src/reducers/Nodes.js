@@ -4,6 +4,7 @@ import AudioNode from '../elements/nodes/AudioNode';
 import _ from 'lodash';
 import { nodes } from '../config/initial-state';
 import uuidv1 from 'uuid/v1';
+import { getSelectedElements } from '../utils/utils';
 
 let fs = null;
 
@@ -80,9 +81,11 @@ const deleteAllNodes = () => {
 };
 
 const selectNode = (state, id) => {
+  let selectionCount = getSelectedElements(state).length;
   return state.map((node) => {
     if (node.id === id) {
-      node.selected = !node.selected;
+      node.selected = true;
+      node.selectionIdx = ++selectionCount;
     }
     return node;
   });

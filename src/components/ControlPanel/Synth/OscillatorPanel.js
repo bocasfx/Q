@@ -1,9 +1,19 @@
 import React from 'react';
 import './OscillatorPanel.css';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Knob from '../../UI/Knob';
 import Slider from '../../UI/Slider';
 import noteConfig from '../../../config/frequencies';
 import _ from 'lodash';
+import { getSelectedElements } from '../../../utils/utils';
+import {
+  setNodeOsc1Frequency,
+  setNodeOsc2Frequency,
+  setNodeOsc1Gain,
+  setNodeOsc2Gain,
+  setNodeOsc1WaveType,
+  setNodeOsc2WaveType } from '../../../actions/Nodes';
 
 const waveTypes = {
   0: 'sine',
@@ -22,8 +32,13 @@ class OscillatorPanel extends React.Component {
     this.onOctaveChange = this.onOctaveChange.bind(this);
     this.onGainChange = this.onGainChange.bind(this);
 
+    this.nodes = getSelectedElements(props.nodes);
+    this.node = this.nodes[0];
+    this.oscillator = this.props.name === 'osc1' ? this.node.oscillator1 : this.node.oscillator2;
+    this.gain = this.props.name === 'osc1' ? this.node.osc1Gain : this.node.osc2Gain;
+
     let waveType = _.findKey(waveTypes, (type) => {
-      return props.oscillator.waveType === type;
+      return this.oscillator.waveType === type;
     });
     waveType = parseInt(waveType, 10);
 
@@ -44,18 +59,30 @@ class OscillatorPanel extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    this.nodes = getSelectedElements(nextProps.nodes);
+    this.node = this.nodes[0];
+
+    this.oscillator = nextProps.name === 'osc1' ? this.node.oscillator1 : this.node.oscillator2;
+
     let waveType = _.findKey(waveTypes, (type) => {
-      return nextProps.oscillator.waveType === type;
+      return this.oscillator.waveType === type;
     });
     waveType = parseInt(waveType, 10);
+
     this.setState({
       waveType,
-      disabled: nextProps.disabled
+      disabled: this.node.disabled
     });
   }
 
   onFreqChange(frequency) {
-    this.props.onFreqChange(this.props.nodeId, frequency);
+    this.nodes.forEach((node) => {
+      if (this.props.name === 'osc1') {
+        this.props.setNodeOsc1Frequency(node.id, frequency);
+      }else {
+        this.props.setNodeOsc2Frequency(node.id, frequency);
+      }
+    });
   }
 
   renderNoteSelect() {
@@ -77,34 +104,50 @@ class OscillatorPanel extends React.Component {
   }
 
   onWaveTypeChange(value) {
-    this.props.onWaveTypeChange(this.props.nodeId, waveTypes[value]);
+    this.nodes.forEach((node) => {
+      if (this.props.name === 'osc1') {
+        this.props.setNodeOsc1WaveType(node.id, waveTypes[value]);
+      } else {
+        this.props.setNodeOsc2WaveType(node.id, waveTypes[value]);
+      }
+    });
     this.setState({
       waveType: value
     });
   }
 
   onNoteChange(event) {
-    let note = _.find(noteConfig.frequencies, (noteObj) => {
-      return (noteObj.note === event.target.value && noteObj.octave === this.state.octave);
+    this.nodes.forEach((node) => {
+      let note = _.find(noteConfig.frequencies, (noteObj) => {
+        return (noteObj.note === event.target.value && noteObj.octave === this.state.octave);
+      });
+      this.setState({
+        note: note.note
+      });
+      this.props.onFreqChange(node.id, note.frequency);
     });
-    this.setState({
-      note: note.note
-    });
-    this.props.onFreqChange(this.props.nodeId, note.frequency);
   }
 
   onOctaveChange(event) {
-    let note = _.find(noteConfig.frequencies, (noteObj) => {
-      return (noteObj.note === this.state.note && noteObj.octave === parseInt(event.target.value, 10));
+    this.nodes.forEach((node) => {
+      let note = _.find(noteConfig.frequencies, (noteObj) => {
+        return (noteObj.note === this.state.note && noteObj.octave === parseInt(event.target.value, 10));
+      });
+      this.setState({
+        octave: note.octave
+      });
+      this.props.onFreqChange(node.id, note.frequency);
     });
-    this.setState({
-      octave: note.octave
-    });
-    this.props.onFreqChange(this.props.nodeId, note.frequency);
   }
 
   onGainChange(value) {
-    this.props.onGainChange(this.props.nodeId, value);
+    this.nodes.forEach((node) => {
+      if (this.props.name === 'osc1') {
+        this.props.setNodeOsc1Gain(node.id, value);
+      } else {
+        this.props.setNodeOsc2Gain(node.id, value);
+      }
+    });
   }
 
   render() {
@@ -134,7 +177,7 @@ class OscillatorPanel extends React.Component {
             checked={this.state.checked}/>
           <Knob
             label={'Frequency'}
-            value={this.props.oscillator.frequency}
+            value={this.oscillator.frequency}
             min={20}
             max={2000}
             onChange={this.onFreqChange}
@@ -143,7 +186,7 @@ class OscillatorPanel extends React.Component {
           <div className="oscillator-panel-gain">
             <Knob
               label={'Gain'}
-              value={this.props.gain}
+              value={this.gain}
               min={0}
               max={1}
               onChange={this.onGainChange}
@@ -182,4 +225,19 @@ class OscillatorPanel extends React.Component {
   }
 }
 
-module.exports = OscillatorPanel;
+const mapStateToProps = (state) => {
+  return state;
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setNodeOsc1Frequency: bindActionCreators(setNodeOsc1Frequency, dispatch),
+    setNodeOsc2Frequency: bindActionCreators(setNodeOsc2Frequency, dispatch),
+    setNodeOsc1Gain: bindActionCreators(setNodeOsc1Gain, dispatch),
+    setNodeOsc2Gain: bindActionCreators(setNodeOsc2Gain, dispatch),
+    setNodeOsc1WaveType: bindActionCreators(setNodeOsc1WaveType, dispatch),
+    setNodeOsc2WaveType: bindActionCreators(setNodeOsc2WaveType, dispatch)
+  };
+};
+
+module.exports = connect(mapStateToProps, mapDispatchToProps)(OscillatorPanel);

@@ -4,7 +4,7 @@ import ActivityIndicator from '../UI/ActivityIndicator';
 import './ElementPanelHeader.css';
 import { getNodeColor } from '../../utils/utils';
 
-class NodePanelHeader extends React.Component {
+class ElementPanelHeader extends React.Component {
   constructor(props) {
     super(props);
 
@@ -62,4 +62,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-module.exports = connect(mapStateToProps)(NodePanelHeader);
+module.exports = connect(mapStateToProps)(ElementPanelHeader);

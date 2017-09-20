@@ -23,7 +23,13 @@ class AudioNode extends Node {
     this.amplifier = new Amplifier();
     this.amplifier.volume = 0;
     this.ampEnvelopeGenerator = new AmpEnvelopeGenerator(config.synth.envelope);
+
     this._sendFXGain = qAudioContext.ctx.createGain();
+    this._sendFXGain.volume = 0.2;
+
+    this._mainGain = qAudioContext.ctx.createGain();
+    this._mainGain.gain.value = 0.2;
+
     this.decodedAudioData = null;
     this.path = '';
   }
@@ -39,15 +45,21 @@ class AudioNode extends Node {
   }
 
   createDataSource() {
-    this._src = qAudioContext.ctx.createBufferSource();
-    this._src.buffer = this.decodedAudioData;
-    this._src.connect(this.amplifier.input);
+    let src = qAudioContext.ctx.createBufferSource();
+    src.buffer = this.decodedAudioData;
+    src.connect(this.amplifier.input);
     this.ampEnvelopeGenerator.connect(this.amplifier.amplitudeL, this.amplifier.amplitudeR);
-    this.amplifier.connect(qAudioContext.destination);
     this.amplifier.connect(this._sendFXGain);
+    this.amplifier.connect(this._mainGain);
+
+    this._mainGain.connect(qAudioContext.destination);
+
     this._sendFXGain.connect(qAudioContext.fxDestination);
-    this._sendFXGain.volume = 0;
-    this._src.start();
+
+    src.start();
+    src.onended = () => {
+      src.disconnect();
+    };
   }
 
   set sendFXGain(value) {
@@ -72,6 +84,14 @@ class AudioNode extends Node {
 
   get release() {
     return this.ampEnvelopeGenerator.release;
+  }
+
+  set volume(value) {
+    this._mainGain.gain.value = value;
+  }
+
+  get volume() {
+    return this._mainGain.gain.value;
   }
 
   play() {
