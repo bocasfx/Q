@@ -59,6 +59,8 @@ class EventHandler {
           // Save
           case 's':
           case 'S':
+            event.stopPropagation();
+            event.returnValue = false;
             return this.serializeProject();
 
           // Open
@@ -103,6 +105,9 @@ class EventHandler {
 
           // Backspace
           case 'Backspace':
+            store.dispatch({
+              type: 'UNLINK_SELECTED_NODES'
+            });
             return store.dispatch({
               type: 'DELETE_SELECTED_NODES'
             });

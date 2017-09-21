@@ -2,9 +2,9 @@
 class Serializer {
 
   serializeSynthNode (node) {
-    return (({ id, type, name, position, selected, volume, attack, release, noiseGain, osc1Freq, osc2Freq, disabled, pan, links, lag, probability, sendFXGain, oscillator1, oscillator2, osc1Gain, osc2Gain }) => {
+    return (({ id, type, name, position, selected, volume, attack, release, noiseGain, osc1Freq, osc2Freq, disabled, pan, links, parentIds, lag, probability, sendFXGain, oscillator1, oscillator2, osc1Gain, osc2Gain }) => {
       return { 
-        topLevel: {id, type, name, position, selected, volume, attack, release, noiseGain, osc1Freq, osc2Freq, disabled, pan, links, lag, probability, sendFXGain},
+        topLevel: {id, type, name, position, selected, volume, attack, release, noiseGain, osc1Freq, osc2Freq, disabled, pan, links, parentIds, lag, probability, sendFXGain},
         inner: {
           oscillator1: {
             waveType: oscillator1.waveType,
@@ -20,18 +20,18 @@ class Serializer {
   };
 
   serializeMidiNode (node) {
-    return (({ id, type, name, position, selected, note, velocity, disabled, links, lag, probability }) => {
+    return (({ id, type, name, position, selected, note, velocity, disabled, links, parentIds, lag, probability }) => {
       return {
-        topLevel: { id, type, name, position, selected, note, velocity, disabled, links, lag, probability },
+        topLevel: { id, type, name, position, selected, note, velocity, disabled, links, parentIds, lag, probability },
         inner: {}
       };
     })(node);
   };
 
   serializeAudioNode (node) {
-    return (({ id, type, name, position, selected, disabled, links, lag, path, volume, attack, release, probability, sendFXGain }) => {
+    return (({ id, type, name, position, selected, disabled, links, parentIds, lag, path, volume, attack, release, probability, sendFXGain }) => {
       return {
-        topLevel: { id, type, name, position, selected, disabled, links, lag, path, volume, attack, release, probability, sendFXGain },
+        topLevel: { id, type, name, position, selected, disabled, links, parentIds, lag, path, volume, attack, release, probability, sendFXGain },
         inner: {}
       };
     })(node);

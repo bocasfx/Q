@@ -5,7 +5,7 @@ import ListItem from './ListItem';
 import Tabs from '../UI/Tabs/Tabs';
 import { bindActionCreators } from 'redux';
 import { deleteStream, selectStream, setStreamDisabledStatus } from '../../actions/Streams';
-import { deleteNode, selectNode, setNodeDisabledStatus, deselectNodes, stopNode } from '../../actions/Nodes';
+import { deleteNode, selectNode, setNodeDisabledStatus, deselectNodes, stopNode, unlinkNode } from '../../actions/Nodes';
 import './SelectorPanel.css';
 
 class SelectorPanel extends React.Component {
@@ -25,6 +25,7 @@ class SelectorPanel extends React.Component {
 
   onDeleteNode(id, event) {
     event.preventDefault();
+    this.props.unlinkNode(id);
     this.props.deleteNode(id);
     event.stopPropagation();
   }
@@ -118,7 +119,8 @@ const mapDispatchToProps = (dispatch) => {
     selectNode: bindActionCreators(selectNode, dispatch),
     setNodeDisabledStatus: bindActionCreators(setNodeDisabledStatus, dispatch),
     setStreamDisabledStatus: bindActionCreators(setStreamDisabledStatus, dispatch),
-    stopNode: bindActionCreators(stopNode, dispatch)
+    stopNode: bindActionCreators(stopNode, dispatch),
+    unlinkNode: bindActionCreators(unlinkNode, dispatch)
   };
 };
 
