@@ -5,7 +5,7 @@ import Canvas from './components/Canvas/Canvas';
 import './index.css';
 import { Provider } from 'react-redux';
 import Menu from './components/Menu/Menu';
-import Mixer from './components/Mixer/Mixer';
+// import Mixer from './components/Mixer/Mixer';
 import ControlPanel from './components/ControlPanel/ControlPanel';
 import FXPanel from './components/FXPanel/FXPanel';
 import Transport from './components/Transport/Transport';
@@ -17,12 +17,12 @@ const renderDom = () => {
   ReactDOM.render(
     <Provider store={store}>
       <div>
-        <Mixer/>
+        {/*<Mixer/>*/}
         <div className="main-container">
           <Menu/>
           <div>
             <Transport/>
-            <Canvas midiContext={midiContext}/>
+            <Canvas/>
             <FXPanel/>
           </div>
           <ControlPanel/>

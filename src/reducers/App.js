@@ -15,6 +15,11 @@ const setWindowSize = (state, width, height) => {
   return newState;
 };
 
+const setDirtyStatus = (state, status) => {
+  let newState = Object.assign({}, state, {dirty: status});
+  return newState;
+};
+
 export default (state = app, action) => {
   switch (action.type) {
 
@@ -26,6 +31,9 @@ export default (state = app, action) => {
 
     case 'SET_WINDOW_SIZE':
       return setWindowSize(state, action.width, action.height);
+
+    case 'SET_DIRTY_STATUS':
+      return setDirtyStatus(state, action.status);
 
     default:
       return state;

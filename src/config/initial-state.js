@@ -2,7 +2,8 @@ module.exports = {
   app: {
     hydrating: false,
     width: window.innerWidth,
-    height: window.innerHeight
+    height: window.innerHeight,
+    dirty: false
   },
   devices: {
     streams: false,
@@ -29,23 +30,23 @@ module.exports = {
     delay: {
       time: 0.5,
       feedback: 0.0,
-      disabled: false
+      disabled: true
     },
     filter: {
       q: 0,
       cutoffFrequency: 2000,
       attack: 0,
-      disabled: false
+      disabled: true
     },
     waveShaper: {
       amount: 0,
       oversample: '4x',
-      disabled: false
+      disabled: true
     },
     reverb: {
       amount: 0,
       impulseResponse: 'audio/ir/hamilton-mausoleum.wav',
-      disabled: false
+      disabled: true
     }
   },
   transport: {

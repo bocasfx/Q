@@ -54,9 +54,6 @@ class ListItem extends React.Component {
           <span className="list-item-icon" onClick={this.props.onToggle}>
             <i data-type="off" className="fa fa-power-off" style={this.state.off} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}></i>
           </span>
-          <span className="list-item-icon" onClick={this.props.onClone}>
-            <i data-type="copy" className="fa fa-copy" style={this.state.copy} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}></i>
-          </span>
           <span className="list-item-icon" onClick={this.props.onDelete}>
             <i data-type="trash" className="fa fa-trash" style={this.state.trash} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}></i>
           </span>

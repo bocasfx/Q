@@ -95,3 +95,9 @@ export const hydrateFx = (payload) => {
     payload
   };
 };
+
+export const resetFXConfiguration = () => {
+  return {
+    type: 'RESET_FX_CONFIGURATION'
+  };
+};

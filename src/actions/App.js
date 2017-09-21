@@ -17,3 +17,10 @@ export const setWindowSize = (width, height) => {
     height
   };
 };
+
+export const setDirtyStatus = (status) => {
+  return {
+    type: 'SET_DIRTY_STATUS',
+    status
+  };
+};

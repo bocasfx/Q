@@ -4,12 +4,13 @@ import ActivityIndicator from '../UI/ActivityIndicator';
 import './ElementPanelHeader.css';
 import { getNodeColor } from '../../utils/utils';
 
-class NodePanelHeader extends React.Component {
+class ElementPanelHeader extends React.Component {
   constructor(props) {
     super(props);
 
     this.onChange = this.onChange.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
     this.onToggle = this.onToggle.bind(this);
   }
 
@@ -24,6 +25,10 @@ class NodePanelHeader extends React.Component {
   }
 
   onKeyPress(event) {
+    event.stopPropagation();
+  }
+
+  onKeyDown(event) {
     event.stopPropagation();
   }
 
@@ -45,7 +50,8 @@ class NodePanelHeader extends React.Component {
             value={this.props.element.name}
             onChange={this.onChange}
             disabled={this.props.element.disabled}
-            onKeyPress={this.onKeyPress}/>
+            onKeyPress={this.onKeyPress}
+            onKeyDown={this.onKeyDown}/>
           <div className={toggleClass} style={style} onClick={this.onToggle}>
             <i className="fa fa-power-off"></i>
           </div>
@@ -62,4 +68,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-module.exports = connect(mapStateToProps)(NodePanelHeader);
+module.exports = connect(mapStateToProps)(ElementPanelHeader);

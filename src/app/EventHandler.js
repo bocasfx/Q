@@ -5,11 +5,13 @@ import store from '../app/Store';
 let electron = null;
 let dialog = null;
 let fs = null;
+let ipcRenderer = null;
 
 if (window.require) {
   electron = window.require('electron');
   fs = window.require('fs');
   dialog = electron.remote.dialog;
+  ipcRenderer = electron.ipcRenderer;
 }
 
 const filters = {
@@ -22,13 +24,26 @@ const filters = {
 class EventHandler {
 
   initialize() {
-    window.addEventListener('keyup', (event) => {
-      console.log(event);
-    }, true);
+    if (ipcRenderer) {
+      ipcRenderer.on('QEvents', (event, message) => {
+        switch (message) {
+          case 'selectAll':
+            return store.dispatch({
+              type: 'SELECT_ALL_NODES'
+            });
+          case 'saveAs':
+            return this.serializeProject();
+          case 'open':
+            return this.hydrateProject();
+          case 'new':
+            return this.newProject();
+          default:
+            return null;
+        }
+      });
+    }
 
     window.onkeydown = (event) => {
-      event.stopPropagation();
-      event.returnValue = false;
       if (event.metaKey) {
 
         switch (event.key) {
@@ -52,14 +67,19 @@ class EventHandler {
             return this.hydrateProject();
 
           // Mixer
-          case 'm':
-          case 'M':
-            return this.toggleDevice('mixer');
+          // case 'm':
+          // case 'M':
+          //   return this.toggleDevice('mixer');
 
           // Grab
           case 'g':
           case 'G':
             return this.toggleDevice('grab');
+
+          // New
+          case 'n':
+          case 'N':
+            return this.newProject();
 
           default:
             return null;
@@ -69,6 +89,8 @@ class EventHandler {
         switch (event.key) {
           //Play/Pause
           case ' ':
+            event.stopPropagation();
+            event.returnValue = false;
             store.dispatch({
               type: 'TOGGLE_TRANSPORT'
             });
@@ -77,7 +99,13 @@ class EventHandler {
                 type: 'STOP_NODES'
               });
             }
-            return; 
+            return;
+
+          // Backspace
+          case 'Backspace':
+            return store.dispatch({
+              type: 'DELETE_SELECTED_NODES'
+            });
 
           default:
             return null;
@@ -112,9 +140,26 @@ class EventHandler {
     }
 
     dialog.showOpenDialog(filters, (fileNames) => {
-      this.loadContent('file', fileNames[0]);
+      if (fileNames && fileNames.length) {
+        this.loadContent('file', fileNames[0]);
+      }
     });
   };
+
+  newProject() {
+    let response = true;
+    if (store.getState().app.dirty) {
+      response = window.confirm('Discard changes?');
+    }
+
+    if (response) {
+      store.dispatch({type: 'HYDRATION_STARTED'});
+      store.dispatch({type: 'DELETE_ALL_NODES'});
+      store.dispatch({type: 'DELETE_ALL_STREAMS'});
+      store.dispatch({type: 'RESET_FX_CONFIGURATION'});
+      store.dispatch({type: 'HYDRATION_COMPLETE'});
+    }
+  }
 
   toggleDevice(device) {
     store.dispatch({

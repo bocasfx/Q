@@ -4,6 +4,7 @@ import AudioNode from '../elements/nodes/AudioNode';
 import _ from 'lodash';
 import { nodes } from '../config/initial-state';
 import uuidv1 from 'uuid/v1';
+import { getSelectedElements } from '../utils/utils';
 
 let fs = null;
 
@@ -75,10 +76,23 @@ const deleteNode = (state, id) => {
   });
 };
 
+const deleteSelectedNodes = (state) => {
+  let nodeList = state.splice(0);
+  return _.remove(nodeList, (node) => {
+    return !node.selected;
+  });
+};
+
+const deleteAllNodes = () => {
+  return [];
+};
+
 const selectNode = (state, id) => {
+  let selectionCount = getSelectedElements(state).length;
   return state.map((node) => {
     if (node.id === id) {
-      node.selected = !node.selected;
+      node.selected = true;
+      node.selectionIdx = ++selectionCount;
     }
     return node;
   });
@@ -119,7 +133,28 @@ const setNodeOsc2WaveType = (state, id, waveType) => {
 const cloneNode = (state, id) => {
   state.forEach((node) => {
     if (node.id === id) {
-      let clonedNode = new SynthNode();
+
+      let clonedNode = null;
+      if (node.type === 'synth') {
+        clonedNode = new SynthNode();
+        clonedNode.osc1Freq = node.osc1Freq;
+        clonedNode.osc2Freq = node.osc2Freq;
+        clonedNode.osc1Freq = node.osc1Freq;
+        clonedNode.osc2Freq = node.osc2Freq;
+        clonedNode.osc1WaveType = node.oscillator1.oscillator.type;
+        clonedNode.osc2WaveType = node.oscillator2.oscillator.type;
+        clonedNode.osc1Gain = node.osc1Gain;
+        clonedNode.osc2Gain = node.osc2Gain;
+        clonedNode.noiseGain = node.noiseGain;
+      } else if (node.type === 'midi') {
+        clonedNode = new MidiNode();
+        clonedNode.velocity = node.velocity;
+        clonedNode.note = node.note;
+      } else {
+        clonedNode = new AudioNode();
+        clonedNode.decodedAudioData = node.decodedAudioData;
+      }
+
       clonedNode.active = false;
       clonedNode.lag = node.lag;
       clonedNode.links = [];
@@ -133,19 +168,11 @@ const cloneNode = (state, id) => {
       clonedNode._disabled = node._disabled;
       clonedNode.attack = node.attack;
       clonedNode.disabled = node.disabled;
-      clonedNode.osc1Freq = node.osc1Freq;
-      clonedNode.osc2Freq = node.osc2Freq;
       clonedNode.release = node.release;
       clonedNode.sendFXGain = node.sendFXGain;
       clonedNode.name = node.name + ' (clone)';
       clonedNode.id = uuidv1();
-      clonedNode.osc1Freq = node.osc1Freq;
-      clonedNode.osc2Freq = node.osc2Freq;
-      clonedNode.osc1WaveType = node.oscillator1.oscillator.type;
-      clonedNode.osc2WaveType = node.oscillator2.oscillator.type;
-      clonedNode.osc1Gain = node.osc1Gain;
-      clonedNode.osc2Gain = node.osc2Gain;
-      clonedNode.noiseGain = node.noiseGain;
+      
       state.push(clonedNode);
     }
   });
@@ -438,6 +465,12 @@ export default (state = nodes, action) => {
 
     case 'DELETE_NODE':
       return deleteNode(state, action.id);
+
+    case 'DELETE_ALL_NODES':
+      return deleteAllNodes();
+
+    case 'DELETE_SELECTED_NODES':
+      return deleteSelectedNodes(state);
 
     case 'SELECT_NODE':
       return selectNode(state, action.id);

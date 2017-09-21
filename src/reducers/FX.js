@@ -81,6 +81,10 @@ const hydrateFx = (state, payload) => {
   return Object.assign({}, state, payload);
 };
 
+const resetFXConfiguration = () => {
+  return fx;
+};
+
 export default (state = fx, action) => {
   switch (action.type) {
 
@@ -125,6 +129,9 @@ export default (state = fx, action) => {
 
     case 'SET_REVERB_DISABLED':
       return setReverbDisabled(state, action.value);
+
+    case 'RESET_FX_CONFIGURATION':
+      return resetFXConfiguration();
 
     default:
       return state;
