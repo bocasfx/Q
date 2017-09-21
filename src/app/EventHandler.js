@@ -59,6 +59,8 @@ class EventHandler {
           // Save
           case 's':
           case 'S':
+            event.stopPropagation();
+            event.returnValue = false;
             return this.serializeProject();
 
           // Open
