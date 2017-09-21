@@ -17,6 +17,7 @@ class Node {
     this.lag = 0;
     this.probability = 1.0;
     this.ignoring = false;
+    this.parentIds = [];
 
     this.selectedNodeImg = new Image();
     this.selectedNodeImg.src = './icons/elements/node-selected.png';

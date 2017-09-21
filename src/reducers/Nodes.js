@@ -83,6 +83,23 @@ const deleteSelectedNodes = (state) => {
   });
 };
 
+const unlinkSelectedNodes = (state) => {
+  return state.map((node) => {
+    if (node.selected) {
+      node.links = [];
+      node.parentIds.forEach((parentNodeId) => {
+        let parentNode = _.find(state, (item) => {
+          return item.id === parentNodeId;
+        });
+        if (parentNode) {
+          parentNode.unlink(node);
+        }
+      });
+    }
+    return node;
+  });
+};
+
 const deleteAllNodes = () => {
   return [];
 };
@@ -248,6 +265,7 @@ const linkNodes = (state, srcId, destId) => {
     return node.id === destId;
   });
   srcNode.link(destNode);
+  destNode.parentIds.push(srcNode.id);
   if (graphHasLoop(destNode, srcNode.id, false)) {
     alert('LOOP!');
   }
@@ -255,15 +273,40 @@ const linkNodes = (state, srcId, destId) => {
 };
 
 const unlinkNodes = (state, srcId, destId) => {
-  let srcNode = _.find(state, (node) => {
+  let nodeList = state.splice(0);
+  let srcNode = _.find(nodeList, (node) => {
     return node.id === srcId;
   });
-  let destNode = _.find(state, (node) => {
+  let destNode = _.find(nodeList, (node) => {
     return node.id === destId;
   });
+  if (!srcNode || !destNode) {
+    return nodeList;
+  }
+  let parentIdIdx = destNode.parentIds.indexOf(srcNode.id);
+  destNode.parentIds.splice(parentIdIdx, 1);
   srcNode.unlink(destNode);
-  return state;
+  return nodeList;
 };
+
+const unlinkNode = (state, id) => {
+  let nodeList = state.splice(0);
+  let srcNode = _.find(nodeList, (node) => {
+    return node.id === id;
+  });
+  
+  srcNode.links = [];
+  srcNode.parentIds.forEach((parentNodeId) => {
+    let parentNode = _.find(nodeList, (item) => {
+      return item.id === parentNodeId;
+    });
+    if (parentNode) {
+      parentNode.unlink(srcNode);
+    }
+  });
+  return nodeList;
+};
+
 
 const enqueueParticle = (state, id, particleId) => {
   return state.map((node) => {
@@ -472,6 +515,9 @@ export default (state = nodes, action) => {
     case 'DELETE_SELECTED_NODES':
       return deleteSelectedNodes(state);
 
+    case 'UNLINK_SELECTED_NODES':
+      return unlinkSelectedNodes(state);
+
     case 'SELECT_NODE':
       return selectNode(state, action.id);
 
@@ -510,6 +556,9 @@ export default (state = nodes, action) => {
 
     case 'UNLINK_NODES':
       return unlinkNodes(state, action.srcId, action.destId);
+
+    case 'UNLINK_NODE':
+      return unlinkNode(state, action.id);
 
     case 'ENQUEUE_PARTICLE':
       return enqueueParticle(state, action.id, action.particleId);

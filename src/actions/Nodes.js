@@ -71,6 +71,12 @@ export const deleteSelectedNodes = () => {
   };
 };
 
+export const unlinkSelectedNodes = () => {
+  return {
+    type: 'DELETE_SELECTED_NODES'
+  };
+};
+
 export const selectNode = (id) => {
   return {
     type: 'SELECT_NODE',
@@ -166,6 +172,13 @@ export const unlinkNodes = (srcId, destId) => {
     type: 'UNLINK_NODES',
     srcId,
     destId
+  };
+};
+
+export const unlinkNode = (id) => {
+  return {
+    type: 'UNLINK_NODE',
+    id
   };
 };
 
