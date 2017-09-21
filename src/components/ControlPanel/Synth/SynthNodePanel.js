@@ -20,6 +20,7 @@ class SynthNodePanel extends React.Component {
   constructor(props) {
     super(props);
 
+    this.onGainChange = this.onGainChange.bind(this);
     this.onAttackChange = this.onAttackChange.bind(this);
     this.onReleaseChange = this.onReleaseChange.bind(this);
     this.onPanChange = this.onPanChange.bind(this);

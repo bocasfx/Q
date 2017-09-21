@@ -124,7 +124,7 @@ class OscillatorPanel extends React.Component {
       this.setState({
         note: note.note
       });
-      this.props.onFreqChange(node.id, note.frequency);
+      this.onFreqChange(node.id, note.frequency);
     });
   }
 
@@ -136,7 +136,7 @@ class OscillatorPanel extends React.Component {
       this.setState({
         octave: note.octave
       });
-      this.props.onFreqChange(node.id, note.frequency);
+      this.onFreqChange(node.id, note.frequency);
     });
   }
 
@@ -152,8 +152,8 @@ class OscillatorPanel extends React.Component {
 
   render() {
 
-    let forNote = this.props.name + '-note';
-    let forOctave = this.props.name + '-octave';
+    // let forNote = this.props.name + '-note';
+    // let forOctave = this.props.name + '-octave';
 
     return (
       <div className="oscillator-panel-container" disabled={this.state.disabled}>
@@ -196,7 +196,7 @@ class OscillatorPanel extends React.Component {
           </div>
         </div>
 
-        <div className="oscillator-panel-freq">
+        {/*<div className="oscillator-panel-freq">
           <input
             name={this.props.name}
             type="radio"
@@ -219,7 +219,7 @@ class OscillatorPanel extends React.Component {
               </select>
             </div>
           </div>
-        </div>
+        </div>*/}
       </div>
     );
   }

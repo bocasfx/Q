@@ -22,7 +22,7 @@ const renderDom = () => {
           <Menu/>
           <div>
             <Transport/>
-            <Canvas midiContext={midiContext}/>
+            <Canvas/>
             <FXPanel/>
           </div>
           <ControlPanel/>

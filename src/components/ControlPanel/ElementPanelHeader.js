@@ -10,6 +10,7 @@ class ElementPanelHeader extends React.Component {
 
     this.onChange = this.onChange.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
+    this.onKeyDown = this.onKeyDown.bind(this);
     this.onToggle = this.onToggle.bind(this);
   }
 
@@ -24,6 +25,10 @@ class ElementPanelHeader extends React.Component {
   }
 
   onKeyPress(event) {
+    event.stopPropagation();
+  }
+
+  onKeyDown(event) {
     event.stopPropagation();
   }
 
@@ -45,7 +50,8 @@ class ElementPanelHeader extends React.Component {
             value={this.props.element.name}
             onChange={this.onChange}
             disabled={this.props.element.disabled}
-            onKeyPress={this.onKeyPress}/>
+            onKeyPress={this.onKeyPress}
+            onKeyDown={this.onKeyDown}/>
           <div className={toggleClass} style={style} onClick={this.onToggle}>
             <i className="fa fa-power-off"></i>
           </div>

@@ -11,7 +11,7 @@ if (window.require) {
   electron = window.require('electron');
   fs = window.require('fs');
   dialog = electron.remote.dialog;
-  ipcRenderer = window.require('electron').ipcRenderer;
+  ipcRenderer = electron.ipcRenderer;
 }
 
 const filters = {
@@ -44,8 +44,8 @@ class EventHandler {
     }
 
     window.onkeydown = (event) => {
-      event.stopPropagation();
-      event.returnValue = false;
+      // event.stopPropagation();
+      // event.returnValue = false;
       if (event.metaKey) {
 
         switch (event.key) {
@@ -69,9 +69,9 @@ class EventHandler {
             return this.hydrateProject();
 
           // Mixer
-          case 'm':
-          case 'M':
-            return this.toggleDevice('mixer');
+          // case 'm':
+          // case 'M':
+          //   return this.toggleDevice('mixer');
 
           // Grab
           case 'g':
