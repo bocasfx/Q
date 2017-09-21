@@ -44,8 +44,6 @@ class EventHandler {
     }
 
     window.onkeydown = (event) => {
-      // event.stopPropagation();
-      // event.returnValue = false;
       if (event.metaKey) {
 
         switch (event.key) {
@@ -91,6 +89,8 @@ class EventHandler {
         switch (event.key) {
           //Play/Pause
           case ' ':
+            event.stopPropagation();
+            event.returnValue = false;
             store.dispatch({
               type: 'TOGGLE_TRANSPORT'
             });
