@@ -25,7 +25,7 @@ class AudioNode extends Node {
     this.ampEnvelopeGenerator = new AmpEnvelopeGenerator(config.synth.envelope);
 
     this._sendFXGain = qAudioContext.ctx.createGain();
-    this._sendFXGain.volume = 0.2;
+    this.sendFXGain = 0;
 
     this._mainGain = qAudioContext.ctx.createGain();
     this._mainGain.gain.value = 0.2;

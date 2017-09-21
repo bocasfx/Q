@@ -73,12 +73,12 @@ class Menu extends React.Component {
           onClick={this.onClick.bind(this, 'unlink')}
           active={this.props.devices.unlink}
           title="Unlink nodes"
-          separator={true}/>
-        <MenuButton
+          separator={false}/>
+        {/*<MenuButton
           icon="./icons/menu/mixer.svg"
           onClick={this.onClick.bind(this, 'mixer')}
           active={this.props.devices.mixer}
-          title="Mixer"/>
+          title="Mixer"/>*/}
       </div>
     );
   }
