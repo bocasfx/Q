@@ -5,6 +5,7 @@ const electronMenu = require('./electron-menu');
 
 const url = require('url');
 const path = require('path');
+const ipcMain = electron.ipcMain;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -34,7 +35,7 @@ function initialize() {
     BrowserWindow.addDevToolsExtension(webAudioExtension);
   }
 
-  mainWindow.on('closed', function () {
+  mainWindow.on('closed', function() {
     mainWindow = null;
   });
 }
@@ -43,13 +44,17 @@ app.commandLine.appendSwitch('disable-renderer-backgrounding');
 
 app.on('ready', initialize);
 
-app.on('window-all-closed', function () {
+ipcMain.on('quit', () => {
+  app.quit();
+});
+
+app.on('window-all-closed', function() {
   if (process.platform !== 'darwin') {
     app.quit();
   }
 });
 
-app.on('activate', function () {
+app.on('activate', function() {
   if (mainWindow === null) {
     initialize();
   }

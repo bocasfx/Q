@@ -37,6 +37,10 @@ class EventHandler {
             return this.hydrateProject();
           case 'new':
             return this.newProject();
+          case 'quit':
+            this.saveContent();
+            ipcRenderer.send('quit');
+            return;
           default:
             return null;
         }
@@ -45,6 +49,27 @@ class EventHandler {
 
     window.onkeydown = (event) => {
       if (event.metaKey) {
+
+        if (event.shiftKey) {
+          switch (event.key) {
+
+            // Clear local storage
+            case 'C':
+              return this.clearLocalStorage();
+
+            // Save to local storage
+            case 'S':
+              return this.saveContent();
+
+            // Load local storage
+            case 'O':
+              this.loadContent();
+              return;
+
+            default:
+              return null;
+          }
+        }
 
         switch (event.key) {
 
@@ -190,7 +215,7 @@ class EventHandler {
         hydrator.hydrate(store, payload);
       });
     } else {
-      hydrator.hydrate(store, localStorage.QState);
+      hydrator.hydrate(store, JSON.parse(localStorage.QState));
     }
   };
 
@@ -212,6 +237,10 @@ class EventHandler {
 
     localStorage.QState = serializer.serialize(state);
   };
+
+  clearLocalStorage() {
+    localStorage.removeItem('QState');
+  }
 }
 
 let handler = new EventHandler();
