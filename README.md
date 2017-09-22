@@ -1,4 +1,4 @@
-<p align="center"><img src="./resources/icon/icon.png" width="128px"/></p>
+<p align="center"><img src="./resources/icon/icon.png" width="256px"/></p>
 
 # Q - Nodular Synthesizer/Sequencer
 
