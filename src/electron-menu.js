@@ -82,7 +82,13 @@ function setMainMenu(mainWindow) {
       {role: 'hideothers'},
       {role: 'unhide'},
       {type: 'separator'},
-      {role: 'quit'}
+      {
+        label: 'Quit',
+        accelerator: 'CmdOrCtrl+Q',
+        click: () => {
+          mainWindow.webContents.send('QEvents', 'quit');
+        }
+      }
     ]
   });
 
