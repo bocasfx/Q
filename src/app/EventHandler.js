@@ -54,14 +54,17 @@ class EventHandler {
           switch (event.key) {
 
             // Clear local storage
-            case 'c':
             case 'C':
               return this.clearLocalStorage();
 
             // Save to local storage
-            case 's':
             case 'S':
               return this.saveContent();
+
+            // Load local storage
+            case 'O':
+              this.loadContent();
+              return;
 
             default:
               return null;
@@ -212,7 +215,7 @@ class EventHandler {
         hydrator.hydrate(store, payload);
       });
     } else {
-      hydrator.hydrate(store, localStorage.QState);
+      hydrator.hydrate(store, JSON.parse(localStorage.QState));
     }
   };
 

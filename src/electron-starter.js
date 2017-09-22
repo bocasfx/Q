@@ -45,7 +45,6 @@ app.commandLine.appendSwitch('disable-renderer-backgrounding');
 app.on('ready', initialize);
 
 ipcMain.on('quit', () => {
-  console.log('quitting...');
   app.quit();
 });
 
