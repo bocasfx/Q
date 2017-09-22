@@ -4,7 +4,7 @@
 
 ------
 
-Q is a Nodular Synthesizer/Sequencer controlled by the interactions between nodes and particle streams. It was built using [Electron](https://electron.atom.io/) and [React](https://facebook.github.io/react/).
+Q is a Nodular Synthesizer/Sequencer controlled by the interactions between nodes and particle streams. It was built using <a href="https://electron.atom.io/" target="_blank">Electron</a> and <a href="https://facebook.github.io/react/" target="_blank">React</a>.
 
 ![Q](./resources/docs/ui.png)
 
