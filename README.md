@@ -1,4 +1,4 @@
-# Q - Nodular Synthesizer/Sequencer
+# <img src="./resources/icon/icon.png" width="80px"/>  Q - Nodular Synthesizer/Sequencer
 
 The Q Nodular Synthesizer/Sequencer is a musical instrument controlled by interactions between nodes and particle streams.
 
@@ -90,6 +90,5 @@ The Q Nodular Synthesizer/Sequencer is a musical instrument controlled by intera
   | <img src="./resources/menu/clone.svg" width="50px"/> | **Clone nodes** - Click on a node to clone it. |
   | <img src="./resources/menu/link.svg" width="50px"/> | **Link nodes** - Click on a node and drag to a second node to link them. Messages travel from parent nodes to child nodes but not from child nodes to parent nodes. Loops are not allowed. |
   | <img src="./resources/menu/unlink.svg" width="50px"/> | **Unlink nodes** - Click on a parent node and drag to a child node to unlink them. |
-
 
 
