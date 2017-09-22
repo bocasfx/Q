@@ -5,26 +5,35 @@ import _ from 'lodash';
 import { streams } from '../config/initial-state';
 
 const addFreehandStream = (state, position, event) => {
-  let stream = new FreehandStream({position});
+  let newStream = new FreehandStream({position});
+  newStream.selected = true;
   let streamList = state.splice(0);
-  streamList.push(stream);
-  stream.onMouseDown(event);
+  streamList.forEach((stream) => {
+    stream.selected = false;
+  });
+  streamList.push(newStream);
+  newStream.onMouseDown(event);
   return streamList;
 };
 
 const addCircularStream = (state, position, event) => {
-  let stream = new CircularStream({position});
+  let newStream = new CircularStream({position});
+  newStream.selected = true;
   let streamList = state.splice(0);
-  streamList.push(stream);
-  stream.onMouseDown(event);
+  streamList.push(newStream);
+  newStream.onMouseDown(event);
   return streamList;
 };
 
 const addLinearStream = (state, position, event) => {
-  let stream = new LinearStream({position});
+  let newStream = new LinearStream({position});
+  newStream.selected = true;
   let streamList = state.splice(0);
-  streamList.push(stream);
-  stream.onMouseDown(event);
+  streamList.forEach((stream) => {
+    stream.selected = false;
+  });
+  streamList.push(newStream);
+  newStream.onMouseDown(event);
   return streamList;
 };
 
