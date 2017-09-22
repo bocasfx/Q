@@ -1,4 +1,6 @@
-# <img src="./resources/icon/icon.png" width="80px"/>  Q - Nodular Synthesizer/Sequencer
+# Q - Nodular Synthesizer/Sequencer
+
+<img src="./resources/icon/icon.png" width="128px"/>
 
 The Q Nodular Synthesizer/Sequencer is a musical instrument controlled by interactions between nodes and particle streams.
 
