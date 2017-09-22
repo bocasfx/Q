@@ -1,6 +1,5 @@
 .slider-container {
   position: relative;
-  cursor: pointer;
   height: 85px;
   display: flex;
   justify-content: center;
@@ -38,7 +37,6 @@
 
 .slider::-webkit-slider-runnable-track {
   height: 15px;
-  cursor: pointer;
   background: rgba(0, 0, 0, 0.1);
   border-radius: 7px;
   border: 1px solid dimgray;
@@ -50,7 +48,6 @@
   width: 10px;
   border-radius: 5px;
   background: darkorange;
-  cursor: pointer;
   -webkit-appearance: none;
   box-shadow: -2px 2px 2px rgba(0, 0, 0, 0.4);
 }

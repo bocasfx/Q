@@ -26,7 +26,7 @@ class OscillatorPanel extends React.Component {
   constructor(props) {
     super(props);
     this.onFreqChange = this.onFreqChange.bind(this);
-    this.onRadioChange = this.onRadioChange.bind(this);
+    // this.onRadioChange = this.onRadioChange.bind(this);
     this.onWaveTypeChange = this.onWaveTypeChange.bind(this);
     this.onNoteChange = this.onNoteChange.bind(this);
     this.onOctaveChange = this.onOctaveChange.bind(this);
@@ -97,11 +97,11 @@ class OscillatorPanel extends React.Component {
     });
   }
 
-  onRadioChange(event) {
-    this.setState({
-      checked: event.target.value === 'continue'
-    });
-  }
+  // onRadioChange(event) {
+  //   this.setState({
+  //     checked: event.target.value === 'continue'
+  //   });
+  // }
 
   onWaveTypeChange(value) {
     this.nodes.forEach((node) => {
@@ -169,12 +169,12 @@ class OscillatorPanel extends React.Component {
           disabled={this.state.disabled}/>  
 
         <div className="oscillator-panel-freq">
-          <input
+          {/*<input
             name={this.props.name}
             type="radio"
             value="continue"
             onChange={this.onRadioChange}
-            checked={this.state.checked}/>
+            checked={this.state.checked}/>*/}
           <Knob
             label={'Frequency'}
             value={this.oscillator.frequency}

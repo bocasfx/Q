@@ -130,6 +130,13 @@ const hydrateStreams = (state, payload) => {
   });
 };
 
+const deselectStreams = (state) => {
+  return state.map((stream) => {
+    stream.selected = false;
+    return stream;
+  });
+};
+
 export default (state = streams, action) => {
   switch (action.type) {
 
@@ -171,6 +178,9 @@ export default (state = streams, action) => {
 
     case 'HYDRATE_STREAMS':
       return hydrateStreams(state, action.payload);
+
+    case 'DESELECT_STREAMS':
+      return deselectStreams(state, action.payload);
 
     default:
       return state;

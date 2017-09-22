@@ -162,7 +162,6 @@ export default {
     strokeStyle: 'gray',
     lineWidth: 2,
     lineDash: [3, 3],
-    font: '12px Arial',
     fillStyle: 'gold',
     textAlign: 'center'
   },
@@ -170,7 +169,6 @@ export default {
     strokeStyle: 'gray',
     lineWidth: 2,
     lineDash: [3, 3],
-    font: '12px Arial',
     fillStyle: 'gold',
     textAlign: 'center'
   },

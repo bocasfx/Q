@@ -39,7 +39,7 @@ class NodePanelHeader extends React.Component {
           min={0}
           max={5000}
           onChange={this.onLagChange}
-          disabled={this.nodes[0].disabled}
+          disabled={!this.nodes[0].parentIds.length}
           type={this.nodes[0].type}/>
         <Knob
           label={'Probability'}

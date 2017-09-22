@@ -98,13 +98,13 @@ class Node {
     }
   }
 
-  link(destNode) {
-    this.links.push(destNode);
+  link(destNodeId) {
+    this.links.push(destNodeId);
   }
 
-  unlink(destNode) {
+  unlink(destNodeId) {
     this.links = _.remove(this.links, (link) => {
-      return link.id !== destNode.id;
+      return link !== destNodeId;
     });
   }
 

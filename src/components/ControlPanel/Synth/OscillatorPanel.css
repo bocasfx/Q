@@ -8,6 +8,7 @@
 .oscillator-panel-label{
   transition: 0.3s ease-in-out;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .oscillator-panel-gain{
@@ -15,7 +16,7 @@
 }
 
 .oscillator-panel-freq {
-  margin-top: 20px;
+  margin-top: 40px;
 }
 
 .oscillator-panel-notes div {

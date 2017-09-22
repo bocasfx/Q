@@ -3,10 +3,10 @@ import './Canvas.css';
 import _ from 'lodash';
 import config from '../../config/config';
 import { connect } from 'react-redux';
-import { addFreehandStream, addCircularStream, addLinearStream, updateStreamPositionByDelta } from '../../actions/Streams';
+import { addFreehandStream, addCircularStream, addLinearStream, updateStreamPositionByDelta, deselectStreams } from '../../actions/Streams';
 import { updateFPSCount } from '../../actions/Transport';
 import { bindActionCreators } from 'redux';
-import { calculateDistance, getPosition, calculateNodeBorderDistance, timestamp } from '../../utils/utils';
+import { calculateDistance, getPosition, calculateNodeBorderDistance, timestamp, getNodeById } from '../../utils/utils';
 import { addSynthNode,
   addMidiNode,
   addAudioNode,
@@ -78,16 +78,20 @@ class Canvas extends React.Component {
 
     if (this.props.devices.streams) {
       this.props.addFreehandStream(position, event);
+      this.props.deselectNodes();
     } else if (this.props.devices.circularStreams) {
       this.props.addCircularStream(position, event);
+      this.props.deselectNodes();
     } else if (this.props.devices.linearStreams) {
       this.props.addLinearStream(position, event);
+      this.props.deselectNodes();
     } else if (this.props.devices.link || this.props.devices.unlink) {
       this.linkPosition = position;
       this.initiateNodeLink(position);
     } else if (this.props.devices.synthNodes || this.props.devices.midiNodes || this.props.devices.audioNodes) {
       this.addNode(position);
       this.selectNode(position, event.metaKey);
+      this.props.deselectStreams();
     } else if (this.props.devices.grab) {
       this.selectNode(position, event.metaKey);
     } else if (this.props.devices.clone) {
@@ -182,6 +186,7 @@ class Canvas extends React.Component {
 
   selectNode(position, metaKey) {
     setTimeout(() => {
+      this.props.deselectStreams();
       let selectedNodes = this.getSelectedNodeCount();
       if (!metaKey && selectedNodes === 1) {
         this.props.deselectNodes();
@@ -220,7 +225,7 @@ class Canvas extends React.Component {
     this.props.nodes.forEach((node) => {
       let distance = calculateDistance(node.position, position);
       if (distance <= config.app.doubleClickDistance) {
-        this.linkSrc = node;
+        this.linkSrc = node.id;
       }
     });
   }
@@ -229,43 +234,47 @@ class Canvas extends React.Component {
     this.props.nodes.forEach((node) => {
       let distance = calculateDistance(node.position, position);
       if (distance <= config.app.doubleClickDistance) {
-        if (this.linkSrc && this.linkSrc.id !== node.id) {
+        if (this.linkSrc !== node.id) {
           if (unlink) {
-            this.props.unlinkNodes(this.linkSrc.id, node.id);
+            this.props.unlinkNodes(this.linkSrc, node.id);
           } else {
-            this.props.linkNodes(this.linkSrc.id, node.id);
+            this.props.linkNodes(this.linkSrc, node.id);
           }
         }
       }
     });
   }
 
-  playLinks(node, rootId, particleId, checkForRoot) {
+  playLinks(nodeId, rootId, particleId, checkForRoot) {
+    let node = getNodeById(this.props.nodes, nodeId);
     if (!node.links.length) {
       return;
     }
     if (checkForRoot && node.id === rootId) {
       return;
     }
-    node.links.forEach((link) => {
+    node.links.forEach((linkId) => {
+      let link = getNodeById(this.props.nodes, linkId);
       setTimeout(() => {
-        this.props.playNode(link.id);
-        this.playLinks(link, rootId, particleId, true);
+        this.props.playNode(linkId);
+        this.playLinks(linkId, rootId, particleId, true);
       }, link.lag);
     });
   };
 
-  stopLinks(node, rootId, particleId, checkForRoot) {
+  stopLinks(nodeId, rootId, particleId, checkForRoot) {
+    let node = getNodeById(this.props.nodes, nodeId);
     if (!node.links.length) {
       return;
     }
     if (checkForRoot && node.id === rootId) {
       return;
     }
-    node.links.forEach((link) => {
+    node.links.forEach((linkId) => {
+      let link = getNodeById(this.props.nodes, linkId);
       setTimeout(() => {
         this.props.stopNode(link.id);
-        this.stopLinks(link, rootId, particleId, true);
+        this.stopLinks(linkId, rootId, particleId, true);
       }, link.lag);
     });
   };
@@ -281,12 +290,12 @@ class Canvas extends React.Component {
           if (distance <= config.app.collisionDistance) {
             if (!node.isParticleQueued(particle.id)) {
               this.props.enqueueParticle(node.id, particle.id);
-              this.playLinks(node, node.id, particle.id, false);
+              this.playLinks(node.id, node.id, particle.id, false);
             }
           } else {
             if (node.isParticleQueued(particle.id)) {
               this.props.dequeueParticle(node.id, particle.id);
-              this.stopLinks(node, node.id, particle.id, false);
+              this.stopLinks(node.id, node.id, particle.id, false);
             }
           }
         });
@@ -328,7 +337,7 @@ class Canvas extends React.Component {
       this.props.nodes.forEach((node) => {
         this.props.streams.forEach((stream) => {
           stream.particles.forEach((particle) => {
-            this.stopLinks(node, node.id, particle.id, false);
+            this.stopLinks(node.id, node.id, particle.id, false);
           });
         });
       });
@@ -376,10 +385,8 @@ class Canvas extends React.Component {
     this.canvasContext.lineWidth = config.link.lineWidth;
     this.canvasContext.setLineDash(config.link.lineDash);
 
-    node.links.forEach((link) => {
-      let destNode = _.find(this.props.nodes, (nodeObj) => {
-        return nodeObj.id === link.id;
-      });
+    node.links.forEach((linkId) => {
+      let destNode = getNodeById(this.props.nodes, linkId);
 
       let startPoint = calculateNodeBorderDistance(node.position, destNode.position);
       let endPoint = calculateNodeBorderDistance(destNode.position, node.position);
@@ -403,10 +410,12 @@ class Canvas extends React.Component {
     this.canvasContext.lineWidth = config.link.lineWidth;
     this.canvasContext.setLineDash(config.link.lineDash);
 
-    let startPoint = calculateNodeBorderDistance(this.linkSrc.position, this.linkPosition);
+    let linkedNode = getNodeById(this.props.nodes, this.linkSrc);
+
+    let startPoint = calculateNodeBorderDistance(linkedNode.position, this.linkPosition);
 
     this.canvasContext.moveTo(startPoint[0], startPoint[1]);
-    this.canvasContext.drawImage(this.linkAnchorImg, this.linkSrc.position[0] - 7, this.linkSrc.position[1] - 7);
+    this.canvasContext.drawImage(this.linkAnchorImg, linkedNode.position[0] - 7, linkedNode.position[1] - 7);
     this.canvasContext.lineTo(this.linkPosition[0], this.linkPosition[1]);
     this.canvasContext.stroke();
   }
@@ -492,7 +501,8 @@ const mapDispatchToProps = (dispatch) => {
     updateSelectedNodePositionByDelta: bindActionCreators(updateSelectedNodePositionByDelta, dispatch),
     updateNodePositionByDelta: bindActionCreators(updateNodePositionByDelta, dispatch),
     updateStreamPositionByDelta: bindActionCreators(updateStreamPositionByDelta, dispatch),
-    updateFPSCount: bindActionCreators(updateFPSCount, dispatch)
+    updateFPSCount: bindActionCreators(updateFPSCount, dispatch),
+    deselectStreams: bindActionCreators(deselectStreams, dispatch)
   };
 };
 

@@ -36,7 +36,7 @@
   position: absolute;
   font-size: 2.0em;
   line-height: 1.75em;
-  cursor: pointer;
+  cursor: default;
   transition: opacity 0.3s ease-in-out;
   z-index: 1;
   text-align: left;
@@ -52,7 +52,6 @@
   height: 40px;
   border-radius: 50%;
   border: 1px solid rgba(127, 127, 127, 0.35);
-  cursor: pointer;
   text-align: center;
   font-size: 0.9em;
   vertical-align: middle;
