@@ -3,7 +3,7 @@ import './Canvas.css';
 import _ from 'lodash';
 import config from '../../config/config';
 import { connect } from 'react-redux';
-import { addFreehandStream, addCircularStream, addLinearStream, updateStreamPositionByDelta } from '../../actions/Streams';
+import { addFreehandStream, addCircularStream, addLinearStream, updateStreamPositionByDelta, deselectStreams } from '../../actions/Streams';
 import { updateFPSCount } from '../../actions/Transport';
 import { bindActionCreators } from 'redux';
 import { calculateDistance, getPosition, calculateNodeBorderDistance, timestamp, getNodeById } from '../../utils/utils';
@@ -78,16 +78,20 @@ class Canvas extends React.Component {
 
     if (this.props.devices.streams) {
       this.props.addFreehandStream(position, event);
+      this.props.deselectNodes();
     } else if (this.props.devices.circularStreams) {
       this.props.addCircularStream(position, event);
+      this.props.deselectNodes();
     } else if (this.props.devices.linearStreams) {
       this.props.addLinearStream(position, event);
+      this.props.deselectNodes();
     } else if (this.props.devices.link || this.props.devices.unlink) {
       this.linkPosition = position;
       this.initiateNodeLink(position);
     } else if (this.props.devices.synthNodes || this.props.devices.midiNodes || this.props.devices.audioNodes) {
       this.addNode(position);
       this.selectNode(position, event.metaKey);
+      this.props.deselectStreams();
     } else if (this.props.devices.grab) {
       this.selectNode(position, event.metaKey);
     } else if (this.props.devices.clone) {
@@ -182,6 +186,7 @@ class Canvas extends React.Component {
 
   selectNode(position, metaKey) {
     setTimeout(() => {
+      this.props.deselectStreams();
       let selectedNodes = this.getSelectedNodeCount();
       if (!metaKey && selectedNodes === 1) {
         this.props.deselectNodes();
@@ -496,7 +501,8 @@ const mapDispatchToProps = (dispatch) => {
     updateSelectedNodePositionByDelta: bindActionCreators(updateSelectedNodePositionByDelta, dispatch),
     updateNodePositionByDelta: bindActionCreators(updateNodePositionByDelta, dispatch),
     updateStreamPositionByDelta: bindActionCreators(updateStreamPositionByDelta, dispatch),
-    updateFPSCount: bindActionCreators(updateFPSCount, dispatch)
+    updateFPSCount: bindActionCreators(updateFPSCount, dispatch),
+    deselectStreams: bindActionCreators(deselectStreams, dispatch)
   };
 };
 

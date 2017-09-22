@@ -62,7 +62,6 @@
 .fx-panel-info-icon {
   margin-left: 10px;
   color: dimgray;
-  cursor: pointer;
 }
 
 .fx-panel-info {
@@ -79,22 +78,27 @@
   border: 1px solid #333;
   background-color: #222;
   z-index: 2;
+
 }
 
 .fx-panel-info i {
   float: right;
   color: darkorange;
-  cursor: pointer;
   margin-top: -25px;
 }
 
 .fx-panel-info h1 {
   font-size: 1.5em;
   font-weight: bold;
+  text-align: left;
 }
 
 .fx-panel-info a {
   color: darkorange;
+}
+
+.fx-panel-info p {
+  text-align: left;
 }
 
 .fx-panel-align-top {

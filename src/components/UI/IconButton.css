@@ -1,6 +1,4 @@
 .icon-button-container button {
-  /*width: 100%;*/
-  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;

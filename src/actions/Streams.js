@@ -96,3 +96,9 @@ export const hydrateStreams = (payload) => {
     payload
   };
 };
+
+export const deselectStreams = () => {
+  return {
+    type: 'DESELECT_STREAMS'
+  };
+};
