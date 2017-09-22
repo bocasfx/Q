@@ -4,11 +4,13 @@
 
 ------
 
-Q is a Nodular Synthesizer/Sequencer controlled by the interactions between nodes and particle streams.
+Q is a Nodular Synthesizer/Sequencer controlled by the interactions between nodes and particle streams. It was built using [Electron](https://electron.atom.io/) and [React](https://facebook.github.io/react/).
 
 ![Q](./resources/docs/ui.png)
 
 ## Nodes
+
+Nodes generate sound whenever they become in contact with a particle. There are three different types of nodes:
 
 - **Synth**
   - Two oscillators per node.
@@ -33,6 +35,8 @@ Q is a Nodular Synthesizer/Sequencer controlled by the interactions between node
   - FX chain send control.
 
 ## Streams
+
+Particles travel along the paths defined by streams. Streams can have zero or more particles. There are three different types of particles:
 
 - **Linear**
   - Linear particle flow (user-defined length).
