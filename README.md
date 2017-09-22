@@ -84,19 +84,33 @@ Particles travel along the paths defined by streams. Streams can have zero or mo
 
   ​
 
-  ## User Guide
+## User Guide
 
-  |                   Icon                   | Action                                   |
-  | :--------------------------------------: | :--------------------------------------- |
-  | <img src="./resources/menu/grab.svg" width="50px"/> | **Grab nodes** - Click on a node to select it. Click and drag a node to change its position. |
-  | <img src="./resources/menu/synth.svg" width="50px"/> | **Synth nodes** - Click anywhere on the display area to create a synth node. |
-  | <img src="./resources/menu/midi.svg" width="50px"/> | **MIDI nodes** - Click anywhere on the display area to create a MIDI node. |
-  | <img src="./resources/menu/audio.svg" width="50px"/> | **Audio nodes** - Click anywhere on the display area to create an audio node. |
-  | <img src="./resources/menu/linear-stream.svg" width="50px"/> | **Linear Streams** - Click and drag anywhere on the display area to create a linear stream. |
-  | <img src="./resources/menu/circular-stream.svg" width="50px"/> | **Circular Streams** - Click and drag anywhere on the display area to create a circular stream. |
-  | <img src="./resources/menu/stream.svg" width="50px"/> | **Freehand Streams** - Click and drag anywhere on the display area to create a freehand stream. |
-  | <img src="./resources/menu/clone.svg" width="50px"/> | **Clone nodes** - Click on a node to clone it. |
-  | <img src="./resources/menu/link.svg" width="50px"/> | **Link nodes** - Click on a node and drag to a second node to link them. Messages travel from parent nodes to child nodes but not from child nodes to parent nodes. Loops are not allowed. |
-  | <img src="./resources/menu/unlink.svg" width="50px"/> | **Unlink nodes** - Click on a parent node and drag to a child node to unlink them. |
+|                   Icon                   | Action                                   |
+| :--------------------------------------: | :--------------------------------------- |
+| <img src="./resources/menu/grab.svg" width="50px"/> | **Grab nodes** - Click on a node to select it. Click and drag a node to change its position. |
+| <img src="./resources/menu/synth.svg" width="50px"/> | **Synth nodes** - Click anywhere on the display area to create a synth node. |
+| <img src="./resources/menu/midi.svg" width="50px"/> | **MIDI nodes** - Click anywhere on the display area to create a MIDI node. |
+| <img src="./resources/menu/audio.svg" width="50px"/> | **Audio nodes** - Click anywhere on the display area to create an audio node. |
+| <img src="./resources/menu/linear-stream.svg" width="50px"/> | **Linear Streams** - Click and drag anywhere on the display area to create a linear stream. |
+| <img src="./resources/menu/circular-stream.svg" width="50px"/> | **Circular Streams** - Click and drag anywhere on the display area to create a circular stream. |
+| <img src="./resources/menu/stream.svg" width="50px"/> | **Freehand Streams** - Click and drag anywhere on the display area to create a freehand stream. |
+| <img src="./resources/menu/clone.svg" width="50px"/> | **Clone nodes** - Click on a node to clone it. |
+| <img src="./resources/menu/link.svg" width="50px"/> | **Link nodes** - Click on a node and drag to a second node to link them. Messages travel from parent nodes to child nodes but not from child nodes to parent nodes. Loops are not allowed. |
+| <img src="./resources/menu/unlink.svg" width="50px"/> | **Unlink nodes** - Click on a parent node and drag to a child node to unlink them. |
 
+
+## Keyboard Shortcuts
+
+| Shortcut  | Action                                 |
+| --------- | -------------------------------------- |
+| Spacebar  | Play/Pause.                            |
+| Backspace | Delete nodes.                          |
+| ⌘-A       | Select all nodes.                      |
+| ⌘-S       | Save project.                          |
+| ⌘-O       | Open project.                          |
+| ⌘-N       | Create a new project                   |
+| ⌘-⇧-S     | Save current project to local storage. |
+| ⌘-⇧-O     | Load project from local storage.       |
+| ⌘-⇧-C     | Clear local storage.                   |
 
