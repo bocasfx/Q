@@ -82,6 +82,9 @@ class AudioNodePanel extends React.Component {
     }
 
     dialog.showOpenDialog({properties: ['openFile']}, (files) => {
+      if (!files) {
+        return;
+      }
       fs.readFile(files[0], (err, dataBuffer) => {
         if (err) {
           alert(err);

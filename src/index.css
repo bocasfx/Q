@@ -50,7 +50,6 @@ input[type="radio"]:after {
   visibility: visible;
   outline: 0;
   position: relative;
-  cursor: pointer;
 }
 
 input[type="radio"]:checked:after {

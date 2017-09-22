@@ -86,10 +86,6 @@ class CircularStream extends Stream {
     if (this.mouseDown) {
       canvasContext.moveTo(this.position[0], this.position[1]);
       canvasContext.lineTo(this.mousePosition[0], this.mousePosition[1]);
-      canvasContext.font = config.circularStream.font;
-      canvasContext.fillStyle = config.circularStream.fillStyle;
-      canvasContext.textAlign = config.circularStream.textAlign;
-      canvasContext.fillText(this.radius.toFixed(2), this.position[0], this.position[1]); 
     }
 
     canvasContext.stroke();

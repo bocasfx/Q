@@ -4,7 +4,7 @@ import AudioNode from '../elements/nodes/AudioNode';
 import _ from 'lodash';
 import { nodes } from '../config/initial-state';
 import uuidv1 from 'uuid/v1';
-import { getSelectedElements } from '../utils/utils';
+import { getSelectedElements, getNodeById, graphHasLoop } from '../utils/utils';
 
 let fs = null;
 
@@ -88,11 +88,9 @@ const unlinkSelectedNodes = (state) => {
     if (node.selected) {
       node.links = [];
       node.parentIds.forEach((parentNodeId) => {
-        let parentNode = _.find(state, (item) => {
-          return item.id === parentNodeId;
-        });
+        let parentNode = getNodeById(state, parentNodeId);
         if (parentNode) {
-          parentNode.unlink(node);
+          parentNode.unlink(node.id);
         }
       });
     }
@@ -244,19 +242,6 @@ const setNodePan = (state, id, pan) => {
   });
 };
 
-const graphHasLoop = (node, rootId, checkForRoot) => {
-  if (checkForRoot && node.id === rootId) {
-    return true;
-  }
-  for (var i = 0; i < node.links.length; i++) {
-    let result = graphHasLoop(node.links[i], rootId, true);
-    if (result) {
-      return result;
-    }
-  }
-  return false;
-};
-
 const linkNodes = (state, srcId, destId) => {
   let srcNode = _.find(state, (node) => {
     return node.id === srcId;
@@ -264,9 +249,9 @@ const linkNodes = (state, srcId, destId) => {
   let destNode = _.find(state, (node) => {
     return node.id === destId;
   });
-  srcNode.link(destNode);
+  srcNode.link(destNode.id);
   destNode.parentIds.push(srcNode.id);
-  if (graphHasLoop(destNode, srcNode.id, false)) {
+  if (graphHasLoop(state, destNode, srcNode.id, false)) {
     alert('LOOP!');
   }
   return state;
@@ -285,21 +270,16 @@ const unlinkNodes = (state, srcId, destId) => {
   }
   let parentIdIdx = destNode.parentIds.indexOf(srcNode.id);
   destNode.parentIds.splice(parentIdIdx, 1);
-  srcNode.unlink(destNode);
+  srcNode.unlink(destNode.id);
   return nodeList;
 };
 
 const unlinkNode = (state, id) => {
   let nodeList = state.splice(0);
-  let srcNode = _.find(nodeList, (node) => {
-    return node.id === id;
-  });
-  
+  let srcNode = getNodeById(nodeList, id);
   srcNode.links = [];
   srcNode.parentIds.forEach((parentNodeId) => {
-    let parentNode = _.find(nodeList, (item) => {
-      return item.id === parentNodeId;
-    });
+    let parentNode = getNodeById(nodeList, parentNodeId);
     if (parentNode) {
       parentNode.unlink(srcNode);
     }

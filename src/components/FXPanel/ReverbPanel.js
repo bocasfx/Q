@@ -100,13 +100,11 @@ class ReverbPanel extends React.Component {
     let label = null;
     let link = null;
     this.impulseResponses.forEach((response) => {
-      if (response.url === this.props.fx.reverb.impulseResponse && response.info) {
-        info = response.info.map((paragraph, key) => {
-          return <p key={key}>{paragraph}</p>;
-        });
-        label = <h1 key="title">{response.label}</h1>;
-        link = <a key="link" href="#" data-url={response.infoUrl} onClick={this.openLinkInBrowser}>More info</a>;
-      }
+      info = response.info.map((paragraph, key) => {
+        return <p key={key}>{paragraph}</p>;
+      });
+      label = <h1 key="title">{response.label}</h1>;
+      link = <a key="link" href="#" data-url={response.infoUrl} onClick={this.openLinkInBrowser}>More info</a>;
     });
 
     return [label, info, link];

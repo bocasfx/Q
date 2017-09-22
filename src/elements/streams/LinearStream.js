@@ -81,13 +81,6 @@ class LinearStream extends Stream {
     canvasContext.moveTo(this.from[0], this.from[1]);
     canvasContext.lineTo(this.to[0], this.to[1]);
 
-    if (this.mouseDown) {
-      canvasContext.font = config.linearStream.font;
-      canvasContext.fillStyle = config.linearStream.fillStyle;
-      canvasContext.textAlign = config.linearStream.textAlign;
-      canvasContext.fillText(this.distance.toFixed(2), this.from[0], this.from[1]); 
-    }
-
     canvasContext.stroke();
 
     this.particles.forEach((particle) => {

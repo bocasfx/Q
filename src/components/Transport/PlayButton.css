@@ -1,7 +1,6 @@
 .play-button-container {
   color: darkorange;
   text-shadow: darkorange 0px 0px 2px;
-  cursor: pointer;
   width: 100%;
   text-align: center;
 }
