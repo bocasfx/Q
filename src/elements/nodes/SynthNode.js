@@ -141,6 +141,7 @@ class SynthNode extends Node {
   }
 
   play() {
+    console.log(this.lag);
     if (this.active || this._disabled || !this.shouldPlay) {
       return;
     }

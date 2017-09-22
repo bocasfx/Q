@@ -29,6 +29,26 @@ export const getSelectedElements = (elements) => {
   }]);
 };
 
+export const getNodeById = (nodes, nodeId) => {
+  return _.find(nodes, (node) => {
+    return node.id === nodeId;
+  });
+};
+
+export const graphHasLoop = (nodeList, node, rootId, checkForRoot) => {
+  if (checkForRoot && node.id === rootId) {
+    return true;
+  }
+  for (var i = 0; i < node.links.length; i++) {
+    let link = getNodeById(nodeList, node.links[i]);
+    let result = graphHasLoop(nodeList, link, rootId, true);
+    if (result) {
+      return result;
+    }
+  }
+  return false;
+};
+
 export const calculateNodeBorderDistance = (a, b) => {
   let d2 = 22;
   let d = calculateDistance(a, b);
