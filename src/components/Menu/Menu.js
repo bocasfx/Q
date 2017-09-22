@@ -4,11 +4,17 @@ import MenuButton from './MenuButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {toggleDevice} from '../../actions/Devices';
+import {setSelection} from '../../actions/Selection';
 
 class Menu extends React.Component {
 
   onClick(device) {
     this.props.toggleDevice(device);
+    let selection = 'nodes';
+    if (device === 'linearStreams' || device === 'circularStreams' || device === 'streams') {
+      selection = 'streams';
+    }
+    this.props.setSelection(selection);
   }
 
   render() {
@@ -92,7 +98,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    toggleDevice: bindActionCreators(toggleDevice, dispatch)
+    toggleDevice: bindActionCreators(toggleDevice, dispatch),
+    setSelection: bindActionCreators(setSelection, dispatch)
   };
 };
 

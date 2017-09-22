@@ -14,6 +14,18 @@ class Tabs extends React.Component {
     this.renderTitles = this.renderTitles.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.selection.objType === 'streams') {
+      this.setState({
+        selected: 1
+      });
+    } else {
+      this.setState({
+        selected: 0
+      });
+    }
+  }
+
   onClick(idx, event) {
     event.preventDefault();
     this.setState({
@@ -49,10 +61,16 @@ class Tabs extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    selection: state.selection
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     setSelection: bindActionCreators(setSelection, dispatch)
   };
 };
 
-module.exports = connect(null, mapDispatchToProps)(Tabs);
+module.exports = connect(mapStateToProps, mapDispatchToProps)(Tabs);
