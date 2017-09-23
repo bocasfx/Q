@@ -3,10 +3,7 @@
   "description": "Q - Nodular Synthesizer/Sequencer",
   "version": "0.1.0",
   "private": true,
-  "license": {
-    "type": "CC",
-    "url": "https://creativecommons.org/licenses/by-nc-sa/4.0/"
-  },
+  "license": "MIT",
   "author": {
     "name": "Rodolfo Palacios",
     "email": "mintcreamseashell@gmail.com",
