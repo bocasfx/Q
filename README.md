@@ -8,6 +8,10 @@ Q is a Nodular Synthesizer/Sequencer controlled by the interactions between node
 
 ![Q](./resources/docs/ui.png)
 
+## Platforms
+
+Currently Q is only available for OSX but there are plans for a Windows release soon.
+
 ## Nodes
 
 Nodes generate sound whenever they become in contact with a particle. There are three different types of nodes:
