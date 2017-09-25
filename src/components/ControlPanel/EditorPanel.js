@@ -13,11 +13,17 @@ class EditorPanel extends React.Component {
     this.onScroll = this.onScroll.bind(this);
     this.onKeyPress = this.onKeyPress.bind(this);
     this.state = {
-      scrolling: false
+      scrolling: false,
+      height: window.innerHeight - 297
     };
     this.nodes = getSelectedElements(props.nodes);
     this.node = this.nodes[0];
     this.stream = getSelectedElements(props.streams)[0];
+    this.updateDimensions = this.updateDimensions.bind(this);
+  }
+
+  componentDidMount() {
+    window.addEventListener("resize", this.updateDimensions);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -59,11 +65,16 @@ class EditorPanel extends React.Component {
     }
   }
 
+  updateDimensions() {
+    this.setState({
+      height: window.innerHeight - 297
+    });
+  }
+
   render() {
-    let height = window.innerHeight - 297;
     let style = {
-      height,
-      maxHeight: height
+      height: this.state.height,
+      maxHeight: this.state.height
     };
 
     let panelClass = 'editor-panel-container';

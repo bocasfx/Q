@@ -70,7 +70,7 @@ function setMainMenu(mainWindow) {
         role: 'aboot',
         label: 'Aboot Q',
         click: () => openAboutWindow.default({
-          'icon_path': path.join(app.getAppPath(), 'resources/icon/icon.png'),
+          'icon_path': path.join(app.getAppPath(), 'public/icons/icon.png'),
           license: 'Creative Commons (BY-NC-SA 4.0)',
           description: 'Nodular Synthesizer/Sequencer'
         })
