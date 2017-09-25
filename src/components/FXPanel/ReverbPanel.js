@@ -129,7 +129,7 @@ class ReverbPanel extends React.Component {
             
           </div>
           <div className="fx-panel-centered">
-            <select onChange={this.onImpulseResponseChange}>
+            <select onChange={this.onImpulseResponseChange} disabled={this.props.fx.reverb.disabled}>
               {this.renderIRSelect()}
             </select>
             <i className="fx-panel-info-icon fa fa-info-circle" onClick={this.showReverbInfo}>
@@ -143,7 +143,7 @@ class ReverbPanel extends React.Component {
               min={0}
               max={1}
               onChange={this.props.setReverbAmount}
-              disabled={false}
+              disabled={this.props.fx.reverb.disabled}
               type="synth"
               log={true}/>
           </div>

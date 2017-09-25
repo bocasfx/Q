@@ -131,6 +131,9 @@ class EventHandler {
           // Backspace
           case 'Backspace':
             store.dispatch({
+              type: 'STOP_SELECTED_NODES'
+            });
+            store.dispatch({
               type: 'UNLINK_SELECTED_NODES'
             });
             return store.dispatch({

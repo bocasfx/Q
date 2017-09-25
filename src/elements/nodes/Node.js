@@ -64,6 +64,7 @@ class Node {
   }
 
   stop() {}
+  disconnect() {}
 
   isParticleQueued(id) {
     let particleIdx = _.findIndex(this.particleQueue, (particleId) => {
