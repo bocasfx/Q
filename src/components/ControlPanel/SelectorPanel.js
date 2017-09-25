@@ -2,10 +2,10 @@ import React from 'react';
 import Panel from '../UI/Tabs/Panel';
 import { connect } from 'react-redux';
 import ListItem from './ListItem';
-import Tabs from '../UI/Tabs/Tabs';
 import { bindActionCreators } from 'redux';
 import { deleteStream, selectStream, setStreamDisabledStatus, deselectStreams } from '../../actions/Streams';
 import { deleteNode, selectNode, setNodeDisabledStatus, deselectNodes, stopNode, unlinkNode } from '../../actions/Nodes';
+import { setSelection } from '../../actions/Selection';
 import './SelectorPanel.css';
 
 class SelectorPanel extends React.Component {
@@ -49,6 +49,7 @@ class SelectorPanel extends React.Component {
       this.props.deselectNodes();
     }
     this.props.selectNode(node.id);
+    this.props.setSelection('nodes');
     this.props.deselectStreams();
   }
 
@@ -56,6 +57,7 @@ class SelectorPanel extends React.Component {
     event.preventDefault();
     this.props.selectStream(stream.id);
     this.props.deselectNodes();
+    this.props.setSelection('streams');
   }
 
   renderStreams() {
@@ -93,14 +95,10 @@ class SelectorPanel extends React.Component {
   render() {
     return (
       <div className="selector-panel-container">
-        <Tabs>
-          <Panel label="Nodes">
-            {this.renderNodes()}
-          </Panel>
-          <Panel label="Streams">
-            {this.renderStreams()}
-          </Panel>
-        </Tabs>
+        <Panel label="Nodes">
+          {this.renderStreams()}
+          {this.renderNodes()}
+        </Panel>
       </div>
     );
   }
@@ -124,7 +122,8 @@ const mapDispatchToProps = (dispatch) => {
     setStreamDisabledStatus: bindActionCreators(setStreamDisabledStatus, dispatch),
     stopNode: bindActionCreators(stopNode, dispatch),
     unlinkNode: bindActionCreators(unlinkNode, dispatch),
-    deselectStreams: bindActionCreators(deselectStreams, dispatch)
+    deselectStreams: bindActionCreators(deselectStreams, dispatch),
+    setSelection: bindActionCreators(setSelection, dispatch)
   };
 };
 

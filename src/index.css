@@ -68,8 +68,13 @@ canvas {
 }
 
 .main-container {
-  display: flex;
+  /*display: flex;*/
   background-image: url(../public/backgrounds/concrete_wall.png);
+}
+
+.main-body-container {
+  display: flex;
+  flex-direction: row;
 }
 
 .main-container > div {

@@ -110,11 +110,12 @@ Particles travel along the paths defined by streams. Streams can have zero or mo
 | --------- | -------------------------------------- |
 | Spacebar  | Play/Pause.                            |
 | Backspace | Delete nodes.                          |
-| ⌘-A       | Select all nodes.                      |
-| ⌘-S       | Save project.                          |
-| ⌘-O       | Open project.                          |
-| ⌘-N       | Create a new project                   |
-| ⌘-⇧-S     | Save current project to local storage. |
-| ⌘-⇧-O     | Load project from local storage.       |
-| ⌘-⇧-C     | Clear local storage.                   |
+| ⌘+A       | Select all nodes.                      |
+| ⌘+S       | Save project.                          |
+| ⌘+O       | Open project.                          |
+| ⌘+N       | Create a new project                   |
+| ⌘+⇧+S     | Save current project to local storage. |
+| ⌘+⇧+O     | Load project from local storage.       |
+| ⌘+⇧+C     | Clear local storage.                   |
+| ⌘+Click   | Select Multiple nodes.                 |
 

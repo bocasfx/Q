@@ -19,13 +19,15 @@ const renderDom = () => {
       <div>
         {/*<Mixer/>*/}
         <div className="main-container">
-          <Menu/>
-          <div>
-            <Transport/>
-            <Canvas/>
-            <FXPanel/>
+          <Transport/>
+          <div className="main-body-container">
+            <Menu/>
+            <div>
+              <Canvas/>
+              <FXPanel/>
+            </div>
+            <ControlPanel/>
           </div>
-          <ControlPanel/>
         </div>
       </div>
     </Provider>,

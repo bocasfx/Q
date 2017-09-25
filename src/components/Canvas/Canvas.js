@@ -77,12 +77,15 @@ class Canvas extends React.Component {
     this.canvasPosition = position;
 
     if (this.props.devices.streams) {
+      this.props.deselectStreams();
       this.props.addFreehandStream(position, event);
       this.props.deselectNodes();
     } else if (this.props.devices.circularStreams) {
+      this.props.deselectStreams();
       this.props.addCircularStream(position, event);
       this.props.deselectNodes();
     } else if (this.props.devices.linearStreams) {
+      this.props.deselectStreams();
       this.props.addLinearStream(position, event);
       this.props.deselectNodes();
     } else if (this.props.devices.link || this.props.devices.unlink) {

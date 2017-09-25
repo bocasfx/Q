@@ -18,10 +18,14 @@ class ActivityIndicator extends React.Component {
     };
 
     if (this.props.item.type === 'stream') {
-      if (!this.props.item.disabled) {
+      if (this.props.item.disabled) {
+        return <span className="activity-indicator-bullet" style={style}><i className="fa fa-ban"></i></span>;
+      } else if (this.props.transport.playing) {
         return <span className="activity-indicator-bullet" style={style}><i className="fa fa-circle"></i></span>;
+      } else {
+        return <span className="activity-indicator-bullet" style={style}><i className="fa fa-circle-o"></i></span>;
       }
-      return <span className="activity-indicator-bullet" style={style}><i className="fa fa-ban"></i></span>;
+      
     } else if (!this.props.item.disabled) {
       if (this.props.item.active) {
         return <span className="activity-indicator-bullet" style={style}><i className="fa fa-circle"></i></span>;
@@ -44,7 +48,8 @@ class ActivityIndicator extends React.Component {
 const mapStateToProps = (state) => {
   return {
     nodes: state.nodes,
-    streams: state.streams
+    streams: state.streams,
+    transport: state.transport
   };
 };
 

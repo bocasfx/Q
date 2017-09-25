@@ -13,6 +13,8 @@ class CircularStream extends Stream {
     this.cy = this.position[0] + this.radius;
     this.deg2rad = Math.PI / 180;
     this.variety = 'circular';
+    this.count = count;
+    this.speed = speed;
   }
 
   set count(value) {
