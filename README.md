@@ -10,7 +10,7 @@ Q is a Nodular Synthesizer/Sequencer controlled by the interactions between node
 
 ## Platforms
 
-Currently Q is only available for OSX but there are plans for a Windows release soon.
+Currently Q is only available for OSX.
 
 ## Nodes
 

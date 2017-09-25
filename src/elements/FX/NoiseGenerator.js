@@ -56,6 +56,11 @@ class NoiseGenerator {
       this.generator.connect(node);
     }
   }
+
+  disconnect() {
+    this.generator.stop();
+    this.generator.disconnect();
+  }
 }
 
 export default NoiseGenerator;

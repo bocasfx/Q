@@ -140,6 +140,19 @@ class SynthNode extends Node {
     return this._mainGain.gain.value;
   }
 
+  disconnect() {
+    this.oscillator1.disconnect();
+    this._osc1Gain.disconnect();
+    this.oscillator2.disconnect();
+    this._osc2Gain.disconnect();
+    this.noiseGenerator.disconnect();
+    this._noiseGain.disconnect();
+    this.amplifier.disconnect();
+    this.amplifier.disconnect();
+    this._mainGain.disconnect();
+    this._sendFXGain.disconnect();
+  }
+
   play() {
     if (this.active || this._disabled || !this.shouldPlay) {
       return;

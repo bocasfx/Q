@@ -35,6 +35,10 @@ class Oscillator {
       this.output.connect(node);
     }
   }
+
+  disconnect() {
+    this.output.disconnect();
+  }
 }
 
 module.exports = Oscillator;

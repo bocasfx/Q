@@ -35,6 +35,13 @@ class Amplifier {
       this.output.connect(node);
     };
   }
+
+  disconnect() {
+    this.splitter.disconnect();
+    this.gainL.disconnect();
+    this.gainR.disconnect();
+    this.output.disconnect();
+  }
 }
 
 module.exports = Amplifier;

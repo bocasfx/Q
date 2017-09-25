@@ -71,6 +71,11 @@ const setNodeSource = (state, id, buffer, path) => {
 
 const deleteNode = (state, id) => {
   let nodeList = state.splice(0);
+  nodeList.forEach((node) => {
+    if (node.id === id) {
+      node.disconnect();
+    }
+  });
   return _.remove(nodeList, (node) => {
     return node.id !== id;
   });
@@ -78,6 +83,11 @@ const deleteNode = (state, id) => {
 
 const deleteSelectedNodes = (state) => {
   let nodeList = state.splice(0);
+  nodeList.forEach((node) => {
+    if (node.selected) {
+      node.disconnect();
+    }
+  });
   return _.remove(nodeList, (node) => {
     return !node.selected;
   });
@@ -98,7 +108,11 @@ const unlinkSelectedNodes = (state) => {
   });
 };
 
-const deleteAllNodes = () => {
+const deleteAllNodes = (state) => {
+  let nodeList = state.splice(0);
+  nodeList.forEach((node) => {
+    node.disconnect();
+  });
   return [];
 };
 
@@ -331,6 +345,15 @@ const stopNodes = (state) => {
   });
 };
 
+const stopSelectedNodes = (state) => {
+  return state.map((node) => {
+    if (node.selected) {
+      node.stop();
+    }
+    return node;
+  });
+};
+
 const setNodeLag = (state, id, lag) => {
   return state.map((node) => {
     if (node.id === id) {
@@ -490,7 +513,7 @@ export default (state = nodes, action) => {
       return deleteNode(state, action.id);
 
     case 'DELETE_ALL_NODES':
-      return deleteAllNodes();
+      return deleteAllNodes(state);
 
     case 'DELETE_SELECTED_NODES':
       return deleteSelectedNodes(state);
@@ -554,6 +577,9 @@ export default (state = nodes, action) => {
 
     case 'STOP_NODES':
       return stopNodes(state);
+
+    case 'STOP_SELECTED_NODES':
+      return stopSelectedNodes(state);
 
     case 'SET_NODE_LAG':
       return setNodeLag(state, action.id, action.lag);

@@ -25,6 +25,7 @@ class SelectorPanel extends React.Component {
 
   onDeleteNode(id, event) {
     event.preventDefault();
+    this.props.stopNode(id);
     this.props.unlinkNode(id);
     this.props.deleteNode(id);
     event.stopPropagation();
