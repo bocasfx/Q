@@ -320,6 +320,13 @@ const dequeueParticle = (state, id, particleId) => {
   });
 };
 
+const dequeueParticles = (state) => {
+  return state.map((node) => {
+    node.dequeueParticles();
+    return node;
+  });
+};
+
 const playNode = (state, id) => {
   return state.map((node) => {
     if (node.id === id) {
@@ -568,6 +575,9 @@ export default (state = nodes, action) => {
 
     case 'DEQUEUE_PARTICLE':
       return dequeueParticle(state, action.id, action.particleId);
+
+    case 'DEQUEUE_PARTICLES':
+      return dequeueParticles(state);
 
     case 'PLAY_NODE':
       return playNode(state, action.id);

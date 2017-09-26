@@ -99,6 +99,10 @@ class Node {
     }
   }
 
+  dequeueParticles() {
+    this.particleQueue = [];
+  }
+
   link(destNodeId) {
     this.links.push(destNodeId);
   }

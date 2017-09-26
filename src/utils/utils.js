@@ -98,3 +98,14 @@ export const buffer2ArrayBuffer = (buffer) => {
   }
   return arrayBuffer;
 };
+
+export const getNodesWithinDistance = (nodes, position) => {
+  let matches = [];
+  nodes.forEach((node) => {
+    let distance = calculateDistance(node.position, position);
+    if (distance <= config.app.doubleClickDistance) {
+      matches.push(node);
+    }
+  });
+  return matches;
+};

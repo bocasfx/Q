@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { addFreehandStream, addCircularStream, addLinearStream, updateStreamPositionByDelta, deselectStreams } from '../../actions/Streams';
 import { updateFPSCount } from '../../actions/Transport';
 import { bindActionCreators } from 'redux';
-import { calculateDistance, getPosition, calculateNodeBorderDistance, timestamp, getNodeById } from '../../utils/utils';
+import { calculateDistance, getPosition, calculateNodeBorderDistance, timestamp, getNodeById, getNodesWithinDistance } from '../../utils/utils';
 import { addSynthNode,
   addMidiNode,
   addAudioNode,
@@ -196,18 +196,23 @@ class Canvas extends React.Component {
       }
       let selectionChanged = false;
       let alreadySelected = false;
-      this.props.nodes.forEach((node) => {
-        let distance = calculateDistance(node.position, position);
-        if (distance <= config.app.doubleClickDistance) {
-          if (node.selected) {
-            alreadySelected = true;
-          } else {
-            this.props.selectNode(node.id);
-            selectionChanged = true;
-            selectedNodes++;
-          }
-        } 
-      });
+
+      let matches = getNodesWithinDistance(this.props.nodes, position);
+
+      if (!matches.length) {
+        this.props.deselectNodes();
+        return;
+      }
+
+      let node = matches[0];
+
+      if (node.selected) {
+        alreadySelected = true;
+      } else {
+        this.props.selectNode(node.id);
+        selectionChanged = true;
+        selectedNodes++;
+      }
 
       if (!selectionChanged && !alreadySelected) {
         this.props.deselectNodes();
