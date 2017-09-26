@@ -86,7 +86,11 @@ function setMainMenu(mainWindow) {
         label: 'Quit',
         accelerator: 'CmdOrCtrl+Q',
         click: () => {
-          mainWindow.webContents.send('QEvents', 'quit');
+          try {
+            mainWindow.webContents.send('QEvents', 'quit');
+          } catch (err) {
+            app.quit();
+          }
         }
       }
     ]
