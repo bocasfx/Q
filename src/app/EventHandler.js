@@ -59,7 +59,9 @@ class EventHandler {
 
             // Save to local storage
             case 'S':
-              return this.saveContent();
+              this.saveContent();
+              alert('Project saved to internal storage.');
+              return;
 
             // Load local storage
             case 'O':
@@ -86,17 +88,13 @@ class EventHandler {
           case 'S':
             event.stopPropagation();
             event.returnValue = false;
-            return this.serializeProject();
+            this.serializeProject();
+            return;
 
           // Open
           case 'o':
           case 'O':
             return this.hydrateProject();
-
-          // Mixer
-          // case 'm':
-          // case 'M':
-          //   return this.toggleDevice('mixer');
 
           // Grab
           case 'g':
@@ -122,23 +120,18 @@ class EventHandler {
               type: 'TOGGLE_TRANSPORT'
             });
             if (!store.getState().transport.playing) {
-              store.dispatch({
-                type: 'STOP_NODES'
-              });
+              store.dispatch({type: 'STOP_NODES'});
+              store.dispatch({type: 'DEQUEUE_PARTICLES'});
             }
             return;
 
           // Backspace
           case 'Backspace':
-            store.dispatch({
-              type: 'STOP_SELECTED_NODES'
-            });
-            store.dispatch({
-              type: 'UNLINK_SELECTED_NODES'
-            });
-            return store.dispatch({
-              type: 'DELETE_SELECTED_NODES'
-            });
+            store.dispatch({type: 'STOP_SELECTED_NODES'});
+            store.dispatch({type: 'UNLINK_SELECTED_NODES'});
+            store.dispatch({type: 'DELETE_SELECTED_NODES'});
+            store.dispatch({type: 'DELETE_SELECTED_STREAMS'});
+            return;
 
           default:
             return null;

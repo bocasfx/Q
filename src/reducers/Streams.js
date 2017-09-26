@@ -44,6 +44,13 @@ const deleteStream = (state, id) => {
   });
 };
 
+const deleteSelectedStreams = (state) => {
+  let streamList = state.splice(0);
+  return _.remove(streamList, (stream) => {
+    return !stream.selected;
+  });
+};
+
 const deleteAllStreams = () => {
   return [];
 };
@@ -148,6 +155,9 @@ export default (state = streams, action) => {
 
     case 'ADD_LINEAR_STREAM':
       return addLinearStream(state, action.position, action.event);
+
+    case 'DELETE_SELECTED_STREAMS':
+      return deleteSelectedStreams(state);
 
     case 'DELETE_STREAM':
       return deleteStream(state, action.id);
