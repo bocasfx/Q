@@ -25,7 +25,8 @@ class QAudioContext {
     this.delay.connect(this.analyser);
     this.analyser.connect(this.ctx.destination);
 
-    this.analyser.fftSize = 2048;
+    // this.analyser.fftSize = 2048;
+    this.analyser.fftSize = 256;
   }
 
   get destination() {
@@ -80,8 +81,7 @@ class QAudioContext {
     this.filter.trigger();
   }
 
-  render(canvasContext, width, height) {
-
+  renderWaveform(canvasContext, width, height) {
     let bufferLength = this.analyser.frequencyBinCount;
     let dataArray = new Uint8Array(bufferLength);
     this.analyser.getByteTimeDomainData(dataArray);
@@ -107,6 +107,29 @@ class QAudioContext {
     }
     canvasContext.lineTo(width, height/2);
     canvasContext.stroke(); 
+  }
+
+  renderBars(canvasContext, width, height) {
+    let bufferLength = this.analyser.frequencyBinCount;
+    let dataArray = new Uint8Array(bufferLength);
+    this.analyser.getByteFrequencyData(dataArray);
+
+    var barWidth = (width / bufferLength) * 2.5;
+    var barHeight;
+    var x = 0;
+
+    for(var i = 0; i < bufferLength; i++) {
+      barHeight = dataArray[i]/2;
+
+      canvasContext.fillStyle = 'rgba(127, 127, 127, 0.4)';
+      canvasContext.fillRect(x, height - barHeight / 2, barWidth, barHeight);
+
+      x += barWidth + 1;
+    }
+  }
+
+  render(canvasContext, width, height) {
+    this.renderBars(canvasContext, width, height);
   }
 }
 
