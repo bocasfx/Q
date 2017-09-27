@@ -20,6 +20,11 @@ const setDirtyStatus = (state, status) => {
   return newState;
 };
 
+const setVisualizer = (state, vizType) => {
+  let newState = Object.assign({}, state, {visualizer: vizType});
+  return newState;
+};
+
 export default (state = app, action) => {
   switch (action.type) {
 
@@ -34,6 +39,9 @@ export default (state = app, action) => {
 
     case 'SET_DIRTY_STATUS':
       return setDirtyStatus(state, action.status);
+
+    case 'SET_VISUALIZER':
+      return setVisualizer(state, action.vizType);
 
     default:
       return state;

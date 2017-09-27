@@ -27,20 +27,33 @@ class EventHandler {
     if (ipcRenderer) {
       ipcRenderer.on('QEvents', (event, message) => {
         switch (message) {
+
           case 'selectAll':
-            return store.dispatch({
-              type: 'SELECT_ALL_NODES'
-            });
+            return store.dispatch({type: 'SELECT_ALL_NODES'});
+
           case 'saveAs':
             return this.serializeProject();
+
           case 'open':
             return this.hydrateProject();
+
           case 'new':
             return this.newProject();
+
           case 'quit':
             this.saveContent();
             ipcRenderer.send('quit');
             return;
+
+          case 'visualizerOff':
+            return store.dispatch({type: 'SET_VISUALIZER', vizType: 'visualizerOff'});
+
+          case 'visualizerWaveform':
+            return store.dispatch({type: 'SET_VISUALIZER', vizType: 'visualizerWaveform'});
+
+          case 'visualizerBars':
+            return store.dispatch({type: 'SET_VISUALIZER', vizType: 'visualizerBars'});
+
           default:
             return null;
         }

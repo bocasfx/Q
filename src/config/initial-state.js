@@ -3,7 +3,8 @@ module.exports = {
     hydrating: false,
     width: window.innerWidth,
     height: window.innerHeight,
-    dirty: false
+    dirty: false,
+    visualizer: 'visualizerOff'
   },
   devices: {
     streams: false,

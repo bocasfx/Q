@@ -128,8 +128,20 @@ class QAudioContext {
     }
   }
 
-  render(canvasContext, width, height) {
-    this.renderBars(canvasContext, width, height);
+  render(vizType, canvasContext, width, height) {
+    switch (vizType) {
+      case 'visualizerOff':
+        return;
+
+      case 'visualizerWaveform':
+        return this.renderWaveform(canvasContext, width, height);
+
+      case 'visualizerBars':
+        return this.renderBars(canvasContext, width, height);
+
+      default:
+        return;
+    }
   }
 }
 

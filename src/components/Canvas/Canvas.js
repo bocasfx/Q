@@ -448,7 +448,7 @@ class Canvas extends React.Component {
     this.canvasContext.clearRect(0, 0, this.canvasContext.canvas.width, this.canvasContext.canvas.height);
     this.canvasContext.fillRect(0, 0, this.canvasContext.canvas.width, this.canvasContext.canvas.height);
 
-    qAudioContext.render(this.canvasContext, this.state.width, this.state.height);
+    qAudioContext.render(this.props.app.visualizer, this.canvasContext, this.state.width, this.state.height);
 
     this.props.nodes.forEach((node) => {
       this.renderLinks(node);
