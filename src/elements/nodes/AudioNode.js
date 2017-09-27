@@ -28,7 +28,7 @@ class AudioNode extends Node {
     this.sendFXGain = 0;
 
     this._mainGain = qAudioContext.ctx.createGain();
-    this._mainGain.gain.value = 0.2;
+    this._mainGain.gain.value = 0.8;
 
     this.decodedAudioData = null;
     this.path = '';

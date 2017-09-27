@@ -57,7 +57,7 @@ const deleteAllStreams = () => {
 
 const selectStream = (state, id) => {
   return state.map((stream) => {
-    stream.selected = stream.id === id ? !stream.selected : false;
+    stream.selected = stream.id === id;
     return stream;
   });
 };

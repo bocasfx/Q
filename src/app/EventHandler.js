@@ -78,9 +78,8 @@ class EventHandler {
           // Select All
           case 'a':
           case 'A':
-            store.dispatch({
-              type: 'SELECT_ALL_NODES'
-            });
+            store.dispatch({type: 'SELECT_ALL_NODES'});
+            store.dispatch({type: 'DESELECT_STREAMS'});
             return;
 
           // Save
