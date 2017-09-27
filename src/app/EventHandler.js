@@ -27,20 +27,33 @@ class EventHandler {
     if (ipcRenderer) {
       ipcRenderer.on('QEvents', (event, message) => {
         switch (message) {
+
           case 'selectAll':
-            return store.dispatch({
-              type: 'SELECT_ALL_NODES'
-            });
+            return store.dispatch({type: 'SELECT_ALL_NODES'});
+
           case 'saveAs':
             return this.serializeProject();
+
           case 'open':
             return this.hydrateProject();
+
           case 'new':
             return this.newProject();
+
           case 'quit':
             this.saveContent();
             ipcRenderer.send('quit');
             return;
+
+          case 'visualizerOff':
+            return store.dispatch({type: 'SET_VISUALIZER', vizType: 'visualizerOff'});
+
+          case 'visualizerWaveform':
+            return store.dispatch({type: 'SET_VISUALIZER', vizType: 'visualizerWaveform'});
+
+          case 'visualizerBars':
+            return store.dispatch({type: 'SET_VISUALIZER', vizType: 'visualizerBars'});
+
           default:
             return null;
         }
@@ -59,7 +72,9 @@ class EventHandler {
 
             // Save to local storage
             case 'S':
-              return this.saveContent();
+              this.saveContent();
+              alert('Project saved to internal storage.');
+              return;
 
             // Load local storage
             case 'O':
@@ -76,9 +91,8 @@ class EventHandler {
           // Select All
           case 'a':
           case 'A':
-            store.dispatch({
-              type: 'SELECT_ALL_NODES'
-            });
+            store.dispatch({type: 'SELECT_ALL_NODES'});
+            store.dispatch({type: 'DESELECT_STREAMS'});
             return;
 
           // Save
@@ -86,17 +100,13 @@ class EventHandler {
           case 'S':
             event.stopPropagation();
             event.returnValue = false;
-            return this.serializeProject();
+            this.serializeProject();
+            return;
 
           // Open
           case 'o':
           case 'O':
             return this.hydrateProject();
-
-          // Mixer
-          // case 'm':
-          // case 'M':
-          //   return this.toggleDevice('mixer');
 
           // Grab
           case 'g':
@@ -122,23 +132,18 @@ class EventHandler {
               type: 'TOGGLE_TRANSPORT'
             });
             if (!store.getState().transport.playing) {
-              store.dispatch({
-                type: 'STOP_NODES'
-              });
+              store.dispatch({type: 'STOP_NODES'});
+              store.dispatch({type: 'DEQUEUE_PARTICLES'});
             }
             return;
 
           // Backspace
           case 'Backspace':
-            store.dispatch({
-              type: 'STOP_SELECTED_NODES'
-            });
-            store.dispatch({
-              type: 'UNLINK_SELECTED_NODES'
-            });
-            return store.dispatch({
-              type: 'DELETE_SELECTED_NODES'
-            });
+            store.dispatch({type: 'STOP_SELECTED_NODES'});
+            store.dispatch({type: 'UNLINK_SELECTED_NODES'});
+            store.dispatch({type: 'DELETE_SELECTED_NODES'});
+            store.dispatch({type: 'DELETE_SELECTED_STREAMS'});
+            return;
 
           default:
             return null;

@@ -1,12 +1,12 @@
 import React from 'react';
 import './Canvas.css';
-import _ from 'lodash';
 import config from '../../config/config';
 import { connect } from 'react-redux';
 import { addFreehandStream, addCircularStream, addLinearStream, updateStreamPositionByDelta, deselectStreams } from '../../actions/Streams';
 import { updateFPSCount } from '../../actions/Transport';
 import { bindActionCreators } from 'redux';
-import { calculateDistance, getPosition, calculateNodeBorderDistance, timestamp, getNodeById } from '../../utils/utils';
+import { calculateDistance, getPosition, calculateNodeBorderDistance, timestamp, getNodeById, getNodesWithinDistance } from '../../utils/utils';
+import qAudioContext from '../../app/context/QAudioContext';
 import { addSynthNode,
   addMidiNode,
   addAudioNode,
@@ -58,8 +58,12 @@ class Canvas extends React.Component {
     this.backgroundX = 0;
     this.backgroundY = 0;
 
+    this.width = props.app.width - config.controlPanel.width - config.menu.width;
+
     this.state = {
-      mouseDown: false
+      mouseDown: false,
+      width: props.app.width - config.controlPanel.width - config.menu.width,
+      height: props.app.height - config.fxPanel.height - config.transport.height
     };
   }
   
@@ -67,6 +71,13 @@ class Canvas extends React.Component {
     this.canvasContext = this.refs.canvas.getContext('2d');
     this.draw();
     this.flow();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      width: nextProps.app.width - config.controlPanel.width - config.menu.width,
+      height: nextProps.app.height - config.fxPanel.height - config.transport.height
+    });
   }
 
   onMouseDown(event) {
@@ -196,18 +207,23 @@ class Canvas extends React.Component {
       }
       let selectionChanged = false;
       let alreadySelected = false;
-      this.props.nodes.forEach((node) => {
-        let distance = calculateDistance(node.position, position);
-        if (distance <= config.app.doubleClickDistance) {
-          if (node.selected) {
-            alreadySelected = true;
-          } else {
-            this.props.selectNode(node.id);
-            selectionChanged = true;
-            selectedNodes++;
-          }
-        } 
-      });
+
+      let matches = getNodesWithinDistance(this.props.nodes, position);
+
+      if (!matches.length) {
+        this.props.deselectNodes();
+        return;
+      }
+
+      let node = matches[0];
+
+      if (node.selected) {
+        alreadySelected = true;
+      } else {
+        this.props.selectNode(node.id);
+        selectionChanged = true;
+        selectedNodes++;
+      }
 
       if (!selectionChanged && !alreadySelected) {
         this.props.deselectNodes();
@@ -383,6 +399,7 @@ class Canvas extends React.Component {
 
   renderLinks(node) {
 
+    this.canvasContext.save();
     this.canvasContext.beginPath();
     this.canvasContext.strokeStyle = config.link.strokeStyle;
     this.canvasContext.lineWidth = config.link.lineWidth;
@@ -401,6 +418,7 @@ class Canvas extends React.Component {
     });
 
     this.canvasContext.stroke();
+    this.canvasContext.restore();
   }
 
   renderLinkHandle() {
@@ -408,6 +426,7 @@ class Canvas extends React.Component {
       return;
     }
 
+    this.canvasContext.save();
     this.canvasContext.beginPath();
     this.canvasContext.strokeStyle = this.props.devices.link ? config.link.strokeStyle : config.unlink.strokeStyle;
     this.canvasContext.lineWidth = config.link.lineWidth;
@@ -421,12 +440,15 @@ class Canvas extends React.Component {
     this.canvasContext.drawImage(this.linkAnchorImg, linkedNode.position[0] - 7, linkedNode.position[1] - 7);
     this.canvasContext.lineTo(this.linkPosition[0], this.linkPosition[1]);
     this.canvasContext.stroke();
+    this.canvasContext.restore();
   }
 
   draw() {
     this.canvasContext.fillStyle = config.canvas.backgroundColor;
     this.canvasContext.clearRect(0, 0, this.canvasContext.canvas.width, this.canvasContext.canvas.height);
     this.canvasContext.fillRect(0, 0, this.canvasContext.canvas.width, this.canvasContext.canvas.height);
+
+    qAudioContext.render(this.props.app.visualizer, this.canvasContext, this.state.width, this.state.height);
 
     this.props.nodes.forEach((node) => {
       this.renderLinks(node);
@@ -461,8 +483,8 @@ class Canvas extends React.Component {
       <canvas
         draggable="true"
         ref="canvas"
-        width={this.props.app.width - config.controlPanel.width - config.menu.width}
-        height={this.props.app.height - config.fxPanel.height - config.transport.height}
+        width={this.state.width}
+        height={this.state.height}
         onMouseMove={this.onMouseMove}
         onMouseDown={this.onMouseDown}
         onMouseUp={this.onMouseUp}

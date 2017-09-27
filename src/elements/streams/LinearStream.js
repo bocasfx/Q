@@ -72,6 +72,7 @@ class LinearStream extends Stream {
 
   render(canvasContext) {
 
+    canvasContext.save();
     canvasContext.beginPath();
     canvasContext.strokeStyle = this.selected ? config.selectedStream.strokeStyle : config.linearStream.strokeStyle;
     canvasContext.strokeStyle = this.disabled ? config.linearStream.strokeStyle : canvasContext.strokeStyle;
@@ -82,6 +83,7 @@ class LinearStream extends Stream {
     canvasContext.lineTo(this.to[0], this.to[1]);
 
     canvasContext.stroke();
+    canvasContext.restore();
 
     this.particles.forEach((particle) => {
       particle.disabled = this.disabled;

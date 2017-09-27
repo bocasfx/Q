@@ -198,6 +198,12 @@ export const dequeueParticle = (id, particleId) => {
   };
 };
 
+export const dequeueParticles = () => {
+  return {
+    type: 'DEQUEUE_PARTICLES'
+  };
+};
+
 export const playNode = (id) => {
   return {
     type: 'PLAY_NODE',

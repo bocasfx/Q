@@ -29,6 +29,12 @@ export const deleteStream = (id) => {
   };
 };
 
+export const deleteSelectedStreams = () => {
+  return {
+    type: 'DELETE_STREAMS'
+  };
+};
+
 export const deleteALLStreamS = () => {
   return {
     type: 'DELETE_ALL_STREAMS'

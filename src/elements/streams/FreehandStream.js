@@ -128,6 +128,7 @@ class FreehandStream extends Stream {
 
   render(canvasContext) {
 
+    canvasContext.save();
     canvasContext.beginPath();
     canvasContext.strokeStyle = this.selected ? config.selectedStream.strokeStyle : config.stream.strokeStyle;
     canvasContext.strokeStyle = this.disabled ? config.stream.strokeStyle : canvasContext.strokeStyle;
@@ -142,14 +143,18 @@ class FreehandStream extends Stream {
 
     canvasContext.stroke();
 
+    if (this.showMarker) {
+      canvasContext.drawImage(this.markerImage, this.markerPosition[0] - 7.5, this.markerPosition[1] - 7.5);
+    }
+
+    canvasContext.restore();
+
     this.particles.forEach((particle) => {
       particle.disabled = this.disabled;
       particle.render(canvasContext);
     });
 
-    if (this.showMarker) {
-      canvasContext.drawImage(this.markerImage, this.markerPosition[0] - 7.5, this.markerPosition[1] - 7.5);
-    }
+    
   }
 }
 
