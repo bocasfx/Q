@@ -6,6 +6,37 @@ function setMainMenu(mainWindow) {
 
   const template = [
     {
+      label: app.getName(),
+      submenu: [
+        {
+          role: 'aboot',
+          label: 'Aboot Q',
+          click: () => openAboutWindow.default({
+            'icon_path': path.join(app.getAppPath(), 'public/icons/icon.png'),
+            license: 'Creative Commons (BY-NC-SA 4.0)',
+            description: 'Nodular Synthesizer/Sequencer'
+          })
+        },
+        {type: 'separator'},
+        {role: 'services', submenu: []},
+        {type: 'separator'},
+        {role: 'hide'},
+        {role: 'hideothers'},
+        {role: 'unhide'},
+        {type: 'separator'},
+        {
+          label: 'Quit',
+          accelerator: 'CmdOrCtrl+Q',
+          click: () => {
+            try {
+              mainWindow.webContents.send('QEvents', 'quit');
+            } catch (err) {
+              app.quit();
+            }
+          }
+        }
+      ]
+    }, {
       label: 'File',
       submenu: [
         {
@@ -42,6 +73,29 @@ function setMainMenu(mainWindow) {
         }
       ]
     }, {
+      label: 'View',
+      submenu: [
+        {
+          label: 'Visualizer',
+          submenu: [{
+            label: 'Off',
+            click: () => {
+              mainWindow.webContents.send('QEvents', 'visualizerOff');
+            }
+          }, {
+            label: 'Waveform',
+            click: () => {
+              mainWindow.webContents.send('QEvents', 'visualizerWaveform');
+            }
+          }, {
+            label: 'Bars',
+            click: () => {
+              mainWindow.webContents.send('QEvents', 'visualizerBars');
+            }
+          }]
+        }
+      ]
+    }, {
       role: 'window',
       submenu: [
         {role: 'close'},
@@ -62,39 +116,6 @@ function setMainMenu(mainWindow) {
       ]
     }
   ];
-
-  template.unshift({
-    label: app.getName(),
-    submenu: [
-      {
-        role: 'aboot',
-        label: 'Aboot Q',
-        click: () => openAboutWindow.default({
-          'icon_path': path.join(app.getAppPath(), 'public/icons/icon.png'),
-          license: 'Creative Commons (BY-NC-SA 4.0)',
-          description: 'Nodular Synthesizer/Sequencer'
-        })
-      },
-      {type: 'separator'},
-      {role: 'services', submenu: []},
-      {type: 'separator'},
-      {role: 'hide'},
-      {role: 'hideothers'},
-      {role: 'unhide'},
-      {type: 'separator'},
-      {
-        label: 'Quit',
-        accelerator: 'CmdOrCtrl+Q',
-        click: () => {
-          try {
-            mainWindow.webContents.send('QEvents', 'quit');
-          } catch (err) {
-            app.quit();
-          }
-        }
-      }
-    ]
-  });
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }

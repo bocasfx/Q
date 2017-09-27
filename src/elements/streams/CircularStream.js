@@ -77,6 +77,7 @@ class CircularStream extends Stream {
 
   render(canvasContext) {
 
+    canvasContext.save();
     canvasContext.beginPath();
     canvasContext.strokeStyle = this.selected ? config.selectedStream.strokeStyle : config.circularStream.strokeStyle;
     canvasContext.strokeStyle = this.disabled ? config.circularStream.strokeStyle : canvasContext.strokeStyle;
@@ -91,6 +92,7 @@ class CircularStream extends Stream {
     }
 
     canvasContext.stroke();
+    canvasContext.restore();
 
     this.particles.forEach((particle) => {
       particle.disabled = this.disabled;
