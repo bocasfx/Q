@@ -13,7 +13,7 @@ Q is a Nodular Synthesizer/Sequencer controlled by the interactions between node
 Currently Q is only available for OSX.
 
 ## Installation
-1. Download the [latest release](https://github.com/bocasfx/Q/releases/download/v0.1.0-beta/Q-v0.1.0-beta.zip).
+1. Download the [latest release](https://github.com/bocasfx/Q/releases/latest).
 1. Unzip it.
 1. Copy Q to your Applications folder.
 
