@@ -14,17 +14,22 @@ class QAudioContext {
     this.delay = new Delay(this.ctx, config.fx.delay);
     this.reverb = new Reverb(this.ctx, config.fx.reverb);
 
+    this.analyser = this.ctx.createAnalyser();
+
     this.fxDestination.connect(this.waveShaper.input, 0, 0);
     this.waveShaper.connect(this.filter);
     this.filter.connect(this.delay.input);
     this.filter.connect(this.reverb.input);
-    this.filter.connect(this.destination);
-    this.reverb.connect(this.destination);
-    this.delay.connect(this.destination);
+    this.filter.connect(this.analyser);
+    this.reverb.connect(this.analyser);
+    this.delay.connect(this.analyser);
+    this.analyser.connect(this.ctx.destination);
+
+    this.analyser.fftSize = 2048;
   }
 
   get destination() {
-    return this.ctx.destination;
+    return this.analyser;
   }
 
   set time(value) {
@@ -73,6 +78,35 @@ class QAudioContext {
 
   triggerFilter() {
     this.filter.trigger();
+  }
+
+  render(canvasContext, width, height) {
+
+    let bufferLength = this.analyser.frequencyBinCount;
+    let dataArray = new Uint8Array(bufferLength);
+    this.analyser.getByteTimeDomainData(dataArray);
+
+    canvasContext.lineWidth = 2;
+    canvasContext.strokeStyle = 'rgba(127, 127, 127, 0.4)';
+    canvasContext.beginPath();
+
+    let sliceWidth = width * 1.0 / bufferLength;
+    let x = 0;
+
+    for(let i = 0; i < bufferLength; i++) {
+      let v = dataArray[i] / 128.0;
+      let y = v * height/2;
+
+      if(i === 0) {
+        canvasContext.moveTo(x, y);
+      } else {
+        canvasContext.lineTo(x, y);
+      }
+
+      x += sliceWidth;
+    }
+    canvasContext.lineTo(width, height/2);
+    canvasContext.stroke(); 
   }
 }
 
