@@ -113,7 +113,7 @@ class SynthNodePanel extends React.Component {
             label={'Release'}
             value={this.node.release}
             min={0}
-            max={2}
+            max={5}
             onChange={this.onReleaseChange}
             disabled={this.node.disabled}
             type={this.node.type}/>
