@@ -1,7 +1,7 @@
 .channel-container {
   width: 70px;
   min-width: 70px;
-  height: 689px;
+  height: 100%;
   border-top: 1px solid dimgray;
   border-left: 1px solid dimgray;
   border-bottom: 1px solid dimgray;
@@ -14,8 +14,4 @@
 
 .channel-container:last-child {
   border-right: 1px solid dimgray;
-}
-
-.channel-knob-placeholder {
-  height: 310px;
 }
