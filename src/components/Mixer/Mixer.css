@@ -1,9 +1,9 @@
 .mixer-container {
   position: absolute;
   left: 56px;
-  width: calc(100% - 356px);
+  width: calc(100% - 56px);
   top: 36px;
-  height: calc(100% - 260px);
+  height: calc(100% - 36px);
   overflow-x: scroll;
   z-index: 2;
   background-image: url(../../../public/backgrounds/concrete_wall.png);
@@ -13,6 +13,7 @@
   width: 100%;
   height: auto;
   min-height: 100%;
+  padding: 10px 0;
   display: flex;
   align-items: center;
   overflow-x: scroll;

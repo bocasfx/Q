@@ -15,3 +15,11 @@
 .channel-container:last-child {
   border-right: 1px solid dimgray;
 }
+
+.channel-indicator {
+  margin-bottom: 20px;
+}
+
+.channel-spacer {
+  margin-bottom: 10px;
+}
