@@ -2,6 +2,7 @@
   width: 70px;
   min-width: 70px;
   height: 100%;
+  min-height: 725px;
   border-top: 1px solid dimgray;
   border-left: 1px solid dimgray;
   border-bottom: 1px solid dimgray;
@@ -18,8 +19,15 @@
 
 .channel-indicator {
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .channel-spacer {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.channel-buttons {
+  padding: 5px;
+  margin: 0 5px 20px;
+  border: 1px solid #444;
 }
