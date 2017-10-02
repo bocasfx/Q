@@ -18,6 +18,11 @@ class SynthNode extends Node {
     this._mainGain = qAudioContext.ctx.createGain();
     this.noiseGenerator = new NoiseGenerator();
     this.ampEnvelopeGenerator = new AmpEnvelopeGenerator(config.synth.envelope);
+    this.analyser = qAudioContext.ctx.createAnalyser();
+    this.analyser.smoothingTimeConstant = 0.3;
+    this.analyser.fftSize = 32;
+    this.scriptProcessor = qAudioContext.ctx.createScriptProcessor(2048, 1, 1);
+    this.scriptProcessor.onaudioprocess = this.renderBars.bind(this);
 
     this._noiseGain = qAudioContext.ctx.createGain();
     this._noiseGain.gain.value = 0.0;
@@ -38,8 +43,12 @@ class SynthNode extends Node {
     this._noiseGain.connect(this.amplifier.input);
 
     this.ampEnvelopeGenerator.connect(this.amplifier.amplitudeL, this.amplifier.amplitudeR);
+
     this.amplifier.connect(this._sendFXGain);
     this.amplifier.connect(this._mainGain);
+    this._mainGain.connect(this.analyser);
+    this.analyser.connect(this.scriptProcessor);
+    this.scriptProcessor.connect(qAudioContext.destination);
 
     this._mainGain.connect(qAudioContext.destination);
     this._mainGain.gain.value = 0.8;
@@ -57,7 +66,6 @@ class SynthNode extends Node {
 
     this.probabilityNodeImg = new Image();
     this.probabilityNodeImg.src = './icons/elements/synth-node-probability.png';
-
   }
 
   set osc1Freq(freq) {
@@ -168,6 +176,25 @@ class SynthNode extends Node {
     }
     this.active = false;
     this.ampEnvelopeGenerator.close();
+  }
+
+  renderBars() {
+    if (!this.volumeMeter) {
+      return;
+    }
+
+    let dataArray = new Uint8Array(16);
+    this.analyser.getByteFrequencyData(dataArray);
+    let volumeMeterHeight = 0;
+
+    for(var i = 0; i < 16; i++) {
+      volumeMeterHeight += dataArray[i];
+    }
+    volumeMeterHeight /= 16;
+
+    this.volumeMeter.clearRect(0, 0, 5, 200);
+    this.volumeMeter.fillStyle = 'gold';
+    this.volumeMeter.fillRect(0, 200 - volumeMeterHeight, 5, 200);
   }
 }
 

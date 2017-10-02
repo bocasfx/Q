@@ -17,6 +17,13 @@ class Channel extends React.Component {
 
     this.onMouseEnter = this.onMouseEnter.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
+    
+  }
+
+  componentDidMount() {
+    if (this.refs.canvas) {
+      this.props.node.volumeMeter = this.refs.canvas.getContext('2d');
+    }
   }
 
   onMouseEnter(event) {
@@ -81,7 +88,15 @@ class Channel extends React.Component {
       return null;
     }
 
-    return <Fader node={this.props.node}/>;
+    return [
+      <Fader node={this.props.node} key="0"/>,
+      <canvas
+        ref="canvas"
+        className="channel-volume-meter"
+        width="5"
+        height="200"
+        key="1"/>
+    ];
   }
 
   renderSendFXGain() {
@@ -141,7 +156,9 @@ class Channel extends React.Component {
           <span data-type="off" className="channel-buttons" onClick={this.props.onToggle} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
             <i className="fa fa-power-off" style={this.state.off}></i>
           </span>
-          {this.renderFader()}
+          <div className="channel-fader-container">
+            {this.renderFader()}
+          </div>
         </div>
       </div>
     );

@@ -16,10 +16,10 @@ module.exports = {
     settings: false,
     nodeSettings: false,
     nodeSettingsId: null,
-    mixer: true,
+    mixer: false,
     link: false,
     unlink: false,
-    grab: false,
+    grab: true,
     clone: false
   },
   nodes: [],
