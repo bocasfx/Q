@@ -37,4 +37,4 @@ class WaveShaper {
   }
 }
 
-module.exports = WaveShaper;
+export default WaveShaper;

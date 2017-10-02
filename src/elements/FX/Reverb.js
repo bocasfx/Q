@@ -76,4 +76,4 @@ class Reverb {
   }
 }
 
-module.exports = Reverb;
+export default Reverb;

@@ -88,5 +88,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(WaveShaperPanel);
-export default WaveShaperPanel;
+export default connect(mapStateToProps, mapDispatchToProps)(WaveShaperPanel);

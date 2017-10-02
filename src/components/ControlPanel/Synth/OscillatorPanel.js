@@ -240,4 +240,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(OscillatorPanel);
+export default connect(mapStateToProps, mapDispatchToProps)(OscillatorPanel);

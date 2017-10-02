@@ -44,4 +44,4 @@ class Amplifier {
   }
 }
 
-module.exports = Amplifier;
+export default Amplifier;

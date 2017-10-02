@@ -116,4 +116,4 @@ class RadialKnob extends React.Component {
   }
 }
 
-module.exports = RadialKnob;
+export default RadialKnob;

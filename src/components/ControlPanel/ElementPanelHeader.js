@@ -68,4 +68,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-module.exports = connect(mapStateToProps)(ElementPanelHeader);
+export default connect(mapStateToProps)(ElementPanelHeader);

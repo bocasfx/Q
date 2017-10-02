@@ -86,4 +86,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-module.exports = connect(null, mapDispatchToProps)(StreamPanel);
+export default connect(null, mapDispatchToProps)(StreamPanel);

@@ -158,4 +158,4 @@ class FreehandStream extends Stream {
   }
 }
 
-module.exports = FreehandStream;
+export default FreehandStream;

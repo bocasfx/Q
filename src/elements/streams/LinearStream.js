@@ -92,4 +92,4 @@ class LinearStream extends Stream {
   }
 }
   
-module.exports = LinearStream;
+export default LinearStream;

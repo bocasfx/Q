@@ -18,4 +18,4 @@ class MenuButton extends React.Component {
   }
 }
 
-module.exports = MenuButton;
+export default MenuButton;

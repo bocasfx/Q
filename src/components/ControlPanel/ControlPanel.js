@@ -22,4 +22,4 @@ class ControlPanel extends React.Component {
   }
 }
 
-module.exports = ControlPanel;
+export default ControlPanel;

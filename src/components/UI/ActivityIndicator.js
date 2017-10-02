@@ -53,4 +53,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-module.exports = connect(mapStateToProps)(ActivityIndicator);
+export default connect(mapStateToProps)(ActivityIndicator);

@@ -35,4 +35,4 @@ class AmpEnvelopeGenerator {
   }
 }
 
-module.exports = AmpEnvelopeGenerator;
+export default AmpEnvelopeGenerator;

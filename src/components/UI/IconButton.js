@@ -21,4 +21,4 @@ class IconButton extends React.Component {
   }
 }
 
-module.exports = IconButton;
+export default IconButton;

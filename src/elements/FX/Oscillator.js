@@ -41,4 +41,4 @@ class Oscillator {
   }
 }
 
-module.exports = Oscillator;
+export default Oscillator;

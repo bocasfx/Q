@@ -30,4 +30,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-module.exports = connect(mapStateToProps)(Transport);
+export default connect(mapStateToProps)(Transport);

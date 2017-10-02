@@ -18,4 +18,4 @@ class LED extends React.Component {
   }
 }
 
-module.exports = LED;
+export default LED;
