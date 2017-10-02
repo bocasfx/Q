@@ -117,14 +117,16 @@ class Knob extends React.Component {
 
     let disabled = this.props.disabled;
 
+    let classPrefix = this.props.mini ? 'mini-' : '';
+
     return (
       <div className="knob-container" disabled={disabled}>
-        <div className="knob-outer">
-          <img className="knob-marks" src="./icons/control-panel/knob/marks.svg" alt="./icons/control-panel/knob/marks.svg" onMouseDown={this.ignoreMouseDown}/>
-          <div className="knob-dot" style={dotStyle} onMouseDown={this.onMouseDown} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp}>&middot;</div>
-          <div className="knob-dial"></div>
+        <div className={classPrefix + 'knob-outer'}>
+          <img className={classPrefix + 'knob-marks'} src="./icons/control-panel/knob/marks.svg" alt="./icons/control-panel/knob/marks.svg" onMouseDown={this.ignoreMouseDown}/>
+          <div className={classPrefix + 'knob-dot'} style={dotStyle} onMouseDown={this.onMouseDown} onMouseMove={this.onMouseMove} onMouseUp={this.onMouseUp}>&middot;</div>
+          <div className={classPrefix + 'knob-dial'}></div>
         </div>
-        <div className="knob-label">{this.props.label}</div>
+        <div className={classPrefix + 'knob-label'}>{this.props.label}</div>
       </div>
     );
   }
