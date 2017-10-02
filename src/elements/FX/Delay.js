@@ -35,4 +35,4 @@ class Delay {
   }
 }
 
-module.exports = Delay;
+export default Delay;

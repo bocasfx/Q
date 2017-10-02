@@ -55,4 +55,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-module.exports = connect(null, mapDispatchToProps)(NodePanel);
+export default connect(null, mapDispatchToProps)(NodePanel);

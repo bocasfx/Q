@@ -6,7 +6,7 @@
   height: calc(100% - 36px);
   overflow-x: scroll;
   z-index: 2;
-  background-image: url(../../../public/backgrounds/concrete_wall.png);
+  background-image: url(../../assets/backgrounds/concrete_wall.png);
 }
 
 .mixer-background {

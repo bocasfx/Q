@@ -138,4 +138,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-module.exports = connect(mapStateToProps)(Knob);
+export default connect(mapStateToProps)(Knob);

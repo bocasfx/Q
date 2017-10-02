@@ -44,4 +44,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(PlayButton);
+export default connect(mapStateToProps, mapDispatchToProps)(PlayButton);

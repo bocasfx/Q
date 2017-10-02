@@ -104,6 +104,8 @@ class ReverbPanel extends React.Component {
         return <p key={key}>{paragraph}</p>;
       });
       label = <h1 key="title">{response.label}</h1>;
+
+      // eslint-disable-next-line
       link = <a key="link" href="#" data-url={response.infoUrl} onClick={this.openLinkInBrowser}>More info</a>;
     });
 
@@ -168,4 +170,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(ReverbPanel);
+export default connect(mapStateToProps, mapDispatchToProps)(ReverbPanel);

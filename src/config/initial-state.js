@@ -1,4 +1,4 @@
-module.exports = {
+let initialState = {
   app: {
     hydrating: false,
     width: window.innerWidth,
@@ -58,3 +58,5 @@ module.exports = {
     destinations: []
   }
 };
+
+module.exports = initialState;

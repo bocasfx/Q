@@ -56,4 +56,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(Mixer);
+export default connect(mapStateToProps, mapDispatchToProps)(Mixer);

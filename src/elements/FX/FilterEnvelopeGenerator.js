@@ -20,4 +20,4 @@ class FilterEnvelopeGenerator {
   }
 }
 
-module.exports = FilterEnvelopeGenerator;
+export default FilterEnvelopeGenerator;

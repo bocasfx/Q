@@ -107,4 +107,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(FilterPanel);
+export default connect(mapStateToProps, mapDispatchToProps)(FilterPanel);

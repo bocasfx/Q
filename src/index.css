@@ -60,7 +60,7 @@ input[type="radio"]:checked:after {
 }
 
 canvas {
-  background-image: url(../public/backgrounds/batthern.png);
+  background-image: url(./assets/backgrounds/batthern.png);
   background-color: rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: inset 0px 0px 34px 5px rgba(0, 0, 0, 0.4);
   -moz-box-shadow: inset 0px 0px 34px 5px rgba(0, 0, 0, 0.4);
@@ -69,7 +69,7 @@ canvas {
 
 .main-container {
   /*display: flex;*/
-  background-image: url(../public/backgrounds/concrete_wall.png);
+  background-image: url(./assets/backgrounds/concrete_wall.png);
 }
 
 .main-body-container {

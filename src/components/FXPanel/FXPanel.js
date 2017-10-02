@@ -29,4 +29,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-module.exports = connect(mapStateToProps)(FXPanel);
+export default connect(mapStateToProps)(FXPanel);
