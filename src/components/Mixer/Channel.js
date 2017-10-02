@@ -10,33 +10,24 @@ class Channel extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      off: {},
-      copy: {},
-      trash: {}
+      channelStyle: {}
     };
 
     this.onMouseEnter = this.onMouseEnter.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
   }
 
-  onMouseEnter(event) {
-    let type = event.target.getAttribute('data-type');
-    let newState = {};
-    newState[type] = {
-      color: getNodeColor(this.props.node.type)
-    };
-    this.setState(newState);
+  onMouseEnter() {
+    this.setState({
+      channelStyle: {
+        color: getNodeColor(this.props.node.type)
+      }
+    });
   }
 
   onMouseLeave() {
     this.setState({
-      off: {
-        color: 'darkgray'
-      },
-      copy: {
-        color: 'darkgray'
-      },
-      trash: {
+      channelStyle: {
         color: 'darkgray'
       }
     });
@@ -78,7 +69,7 @@ class Channel extends React.Component {
 
   renderFader() {
     if (this.props.node.type === 'midi') {
-      return null;
+      return <div className='channel-fader-spacer'></div>;
     }
 
     return <Fader node={this.props.node}/>;
@@ -139,7 +130,7 @@ class Channel extends React.Component {
         {this.renderKnobs()}
         <div>
           <span data-type="off" className="channel-buttons" onClick={this.props.onToggle} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
-            <i className="fa fa-power-off" style={this.state.off}></i>
+            <i className="fa fa-power-off" style={this.state.channelStyle}></i>
           </span>
           {this.renderFader()}
         </div>
