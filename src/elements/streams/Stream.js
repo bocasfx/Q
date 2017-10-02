@@ -40,4 +40,4 @@ class Stream {
   }
 }
 
-module.exports = Stream;
+export default Stream;

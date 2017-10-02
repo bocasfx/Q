@@ -183,4 +183,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(AudioNodePanel);
+export default connect(mapStateToProps, mapDispatchToProps)(AudioNodePanel);

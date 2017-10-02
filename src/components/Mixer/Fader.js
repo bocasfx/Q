@@ -63,4 +63,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(Fader);
+export default connect(mapStateToProps, mapDispatchToProps)(Fader);

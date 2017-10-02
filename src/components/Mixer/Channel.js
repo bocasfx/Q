@@ -165,4 +165,4 @@ class Channel extends React.Component {
   }
 }
 
-module.exports = Channel;
+export default Channel;

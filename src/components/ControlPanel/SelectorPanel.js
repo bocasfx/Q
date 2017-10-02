@@ -127,4 +127,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(SelectorPanel);
+export default connect(mapStateToProps, mapDispatchToProps)(SelectorPanel);

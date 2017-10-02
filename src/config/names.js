@@ -631,6 +631,6 @@ const generate = (blues = false) => {
   return adj + ' ' + noun;
 };
 
-module.exports = {
+export default {
   generate
 };

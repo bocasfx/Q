@@ -150,4 +150,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(MidiNodePanel);
+export default connect(mapStateToProps, mapDispatchToProps)(MidiNodePanel);

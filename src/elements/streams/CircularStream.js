@@ -101,4 +101,4 @@ class CircularStream extends Stream {
   }
 }
   
-module.exports = CircularStream;
+export default CircularStream;

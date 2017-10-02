@@ -96,4 +96,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(DelayPanel);
+export default connect(mapStateToProps, mapDispatchToProps)(DelayPanel);

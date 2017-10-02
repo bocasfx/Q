@@ -1,7 +1,6 @@
 import React from 'react';
 import './EditorPanel.css';
 import { connect } from 'react-redux';
-import _ from 'lodash';
 import NodePanel from './NodePanel';
 import StreamPanel from './Stream/StreamPanel';
 import { getSelectedElements } from '../../utils/utils';
@@ -23,7 +22,7 @@ class EditorPanel extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener("resize", this.updateDimensions);
+    window.addEventListener('resize', this.updateDimensions);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -98,4 +97,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-module.exports = connect(mapStateToProps)(EditorPanel);
+export default connect(mapStateToProps)(EditorPanel);

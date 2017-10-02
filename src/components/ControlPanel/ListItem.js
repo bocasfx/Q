@@ -63,4 +63,4 @@ class ListItem extends React.Component {
   }
 }
 
-module.exports = ListItem;
+export default ListItem;
