@@ -26,8 +26,8 @@
 }
 
 .fader-container .rc-slider-track {
-  background-color: darkorange;
-  opacity: 0.5;
+  background-color: gold;
+  opacity: 0.75;
   border: 1px solid rgba(127, 127, 127, 0.2);
 }
 
