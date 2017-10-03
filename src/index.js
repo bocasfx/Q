@@ -12,11 +12,13 @@ import Transport from './components/Transport/Transport';
 import midiContext from './app/context/MIDIContext';
 import eventHandler from './app/EventHandler';
 import hydrator from './app/Hydrator';
+import Visualizer from './components/Visualizer/Visualizer';
 
 const renderDom = () => {
   ReactDOM.render(
     <Provider store={store}>
       <div>
+        <Visualizer/>
         <Mixer/>
         <div className="main-container">
           <Transport/>
