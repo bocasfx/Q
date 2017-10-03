@@ -59,7 +59,7 @@ input[type="radio"]:checked:after {
   left: -1px;
 }
 
-canvas {
+.canvas {
   background-image: url(./assets/backgrounds/batthern.png);
   background-color: rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: inset 0px 0px 34px 5px rgba(0, 0, 0, 0.4);

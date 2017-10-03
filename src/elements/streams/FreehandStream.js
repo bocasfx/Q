@@ -3,7 +3,7 @@ import { getPosition } from '../../utils/utils';
 import Stream from './Stream';
 
 class FreehandStream extends Stream {
-  constructor({position, queue = [], easing = '', pathIndex = 0, path = [], count = 1}) {
+  constructor({position, queue = [], easing = '', pathIndex = 0, path = [], count = 1, creating = true}) {
     super({position, speed: 1, count});
     this._position = position;
     this.queue = queue;
@@ -19,7 +19,7 @@ class FreehandStream extends Stream {
 
     this.markerImage = new Image();
     this.markerImage.src = './icons/elements/stream-marker.png';
-    this.creating = true;
+    this.creating = creating;
   }
 
   advancePathIndex() {
@@ -153,8 +153,6 @@ class FreehandStream extends Stream {
       particle.disabled = this.disabled;
       particle.render(canvasContext);
     });
-
-    
   }
 }
 

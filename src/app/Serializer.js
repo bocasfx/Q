@@ -58,7 +58,7 @@ class Serializer {
   serializeFreehandStream (stream) {
     return (({id, variety, count, position, queue, easing, pathIndex, path}) => {
       return {
-        topLevel: {id, variety, count, position, queue, easing, pathIndex, path},
+        topLevel: {id, variety, count, position, queue, easing, pathIndex, path, creating: false},
         inner: {}
       };
     })(stream);

@@ -29,6 +29,8 @@ class EventHandler {
         switch (message) {
 
           case 'selectAll':
+            store.dispatch({type: 'SET_SELECTION', objType: 'nodes'});
+            store.dispatch({type: 'DESELECT_STREAMS'});
             return store.dispatch({type: 'SELECT_ALL_NODES'});
 
           case 'saveAs':
@@ -91,8 +93,9 @@ class EventHandler {
           // Select All
           case 'a':
           case 'A':
-            store.dispatch({type: 'SELECT_ALL_NODES'});
+            store.dispatch({type: 'SET_SELECTION', objType: 'nodes'});
             store.dispatch({type: 'DESELECT_STREAMS'});
+            store.dispatch({type: 'SELECT_ALL_NODES'});
             return;
 
           // Save

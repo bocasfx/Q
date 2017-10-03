@@ -25,8 +25,7 @@ class QAudioContext {
     this.delay.connect(this.analyser);
     this.analyser.connect(this.ctx.destination);
 
-    // this.analyser.fftSize = 2048;
-    this.analyser.fftSize = 256;
+    this.analyser.fftSize = 128;
   }
 
   get destination() {
@@ -87,15 +86,16 @@ class QAudioContext {
     this.analyser.getByteTimeDomainData(dataArray);
 
     canvasContext.lineWidth = 2;
-    canvasContext.strokeStyle = 'rgba(127, 127, 127, 0.4)';
+    canvasContext.strokeStyle = 'rgba(255, 215, 0, 0.75)';
     canvasContext.beginPath();
 
-    let sliceWidth = width * 1.0 / bufferLength;
-    let x = 0;
+    let sliceWidth = width * 1.0 / (bufferLength - 1.0);
+    let x = 0.0;
+    let half = height / 2.0;
 
     for(let i = 0; i < bufferLength; i++) {
       let v = dataArray[i] / 128.0;
-      let y = v * height/2;
+      let y = v * half;
 
       if(i === 0) {
         canvasContext.moveTo(x, y);
@@ -105,7 +105,12 @@ class QAudioContext {
 
       x += sliceWidth;
     }
-    canvasContext.lineTo(width, height/2);
+    // canvasContext.lineTo(width, height/2);
+    canvasContext.stroke();
+    canvasContext.beginPath();
+    canvasContext.moveTo(0, half);
+    canvasContext.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+    canvasContext.lineTo(width, half);
     canvasContext.stroke(); 
   }
 
@@ -116,16 +121,21 @@ class QAudioContext {
 
     var barWidth = (width / bufferLength) * 2.5;
     var barHeight;
-    var x = 0;
+    var x = 0.0;
+    let half = height / 2.0;
+    canvasContext.fillStyle = 'rgba(255, 215, 0, 0.75)';
 
     for(var i = 0; i < bufferLength; i++) {
-      barHeight = dataArray[i]/2;
-
-      canvasContext.fillStyle = 'rgba(127, 127, 127, 0.4)';
-      canvasContext.fillRect(x, height - barHeight / 2, barWidth, barHeight);
-
+      barHeight = dataArray[i] / 2.0;
+      canvasContext.fillRect(x, (height - barHeight) / 2.0, barWidth, barHeight);
       x += barWidth + 1;
     }
+
+    canvasContext.beginPath();
+    canvasContext.moveTo(0, half);
+    canvasContext.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+    canvasContext.lineTo(width, half);
+    canvasContext.stroke();
   }
 
   render(vizType, canvasContext, width, height) {

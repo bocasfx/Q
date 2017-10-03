@@ -6,7 +6,6 @@ import { addFreehandStream, addCircularStream, addLinearStream, updateStreamPosi
 import { updateFPSCount } from '../../actions/Transport';
 import { bindActionCreators } from 'redux';
 import { calculateDistance, getPosition, calculateNodeBorderDistance, timestamp, getNodeById, getNodesWithinDistance } from '../../utils/utils';
-import qAudioContext from '../../app/context/QAudioContext';
 import { addSynthNode,
   addMidiNode,
   addAudioNode,
@@ -57,8 +56,6 @@ class Canvas extends React.Component {
     this.canvasPosition = null;
     this.backgroundX = 0;
     this.backgroundY = 0;
-
-    this.width = props.app.width - config.controlPanel.width - config.menu.width;
 
     this.state = {
       mouseDown: false,
@@ -446,9 +443,6 @@ class Canvas extends React.Component {
   draw() {
     this.canvasContext.fillStyle = config.canvas.backgroundColor;
     this.canvasContext.clearRect(0, 0, this.canvasContext.canvas.width, this.canvasContext.canvas.height);
-    this.canvasContext.fillRect(0, 0, this.canvasContext.canvas.width, this.canvasContext.canvas.height);
-
-    qAudioContext.render(this.props.app.visualizer, this.canvasContext, this.state.width, this.state.height);
 
     this.props.nodes.forEach((node) => {
       this.renderLinks(node);
@@ -481,6 +475,7 @@ class Canvas extends React.Component {
 
     return (
       <canvas
+        className="canvas"
         draggable="true"
         ref="canvas"
         width={this.state.width}
