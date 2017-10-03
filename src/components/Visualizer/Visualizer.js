@@ -26,11 +26,17 @@ class Visualizer extends React.Component {
   }
 
   componentDidMount() {
+    if (this.props.app.visualizer === 'visualizerOff') {
+      return;
+    }
     this.canvasContext = this.refs.visualizer.getContext('2d');
     requestAnimationFrame(this.draw);
   }
 
   draw() {
+    if (!this.canvasContext) {
+      this.canvasContext = this.refs.visualizer.getContext('2d');
+    }
     this.canvasContext.clearRect(0, 0, this.canvasContext.canvas.width, this.canvasContext.canvas.height);
     qAudioContext.render(this.props.app.visualizer, this.canvasContext, this.state.width, 204);
     if (this.props.app.visualizer !== 'visualizerOff') {
@@ -39,12 +45,13 @@ class Visualizer extends React.Component {
   }
 
   render() {
-    let style = {
-      opacity: this.props.app.visualizer === 'visualizerOff' ? 0 : 1
-    };
+
+    if (this.props.app.visualizer === 'visualizerOff') {
+      return null;
+    }
 
     return (
-      <div className="visualizer-container" style={style}>
+      <div className="visualizer-container">
         <div className="visualizer-frame">
           <canvas
             draggable="true"
