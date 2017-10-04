@@ -5,7 +5,6 @@ import Canvas from './components/Canvas/Canvas';
 import './index.css';
 import { Provider } from 'react-redux';
 import Menu from './components/Menu/Menu';
-import Mixer from './components/Mixer/Mixer';
 import ControlPanel from './components/ControlPanel/ControlPanel';
 import FXPanel from './components/FXPanel/FXPanel';
 import Transport from './components/Transport/Transport';
@@ -19,7 +18,6 @@ const renderDom = () => {
     <Provider store={store}>
       <div>
         <Visualizer/>
-        <Mixer/>
         <div className="main-container">
           <Transport/>
           <div className="main-body-container">
