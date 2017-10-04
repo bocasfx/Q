@@ -35,3 +35,18 @@
 .channel-fader-spacer {
   height: 235px;
 }
+
+.channel-selection-indicator {
+  height: 5px;
+  width: 50%;
+  background-color: gold;
+  opacity: 0.75;
+  margin: 5px auto 0 auto;
+}
+
+.channel-selection-spacer {
+  height: 5px;
+  width: 50%;
+  opacity: 0;
+  margin: 5px auto 0 auto;
+}

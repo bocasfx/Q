@@ -105,7 +105,7 @@ class SynthNodePanel extends React.Component {
             label={'Attack'}
             value={this.node.attack}
             min={0}
-            max={2}
+            max={5}
             onChange={this.onAttackChange}
             disabled={this.node.disabled}
             type={this.node.type}/>

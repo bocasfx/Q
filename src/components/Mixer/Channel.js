@@ -4,6 +4,10 @@ import Fader from './Fader';
 import ActivityIndicator from '../UI/ActivityIndicator';
 import Knob from '../UI/Knob';
 import { getNodeColor } from '../../utils/utils';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { setNodeLag, setNodeAttack, setNodeRelease, setNodeProbability, setNodeDisabledStatus } from '../../actions/Nodes';
+import { hydrationStarted, hydrationComplete } from '../../actions/App';
 
 class Channel extends React.Component {
 
@@ -15,6 +19,11 @@ class Channel extends React.Component {
 
     this.onMouseEnter = this.onMouseEnter.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
+    this.onLagChange = this.onLagChange.bind(this);
+    this.onAttackChange = this.onAttackChange.bind(this);
+    this.onReleaseChange = this.onReleaseChange.bind(this);
+    this.onProbabilityChange = this.onProbabilityChange.bind(this);
+    this.onDisabledStatusChange = this.onDisabledStatusChange.bind(this);
   }
 
   onMouseEnter() {
@@ -33,6 +42,28 @@ class Channel extends React.Component {
     });
   }
 
+  onLagChange(value) {
+    this.props.setNodeLag(this.props.node.id, value);
+  }
+
+  onProbabilityChange(value) {
+    this.props.setNodeProbability(this.props.node.id, value);
+  }
+
+  onAttackChange(value) {
+    this.props.hydrationStarted();
+    this.props.setNodeAttack(this.props.node.id, value);
+    this.props.hydrationComplete();
+  }
+
+  onReleaseChange(value) {
+    this.props.setNodeRelease(this.props.node.id, value);
+  }
+
+  onDisabledStatusChange() {
+    this.props.setNodeDisabledStatus(this.props.node.id, !this.props.node.disabled);
+  }
+
   renderKnobs() {
     if (this.props.node.type !== 'synth') {
       return null;
@@ -43,11 +74,10 @@ class Channel extends React.Component {
           label={'Attack'}
           value={this.props.node.attack}
           min={0}
-          max={1}
-          onChange={null}
+          max={5}
+          onChange={this.onAttackChange}
           disabled={this.props.node.disabled}
           type={this.props.node.type}
-          log={true}
           mini={true}
           key="0"/>
       </div>,
@@ -56,8 +86,8 @@ class Channel extends React.Component {
           label={'Release'}
           value={this.props.node.release}
           min={0}
-          max={1}
-          onChange={null}
+          max={5}
+          onChange={this.onReleaseChange}
           disabled={this.props.node.disabled}
           type={this.props.node.type}
           log={true}
@@ -94,21 +124,30 @@ class Channel extends React.Component {
     </div>;
   }
 
+  renderSelectionIndicator() {
+    if (this.props.node.selected) {
+      return <div className="channel-selection-indicator"></div>;
+    }
+
+    return <div className="channel-selection-spacer"></div>;
+  }
+
   render() {
     return (
       <div className="channel-container">
         <div>
           <div className="channel-indicator">
             <ActivityIndicator item={this.props.node}/>
+            {this.renderSelectionIndicator()}
           </div>
           <div className="channel-spacer">
             <Knob
               label={'Lag'}
-              value={this.props.node.lag}
+              value={this.state.lag}
               min={0}
               max={1}
-              onChange={null}
-              disabled={this.props.node.disabled}
+              onChange={this.onLagChange}
+              disabled={!this.props.node.parentIds.length || this.props.nodes.disabled}
               type={this.props.node.type}
               log={true}
               mini={true}/>
@@ -119,7 +158,7 @@ class Channel extends React.Component {
               value={this.props.node.probability}
               min={0}
               max={1}
-              onChange={null}
+              onChange={this.onProbabilityChange}
               disabled={this.props.node.disabled}
               type={this.props.node.type}
               log={true}
@@ -129,7 +168,7 @@ class Channel extends React.Component {
         </div>
         {this.renderKnobs()}
         <div>
-          <span data-type="off" className="channel-buttons" onClick={this.props.onToggle} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
+          <span data-type="off" className="channel-buttons" onClick={this.onDisabledStatusChange} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave}>
             <i className="fa fa-power-off" style={this.state.channelStyle}></i>
           </span>
           {this.renderFader()}
@@ -139,4 +178,20 @@ class Channel extends React.Component {
   }
 }
 
-export default Channel;
+const mapStateToProps = (state) => {
+  return state;
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setNodeLag: bindActionCreators(setNodeLag, dispatch),
+    setNodeAttack: bindActionCreators(setNodeAttack, dispatch),
+    setNodeRelease: bindActionCreators(setNodeRelease, dispatch),
+    setNodeProbability: bindActionCreators(setNodeProbability, dispatch),
+    setNodeDisabledStatus: bindActionCreators(setNodeDisabledStatus, dispatch),
+    hydrationStarted: bindActionCreators(hydrationStarted, dispatch),
+    hydrationComplete: bindActionCreators(hydrationComplete, dispatch)
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Channel);
