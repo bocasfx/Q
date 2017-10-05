@@ -19,11 +19,6 @@ class Mixer extends React.Component {
   }
 
   render() {
-
-    if (!this.props.devices.mixer) {
-      return null;
-    }
-
     return (
       <div className="mixer-container">
         <div className="mixer-background">

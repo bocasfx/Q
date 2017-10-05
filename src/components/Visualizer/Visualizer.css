@@ -9,7 +9,6 @@
 }
 
 .visualizer-frame {
-  background-color: rgba(0, 0, 0, 0.3);
   padding: 10px;
 }
 
@@ -19,6 +18,5 @@
   box-shadow: inset 0px 0px 20px 5px rgba(0, 0, 0, 0.4);
   border: 1px solid #444;
   border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.3);
   background-image: url(../../assets/backgrounds/inflicted.png);
 }
