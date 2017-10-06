@@ -76,8 +76,14 @@ ipcMain.on('quit', () => {
   app.quit();
 });
 
-ipcMain.on('MixerEvents', function(event, message) {
-  mixerWindow.webContents.send('MixerEvents', message);
+// Send events from main window to mixer window
+ipcMain.on('MixerEvents', function(event, action) {
+  mixerWindow.webContents.send('MixerEvents', action);
+});
+
+// Send events from mixer window to main window
+ipcMain.on('MainEvents', function(event, action) {
+  mainWindow.webContents.send('MainEvents', action);
 });
 
 app.on('window-all-closed', function() {

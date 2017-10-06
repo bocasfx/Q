@@ -26,8 +26,14 @@ class EventHandler {
   initialize() {
     if (ipcRenderer) {
 
-      ipcRenderer.on('MixerEvents', (event, message) => {
-        store.dispatch({type:'ADD_SYNTH_NODE', position: [100, 100], relay: true});
+      ipcRenderer.on('MixerEvents', (event, action) => {
+        action.relay = true;
+        store.dispatch(action);
+      });
+
+      ipcRenderer.on('MainEvents', (event, action) => {
+        action.relay = true;
+        store.dispatch(action);
       });
 
       ipcRenderer.on('QEvents', (event, message) => {
