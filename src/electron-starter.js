@@ -10,8 +10,9 @@ const ipcMain = electron.ipcMain;
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
+let mixerWindow;
 
-function initialize() {
+function initializeMainWindow() {
   
   mainWindow = new BrowserWindow({
     width: 1200,
@@ -40,12 +41,43 @@ function initialize() {
   });
 }
 
+function initializeMixerWindow() {
+  
+  mixerWindow = new BrowserWindow({
+    width: 1200,
+    height: 800,
+    webPreferences: {
+      backgroundThrottling: false
+    }
+  });
+  const mixerUrl = process.env.ELECTRON_MIXER_URL;
+  mixerWindow.loadURL(mixerUrl);
+  electronMenu.setMainMenu(mixerWindow);
+
+  if (process.env.ELECTRON_MIXER_URL) {
+    mixerWindow.webContents.openDevTools();
+  }
+
+  mixerWindow.on('closed', function() {
+    mixerWindow = null;
+  });
+}
+
+function initialize() {
+  initializeMainWindow();
+  initializeMixerWindow();
+}
+
 app.commandLine.appendSwitch('disable-renderer-backgrounding');
 
 app.on('ready', initialize);
 
 ipcMain.on('quit', () => {
   app.quit();
+});
+
+ipcMain.on('MixerEvents', function(event, message) {
+  mixerWindow.webContents.send('MixerEvents', message);
 });
 
 app.on('window-all-closed', function() {

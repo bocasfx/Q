@@ -1,7 +1,8 @@
-export const addSynthNode = (position) => {
+export const addSynthNode = (position, relay=false) => {
   return {
     type: 'ADD_SYNTH_NODE',
-    position
+    position,
+    relay
   };
 };
 
