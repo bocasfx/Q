@@ -5,14 +5,14 @@ import './index.css';
 import midiContext from './app/context/MIDIContext';
 import eventHandler from './app/EventHandler';
 import hydrator from './app/Hydrator';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import App from './App';
 
 const renderDom = () => {
   render((
-    <BrowserRouter>
+    <HashRouter>
       <App />
-    </BrowserRouter>
+    </HashRouter>
   ), document.getElementById('root'));
 };
 

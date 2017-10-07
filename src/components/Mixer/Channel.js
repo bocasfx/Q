@@ -6,7 +6,7 @@ import Knob from '../UI/Knob';
 import { getNodeColor } from '../../utils/utils';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setNodeLag, setNodeAttack, setNodeRelease, setNodeProbability, setNodeDisabledStatus } from '../../actions/Nodes';
+import { setNodeLag, setNodeAttack, setNodeRelease, setNodeProbability, setNodeDisabledStatus, setNodeSendGain } from '../../actions/Nodes';
 import { hydrationStarted, hydrationComplete } from '../../actions/App';
 
 class Channel extends React.Component {
@@ -24,6 +24,7 @@ class Channel extends React.Component {
     this.onReleaseChange = this.onReleaseChange.bind(this);
     this.onProbabilityChange = this.onProbabilityChange.bind(this);
     this.onDisabledStatusChange = this.onDisabledStatusChange.bind(this);
+    this.onSendFXGainChange = this.onSendFXGainChange.bind(this);
   }
 
   onMouseEnter() {
@@ -51,9 +52,11 @@ class Channel extends React.Component {
   }
 
   onAttackChange(value) {
-    this.props.hydrationStarted();
     this.props.setNodeAttack(this.props.node.id, value);
-    this.props.hydrationComplete();
+  }
+
+  onSendFXGainChange(value) {
+    this.props.setNodeSendGain(this.props.node.id, value);
   }
 
   onReleaseChange(value) {
@@ -116,7 +119,7 @@ class Channel extends React.Component {
         value={this.props.node.sendFXGain}
         min={0}
         max={1}
-        onChange={null}
+        onChange={this.onSendFXGainChange}
         disabled={this.props.node.disabled}
         type={this.props.node.type}
         log={true}
@@ -189,6 +192,7 @@ const mapDispatchToProps = (dispatch) => {
     setNodeRelease: bindActionCreators(setNodeRelease, dispatch),
     setNodeProbability: bindActionCreators(setNodeProbability, dispatch),
     setNodeDisabledStatus: bindActionCreators(setNodeDisabledStatus, dispatch),
+    setNodeSendGain: bindActionCreators(setNodeSendGain, dispatch),
     hydrationStarted: bindActionCreators(hydrationStarted, dispatch),
     hydrationComplete: bindActionCreators(hydrationComplete, dispatch)
   };

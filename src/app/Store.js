@@ -12,13 +12,28 @@ if (window.require) {
 
 const eventMiddleware = () => next => action => {
   if (!action.relay) {
-    if (window.location.pathname === '/') {
+    if (window.location.hash === '#/') {
       switch (action.type) {
         case 'ADD_SYNTH_NODE':
         case 'ADD_MIDI_NODE':
         case 'ADD_AUDIO_NODE':
           action.id = uuid();
           ipcRenderer.send('MixerEvents', action);
+          break;
+        case 'DELETE_NODE':
+        case 'DELETE_ALL_NODES':
+        case 'DELETE_SELECTED_NODES':
+        case 'SELECT_NODE':
+        case 'SELECT_ALL_NODES':
+        case 'DESELECT_NODES':
+        case 'SET_NODE_VOLUME':
+        case 'SET_NODE_ATTACK':
+        case 'SET_NODE_RELEASE':
+        case 'SET_NODE_SEND_GAIN':
+        case 'SET_NODE_PROBABILITY':
+        case 'SET_NODE_DISABLED_STATUS':
+        case 'TOGGLE_TRANSPORT':
+          ipcRenderer.send('mixerEvents', action);
           break;
         default:
           break;
@@ -31,7 +46,8 @@ const eventMiddleware = () => next => action => {
         case 'SET_NODE_SEND_GAIN':
         case 'SET_NODE_PROBABILITY':
         case 'SET_NODE_DISABLED_STATUS':
-          ipcRenderer.send('MainEvents', action);
+        case 'TOGGLE_TRANSPORT':
+          ipcRenderer.send('mainEvents', action);
           break;
         default:
           break;

@@ -27,11 +27,10 @@ function initializeMainWindow() {
     slashes: true
   });
   mainWindow.loadURL(startUrl);
-  electronMenu.setMainMenu(mainWindow);
+  electronMenu.setMainMenu(mainWindow, initializeMixerWindow);
 
   if (process.env.ELECTRON_START_URL) {
     mainWindow.webContents.openDevTools();
-
     let webAudioExtension = '/Users/rpalacios/Library/Application\ Support/Google/Chrome/Default/Extensions/cmhomipkklckpomafalojobppmmidlgl/0.1.4_0/';
     BrowserWindow.addDevToolsExtension(webAudioExtension);
   }
@@ -39,6 +38,8 @@ function initializeMainWindow() {
   mainWindow.on('closed', function() {
     mainWindow = null;
   });
+
+  mainWindow.maximize();
 }
 
 function initializeMixerWindow() {
@@ -50,12 +51,21 @@ function initializeMixerWindow() {
       backgroundThrottling: false
     }
   });
-  const mixerUrl = process.env.ELECTRON_MIXER_URL;
+  const mixerUrl = process.env.ELECTRON_MIXER_URL || url.format({
+    pathname: path.join(__dirname, '/../build/index.html'),
+    protocol: 'file:',
+    slashes: true
+  });
   mixerWindow.loadURL(mixerUrl);
-  electronMenu.setMainMenu(mixerWindow);
 
   if (process.env.ELECTRON_MIXER_URL) {
     mixerWindow.webContents.openDevTools();
+  } else {
+    mixerWindow.webContents.on('did-finish-load', function() {
+      // We have to wait until the window has finished loading
+      // to be able to send messages to it.
+      mixerWindow.webContents.send('showMixer');
+    });
   }
 
   mixerWindow.on('closed', function() {
@@ -65,7 +75,6 @@ function initializeMixerWindow() {
 
 function initialize() {
   initializeMainWindow();
-  initializeMixerWindow();
 }
 
 app.commandLine.appendSwitch('disable-renderer-backgrounding');
@@ -77,13 +86,17 @@ ipcMain.on('quit', () => {
 });
 
 // Send events from main window to mixer window
-ipcMain.on('MixerEvents', function(event, action) {
-  mixerWindow.webContents.send('MixerEvents', action);
+ipcMain.on('mixerEvents', function(event, action) {
+  if (mixerWindow) {
+    mixerWindow.webContents.send('mixerEvents', action);
+  }
 });
 
 // Send events from mixer window to main window
-ipcMain.on('MainEvents', function(event, action) {
-  mainWindow.webContents.send('MainEvents', action);
+ipcMain.on('mainEvents', function(event, action) {
+  if (mainWindow) {
+    mainWindow.webContents.send('mainEvents', action);
+  }
 });
 
 app.on('window-all-closed', function() {

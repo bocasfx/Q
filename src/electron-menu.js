@@ -2,7 +2,7 @@ const { app, Menu } = require('electron');
 const path = require('path');
 const openAboutWindow = require('about-window');
 
-function setMainMenu(mainWindow) {
+function setMainMenu(mainWindow, initializeMixerWindow) {
 
   const template = [
     {
@@ -93,6 +93,12 @@ function setMainMenu(mainWindow) {
               mainWindow.webContents.send('QEvents', 'visualizerBars');
             }
           }]
+        }, {
+          label: 'Mixer',
+          accelerator: 'CmdOrCtrl+M',
+          click: () => {
+            initializeMixerWindow();
+          }
         }
       ]
     }, {
