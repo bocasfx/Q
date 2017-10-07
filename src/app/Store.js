@@ -18,7 +18,7 @@ const eventMiddleware = () => next => action => {
         case 'ADD_MIDI_NODE':
         case 'ADD_AUDIO_NODE':
           action.id = uuid();
-          ipcRenderer.send('MixerEvents', action);
+          ipcRenderer.send('mixerEvents', action);
           break;
         case 'DELETE_NODE':
         case 'DELETE_ALL_NODES':
@@ -31,6 +31,7 @@ const eventMiddleware = () => next => action => {
         case 'SET_NODE_RELEASE':
         case 'SET_NODE_SEND_GAIN':
         case 'SET_NODE_PROBABILITY':
+        case 'SET_NODE_LAG':
         case 'SET_NODE_DISABLED_STATUS':
         case 'TOGGLE_TRANSPORT':
           ipcRenderer.send('mixerEvents', action);
@@ -45,6 +46,7 @@ const eventMiddleware = () => next => action => {
         case 'SET_NODE_RELEASE':
         case 'SET_NODE_SEND_GAIN':
         case 'SET_NODE_PROBABILITY':
+        case 'SET_NODE_LAG':
         case 'SET_NODE_DISABLED_STATUS':
         case 'TOGGLE_TRANSPORT':
           ipcRenderer.send('mainEvents', action);

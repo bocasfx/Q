@@ -7,7 +7,6 @@ import { getNodeColor } from '../../utils/utils';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setNodeLag, setNodeAttack, setNodeRelease, setNodeProbability, setNodeDisabledStatus, setNodeSendGain } from '../../actions/Nodes';
-import { hydrationStarted, hydrationComplete } from '../../actions/App';
 
 class Channel extends React.Component {
 
@@ -93,7 +92,6 @@ class Channel extends React.Component {
           onChange={this.onReleaseChange}
           disabled={this.props.node.disabled}
           type={this.props.node.type}
-          log={true}
           mini={true}
           key="1"/>
       </div>
@@ -146,13 +144,12 @@ class Channel extends React.Component {
           <div className="channel-spacer">
             <Knob
               label={'Lag'}
-              value={this.state.lag}
+              value={this.props.node.lag}
               min={0}
-              max={1}
+              max={5000}
               onChange={this.onLagChange}
               disabled={!this.props.node.parentIds.length || this.props.nodes.disabled}
               type={this.props.node.type}
-              log={true}
               mini={true}/>
           </div>
           <div className="channel-spacer">
@@ -192,9 +189,7 @@ const mapDispatchToProps = (dispatch) => {
     setNodeRelease: bindActionCreators(setNodeRelease, dispatch),
     setNodeProbability: bindActionCreators(setNodeProbability, dispatch),
     setNodeDisabledStatus: bindActionCreators(setNodeDisabledStatus, dispatch),
-    setNodeSendGain: bindActionCreators(setNodeSendGain, dispatch),
-    hydrationStarted: bindActionCreators(hydrationStarted, dispatch),
-    hydrationComplete: bindActionCreators(hydrationComplete, dispatch)
+    setNodeSendGain: bindActionCreators(setNodeSendGain, dispatch)
   };
 };
 

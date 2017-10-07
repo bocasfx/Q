@@ -36,9 +36,6 @@ class Knob extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.app || !this.props.app.hydrating) {
-      return;
-    }
     let value = nextProps.value;
     if (this.props.log) {
       value = Math.log(Math.E * value - value + 1);

@@ -3,7 +3,6 @@ import './Fader.css';
 import Slider from 'rc-slider/lib/Slider';
 import 'rc-slider/assets/index.css';
 import { setNodeVolume } from '../../actions/Nodes';
-import { hydrationStarted, hydrationComplete } from '../../actions/App';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getNodeById } from '../../utils/utils';
@@ -29,9 +28,7 @@ class Fader extends React.Component {
     this.setState({ 
       value: parseFloat((value), 10)
     });
-    this.props.hydrationStarted();
     this.props.setNodeVolume(this.props.node.id, value);
-    this.props.hydrationComplete();
   }
 
   render() {
@@ -57,9 +54,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setNodeVolume: bindActionCreators(setNodeVolume, dispatch),
-    hydrationStarted: bindActionCreators(hydrationStarted, dispatch),
-    hydrationComplete: bindActionCreators(hydrationComplete, dispatch)
+    setNodeVolume: bindActionCreators(setNodeVolume, dispatch)
   };
 };
 
