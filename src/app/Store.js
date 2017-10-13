@@ -34,6 +34,13 @@ const eventMiddleware = () => next => action => {
         case 'SET_NODE_LAG':
         case 'SET_NODE_DISABLED_STATUS':
         case 'TOGGLE_TRANSPORT':
+        case 'UNLINK_SELECTED_NODES':
+        case 'LINK_NODES':
+        case 'UNLINK_NODES':
+        case 'UNLINK_NODE':
+        case 'HYDRATE_NODES':
+        case 'HYDRATE_STREAMS':
+        case 'HYDRATE_FX':
           ipcRenderer.send('mixerEvents', action);
           break;
         default:
@@ -49,6 +56,9 @@ const eventMiddleware = () => next => action => {
         case 'SET_NODE_LAG':
         case 'SET_NODE_DISABLED_STATUS':
         case 'TOGGLE_TRANSPORT':
+        case 'HYDRATE_NODES':
+        case 'HYDRATE_STREAMS':
+        case 'HYDRATE_FX':
           ipcRenderer.send('mainEvents', action);
           break;
         default:

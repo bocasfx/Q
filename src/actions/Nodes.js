@@ -7,17 +7,21 @@ export const addSynthNode = (position, relay=false, id=null) => {
   };
 };
 
-export const addMidiNode = (position) => {
+export const addMidiNode = (position, relay=false, id=null) => {
   return {
     type: 'ADD_MIDI_NODE',
-    position
+    position,
+    relay,
+    id
   };
 };
 
-export const addAudioNode = (position) => {
+export const addAudioNode = (position, relay=false, id=null) => {
   return {
     type: 'ADD_AUDIO_NODE',
-    position
+    position,
+    relay,
+    id
   };
 };
 
@@ -75,7 +79,7 @@ export const deleteSelectedNodes = () => {
 
 export const unlinkSelectedNodes = () => {
   return {
-    type: 'DELETE_SELECTED_NODES'
+    type: 'UNLINK_SELECTED_NODES'
   };
 };
 

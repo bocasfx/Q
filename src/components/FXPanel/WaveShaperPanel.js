@@ -65,8 +65,7 @@ class WaveShaperPanel extends React.Component {
                 max={100}
                 onChange={this.props.setWaveShaperAmount}
                 disabled={this.props.fx.waveShaper.disabled}
-                type="synth"
-                log={true}/>
+                type="synth"/>
             </div>
           </div>
         </div>

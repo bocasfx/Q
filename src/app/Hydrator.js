@@ -1,9 +1,14 @@
 
 class Hydrator {
   hydrate(store, payload) {
+
     store.dispatch({
       type: 'HYDRATION_STARTED'
     });
+
+    store.dispatch({type: 'DELETE_ALL_NODES'});
+    store.dispatch({type: 'DELETE_ALL_STREAMS'});
+    store.dispatch({type: 'RESET_FX_CONFIGURATION'});
 
     if (payload.nodes) {
       store.dispatch({

@@ -462,14 +462,17 @@ const createNode = (node) => {
       newSynthNode.osc2WaveType = node.inner.oscillator2.waveType;
       newSynthNode.osc1Gain = node.inner.oscillator1.gain;
       newSynthNode.osc2Gain = node.inner.oscillator2.gain;
+      newSynthNode.id = node.topLevel.id;
       return newSynthNode;
     case 'midi':
       let newMidiNode = new MidiNode(node.topLevel.position);
       newMidiNode = Object.assign(newMidiNode, node.topLevel);
+      newMidiNode.id = node.topLevel.id;
       return newMidiNode;
     case 'audio':
       let newAudioNode = new AudioNode(node.topLevel.position);
       newAudioNode = Object.assign(newAudioNode, node.topLevel);
+      newAudioNode.id = node.topLevel.id;
       if (node.topLevel.path) {
         fs.readFile(node.topLevel.path, (err, dataBuffer) => {
           if (err) {
