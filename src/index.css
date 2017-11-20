@@ -6,6 +6,7 @@ body {
   font-size: 0.8em;
   user-select: none;
   color: darkgray;
+  background-image: url(./assets/backgrounds/concrete_wall.png);
 }
 
 input[type="text"],
@@ -61,15 +62,9 @@ input[type="radio"]:checked:after {
 
 .canvas {
   background-image: url(./assets/backgrounds/batthern.png);
-  background-color: rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: inset 0px 0px 34px 5px rgba(0, 0, 0, 0.4);
   -moz-box-shadow: inset 0px 0px 34px 5px rgba(0, 0, 0, 0.4);
   box-shadow: inset 0px 0px 34px 5px rgba(0, 0, 0, 0.4);
-}
-
-.main-container {
-  /*display: flex;*/
-  background-image: url(./assets/backgrounds/concrete_wall.png);
 }
 
 .main-body-container {

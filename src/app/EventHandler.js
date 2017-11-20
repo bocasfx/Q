@@ -25,6 +25,21 @@ class EventHandler {
 
   initialize() {
     if (ipcRenderer) {
+
+      ipcRenderer.on('showMixer', () => {
+        window.location = '#/mixer';
+      });
+
+      ipcRenderer.on('mixerEvents', (event, action) => {
+        action.relay = true;
+        store.dispatch(action);
+      });
+
+      ipcRenderer.on('mainEvents', (event, action) => {
+        action.relay = true;
+        store.dispatch(action);
+      });
+
       ipcRenderer.on('QEvents', (event, message) => {
         switch (message) {
 

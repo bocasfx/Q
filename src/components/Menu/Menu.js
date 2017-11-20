@@ -5,18 +5,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleDevice } from '../../actions/Devices';
 import { setSelection } from '../../actions/Selection';
-import { hydrationStarted, hydrationComplete } from '../../actions/App';
 
 class Menu extends React.Component {
 
   onClick(device) {
-    if (device === 'mixer') {
-      this.props.hydrationStarted();
-    }
     this.props.toggleDevice(device);
-    if (device === 'mixer') {
-      this.props.hydrationComplete();
-    }
     let selection = 'nodes';
     if (device === 'linearStreams' || device === 'circularStreams' || device === 'streams') {
       selection = 'streams';
@@ -87,11 +80,6 @@ class Menu extends React.Component {
           active={this.props.devices.unlink}
           title="Unlink nodes"
           separator={false}/>
-        {/*<MenuButton
-            icon="./icons/menu/mixer.svg"
-            onClick={this.onClick.bind(this, 'mixer')}
-            active={this.props.devices.mixer}
-            title="Mixer"/>*/}
       </div>
     );
   }
@@ -106,9 +94,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     toggleDevice: bindActionCreators(toggleDevice, dispatch),
-    setSelection: bindActionCreators(setSelection, dispatch),
-    hydrationStarted: bindActionCreators(hydrationStarted, dispatch),
-    hydrationComplete: bindActionCreators(hydrationComplete, dispatch)
+    setSelection: bindActionCreators(setSelection, dispatch)
   };
 };
 

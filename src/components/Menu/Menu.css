@@ -1,6 +1,5 @@
 .menu-container {
   width: 55px;
-  background-color: rgba(0, 0, 0, 0.3);
   border-right: 1px solid dimgray;
   display: flex;
   flex-direction: column;

@@ -1,38 +1,19 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import store from './app/Store';
-import Canvas from './components/Canvas/Canvas';
 import './index.css';
-import { Provider } from 'react-redux';
-import Menu from './components/Menu/Menu';
-import ControlPanel from './components/ControlPanel/ControlPanel';
-import FXPanel from './components/FXPanel/FXPanel';
-import Transport from './components/Transport/Transport';
 import midiContext from './app/context/MIDIContext';
 import eventHandler from './app/EventHandler';
 import hydrator from './app/Hydrator';
-import Visualizer from './components/Visualizer/Visualizer';
+import { HashRouter } from 'react-router-dom';
+import App from './App';
 
 const renderDom = () => {
-  ReactDOM.render(
-    <Provider store={store}>
-      <div>
-        <Visualizer/>
-        <div className="main-container">
-          <Transport/>
-          <div className="main-body-container">
-            <Menu/>
-            <div>
-              <Canvas/>
-              <FXPanel/>
-            </div>
-            <ControlPanel/>
-          </div>
-        </div>
-      </div>
-    </Provider>,
-    document.getElementById('root')
-  );
+  render((
+    <HashRouter>
+      <App />
+    </HashRouter>
+  ), document.getElementById('root'));
 };
 
 const initialize = () => {

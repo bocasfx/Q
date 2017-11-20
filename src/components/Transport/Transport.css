@@ -1,6 +1,5 @@
 .transport-container {
   height: 35px;
-  background-color: rgba(0, 0, 0, 0.3);
   border-bottom: 1px solid dimgray;
   display: flex;
   justify-content: center;

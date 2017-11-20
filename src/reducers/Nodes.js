@@ -12,22 +12,25 @@ if (window.require) {
   fs = window.require('fs');
 }
 
-const addSynthNode = (state, position) => {
+const addSynthNode = (state, position, id) => {
   let node = new SynthNode(position);
+  node.id = id || node.id;
   let nodeList = state.splice(0);
   nodeList.push(node);
   return nodeList;
 };
 
-const addMidiNode = (state, position) => {
+const addMidiNode = (state, position, id) => {
   let midiNode = new MidiNode(position);
+  midiNode.id = id || midiNode.id;
   let nodeList = state.splice(0);
   nodeList.push(midiNode);
   return nodeList;
 };
 
-const addAudioNode = (state, position) => {
+const addAudioNode = (state, position, id) => {
   let audioNode = new AudioNode(position);
+  audioNode.id = id || audioNode.id;
   let nodeList = state.splice(0);
   nodeList.push(audioNode);
   return nodeList;
@@ -459,14 +462,17 @@ const createNode = (node) => {
       newSynthNode.osc2WaveType = node.inner.oscillator2.waveType;
       newSynthNode.osc1Gain = node.inner.oscillator1.gain;
       newSynthNode.osc2Gain = node.inner.oscillator2.gain;
+      newSynthNode.id = node.topLevel.id;
       return newSynthNode;
     case 'midi':
       let newMidiNode = new MidiNode(node.topLevel.position);
       newMidiNode = Object.assign(newMidiNode, node.topLevel);
+      newMidiNode.id = node.topLevel.id;
       return newMidiNode;
     case 'audio':
       let newAudioNode = new AudioNode(node.topLevel.position);
       newAudioNode = Object.assign(newAudioNode, node.topLevel);
+      newAudioNode.id = node.topLevel.id;
       if (node.topLevel.path) {
         fs.readFile(node.topLevel.path, (err, dataBuffer) => {
           if (err) {
@@ -496,13 +502,13 @@ export default (state = nodes, action) => {
   switch (action.type) {
 
     case 'ADD_SYNTH_NODE':
-      return addSynthNode(state, action.position);
+      return addSynthNode(state, action.position, action.id);
 
     case 'ADD_MIDI_NODE':
-      return addMidiNode(state, action.position);
+      return addMidiNode(state, action.position, action.id);
 
     case 'ADD_AUDIO_NODE':
-      return addAudioNode(state, action.position);
+      return addAudioNode(state, action.position, action.id);
 
     case 'SET_NODE_OSC1_FREQUENCY':
       return setNodeOsc1Frequency(state, action.id, action.frequency);
