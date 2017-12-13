@@ -109,3 +109,20 @@ export const getNodesWithinDistance = (nodes, position) => {
   });
   return matches;
 };
+
+export const findClosestFrequency = (notes, closestTo) => {
+  let frequencies = notes.map((note) => note.frequency);
+  let closestFreq = Math.max.apply(null, frequencies);
+
+  for(let i = 0; i < frequencies.length; i++) {
+    if (frequencies[i] >= closestTo && frequencies[i] < closestFreq) {
+      closestFreq = frequencies[i];
+    }
+  }
+
+  let closest = _.find(notes, (note) => {
+    return note.frequency === closestFreq;
+  });
+
+  return closest;
+};

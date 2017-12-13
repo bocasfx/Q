@@ -6,7 +6,7 @@ import Knob from '../../UI/Knob';
 import Slider from '../../UI/Slider';
 import noteConfig from '../../../config/frequencies';
 import _ from 'lodash';
-import { getSelectedElements } from '../../../utils/utils';
+import { getSelectedElements, findClosestFrequency } from '../../../utils/utils';
 import {
   setNodeOsc1Frequency,
   setNodeOsc2Frequency,
@@ -26,7 +26,6 @@ class OscillatorPanel extends React.Component {
   constructor(props) {
     super(props);
     this.onFreqChange = this.onFreqChange.bind(this);
-    // this.onRadioChange = this.onRadioChange.bind(this);
     this.onWaveTypeChange = this.onWaveTypeChange.bind(this);
     this.onNoteChange = this.onNoteChange.bind(this);
     this.onOctaveChange = this.onOctaveChange.bind(this);
@@ -43,7 +42,6 @@ class OscillatorPanel extends React.Component {
     waveType = parseInt(waveType, 10);
 
     this.state = {
-      checked: true,
       waveType,
       disabled: props.disabled,
       note: 'C',
@@ -69,8 +67,14 @@ class OscillatorPanel extends React.Component {
     });
     waveType = parseInt(waveType, 10);
 
+    let closest = findClosestFrequency(noteConfig.frequencies, this.oscillator.frequency);
+    let octave = closest.octave;
+    let note = closest.note;
+
     this.setState({
       waveType,
+      octave,
+      note,
       disabled: this.node.disabled
     });
   }
@@ -97,12 +101,6 @@ class OscillatorPanel extends React.Component {
     });
   }
 
-  // onRadioChange(event) {
-  //   this.setState({
-  //     checked: event.target.value === 'continue'
-  //   });
-  // }
-
   onWaveTypeChange(value) {
     this.nodes.forEach((node) => {
       if (this.props.name === 'osc1') {
@@ -117,27 +115,23 @@ class OscillatorPanel extends React.Component {
   }
 
   onNoteChange(event) {
-    this.nodes.forEach((node) => {
-      let note = _.find(noteConfig.frequencies, (noteObj) => {
-        return (noteObj.note === event.target.value && noteObj.octave === this.state.octave);
-      });
-      this.setState({
-        note: note.note
-      });
-      this.onFreqChange(node.id, note.frequency);
+    let note = _.find(noteConfig.frequencies, (noteObj) => {
+      return (noteObj.note === event.target.value && noteObj.octave === this.state.octave);
     });
+    this.setState({
+      note: note.note
+    });
+    this.onFreqChange(note.frequency);
   }
 
   onOctaveChange(event) {
-    this.nodes.forEach((node) => {
-      let note = _.find(noteConfig.frequencies, (noteObj) => {
-        return (noteObj.note === this.state.note && noteObj.octave === parseInt(event.target.value, 10));
-      });
-      this.setState({
-        octave: note.octave
-      });
-      this.onFreqChange(node.id, note.frequency);
+    let note = _.find(noteConfig.frequencies, (noteObj) => {
+      return (noteObj.note === this.state.note && noteObj.octave === parseInt(event.target.value, 10));
     });
+    this.setState({
+      octave: note.octave
+    });
+    this.onFreqChange(note.frequency);
   }
 
   onGainChange(value) {
@@ -152,8 +146,8 @@ class OscillatorPanel extends React.Component {
 
   render() {
 
-    // let forNote = this.props.name + '-note';
-    // let forOctave = this.props.name + '-octave';
+    let forNote = this.props.name + '-note';
+    let forOctave = this.props.name + '-octave';
 
     return (
       <div className="oscillator-panel-container" disabled={this.state.disabled}>
@@ -169,19 +163,13 @@ class OscillatorPanel extends React.Component {
           disabled={this.state.disabled}/>  
 
         <div className="oscillator-panel-freq">
-          {/*<input
-            name={this.props.name}
-            type="radio"
-            value="continue"
-            onChange={this.onRadioChange}
-            checked={this.state.checked}/>*/}
           <Knob
             label={'Frequency'}
             value={this.oscillator.frequency}
             min={20}
             max={2000}
             onChange={this.onFreqChange}
-            disabled={!this.state.checked || this.state.disabled}
+            disabled={this.state.disabled}
             type={this.props.type}/>
           <div className="oscillator-panel-gain">
             <Knob
@@ -190,36 +178,29 @@ class OscillatorPanel extends React.Component {
               min={0}
               max={1}
               onChange={this.onGainChange}
-              disabled={!this.state.checked || this.state.disabled}
+              disabled={this.state.disabled}
               type={this.props.type}
               log={true}/>
           </div>
         </div>
 
-        {/*<div className="oscillator-panel-freq">
-          <input
-            name={this.props.name}
-            type="radio"
-            value="discrete"
-            onChange={this.onRadioChange}
-            checked={!this.state.checked}
-            disabled={this.state.disabled}/>
+        <div className="oscillator-panel-freq">
           <div className="oscillator-panel-notes">
             <div>
-              <label htmlFor={forNote} disabled={this.state.checked || this.state.disabled}>Note</label>
-              <select name={forNote} onChange={this.onNoteChange} disabled={this.state.checked || this.state.disabled}>
+              <label htmlFor={forNote} disabled={this.state.disabled}>Note</label>
+              <select name={forNote} onChange={this.onNoteChange} disabled={this.state.disabled} value={this.state.note}>
                 {this.renderNoteSelect()}
               </select>
             </div>
 
             <div>
-              <label htmlFor={forOctave} disabled={this.state.checked || this.state.disabled}>Octave</label>
-              <select name={forOctave} onChange={this.onOctaveChange} disabled={this.state.checked || this.state.disabled}>
+              <label htmlFor={forOctave} disabled={this.state.disabled}>Octave</label>
+              <select name={forOctave} onChange={this.onOctaveChange} disabled={this.state.disabled} value={this.state.octave}>
                 {this.renderOctaveSelect()}
               </select>
             </div>
           </div>
-        </div>*/}
+        </div>
       </div>
     );
   }
