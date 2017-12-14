@@ -7,8 +7,10 @@ class MidiNode extends Node {
     super(position);
 
     this.type = 'midi';
-    this.note = 0;
+    this.note = 24;
     this.velocity = 127;
+    this.channel = 0;
+    this.octave = 0;
 
     this.nodeImg = new Image();
     this.nodeImg.src = './icons/elements/midi-node.png';
@@ -27,7 +29,8 @@ class MidiNode extends Node {
       return;
     }
     this.active = true;
-    this.midiOut.send([0x92, this.note, this.velocity]);
+    let command = 144 + this.channel;
+    this.midiOut.send(['0x' + command.toString(16), this.note, this.velocity]);
   }
 
   stop() {
@@ -35,7 +38,8 @@ class MidiNode extends Node {
       return;
     }
     this.active = false;
-    this.midiOut.send([0x82, this.note, this.velocity]);
+    let command = 128 + this.channel;
+    this.midiOut.send(['0x' + command.toString(16), this.note, this.velocity]);
   }
 }
 

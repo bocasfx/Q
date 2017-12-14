@@ -20,9 +20,9 @@ class Serializer {
   };
 
   serializeMidiNode (node) {
-    return (({ id, type, name, position, selected, note, velocity, disabled, links, parentIds, lag, probability }) => {
+    return (({ id, type, name, position, selected, note, velocity, octave, channel, disabled, links, parentIds, lag, probability }) => {
       return {
-        topLevel: { id, type, name, position, selected, note, velocity, disabled, links, parentIds, lag, probability },
+        topLevel: { id, type, name, position, selected, note, velocity, octave, channel, disabled, links, parentIds, lag, probability },
         inner: {}
       };
     })(node);

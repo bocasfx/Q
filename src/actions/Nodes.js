@@ -300,6 +300,22 @@ export const setNodeNote = (id, value) => {
   };
 };
 
+export const setNodeChannel = (id, value) => {
+  return {
+    type: 'SET_NODE_CHANNEL',
+    id,
+    value
+  };
+};
+
+export const setNodeOctave = (id, value) => {
+  return {
+    type: 'SET_NODE_OCTAVE',
+    id,
+    value
+  };
+};
+
 export const updateSelectedNodePositionByDelta = (dx, dy) => {
   return {
     type: 'UPDATE_SELECTED_NODE_POSITION_BY_DELTA',

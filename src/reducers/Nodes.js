@@ -436,6 +436,24 @@ const setNodeNote = (state, id, value) => {
   });
 };
 
+const setNodeOctave = (state, id, value) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.octave = value;
+    }
+    return node;
+  });
+};
+
+const setNodeChannel = (state, id, value) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.channel = value;
+    }
+    return node;
+  });
+};
+
 
 const updateSelectedNodePositionByDelta = (state, dx, dy) => {
   return state.map((node) => {
@@ -620,6 +638,12 @@ export default (state = nodes, action) => {
 
     case 'SET_NODE_NOTE':
       return setNodeNote(state, action.id, action.value);
+
+    case 'SET_NODE_OCTAVE':
+      return setNodeOctave(state, action.id, action.value);
+
+    case 'SET_NODE_CHANNEL':
+      return setNodeChannel(state, action.id, action.value);
 
     case 'UPDATE_SELECTED_NODE_POSITION_BY_DELTA':
       return updateSelectedNodePositionByDelta(state, action.dx, action.dy);
