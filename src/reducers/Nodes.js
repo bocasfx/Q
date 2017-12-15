@@ -5,6 +5,7 @@ import _ from 'lodash';
 import { nodes } from '../config/initial-state';
 import uuidv1 from 'uuid/v1';
 import { getSelectedElements, getNodeById, graphHasLoop } from '../utils/utils';
+import midiContext from '../app/context/MIDIContext';
 
 let fs = null;
 
@@ -436,6 +437,24 @@ const setNodeNote = (state, id, value) => {
   });
 };
 
+const setNodeOctave = (state, id, value) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.octave = value;
+    }
+    return node;
+  });
+};
+
+const setNodeChannel = (state, id, value) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      node.channel = value;
+    }
+    return node;
+  });
+};
+
 
 const updateSelectedNodePositionByDelta = (state, dx, dy) => {
   return state.map((node) => {
@@ -495,6 +514,18 @@ const createNode = (node) => {
 const hydrateNodes = (state, payload) => {
   return payload.map((node) => {
     return createNode(node);
+  });
+};
+
+const setNodeMidiOutput = (state, id, outputId) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      let midiOutput = _.find(midiContext.outputs, (output) => {
+        return output.id === outputId;
+      });
+      node.midiOut = midiOutput;
+    }
+    return node;
   });
 };
 
@@ -621,6 +652,12 @@ export default (state = nodes, action) => {
     case 'SET_NODE_NOTE':
       return setNodeNote(state, action.id, action.value);
 
+    case 'SET_NODE_OCTAVE':
+      return setNodeOctave(state, action.id, action.value);
+
+    case 'SET_NODE_CHANNEL':
+      return setNodeChannel(state, action.id, action.value);
+
     case 'UPDATE_SELECTED_NODE_POSITION_BY_DELTA':
       return updateSelectedNodePositionByDelta(state, action.dx, action.dy);
 
@@ -629,6 +666,9 @@ export default (state = nodes, action) => {
 
     case 'HYDRATE_NODES':
       return hydrateNodes(state, action.payload);
+
+    case 'SET_NODE_MIDI_OUTPUT':
+      return setNodeMidiOutput(state, action.id, action.outputId);
 
     default:
       return state;

@@ -300,6 +300,22 @@ export const setNodeNote = (id, value) => {
   };
 };
 
+export const setNodeChannel = (id, value) => {
+  return {
+    type: 'SET_NODE_CHANNEL',
+    id,
+    value
+  };
+};
+
+export const setNodeOctave = (id, value) => {
+  return {
+    type: 'SET_NODE_OCTAVE',
+    id,
+    value
+  };
+};
+
 export const updateSelectedNodePositionByDelta = (dx, dy) => {
   return {
     type: 'UPDATE_SELECTED_NODE_POSITION_BY_DELTA',
@@ -320,5 +336,13 @@ export const hydrateNodes = (payload) => {
   return {
     type: 'HYDRATE_NODES',
     payload
+  };
+};
+
+export const setNodeMidiOutput = (id, outputId) => {
+  return {
+    type: 'SET_NODE_MIDI_OUTPUT',
+    id,
+    outputId
   };
 };

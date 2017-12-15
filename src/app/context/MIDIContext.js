@@ -9,7 +9,11 @@ class MIDIContext {
     if (navigator.requestMIDIAccess) {
       this.context = navigator.requestMIDIAccess({sysex: false});
       return this.context.then((ctx) => {
-        this.outputs = ctx.outputs;
+        let newOutputs = [];
+        for (let output of ctx.outputs.values()) {
+          newOutputs.push(output);
+        }
+        this.outputs = newOutputs;
       });
     }
   }
