@@ -338,3 +338,11 @@ export const hydrateNodes = (payload) => {
     payload
   };
 };
+
+export const setNodeMidiOutput = (id, outputId) => {
+  return {
+    type: 'SET_NODE_MIDI_OUTPUT',
+    id,
+    outputId
+  };
+};

@@ -21,7 +21,7 @@ class MidiNode extends Node {
     this.probabilityNodeImg = new Image();
     this.probabilityNodeImg.src = './icons/elements/midi-node-probability.png';
 
-    this.midiOut = midiContext.outputs.values().next().value;
+    this.midiOut = midiContext.outputs[0];
   }
 
   play() {

@@ -12,7 +12,8 @@ import {
   setNodeNote,
   setNodeChannel,
   setNodeOctave,
-  stopNode } from '../../../actions/Nodes';
+  stopNode,
+  setNodeMidiOutput } from '../../../actions/Nodes';
 
 class MidiNodePanel extends React.Component {
 
@@ -97,7 +98,10 @@ class MidiNodePanel extends React.Component {
   }
 
   onDestinationChange(event) {
-    console.log(event.target.value);
+    this.state.nodes.forEach((node) => {
+      this.props.stopNode(node.id);
+      this.props.setNodeMidiOutput(node.id, event.target.value);
+    });
   }
 
   renderMidiDestinationSelect() {
@@ -195,7 +199,8 @@ const mapDispatchToProps = (dispatch) => {
     setNodeNote: bindActionCreators(setNodeNote, dispatch),
     setNodeOctave: bindActionCreators(setNodeOctave, dispatch),
     setNodeChannel: bindActionCreators(setNodeChannel, dispatch),
-    stopNode: bindActionCreators(stopNode, dispatch)
+    stopNode: bindActionCreators(stopNode, dispatch),
+    setNodeMidiOutput: bindActionCreators(setNodeMidiOutput, dispatch)
   };
 };
 

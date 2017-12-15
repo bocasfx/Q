@@ -5,6 +5,7 @@ import _ from 'lodash';
 import { nodes } from '../config/initial-state';
 import uuidv1 from 'uuid/v1';
 import { getSelectedElements, getNodeById, graphHasLoop } from '../utils/utils';
+import midiContext from '../app/context/MIDIContext';
 
 let fs = null;
 
@@ -516,6 +517,18 @@ const hydrateNodes = (state, payload) => {
   });
 };
 
+const setNodeMidiOutput = (state, id, outputId) => {
+  return state.map((node) => {
+    if (node.id === id) {
+      let midiOutput = _.find(midiContext.outputs, (output) => {
+        return output.id === outputId;
+      });
+      node.midiOut = midiOutput;
+    }
+    return node;
+  });
+};
+
 export default (state = nodes, action) => {
   switch (action.type) {
 
@@ -653,6 +666,9 @@ export default (state = nodes, action) => {
 
     case 'HYDRATE_NODES':
       return hydrateNodes(state, action.payload);
+
+    case 'SET_NODE_MIDI_OUTPUT':
+      return setNodeMidiOutput(state, action.id, action.outputId);
 
     default:
       return state;
