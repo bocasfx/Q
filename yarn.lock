@@ -2570,6 +2570,10 @@ fast-levenshtein@~2.0.4:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
 
+fastidious-envelope-generator@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/fastidious-envelope-generator/-/fastidious-envelope-generator-2.0.0.tgz#0bcfe9477629a8e7aba9eecdc792440faeb64492"
+
 fastparse@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/fastparse/-/fastparse-1.1.1.tgz#d1e2643b38a94d7583b479060e6c4affc94071f8"
