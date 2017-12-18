@@ -5,6 +5,7 @@ import EnvelopeGenerator from 'fastidious-envelope-generator';
 import qAudioContext from '../../app/context/QAudioContext';
 import audioContext from '../../app/context/AudioContext';
 import NoiseGenerator from '../FX/NoiseGenerator';
+import Pan from '../FX/Pan';
 
 class SynthNode extends Node {
 
@@ -13,6 +14,8 @@ class SynthNode extends Node {
 
     this.oscillator1 = new Oscillator();
     this.oscillator2 = new Oscillator();
+    this._pan = new Pan();
+    this._pan.value = 0;
     this._sendFXGain = qAudioContext.ctx.createGain();
     this._mainGain = qAudioContext.ctx.createGain();
     this.vca = qAudioContext.ctx.createGain();
@@ -39,8 +42,10 @@ class SynthNode extends Node {
     this.noiseGenerator.connect(this._noiseGain);
     this._noiseGain.connect(this.vca);
 
-    this.vca.connect(this._mainGain);
-    this.vca.connect(this._sendFXGain);
+    this.vca.connect(this._pan.input);
+
+    this._pan.connect(this._mainGain);
+    this._pan.connect(this._sendFXGain);
 
     this._mainGain.connect(qAudioContext.destination);
     this._mainGain.gain.value = 0.8;
@@ -139,6 +144,14 @@ class SynthNode extends Node {
 
   get volume() {
     return this._mainGain.gain.value;
+  }
+
+  set pan(value) {
+    this._pan.value = value;
+  }
+
+  get pan() {
+    return this._pan.value;
   }
 
   disconnect() {

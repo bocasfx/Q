@@ -7,7 +7,7 @@ class Stream {
   constructor({position, speed = 1.0, count = 1}) {
     this._position = position;
     this.id = uuidv1();
-    this.name = names.generate();
+    this.name = names.generate(false, true);
     this.disabled = false;
     this.type = 'stream';
     this.mouseDown = false;

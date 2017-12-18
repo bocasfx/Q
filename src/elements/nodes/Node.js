@@ -7,12 +7,11 @@ class Node {
   constructor(position) {
     this.position = position;
     this.id = uuidv1();
-    this.name = names.generate(true);
+    this.name = names.generate(false, true);
     this.selected = false;
     this.activeStatus = false;
     this.particleQueue = [];
     this._disabled = false;
-    this.pan = 0;
     this.links = [];
     this.lag = 0;
     this.probability = 1.0;
