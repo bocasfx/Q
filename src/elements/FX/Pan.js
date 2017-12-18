@@ -1,11 +1,11 @@
 import audioContext from '../../app/context/AudioContext';
 
-class Amplifier {
+class Pan {
   constructor() {
     this.gainL = audioContext.createGain();
     this.gainR = audioContext.createGain();
-    this.gainL.gain.value = 0;
-    this.gainR.gain.value = 0;
+    this.gainL.gain.value = 1;
+    this.gainR.gain.value = 1;
     this.splitter = audioContext.createChannelSplitter(2);
     this.merger = audioContext.createChannelMerger(2);
     this.splitter.connect(this.gainL, 0);
@@ -16,16 +16,29 @@ class Amplifier {
     this.output = this.merger;
     this.amplitudeL = this.gainL.gain;
     this.amplitudeR = this.gainR.gain;
+    this.pan = 0;
   }
 
-  set volume(vol) {
+  set value(pan) {
+    this.pan = pan;
     let now = audioContext.currentTime;
-    this.gainL.gain.linearRampToValueAtTime(vol, now);
-    this.gainR.gain.linearRampToValueAtTime(vol, now);
+    let leftVol = 1;
+    let rightVol = 1;
+
+    if (pan <= 0) {
+      leftVol = 1;
+      rightVol = 1 + pan;
+    } else {
+      rightVol = 1;
+      leftVol = 1 - pan;
+    }
+
+    this.gainL.gain.linearRampToValueAtTime(leftVol, now);
+    this.gainR.gain.linearRampToValueAtTime(rightVol, now);
   }
 
-  get volume() {
-    return (this.gainL.gain.value + this.gainR.gain.value) / 2;
+  get value() {
+    return this.pan;
   }
 
   connect(node) {
@@ -44,4 +57,4 @@ class Amplifier {
   }
 }
 
-export default Amplifier;
+export default Pan;

@@ -1,10 +1,11 @@
 import config from '../../config/config';
 import Node from './Node';
 import Oscillator from '../FX/Oscillator';
-import Amplifier from '../FX/Amplifier';
-import AmpEnvelopeGenerator from '../FX/AmpEnvelopeGenerator';
+import EnvelopeGenerator from 'fastidious-envelope-generator';
 import qAudioContext from '../../app/context/QAudioContext';
+import audioContext from '../../app/context/AudioContext';
 import NoiseGenerator from '../FX/NoiseGenerator';
+import Pan from '../FX/Pan';
 
 class SynthNode extends Node {
 
@@ -13,11 +14,15 @@ class SynthNode extends Node {
 
     this.oscillator1 = new Oscillator();
     this.oscillator2 = new Oscillator();
-    this.amplifier = new Amplifier();
+    this._pan = new Pan();
+    this._pan.value = 0;
     this._sendFXGain = qAudioContext.ctx.createGain();
     this._mainGain = qAudioContext.ctx.createGain();
+    this.vca = qAudioContext.ctx.createGain();
     this.noiseGenerator = new NoiseGenerator();
-    this.ampEnvelopeGenerator = new AmpEnvelopeGenerator(config.synth.envelope);
+    this.envelopeGenerator = new EnvelopeGenerator(audioContext, this.vca.gain);
+    this.envelopeGenerator.attackTime = config.synth.envelope.attack;
+    this.envelopeGenerator.releaseTime = config.synth.envelope.release;
 
     this._noiseGain = qAudioContext.ctx.createGain();
     this._noiseGain.gain.value = 0.0;
@@ -29,17 +34,18 @@ class SynthNode extends Node {
     this._osc2Gain.gain.value = 1.0;
 
     this.oscillator1.connect(this._osc1Gain);
-    this._osc1Gain.connect(this.amplifier.input);
+    this._osc1Gain.connect(this.vca);
 
     this.oscillator2.connect(this._osc2Gain);
-    this._osc2Gain.connect(this.amplifier.input);
+    this._osc2Gain.connect(this.vca);
 
     this.noiseGenerator.connect(this._noiseGain);
-    this._noiseGain.connect(this.amplifier.input);
+    this._noiseGain.connect(this.vca);
 
-    this.ampEnvelopeGenerator.connect(this.amplifier.amplitudeL, this.amplifier.amplitudeR);
-    this.amplifier.connect(this._sendFXGain);
-    this.amplifier.connect(this._mainGain);
+    this.vca.connect(this._pan.input);
+
+    this._pan.connect(this._mainGain);
+    this._pan.connect(this._sendFXGain);
 
     this._mainGain.connect(qAudioContext.destination);
     this._mainGain.gain.value = 0.8;
@@ -85,19 +91,19 @@ class SynthNode extends Node {
   }
 
   set attack(value) {
-    this.ampEnvelopeGenerator.attack = value === 0 ? config.synth.envelope.attack : value;
+    this.envelopeGenerator.attackTime = value;
   }
 
   get attack() {
-    return this.ampEnvelopeGenerator.attack;
+    return this.envelopeGenerator.attackTime;
   }
 
   set release(value) {
-    this.ampEnvelopeGenerator.release = value === 0 ? config.synth.envelope.release : value;
+    this.envelopeGenerator.releaseTime = value;
   }
 
   get release() {
-    return this.ampEnvelopeGenerator.release;
+    return this.envelopeGenerator.releaseTime;
   }
 
   set sendFXGain(value) {
@@ -140,6 +146,14 @@ class SynthNode extends Node {
     return this._mainGain.gain.value;
   }
 
+  set pan(value) {
+    this._pan.value = value;
+  }
+
+  get pan() {
+    return this._pan.value;
+  }
+
   disconnect() {
     this.oscillator1.disconnect();
     this._osc1Gain.disconnect();
@@ -147,8 +161,6 @@ class SynthNode extends Node {
     this._osc2Gain.disconnect();
     this.noiseGenerator.disconnect();
     this._noiseGain.disconnect();
-    this.amplifier.disconnect();
-    this.amplifier.disconnect();
     this._mainGain.disconnect();
     this._sendFXGain.disconnect();
   }
@@ -158,7 +170,7 @@ class SynthNode extends Node {
       return;
     }
     this.active = true;
-    this.ampEnvelopeGenerator.trigger(this.pan);
+    this.envelopeGenerator.gateOn();
     qAudioContext.triggerFilter();
   }
 
@@ -166,8 +178,8 @@ class SynthNode extends Node {
     if (!this.active) {
       return;
     }
+    this.envelopeGenerator.gateOff();
     this.active = false;
-    this.ampEnvelopeGenerator.close();
   }
 }
 
