@@ -1,8 +1,9 @@
 import Node from './Node';
 import qAudioContext from '../../app/context/QAudioContext';
-import Amplifier from '../FX/Amplifier';
-import AmpEnvelopeGenerator from '../FX/AmpEnvelopeGenerator';
+import EnvelopeGenerator from 'fastidious-envelope-generator';
+import audioContext from '../../app/context/AudioContext';
 import config from '../../config/config';
+import Pan from '../FX/Pan';
 
 class AudioNode extends Node {
 
@@ -20,9 +21,13 @@ class AudioNode extends Node {
     this.probabilityNodeImg = new Image();
     this.probabilityNodeImg.src = './icons/elements/audio-node-probability.png';
 
-    this.amplifier = new Amplifier();
-    this.amplifier.volume = 0;
-    this.ampEnvelopeGenerator = new AmpEnvelopeGenerator(config.synth.envelope);
+    this.vca = qAudioContext.ctx.createGain();
+
+    this.envelopeGenerator = new EnvelopeGenerator(audioContext, this.vca.gain);
+    this.envelopeGenerator.attackTime = config.synth.envelope.attack;
+    this.envelopeGenerator.releaseTime = config.synth.envelope.release;
+
+    this._pan = new Pan();
 
     this._sendFXGain = qAudioContext.ctx.createGain();
     this.sendFXGain = 0;
@@ -47,10 +52,10 @@ class AudioNode extends Node {
   createDataSource() {
     let src = qAudioContext.ctx.createBufferSource();
     src.buffer = this.decodedAudioData;
-    src.connect(this.amplifier.input);
-    this.ampEnvelopeGenerator.connect(this.amplifier.amplitudeL, this.amplifier.amplitudeR);
-    this.amplifier.connect(this._sendFXGain);
-    this.amplifier.connect(this._mainGain);
+    src.connect(this.vca);
+    this.vca.connect(this._pan.input);
+    this._pan.connect(this._sendFXGain);
+    this._pan.connect(this._mainGain);
 
     this._mainGain.connect(qAudioContext.destination);
 
@@ -71,19 +76,19 @@ class AudioNode extends Node {
   }
 
   set attack(value) {
-    this.ampEnvelopeGenerator.attack = value === 0 ? config.synth.envelope.attack : value;
+    this.envelopeGenerator.attackTime = value;
   }
 
   get attack() {
-    return this.ampEnvelopeGenerator.attack;
+    return this.envelopeGenerator.attackTime;
   }
 
   set release(value) {
-    this.ampEnvelopeGenerator.release = value === 0 ? config.synth.envelope.release : value;
+    this.envelopeGenerator.releaseTime = value;
   }
 
   get release() {
-    return this.ampEnvelopeGenerator.release;
+    return this.envelopeGenerator.releaseTime;
   }
 
   set volume(value) {
@@ -94,13 +99,21 @@ class AudioNode extends Node {
     return this._mainGain.gain.value;
   }
 
+  set pan(value) {
+    this._pan.value = value;
+  }
+
+  get pan() {
+    return this._pan.value;
+  }
+
   play() {
     if (this.active || !this.decodedAudioData || !this.shouldPlay) {
       return;
     }
     this.createDataSource();
     this.active = true;
-    this.ampEnvelopeGenerator.trigger(this.pan);
+    this.envelopeGenerator.gateOn();
     qAudioContext.triggerFilter();
   }
 
@@ -109,7 +122,7 @@ class AudioNode extends Node {
       return;
     }
     this.active = false;
-    this.ampEnvelopeGenerator.close();
+    this.envelopeGenerator.gateOff();
   }
 }
 
