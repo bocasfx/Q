@@ -123,7 +123,7 @@ class QAudioContext {
     var barHeight;
     var x = 0.0;
     let half = height / 2.0;
-    canvasContext.fillStyle = 'rgba(255, 215, 0, 0.75)';
+    canvasContext.fillStyle = 'rgba(255, 255, 255, 0.3)';
 
     for(var i = 0; i < bufferLength; i++) {
       barHeight = dataArray[i] / 2.0;
