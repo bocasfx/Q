@@ -7,7 +7,7 @@
   "author": {
     "name": "Rodolfo Palacios",
     "email": "mintcreamseashell@gmail.com",
-    "url": "r.palacios.ca"
+    "url": "http://r.palacios.ca"
   },
   "dependencies": {
     "about-window": "1.8.0",
@@ -21,22 +21,26 @@
     "uuid": "3.1.0"
   },
   "devDependencies": {
-    "electron": "1.7.9",
+    "cross-env": "^5.2.0",
+    "electron": "^3.0.0",
+    "electron-packager": "^12.1.2",
     "eslint-plugin-react": "7.5.1",
+    "npm-run-all": "^4.1.3",
     "react-scripts": "1.0.14"
   },
   "homepage": "./",
   "main": "src/electron-starter.js",
   "scripts": {
-    "start": "react-scripts start",
     "build": "react-scripts build",
-    "package": "react-scripts build; electron-packager . Q --icon ./resources/icon/icon.icns --overwrite; ./clean-package.sh",
-    "icon": "iconutil -c icns ./resources/icon/icon.iconset",
+    "bundle": "npm-run-all build package clean:package",
     "clean": "rm -rf ./build; rm -rf ./Q-darwin-x64",
-    "test": "react-scripts test --env=jsdom",
+    "clean:package": "./clean-package.sh",
+    "develop": "cross-env ELECTRON_START_URL=http://localhost:3000 ELECTRON_MIXER_URL=http://localhost:3000/#/mixer npx electron .",
     "eject": "react-scripts eject",
-    "electron": "electron .",
-    "electron-dev": "ELECTRON_START_URL=http://localhost:3000 ELECTRON_MIXER_URL=http://localhost:3000/#/mixer electron ."
+    "icon": "iconutil -c icns ./resources/icon/icon.iconset",
+    "package": "npx electron-packager . Q --icon ./resources/icon/icon.icns --overwrite",
+    "start": "react-scripts start",
+    "test": "react-scripts test --env=jsdom"
   },
   "extraResources": "app/public/audio/ir/"
 }
