@@ -137,6 +137,7 @@ class SynthNodePanel extends React.Component {
             max={1}
             step={0.001}
             marks={0}
+            // value={180 * Math.asin(this.node.pan) / Math.PI}
             value={this.node.pan}
             onChange={this.onPanChange}
             disabled={this.node.disabled}

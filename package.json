@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
+    "dotenv": "^6.0.0",
     "electron": "^3.0.0",
     "electron-packager": "^12.1.2",
     "eslint-plugin-react": "7.5.1",
@@ -35,7 +36,7 @@
     "bundle": "npm-run-all build package clean:package",
     "clean": "rm -rf ./build; rm -rf ./Q-darwin-x64",
     "clean:package": "./clean-package.sh",
-    "develop": "cross-env ELECTRON_START_URL=http://localhost:3000 ELECTRON_MIXER_URL=http://localhost:3000/#/mixer npx electron .",
+    "develop": "NODE_ENV=development npx electron .",
     "eject": "react-scripts eject",
     "icon": "iconutil -c icns ./resources/icon/icon.iconset",
     "package": "npx electron-packager . Q --icon ./resources/icon/icon.icns --overwrite",

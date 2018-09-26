@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config();
+}
+
 const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
@@ -29,9 +33,9 @@ function initializeMainWindow() {
   mainWindow.loadURL(startUrl);
   electronMenu.setMainMenu(mainWindow, initializeMixerWindow);
 
-  if (process.env.ELECTRON_START_URL) {
+  if (process.env.ELECTRON_START_URL && process.env.WEB_AUDIO_EXTENSION) {
     mainWindow.webContents.openDevTools();
-    let webAudioExtension = '/Users/rpalacios/Library/Application\ Support/Google/Chrome/Default/Extensions/cmhomipkklckpomafalojobppmmidlgl/0.1.4_0/';
+    let webAudioExtension = process.env.WEB_AUDIO_EXTENSION;
     BrowserWindow.addDevToolsExtension(webAudioExtension);
   }
 

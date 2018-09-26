@@ -2,39 +2,25 @@ import audioContext from '../../app/context/AudioContext';
 
 class Pan {
   constructor() {
-    this.gainL = audioContext.createGain();
-    this.gainR = audioContext.createGain();
-    this.gainL.gain.value = 1;
-    this.gainR.gain.value = 1;
-    this.splitter = audioContext.createChannelSplitter(2);
-    this.merger = audioContext.createChannelMerger(2);
-    this.splitter.connect(this.gainL, 0);
-    this.splitter.connect(this.gainR, 1);
-    this.gainL.connect(this.merger, 0, 0);
-    this.gainR.connect(this.merger, 0, 1);
-    this.input = this.splitter;
-    this.output = this.merger;
-    this.amplitudeL = this.gainL.gain;
-    this.amplitudeR = this.gainR.gain;
     this.pan = 0;
+    this.panner = audioContext.createPanner();
+    this.input = this.panner;
+    this.output = this.panner;
   }
 
   set value(pan) {
     this.pan = pan;
-    let now = audioContext.currentTime;
-    let leftVol = 1;
-    let rightVol = 1;
 
-    if (pan <= 0) {
-      leftVol = 1;
-      rightVol = 1 + pan;
-    } else {
-      rightVol = 1;
-      leftVol = 1 - pan;
+    var xDeg = pan;
+    var zDeg = xDeg + 90;
+    if (zDeg > 90) {
+      zDeg = 180 - zDeg;
     }
+    var x = Math.sin(xDeg * (Math.PI / 180));
+    var z = Math.sin(zDeg * (Math.PI / 180));
+    console.log(pan, x, z);
 
-    this.gainL.gain.linearRampToValueAtTime(leftVol, now);
-    this.gainR.gain.linearRampToValueAtTime(rightVol, now);
+    this.panner.setPosition(x, 0, z);
   }
 
   get value() {
