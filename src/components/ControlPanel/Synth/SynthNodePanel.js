@@ -133,9 +133,9 @@ class SynthNodePanel extends React.Component {
         <div className="row synth-node-panel-pan synth-node-panel-pan-labels">
           <div>L</div>
           <Slider
-            min={-1}
-            max={1}
-            step={0.001}
+            min={-45}
+            max={45}
+            step={1}
             marks={0}
             // value={180 * Math.asin(this.node.pan) / Math.PI}
             value={this.node.pan}

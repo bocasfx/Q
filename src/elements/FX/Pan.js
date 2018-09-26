@@ -18,8 +18,6 @@ class Pan {
     }
     var x = Math.sin(xDeg * (Math.PI / 180));
     var z = Math.sin(zDeg * (Math.PI / 180));
-    console.log(pan, x, z);
-
     this.panner.setPosition(x, 0, z);
   }
 
