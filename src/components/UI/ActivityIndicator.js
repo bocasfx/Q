@@ -4,9 +4,7 @@ import { connect } from 'react-redux';
 import config from '../../config/config';
 
 const color = {
-  synth: config.synth.color,
   midi: config.midi.color,
-  audio: config.audio.color,
   stream: config.stream.color
 };
 

@@ -29,8 +29,10 @@ const initialize = () => {
       }
 
       for (let entry of midiContext.outputs.entries()) {
+        console.log(entry);
         for (let destination of entry) {
           if (destination.state && destination.state === 'connected' && destination.name) {
+            console.log(destination.name)
             store.dispatch({
               type: 'ADD_DESTINATION',
               destination

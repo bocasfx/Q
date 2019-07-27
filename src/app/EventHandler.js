@@ -5,13 +5,11 @@ import store from '../app/Store';
 let electron = null;
 let dialog = null;
 let fs = null;
-let ipcRenderer = null;
 
 if (window.require) {
   electron = window.require('electron');
   fs = window.require('fs');
   dialog = electron.remote.dialog;
-  ipcRenderer = electron.ipcRenderer;
 }
 
 const filters = {
@@ -24,58 +22,6 @@ const filters = {
 class EventHandler {
 
   initialize() {
-    if (ipcRenderer) {
-
-      ipcRenderer.on('showMixer', () => {
-        window.location = '#/mixer';
-      });
-
-      ipcRenderer.on('mixerEvents', (event, action) => {
-        action.relay = true;
-        store.dispatch(action);
-      });
-
-      ipcRenderer.on('mainEvents', (event, action) => {
-        action.relay = true;
-        store.dispatch(action);
-      });
-
-      ipcRenderer.on('QEvents', (event, message) => {
-        switch (message) {
-
-          case 'selectAll':
-            store.dispatch({type: 'SET_SELECTION', objType: 'nodes'});
-            store.dispatch({type: 'DESELECT_STREAMS'});
-            return store.dispatch({type: 'SELECT_ALL_NODES'});
-
-          case 'saveAs':
-            return this.serializeProject();
-
-          case 'open':
-            return this.hydrateProject();
-
-          case 'new':
-            return this.newProject();
-
-          case 'quit':
-            this.saveContent();
-            ipcRenderer.send('quit');
-            return;
-
-          case 'visualizerOff':
-            return store.dispatch({type: 'SET_VISUALIZER', vizType: 'visualizerOff'});
-
-          case 'visualizerWaveform':
-            return store.dispatch({type: 'SET_VISUALIZER', vizType: 'visualizerWaveform'});
-
-          case 'visualizerBars':
-            return store.dispatch({type: 'SET_VISUALIZER', vizType: 'visualizerBars'});
-
-          default:
-            return null;
-        }
-      });
-    }
 
     window.onkeydown = (event) => {
       if (event.metaKey) {
@@ -212,7 +158,6 @@ class EventHandler {
       store.dispatch({type: 'HYDRATION_STARTED'});
       store.dispatch({type: 'DELETE_ALL_NODES'});
       store.dispatch({type: 'DELETE_ALL_STREAMS'});
-      store.dispatch({type: 'RESET_FX_CONFIGURATION'});
       store.dispatch({type: 'HYDRATION_COMPLETE'});
     }
   }

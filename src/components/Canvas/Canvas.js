@@ -60,7 +60,7 @@ class Canvas extends React.Component {
     this.state = {
       mouseDown: false,
       width: props.app.width - config.controlPanel.width - config.menu.width,
-      height: props.app.height - config.fxPanel.height - config.transport.height
+      height: props.app.height - config.transport.height
     };
   }
   
@@ -73,7 +73,7 @@ class Canvas extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       width: nextProps.app.width - config.controlPanel.width - config.menu.width,
-      height: nextProps.app.height - config.fxPanel.height - config.transport.height
+      height: nextProps.app.height - config.transport.height
     });
   }
 
