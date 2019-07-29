@@ -4,15 +4,12 @@ let initialState = {
     width: window.innerWidth,
     height: window.innerHeight,
     dirty: false,
-    visualizer: 'visualizerOff'
   },
   devices: {
     streams: false,
     circularStreams: false,
     linearStreams: false,
-    synthNodes: false,
     midiNodes: false,
-    audioNodes: false,
     settings: false,
     nodeSettings: false,
     nodeSettingsId: null,
