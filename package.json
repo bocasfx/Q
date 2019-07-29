@@ -1,6 +1,6 @@
 {
   "name": "q",
-  "description": "Q - Nodular Synthesizer/Sequencer",
+  "description": "Q - Nodular Sequencer",
   "version": "0.1.2-beta",
   "private": true,
   "license": "MIT",
@@ -11,9 +11,6 @@
   },
   "dependencies": {
     "about-window": "1.8.0",
-    "eslint": "^6.1.0",
-    "fastidious-envelope-generator": "^2.0.0",
-    "rc-slider": "8.3.1",
     "react": "16.2.0",
     "react-dom": "16.2.0",
     "react-redux": "5.0.6",
@@ -24,26 +21,18 @@
   "devDependencies": {
     "cross-env": "^5.2.0",
     "dotenv": "^6.0.0",
-    "electron": "^5.0.7",
-    "electron-packager": "^14.0.2",
     "eslint-plugin-react": "^7.14.3",
     "npm-run-all": "^4.1.5",
     "react-scripts": "^3.0.1"
   },
-  "main": "src/electron-starter.js",
+  "main": "src/index.js",
   "scripts": {
     "build": "react-scripts build",
-    "bundle": "npm-run-all build package clean:package",
-    "clean": "rm -rf ./build; rm -rf ./Q-darwin-x64",
-    "clean:package": "./clean-package.sh",
-    "develop": "NODE_ENV=development npx electron .",
+    "clean": "rm -rf ./build",
     "eject": "react-scripts eject",
-    "icon": "iconutil -c icns ./resources/icon/icon.iconset",
-    "package": "npx electron-packager . Q --icon ./resources/icon/icon.icns --overwrite",
     "start": "react-scripts start",
     "test": "react-scripts test --env=jsdom"
   },
-  "extraResources": "app/public/audio/ir/",
   "browserslist": {
     "production": [
       ">0.2%",
