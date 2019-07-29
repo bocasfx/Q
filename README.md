@@ -1,47 +1,27 @@
 <p align="center"><img src="./resources/icon/icon.png" width="256px"/></p>
 
-### <p align="center">Q - Nodular Synthesizer/Sequencer</p>
+### <p align="center">Q - Nodular Sequencer</p>
 
 ------
 
-Q is a Nodular Synthesizer/Sequencer controlled by the interactions between nodes and particle streams. It was built using <a href="https://electron.atom.io/" target="_blank">Electron</a> and <a href="https://facebook.github.io/react/" target="_blank">React</a>.
+Q is a Nodular Sequencer controlled by the interactions between nodes and particle streams. It was built using <a href="https://facebook.github.io/react/" target="_blank">React</a>.
 
 ![Q](./resources/docs/ui.png)
 
 ## Platforms
 
-Currently Q is only available for OSX.
-
-## Installation
-1. Download the [latest release](https://github.com/bocasfx/Q/releases/latest).
-1. Unzip it.
-1. Copy Q to your Applications folder.
+Q has been tested on Chrome but it should work on any decent browser with MIDI support.
 
 ## Nodes
 
-Nodes generate sound whenever they become in contact with a particle. There are three different types of nodes:
+Nodes generate midi messages whenever they become in contact with a particle.
 
-- **Synth**
-  - Two oscillators per node.
-  - Sine, triangle, square, and sawtooth waveforms.
-  - Noise generator.
-  - Independent frequency and gain controls for each oscillator.
-  - Attack and release controls.
-  - Lag and probability controls.
-  - Pan control.
-  - FX chain send control.
 - **MIDI**
   - noteOn/noteOff messages to the specified MIDI destination.
   - Lag and probability controls.
   - Velocity control.
   - Note and octave selectors.
   - MIDI destination selector.
-- **Audio**
-  - Audio sample file playback (wav, mp3, aiff, etc. )
-  - Attack and release controls.
-  - Lag and probability controls.
-  - Pan control.
-  - FX chain send control.
 
 ## Streams
 
@@ -57,50 +37,12 @@ Particles travel along the paths defined by streams. Streams can have zero or mo
   - Freehand particle flow (user defined path).
   - Particle count and speed controls.
 
-## FX Chain
-
-- **Wave Shaper**
-
-  - Nonlinear distortion.
-
-    | Min value                                | Max value                                |
-    | ---------------------------------------- | ---------------------------------------- |
-    | <img src="./resources/docs/waveshaper-min.png" width="300px"/> | <img src="./resources/docs/waveshaper-max.png" width="300px"/> |
-
-- **Delay**
-
-  - Time and Feedback controls
-
-- **Biquad Filter**
-
-  - Simple low-order filter.
-  - Cuttof frequency, Q and Attack controls.
-
-- **Reverb**
-
-  - Amount control
-  - Impulse responses:
-    - [Hamilton Mausoleum](http://www.openairlib.net/auralizationdb/content/hamilton-mausoleum)
-    - [Abernyte Grain Silo](http://www.openairlib.net/auralizationdb/content/abernyte-grain-silo)
-    - [Falkland Palace Bottle Dungeon](http://www.openairlib.net/auralizationdb/content/falkland-palace-bottle-dungeon)
-    - [R1 Nuclear Reactor Hall](http://www.openairlib.net/auralizationdb/content/r1-nuclear-reactor-hall)
-    - [Tvísöngur Sound Sculpture, Iceland](http://www.openairlib.net/auralizationdb/content/tv%C3%ADs%C3%B6ngur-sound-sculpture-iceland-model)
-    - [York Minster](http://www.openairlib.net/auralizationdb/content/york-minster)
-    - [St. Mary's Abbey Reconstruction](http://www.openairlib.net/auralizationdb/content/st-marys-abbey-reconstruction)
-    - [Terry's Typing Room](http://www.openairlib.net/auralizationdb/content/terrys-typing-room)
-    - [Errol Brickworks, Errol, Perth and Kinross](http://www.openairlib.net/auralizationdb/content/errol-brickworks-errol-perth-and-kinross)
-    - [Dromagorteen stone circle, Co. Kerry, Ireland](http://www.openairlib.net/auralizationdb/content/dromagorteen-stone-circle-co-kerry-ireland)
-
-  ​
-
 ## User Guide
 
 |                   Icon                   | Action                                   |
 | :--------------------------------------: | :--------------------------------------- |
 | <img src="./resources/menu/grab.svg" width="50px"/> | **Grab nodes** - Click on a node to select it. Click and drag a node to change its position. Click on an empty area to deselect nodes. ⌘+Drag on an epmty area to shift the position of the display panel. |
-| <img src="./resources/menu/synth.svg" width="50px"/> | **Synth nodes** - Click anywhere on the display panel to create a synth node. |
 | <img src="./resources/menu/midi.svg" width="50px"/> | **MIDI nodes** - Click anywhere on the display panel to create a MIDI node. |
-| <img src="./resources/menu/audio.svg" width="50px"/> | **Audio nodes** - Click anywhere on the display panel to create an audio node. |
 | <img src="./resources/menu/linear-stream.svg" width="50px"/> | **Linear Streams** - Click and drag anywhere on the display panel to create a linear stream. |
 | <img src="./resources/menu/circular-stream.svg" width="50px"/> | **Circular Streams** - Click and drag anywhere on the display panel to create a circular stream. |
 | <img src="./resources/menu/stream.svg" width="50px"/> | **Freehand Streams** - Click and drag anywhere on the display panel to create a freehand stream. |
