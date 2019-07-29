@@ -9,37 +9,39 @@ import { HashRouter } from 'react-router-dom';
 import App from './App';
 
 const renderDom = () => {
-  render((
+  render(
     <HashRouter>
       <App />
-    </HashRouter>
-  ), document.getElementById('root'));
+    </HashRouter>,
+    document.getElementById('root')
+  );
 };
 
 const initialize = () => {
   eventHandler.initialize();
-  midiContext.initialize()
-    .then(() => {
+  midiContext.initialize().then(() => {
+    renderDom();
 
-      renderDom();
+    if (localStorage.QState) {
+      let payload = JSON.parse(localStorage.QState);
+      hydrator.hydrate(store, payload);
+    }
 
-      if (localStorage.QState) {
-        let payload = JSON.parse(localStorage.QState);
-        hydrator.hydrate(store, payload);
-      }
-
-      for (let entry of midiContext.outputs.entries()) {
-        for (let destination of entry) {
-          if (destination.state && destination.state === 'connected' && destination.name) {
-            store.dispatch({
-              type: 'ADD_DESTINATION',
-              destination
-            });
-          }
+    for (let entry of midiContext.outputs.entries()) {
+      for (let destination of entry) {
+        if (
+          destination.state &&
+          destination.state === 'connected' &&
+          destination.name
+        ) {
+          store.dispatch({
+            type: 'ADD_DESTINATION',
+            destination
+          });
         }
       }
     }
-  );
+  });
 };
 
 initialize();

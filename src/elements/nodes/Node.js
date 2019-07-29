@@ -25,29 +25,6 @@ class Node {
     this.disabledNodeImg.src = './icons/elements/disabled-node.png';
   }
 
-  set osc1Freq(frequency) {}
-  set osc2Freq(frequency) {}
-  get osc1Freq() {}
-  get osc2Freq() {}
-  set osc1WaveType(waveType) {}
-  set osc2WaveType(waveType) {}
-  set src(value) {}
-  get src() {}
-  set attack(value) {}
-  get attack() {}
-  set release(value) {}
-  get release() {}
-  set sendFXGain(value) {}
-  get sendFXGain() {}
-  set noiseGain(value) {}
-  get noiseGain() {}
-  set osc1Gain(value) {}
-  get osc1Gain() {}
-  set osc2Gain(value) {}
-  get osc2Gain() {}
-  set volume(value) {}
-  get volume() {}
-
   set disabled(value) {
     this._disabled = value;
   }

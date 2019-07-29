@@ -3,7 +3,6 @@ import devices from './Devices';
 import nodes from './Nodes';
 import streams from './Streams';
 import selection from './Selection';
-import fx from './FX';
 import transport from './Transport';
 import midi from './MIDI';
 import app from './App';
@@ -14,7 +13,6 @@ const reducers = combineReducers({
   nodes,
   streams,
   selection,
-  fx,
   transport,
   midi,
   app
