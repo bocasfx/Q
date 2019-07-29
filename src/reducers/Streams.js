@@ -2,7 +2,8 @@ import FreehandStream from '../elements/streams/FreehandStream';
 import CircularStream from '../elements/streams/CircularStream';
 import LinearStream from '../elements/streams/LinearStream';
 import _ from 'lodash';
-import { streams } from '../config/initial-state';
+import initialState from '../config/initial-state';
+const { streams } = initialState;
 
 const addFreehandStream = (state, position, event) => {
   let newStream = new FreehandStream({position});
@@ -120,14 +121,14 @@ const updateStreamPositionByDelta = (state, dx, dy) => {
 
 const createStream = (stream) => {
   switch (stream.topLevel.variety) {
-    case 'circular':
-      return new CircularStream(stream.topLevel);
-    case 'linear':
-      return new LinearStream(stream.topLevel);
-    case 'freehand':
-      return new FreehandStream(stream.topLevel);
-    default:
-      return null;
+  case 'circular':
+    return new CircularStream(stream.topLevel);
+  case 'linear':
+    return new LinearStream(stream.topLevel);
+  case 'freehand':
+    return new FreehandStream(stream.topLevel);
+  default:
+    return null;
   }
 };
 
@@ -147,52 +148,52 @@ const deselectStreams = (state) => {
 export default (state = streams, action) => {
   switch (action.type) {
 
-    case 'ADD_FREEHAND_STREAM':
-      return addFreehandStream(state, action.position, action.event);
+  case 'ADD_FREEHAND_STREAM':
+    return addFreehandStream(state, action.position, action.event);
 
-    case 'ADD_CIRCULAR_STREAM':
-      return addCircularStream(state, action.position, action.event);
+  case 'ADD_CIRCULAR_STREAM':
+    return addCircularStream(state, action.position, action.event);
 
-    case 'ADD_LINEAR_STREAM':
-      return addLinearStream(state, action.position, action.event);
+  case 'ADD_LINEAR_STREAM':
+    return addLinearStream(state, action.position, action.event);
 
-    case 'DELETE_SELECTED_STREAMS':
-      return deleteSelectedStreams(state);
+  case 'DELETE_SELECTED_STREAMS':
+    return deleteSelectedStreams(state);
 
-    case 'DELETE_STREAM':
-      return deleteStream(state, action.id);
+  case 'DELETE_STREAM':
+    return deleteStream(state, action.id);
 
-    case 'DELETE_ALL_STREAMS':
-      return deleteAllStreams();
+  case 'DELETE_ALL_STREAMS':
+    return deleteAllStreams();
 
-    case 'SELECT_STREAM':
-      return selectStream(state, action.id);
+  case 'SELECT_STREAM':
+    return selectStream(state, action.id);
 
-    case 'SET_STREAM_NAME':
-      return setStreamName(state, action.id, action.name);
+  case 'SET_STREAM_NAME':
+    return setStreamName(state, action.id, action.name);
 
-    case 'SET_STREAM_DISABLED_STATUS':
-      return setStreamDisabledStatus(state, action.id, action.status);
+  case 'SET_STREAM_DISABLED_STATUS':
+    return setStreamDisabledStatus(state, action.id, action.status);
 
-    case 'SET_STREAM_SPEED':
-      return setStreamSpeed(state, action.id, action.speed);
+  case 'SET_STREAM_SPEED':
+    return setStreamSpeed(state, action.id, action.speed);
 
-    case 'SET_STREAM_COUNT':
-      return setStreamCount(state, action.id, action.count);
+  case 'SET_STREAM_COUNT':
+    return setStreamCount(state, action.id, action.count);
 
-    case 'UPDATE_SELECTED_STREAM_POSITION_BY_DELTA':
-      return updateSelectedStreamPositionByDelta(state, action.dx, action.dy);
+  case 'UPDATE_SELECTED_STREAM_POSITION_BY_DELTA':
+    return updateSelectedStreamPositionByDelta(state, action.dx, action.dy);
 
-    case 'UPDATE_STREAM_POSITION_BY_DELTA':
-      return updateStreamPositionByDelta(state, action.dx, action.dy);
+  case 'UPDATE_STREAM_POSITION_BY_DELTA':
+    return updateStreamPositionByDelta(state, action.dx, action.dy);
 
-    case 'HYDRATE_STREAMS':
-      return hydrateStreams(state, action.payload);
+  case 'HYDRATE_STREAMS':
+    return hydrateStreams(state, action.payload);
 
-    case 'DESELECT_STREAMS':
-      return deselectStreams(state, action.payload);
+  case 'DESELECT_STREAMS':
+    return deselectStreams(state, action.payload);
 
-    default:
-      return state;
+  default:
+    return state;
   }
 };

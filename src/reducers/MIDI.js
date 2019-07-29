@@ -1,4 +1,5 @@
-import { midi } from '../config/initial-state';
+import initialState from '../config/initial-state';
+const midi = initialState;
 
 const addDestination = (state, destination) => {
   let destinations = state.destinations.splice(0);
@@ -10,10 +11,10 @@ const addDestination = (state, destination) => {
 export default (state = midi, action) => {
   switch (action.type) {
 
-    case 'ADD_DESTINATION':
-      return addDestination(state, action.destination);
+  case 'ADD_DESTINATION':
+    return addDestination(state, action.destination);
 
-    default:
-      return state;
+  default:
+    return state;
   }
 };

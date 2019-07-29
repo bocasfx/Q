@@ -1,4 +1,5 @@
-import { devices } from '../config/initial-state';
+import initialState from '../config/initial-state';
+const { devices } = initialState;
 
 const toggleDevice = (state, device) => {
   let newState = Object.assign({}, state, {});
@@ -12,10 +13,10 @@ const toggleDevice = (state, device) => {
 export default (state = devices, action) => {
   switch (action.type) {
 
-    case 'TOGGLE_DEVICE':
-      return toggleDevice(state, action.device);
+  case 'TOGGLE_DEVICE':
+    return toggleDevice(state, action.device);
 
-    default:
-      return state;
+  default:
+    return state;
   }
 };

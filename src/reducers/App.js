@@ -1,4 +1,5 @@
-import { app } from '../config/initial-state';
+import initialState from '../config/initial-state';
+const { app } = initialState;
 
 const hydrationStarted = state => {
   let newState = Object.assign({}, state, { hydrating: true });

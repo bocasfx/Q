@@ -13,104 +13,100 @@ if (window.require) {
 }
 
 const filters = {
-  filters: [{
-    name: 'text',
-    extensions: ['q']
-  }]
+  filters: [
+    {
+      name: 'text',
+      extensions: ['q'],
+    },
+  ],
 };
 
 class EventHandler {
-
   initialize() {
-
-    window.onkeydown = (event) => {
+    window.onkeydown = event => {
       if (event.metaKey) {
-
         if (event.shiftKey) {
           switch (event.key) {
+          // Clear local storage
+          case 'C':
+            return this.clearLocalStorage();
 
-            // Clear local storage
-            case 'C':
-              return this.clearLocalStorage();
+          // Save to local storage
+          case 'S':
+            this.saveContent();
+            alert('Project saved to internal storage.');
+            return;
 
-            // Save to local storage
-            case 'S':
-              this.saveContent();
-              alert('Project saved to internal storage.');
-              return;
+          // Load local storage
+          case 'O':
+            this.loadContent();
+            return;
 
-            // Load local storage
-            case 'O':
-              this.loadContent();
-              return;
-
-            default:
-              return null;
+          default:
+            return null;
           }
         }
 
         switch (event.key) {
+        // Select All
+        case 'a':
+        case 'A':
+          store.dispatch({ type: 'SET_SELECTION', objType: 'nodes' });
+          store.dispatch({ type: 'DESELECT_STREAMS' });
+          store.dispatch({ type: 'SELECT_ALL_NODES' });
+          return;
 
-          // Select All
-          case 'a':
-          case 'A':
-            store.dispatch({type: 'SET_SELECTION', objType: 'nodes'});
-            store.dispatch({type: 'DESELECT_STREAMS'});
-            store.dispatch({type: 'SELECT_ALL_NODES'});
-            return;
+        // Save
+        case 's':
+        case 'S':
+          event.stopPropagation();
+          event.returnValue = false;
+          this.serializeProject();
+          return;
 
-          // Save
-          case 's':
-          case 'S':
-            event.stopPropagation();
-            event.returnValue = false;
-            this.serializeProject();
-            return;
+        // Open
+        case 'o':
+        case 'O':
+          return this.hydrateProject();
 
-          // Open
-          case 'o':
-          case 'O':
-            return this.hydrateProject();
+        // Grab
+        case 'g':
+        case 'G':
+          return this.toggleDevice('grab');
 
-          // Grab
-          case 'g':
-          case 'G':
-            return this.toggleDevice('grab');
+        // New
+        case 'n':
+        case 'N':
+          return this.newProject();
 
-          // New
-          case 'n':
-          case 'N':
-            return this.newProject();
-
-          default:
-            return null;
+        default:
+          return null;
         }
       } else {
-
         switch (event.key) {
-          //Play/Pause
-          case ' ':
-            event.stopPropagation();
-            event.returnValue = false;
-            store.dispatch({
-              type: 'TOGGLE_TRANSPORT'
-            });
-            if (!store.getState().transport.playing) {
-              store.dispatch({type: 'STOP_NODES'});
-              store.dispatch({type: 'DEQUEUE_PARTICLES'});
-            }
-            return;
+        //Play/Pause
+        case ' ':
+          event.stopPropagation();
+          event.returnValue = false;
+          store.dispatch({
+            type: 'TOGGLE_TRANSPORT',
+          });
+          if (!store.getState().transport.playing) {
+            store.dispatch({ type: 'STOP_NODES' });
+            store.dispatch({ type: 'DEQUEUE_PARTICLES' });
+          }
+          return;
 
-          // Backspace
-          case 'Backspace':
-            store.dispatch({type: 'STOP_SELECTED_NODES'});
-            store.dispatch({type: 'UNLINK_SELECTED_NODES'});
-            store.dispatch({type: 'DELETE_SELECTED_NODES'});
-            store.dispatch({type: 'DELETE_SELECTED_STREAMS'});
-            return;
+        // Backspace
+        case 'Backspace':
+          store.dispatch({ type: 'STOP_SELECTED_NODES' });
+          store.dispatch({ type: 'UNLINK_SELECTED_NODES' });
+          store.dispatch({ type: 'DELETE_SELECTED_NODES' });
+          store.dispatch({ type: 'DELETE_SELECTED_STREAMS' });
+          return;
 
-          default:
-            return null;
+        default:
+          return null;
         }
       }
     };
@@ -119,7 +115,7 @@ class EventHandler {
       store.dispatch({
         type: 'SET_WINDOW_SIZE',
         width: window.innerWidth,
-        height: window.innerHeight
+        height: window.innerHeight,
       });
     };
   }
@@ -130,10 +126,10 @@ class EventHandler {
       return;
     }
 
-    dialog.showSaveDialog(filters, (fileName) => {
+    dialog.showSaveDialog(filters, fileName => {
       this.saveContent('file', fileName);
     });
-  };
+  }
 
   hydrateProject() {
     if (!dialog) {
@@ -141,12 +137,12 @@ class EventHandler {
       return;
     }
 
-    dialog.showOpenDialog(filters, (fileNames) => {
+    dialog.showOpenDialog(filters, fileNames => {
       if (fileNames && fileNames.length) {
         this.loadContent('file', fileNames[0]);
       }
     });
-  };
+  }
 
   newProject() {
     let response = true;
@@ -155,19 +151,19 @@ class EventHandler {
     }
 
     if (response) {
-      store.dispatch({type: 'HYDRATION_STARTED'});
-      store.dispatch({type: 'DELETE_ALL_NODES'});
-      store.dispatch({type: 'DELETE_ALL_STREAMS'});
-      store.dispatch({type: 'HYDRATION_COMPLETE'});
+      store.dispatch({ type: 'HYDRATION_STARTED' });
+      store.dispatch({ type: 'DELETE_ALL_NODES' });
+      store.dispatch({ type: 'DELETE_ALL_STREAMS' });
+      store.dispatch({ type: 'HYDRATION_COMPLETE' });
     }
   }
 
   toggleDevice(device) {
     store.dispatch({
       type: 'TOGGLE_DEVICE',
-      device
+      device,
     });
-  };
+  }
 
   loadContent(type, fileName) {
     if (type === 'file') {
@@ -188,7 +184,7 @@ class EventHandler {
     } else {
       hydrator.hydrate(store, JSON.parse(localStorage.QState));
     }
-  };
+  }
 
   saveContent(type, fileName) {
     const state = store.getState();
@@ -198,7 +194,7 @@ class EventHandler {
         return;
       }
 
-      fs.writeFile(fileName, serializer.serialize(state), (err) => {
+      fs.writeFile(fileName, serializer.serialize(state), err => {
         if (err) {
           alert(err);
           return;
@@ -207,7 +203,7 @@ class EventHandler {
     }
 
     localStorage.QState = serializer.serialize(state);
-  };
+  }
 
   clearLocalStorage() {
     localStorage.removeItem('QState');

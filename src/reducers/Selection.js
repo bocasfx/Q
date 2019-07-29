@@ -1,4 +1,5 @@
-import { selection } from '../config/initial-state';
+import initialState from '../config/initial-state';
+const { selection } = initialState;
 
 const setSelection = (state, objType) => {
   return Object.assign({}, state, { objType });
@@ -7,10 +8,10 @@ const setSelection = (state, objType) => {
 export default (state = selection, action) => {
   switch (action.type) {
 
-    case 'SET_SELECTION':
-      return setSelection(state, action.objType);
+  case 'SET_SELECTION':
+    return setSelection(state, action.objType);
 
-    default:
-      return state;
+  default:
+    return state;
   }
 };

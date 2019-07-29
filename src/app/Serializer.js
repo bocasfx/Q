@@ -9,7 +9,7 @@ class Serializer {
         inner: {}
       };
     })(node);
-  };
+  }
 
   serializeCircularStream (stream) {
     return(({id, type, variety, name, position, radius, selected, disabled, speed, count}) => {
@@ -18,7 +18,7 @@ class Serializer {
         inner: {}
       };
     })(stream);
-  };
+  }
 
   serializeLinearStream (stream) {
     return(({id, type, variety, name, position, from, to, selected, disabled, speed, count, distance, length, particleOffset}) => {
@@ -27,7 +27,7 @@ class Serializer {
         inner: {}
       };
     })(stream);
-  };
+  }
 
   serializeFreehandStream (stream) {
     return (({id, variety, count, position, queue, easing, pathIndex, path}) => {
@@ -36,7 +36,7 @@ class Serializer {
         inner: {}
       };
     })(stream);
-  };
+  }
 
   serialize (payload) {
     let nodes = payload.nodes;
@@ -48,14 +48,14 @@ class Serializer {
 
     let serializedStreams = streams.map((stream) => {
       switch (stream.variety) {
-        case 'circular':
-          return this.serializeCircularStream(stream);
-        case 'linear':
-          return this.serializeLinearStream(stream);
-        case 'freehand':
-          return this.serializeFreehandStream(stream);
-        default:
-          return null;
+      case 'circular':
+        return this.serializeCircularStream(stream);
+      case 'linear':
+        return this.serializeLinearStream(stream);
+      case 'freehand':
+        return this.serializeFreehandStream(stream);
+      default:
+        return null;
       }
     });
 
@@ -63,7 +63,7 @@ class Serializer {
       nodes: serializedNodes,
       streams: serializedStreams,
     });
-  };
+  }
 }
 
 export default new Serializer();

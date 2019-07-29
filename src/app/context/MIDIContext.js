@@ -6,7 +6,6 @@ class MIDIContext {
   }
 
   initialize() {
-    debugger;
     if (navigator.requestMIDIAccess) {
       this.context = navigator.requestMIDIAccess({sysex: false});
       return this.context.then((ctx) => {

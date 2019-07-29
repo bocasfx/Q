@@ -1,9 +1,11 @@
 import MidiNode from '../elements/nodes/MidiNode';
 import _ from 'lodash';
-import { nodes } from '../config/initial-state';
+import initialState from '../config/initial-state';
 import uuidv1 from 'uuid/v1';
 import { getSelectedElements, getNodeById, graphHasLoop } from '../utils/utils';
 import midiContext from '../app/context/MIDIContext';
+
+const { nodes } = initialState;
 
 const addMidiNode = (state, position, id) => {
   let midiNode = new MidiNode(position);
@@ -414,124 +416,124 @@ const setNodeMidiOutput = (state, id, outputId) => {
 export default (state = nodes, action) => {
   switch (action.type) {
 
-    case 'ADD_MIDI_NODE':
-      return addMidiNode(state, action.position, action.id);
+  case 'ADD_MIDI_NODE':
+    return addMidiNode(state, action.position, action.id);
 
-    case 'SET_NODE_VOLUME':
-      return setNodeVolume(state, action.id, action.volume);
+  case 'SET_NODE_VOLUME':
+    return setNodeVolume(state, action.id, action.volume);
 
-    case 'DELETE_NODE':
-      return deleteNode(state, action.id);
+  case 'DELETE_NODE':
+    return deleteNode(state, action.id);
 
-    case 'DELETE_ALL_NODES':
-      return deleteAllNodes(state);
+  case 'DELETE_ALL_NODES':
+    return deleteAllNodes(state);
 
-    case 'DELETE_SELECTED_NODES':
-      return deleteSelectedNodes(state);
+  case 'DELETE_SELECTED_NODES':
+    return deleteSelectedNodes(state);
 
-    case 'UNLINK_SELECTED_NODES':
-      return unlinkSelectedNodes(state);
+  case 'UNLINK_SELECTED_NODES':
+    return unlinkSelectedNodes(state);
 
-    case 'SELECT_NODE':
-      return selectNode(state, action.id);
+  case 'SELECT_NODE':
+    return selectNode(state, action.id);
 
-    case 'DESELECT_NODES':
-      return deselectNodes(state);
+  case 'DESELECT_NODES':
+    return deselectNodes(state);
 
-    case 'SELECT_ALL_NODES':
-      return selectAllNodes(state);
+  case 'SELECT_ALL_NODES':
+    return selectAllNodes(state);
 
-    case 'CLONE_NODE':
-      return cloneNode(state, action.id);
+  case 'CLONE_NODE':
+    return cloneNode(state, action.id);
 
-    case 'SET_NODE_ATTACK':
-      return setNodeAttack(state, action.id, action.value);
+  case 'SET_NODE_ATTACK':
+    return setNodeAttack(state, action.id, action.value);
 
-    case 'SET_NODE_RELEASE':
-      return setNodeRelease(state, action.id, action.value);
+  case 'SET_NODE_RELEASE':
+    return setNodeRelease(state, action.id, action.value);
 
-    case 'SET_NODE_NAME':
-      return setNodeName(state, action.id, action.name);
+  case 'SET_NODE_NAME':
+    return setNodeName(state, action.id, action.name);
 
-    case 'SET_NODE_DISABLED_STATUS':
-      return setNodeDisabledStatus(state, action.id, action.status);
+  case 'SET_NODE_DISABLED_STATUS':
+    return setNodeDisabledStatus(state, action.id, action.status);
 
-    case 'SET_NODE_PAN':
-      return setNodePan(state, action.id, action.pan);
+  case 'SET_NODE_PAN':
+    return setNodePan(state, action.id, action.pan);
 
-    case 'LINK_NODES':
-      return linkNodes(state, action.srcId, action.destId);
+  case 'LINK_NODES':
+    return linkNodes(state, action.srcId, action.destId);
 
-    case 'UNLINK_NODES':
-      return unlinkNodes(state, action.srcId, action.destId);
+  case 'UNLINK_NODES':
+    return unlinkNodes(state, action.srcId, action.destId);
 
-    case 'UNLINK_NODE':
-      return unlinkNode(state, action.id);
+  case 'UNLINK_NODE':
+    return unlinkNode(state, action.id);
 
-    case 'ENQUEUE_PARTICLE':
-      return enqueueParticle(state, action.id, action.particleId);
+  case 'ENQUEUE_PARTICLE':
+    return enqueueParticle(state, action.id, action.particleId);
 
-    case 'DEQUEUE_PARTICLE':
-      return dequeueParticle(state, action.id, action.particleId);
+  case 'DEQUEUE_PARTICLE':
+    return dequeueParticle(state, action.id, action.particleId);
 
-    case 'DEQUEUE_PARTICLES':
-      return dequeueParticles(state);
+  case 'DEQUEUE_PARTICLES':
+    return dequeueParticles(state);
 
-    case 'PLAY_NODE':
-      return playNode(state, action.id);
+  case 'PLAY_NODE':
+    return playNode(state, action.id);
 
-    case 'STOP_NODE':
-      return stopNode(state, action.id);
+  case 'STOP_NODE':
+    return stopNode(state, action.id);
 
-    case 'STOP_NODES':
-      return stopNodes(state);
+  case 'STOP_NODES':
+    return stopNodes(state);
 
-    case 'STOP_SELECTED_NODES':
-      return stopSelectedNodes(state);
+  case 'STOP_SELECTED_NODES':
+    return stopSelectedNodes(state);
 
-    case 'SET_NODE_LAG':
-      return setNodeLag(state, action.id, action.lag);
+  case 'SET_NODE_LAG':
+    return setNodeLag(state, action.id, action.lag);
 
-    case 'SET_NODE_PROBABILITY':
-      return setNodeProbability(state, action.id, action.probability);
+  case 'SET_NODE_PROBABILITY':
+    return setNodeProbability(state, action.id, action.probability);
 
-    case 'SET_NODE_SEND_GAIN':
-      return setNodeSendGain(state, action.id, action.value);
+  case 'SET_NODE_SEND_GAIN':
+    return setNodeSendGain(state, action.id, action.value);
 
-    case 'SET_NODE_NOISE_GAIN':
-      return setNodeNoiseGain(state, action.id, action.value);
+  case 'SET_NODE_NOISE_GAIN':
+    return setNodeNoiseGain(state, action.id, action.value);
 
-    case 'SET_NODE_OSC1_GAIN':
-      return setNodeOsc1Gain(state, action.id, action.value);
+  case 'SET_NODE_OSC1_GAIN':
+    return setNodeOsc1Gain(state, action.id, action.value);
 
-    case 'SET_NODE_OSC2_GAIN':
-      return setNodeOsc2Gain(state, action.id, action.value);
+  case 'SET_NODE_OSC2_GAIN':
+    return setNodeOsc2Gain(state, action.id, action.value);
 
-    case 'SET_NODE_VELOCITY':
-      return setNodeVelocity(state, action.id, action.value);
+  case 'SET_NODE_VELOCITY':
+    return setNodeVelocity(state, action.id, action.value);
 
-    case 'SET_NODE_NOTE':
-      return setNodeNote(state, action.id, action.value);
+  case 'SET_NODE_NOTE':
+    return setNodeNote(state, action.id, action.value);
 
-    case 'SET_NODE_OCTAVE':
-      return setNodeOctave(state, action.id, action.value);
+  case 'SET_NODE_OCTAVE':
+    return setNodeOctave(state, action.id, action.value);
 
-    case 'SET_NODE_CHANNEL':
-      return setNodeChannel(state, action.id, action.value);
+  case 'SET_NODE_CHANNEL':
+    return setNodeChannel(state, action.id, action.value);
 
-    case 'UPDATE_SELECTED_NODE_POSITION_BY_DELTA':
-      return updateSelectedNodePositionByDelta(state, action.dx, action.dy);
+  case 'UPDATE_SELECTED_NODE_POSITION_BY_DELTA':
+    return updateSelectedNodePositionByDelta(state, action.dx, action.dy);
 
-    case 'UPDATE_NODE_POSITION_BY_DELTA':
-      return updateNodePositionByDelta(state, action.dx, action.dy);
+  case 'UPDATE_NODE_POSITION_BY_DELTA':
+    return updateNodePositionByDelta(state, action.dx, action.dy);
 
-    case 'HYDRATE_NODES':
-      return hydrateNodes(state, action.payload);
+  case 'HYDRATE_NODES':
+    return hydrateNodes(state, action.payload);
 
-    case 'SET_NODE_MIDI_OUTPUT':
-      return setNodeMidiOutput(state, action.id, action.outputId);
+  case 'SET_NODE_MIDI_OUTPUT':
+    return setNodeMidiOutput(state, action.id, action.outputId);
 
-    default:
-      return state;
+  default:
+    return state;
   }
 };
