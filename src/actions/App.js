@@ -24,10 +24,3 @@ export const setDirtyStatus = (status) => {
     status
   };
 };
-
-export const setVisualizer = (vizType) => {
-  return {
-    type: 'SET_VISUALIZER',
-    vizType
-  };
-};

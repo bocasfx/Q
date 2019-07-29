@@ -73,35 +73,6 @@ function setMainMenu(mainWindow, initializeMixerWindow) {
         }
       ]
     }, {
-      label: 'View',
-      submenu: [
-        {
-          label: 'Visualizer',
-          submenu: [{
-            label: 'Off',
-            click: () => {
-              mainWindow.webContents.send('QEvents', 'visualizerOff');
-            }
-          }, {
-            label: 'Waveform',
-            click: () => {
-              mainWindow.webContents.send('QEvents', 'visualizerWaveform');
-            }
-          }, {
-            label: 'Bars',
-            click: () => {
-              mainWindow.webContents.send('QEvents', 'visualizerBars');
-            }
-          }]
-        }, {
-          label: 'Mixer',
-          accelerator: 'CmdOrCtrl+M',
-          click: () => {
-            initializeMixerWindow();
-          }
-        }
-      ]
-    }, {
       role: 'window',
       submenu: [
         {role: 'close'},

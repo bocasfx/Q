@@ -33,10 +33,10 @@ function initializeMainWindow() {
   mainWindow.loadURL(startUrl);
   electronMenu.setMainMenu(mainWindow, initializeMixerWindow);
 
-  if (process.env.ELECTRON_START_URL && process.env.WEB_AUDIO_EXTENSION) {
-    mainWindow.webContents.openDevTools();
-    let webAudioExtension = process.env.WEB_AUDIO_EXTENSION;
-    BrowserWindow.addDevToolsExtension(webAudioExtension);
+  mainWindow.webContents.openDevTools();
+  if (process.env.ELECTRON_START_URL) {
+    // let webAudioExtension = process.env.WEB_AUDIO_EXTENSION;
+    // BrowserWindow.addDevToolsExtension(webAudioExtension);
   }
 
   mainWindow.on('closed', function() {

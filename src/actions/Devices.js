@@ -4,9 +4,3 @@ export const toggleDevice = (device) => {
     device
   };
 };
-
-export const hideMixer = () => {
-  return {
-    type: 'HIDE_MIXER'
-  };
-};

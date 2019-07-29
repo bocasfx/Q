@@ -1,37 +1,11 @@
 
 class Serializer {
 
-  serializeSynthNode (node) {
-    return (({ id, type, name, position, selected, volume, attack, release, noiseGain, osc1Freq, osc2Freq, disabled, pan, links, parentIds, lag, probability, sendFXGain, oscillator1, oscillator2, osc1Gain, osc2Gain }) => {
-      return { 
-        topLevel: {id, type, name, position, selected, volume, attack, release, noiseGain, osc1Freq, osc2Freq, disabled, pan, links, parentIds, lag, probability, sendFXGain},
-        inner: {
-          oscillator1: {
-            waveType: oscillator1.waveType,
-            gain: osc1Gain
-          },
-          oscillator2: {
-            waveType: oscillator2.waveType,
-            gain: osc2Gain
-          }
-        }
-      };
-    })(node);
-  };
 
   serializeMidiNode (node) {
     return (({ id, type, name, position, selected, note, velocity, octave, channel, disabled, links, parentIds, lag, probability }) => {
       return {
         topLevel: { id, type, name, position, selected, note, velocity, octave, channel, disabled, links, parentIds, lag, probability },
-        inner: {}
-      };
-    })(node);
-  };
-
-  serializeAudioNode (node) {
-    return (({ id, type, name, position, selected, disabled, links, parentIds, lag, path, volume, attack, release, probability, sendFXGain }) => {
-      return {
-        topLevel: { id, type, name, position, selected, disabled, links, parentIds, lag, path, volume, attack, release, probability, sendFXGain },
         inner: {}
       };
     })(node);
@@ -67,19 +41,9 @@ class Serializer {
   serialize (payload) {
     let nodes = payload.nodes;
     let streams = payload.streams;
-    let fx = payload.fx;
 
     let serializedNodes = nodes.map((node) => {
-      switch (node.type) {
-        case 'synth':
-          return this.serializeSynthNode(node);
-        case 'midi':
-          return this.serializeMidiNode(node);
-        case 'audio':
-          return this.serializeAudioNode(node);
-        default:
-          return null;
-      }
+      return this.serializeMidiNode(node);
     });
 
     let serializedStreams = streams.map((stream) => {
@@ -98,7 +62,6 @@ class Serializer {
     return JSON.stringify({
       nodes: serializedNodes,
       streams: serializedStreams,
-      fx
     });
   };
 }

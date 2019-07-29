@@ -27,22 +27,10 @@ class Menu extends React.Component {
           title="Grab nodes"
           separator={true}/>
         <MenuButton
-          icon="./icons/menu/synth.svg"
-          onClick={this.onClick.bind(this, 'synthNodes')}
-          active={this.props.devices.synthNodes}
-          title="Synth node"
-          separator={true}/>
-        <MenuButton
           icon="./icons/menu/midi.svg"
           onClick={this.onClick.bind(this, 'midiNodes')}
           active={this.props.devices.midiNodes}
           title="MIDI node"
-          separator={true}/>
-        <MenuButton
-          icon="./icons/menu/audio.svg"
-          onClick={this.onClick.bind(this, 'audioNodes')}
-          active={this.props.devices.audioNodes}
-          title="Audio node"
           separator={true}/>
         <MenuButton
           icon="./icons/menu/linear-stream.svg"

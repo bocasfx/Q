@@ -1,25 +1,9 @@
-import SynthNode from '../elements/nodes/SynthNode';
 import MidiNode from '../elements/nodes/MidiNode';
-import AudioNode from '../elements/nodes/AudioNode';
 import _ from 'lodash';
 import { nodes } from '../config/initial-state';
 import uuidv1 from 'uuid/v1';
 import { getSelectedElements, getNodeById, graphHasLoop } from '../utils/utils';
 import midiContext from '../app/context/MIDIContext';
-
-let fs = null;
-
-if (window.require) {
-  fs = window.require('fs');
-}
-
-const addSynthNode = (state, position, id) => {
-  let node = new SynthNode(position);
-  node.id = id || node.id;
-  let nodeList = state.splice(0);
-  nodeList.push(node);
-  return nodeList;
-};
 
 const addMidiNode = (state, position, id) => {
   let midiNode = new MidiNode(position);
@@ -29,45 +13,10 @@ const addMidiNode = (state, position, id) => {
   return nodeList;
 };
 
-const addAudioNode = (state, position, id) => {
-  let audioNode = new AudioNode(position);
-  audioNode.id = id || audioNode.id;
-  let nodeList = state.splice(0);
-  nodeList.push(audioNode);
-  return nodeList;
-};
-
-const setNodeOsc1Frequency = (state, id, frequency) => {
-  return state.map((node) => {
-    if (node.id === id) {
-      node.osc1Freq = frequency;
-    }
-    return node;
-  });
-};
-
-const setNodeOsc2Frequency = (state, id, frequency) => {
-  return state.map((node) => {
-    if (node.id === id) {
-      node.osc2Freq = frequency;
-    }
-    return node;
-  });
-};
-
 const setNodeVolume = (state, id, volume) => {
   return state.map((node) => {
     if (node.id === id) {
       node.volume = volume;
-    }
-    return node;
-  });
-};
-
-const setNodeSource = (state, id, buffer, path) => {
-  return state.map((node) => {
-    if (node.id === id) {
-      node.setAudioSrc(buffer, path);
     }
     return node;
   });
@@ -145,49 +94,14 @@ const deselectNodes = (state) => {
   });
 };
 
-const setNodeOsc1WaveType = (state, id, waveType) => {
-  return state.map((node) => {
-    if (node.id === id) {
-      node.osc1WaveType = waveType;
-    }
-    return node;
-  });
-};
-
-const setNodeOsc2WaveType = (state, id, waveType) => {
-  return state.map((node) => {
-    if (node.id === id) {
-      node.osc2WaveType = waveType;
-    }
-    return node;
-  });
-};
-
 const cloneNode = (state, id) => {
   state.forEach((node) => {
     if (node.id === id) {
 
       let clonedNode = null;
-      if (node.type === 'synth') {
-        clonedNode = new SynthNode();
-        clonedNode.osc1Freq = node.osc1Freq;
-        clonedNode.osc2Freq = node.osc2Freq;
-        clonedNode.osc1Freq = node.osc1Freq;
-        clonedNode.osc2Freq = node.osc2Freq;
-        clonedNode.osc1WaveType = node.oscillator1.oscillator.type;
-        clonedNode.osc2WaveType = node.oscillator2.oscillator.type;
-        clonedNode.osc1Gain = node.osc1Gain;
-        clonedNode.osc2Gain = node.osc2Gain;
-        clonedNode.noiseGain = node.noiseGain;
-      } else if (node.type === 'midi') {
-        clonedNode = new MidiNode();
-        clonedNode.velocity = node.velocity;
-        clonedNode.note = node.note;
-      } else {
-        clonedNode = new AudioNode();
-        clonedNode.decodedAudioData = node.decodedAudioData;
-      }
-
+      clonedNode = new MidiNode();
+      clonedNode.velocity = node.velocity;
+      clonedNode.note = node.note;
       clonedNode.active = false;
       clonedNode.lag = node.lag;
       clonedNode.links = [];
@@ -473,42 +387,10 @@ const updateNodePositionByDelta = (state, dx, dy) => {
 };
 
 const createNode = (node) => {
-  switch (node.topLevel.type) {
-    case 'synth':
-      let newSynthNode = new SynthNode(node.topLevel.position);
-      newSynthNode = Object.assign(newSynthNode, node.topLevel);
-      newSynthNode.osc1WaveType = node.inner.oscillator1.waveType;
-      newSynthNode.osc2WaveType = node.inner.oscillator2.waveType;
-      newSynthNode.osc1Gain = node.inner.oscillator1.gain;
-      newSynthNode.osc2Gain = node.inner.oscillator2.gain;
-      newSynthNode.id = node.topLevel.id;
-      return newSynthNode;
-    case 'midi':
-      let newMidiNode = new MidiNode(node.topLevel.position);
-      newMidiNode = Object.assign(newMidiNode, node.topLevel);
-      newMidiNode.id = node.topLevel.id;
-      return newMidiNode;
-    case 'audio':
-      let newAudioNode = new AudioNode(node.topLevel.position);
-      newAudioNode = Object.assign(newAudioNode, node.topLevel);
-      newAudioNode.id = node.topLevel.id;
-      if (node.topLevel.path) {
-        fs.readFile(node.topLevel.path, (err, dataBuffer) => {
-          if (err) {
-            alert(err);
-            return;
-          }
-          newAudioNode.setAudioSrc(dataBuffer, node.topLevel.path);
-
-          let name = node.topLevel.path.split('/');
-          name = name[name.length -1];
-          newAudioNode.name = name;
-        });
-      }
-      return newAudioNode;
-    default:
-      return null;
-  }
+  let newMidiNode = new MidiNode(node.topLevel.position);
+  newMidiNode = Object.assign(newMidiNode, node.topLevel);
+  newMidiNode.id = node.topLevel.id;
+  return newMidiNode;
 };
 
 const hydrateNodes = (state, payload) => {
@@ -532,26 +414,11 @@ const setNodeMidiOutput = (state, id, outputId) => {
 export default (state = nodes, action) => {
   switch (action.type) {
 
-    case 'ADD_SYNTH_NODE':
-      return addSynthNode(state, action.position, action.id);
-
     case 'ADD_MIDI_NODE':
       return addMidiNode(state, action.position, action.id);
 
-    case 'ADD_AUDIO_NODE':
-      return addAudioNode(state, action.position, action.id);
-
-    case 'SET_NODE_OSC1_FREQUENCY':
-      return setNodeOsc1Frequency(state, action.id, action.frequency);
-
-    case 'SET_NODE_OSC2_FREQUENCY':
-      return setNodeOsc2Frequency(state, action.id, action.frequency);
-
     case 'SET_NODE_VOLUME':
       return setNodeVolume(state, action.id, action.volume);
-
-    case 'SET_NODE_SOURCE':
-      return setNodeSource(state, action.id, action.buffer, action.path);
 
     case 'DELETE_NODE':
       return deleteNode(state, action.id);
@@ -573,12 +440,6 @@ export default (state = nodes, action) => {
 
     case 'SELECT_ALL_NODES':
       return selectAllNodes(state);
-
-    case 'SET_NODE_OSC1_WAVE_TYPE':
-      return setNodeOsc1WaveType(state, action.id, action.waveType);
-
-    case 'SET_NODE_OSC2_WAVE_TYPE':
-      return setNodeOsc2WaveType(state, action.id, action.waveType);
 
     case 'CLONE_NODE':
       return cloneNode(state, action.id);

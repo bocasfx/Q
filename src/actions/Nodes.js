@@ -1,24 +1,6 @@
-export const addSynthNode = (position, relay=false, id=null) => {
-  return {
-    type: 'ADD_SYNTH_NODE',
-    position,
-    relay,
-    id
-  };
-};
-
 export const addMidiNode = (position, relay=false, id=null) => {
   return {
     type: 'ADD_MIDI_NODE',
-    position,
-    relay,
-    id
-  };
-};
-
-export const addAudioNode = (position, relay=false, id=null) => {
-  return {
-    type: 'ADD_AUDIO_NODE',
     position,
     relay,
     id

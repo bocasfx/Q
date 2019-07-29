@@ -8,7 +8,6 @@ class Hydrator {
 
     store.dispatch({type: 'DELETE_ALL_NODES'});
     store.dispatch({type: 'DELETE_ALL_STREAMS'});
-    store.dispatch({type: 'RESET_FX_CONFIGURATION'});
 
     if (payload.nodes) {
       store.dispatch({
@@ -21,13 +20,6 @@ class Hydrator {
       store.dispatch({
         type: 'HYDRATE_STREAMS',
         payload: payload.streams
-      });
-    }
-
-    if (payload.fx) {
-      store.dispatch({
-        type: 'HYDRATE_FX',
-        payload: payload.fx
       });
     }
 

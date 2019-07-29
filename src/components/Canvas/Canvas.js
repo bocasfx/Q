@@ -6,9 +6,8 @@ import { addFreehandStream, addCircularStream, addLinearStream, updateStreamPosi
 import { updateFPSCount } from '../../actions/Transport';
 import { bindActionCreators } from 'redux';
 import { calculateDistance, getPosition, calculateNodeBorderDistance, timestamp, getNodeById, getNodesWithinDistance } from '../../utils/utils';
-import { addSynthNode,
+import {
   addMidiNode,
-  addAudioNode,
   selectNode,
   deselectNodes,
   cloneNode,
@@ -60,7 +59,7 @@ class Canvas extends React.Component {
     this.state = {
       mouseDown: false,
       width: props.app.width - config.controlPanel.width - config.menu.width,
-      height: props.app.height - config.fxPanel.height - config.transport.height
+      height: props.app.height - config.transport.height
     };
   }
   
@@ -73,7 +72,7 @@ class Canvas extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       width: nextProps.app.width - config.controlPanel.width - config.menu.width,
-      height: nextProps.app.height - config.fxPanel.height - config.transport.height
+      height: nextProps.app.height - config.transport.height
     });
   }
 
@@ -99,7 +98,7 @@ class Canvas extends React.Component {
     } else if (this.props.devices.link || this.props.devices.unlink) {
       this.linkPosition = position;
       this.initiateNodeLink(position);
-    } else if (this.props.devices.synthNodes || this.props.devices.midiNodes || this.props.devices.audioNodes) {
+    } else if (this.props.devices.midiNodes) {
       this.addNode(position);
       this.selectNode(position, event.metaKey);
       this.props.deselectStreams();
@@ -124,7 +123,7 @@ class Canvas extends React.Component {
       stream.onMouseMove(event);
     } else if (this.props.devices.link || this.props.devices.unlink) {
       this.linkPosition = getPosition(event);
-    } else if (!this.props.devices.synthNodes && !this.props.devices.midiNodes && !this.props.devices.audioNodes) {
+    } else if (!this.props.devices.midiNodes) {
       let position = getPosition(event);
       let dx = position[0] - this.canvasPosition[0];
       let dy = position[1] - this.canvasPosition[1];
@@ -181,17 +180,8 @@ class Canvas extends React.Component {
   }
 
   addNode(position) {
-    // Synth Nodes
-    if (this.props.devices.synthNodes) {
-      this.props.addSynthNode(position);
-
-    // MIDI Nodes
-    } else if (this.props.devices.midiNodes) {
+    if (this.props.devices.midiNodes) {
       this.props.addMidiNode(position);
-
-    // Audio Nodes
-    } else if (this.props.devices.audioNodes) {
-      this.props.addAudioNode(position);
     }
   }
 
@@ -276,7 +266,7 @@ class Canvas extends React.Component {
         this.playLinks(linkId, rootId, particleId, true);
       }, link.lag);
     });
-  };
+  }
 
   stopLinks(nodeId, rootId, particleId, checkForRoot) {
     let node = getNodeById(this.props.nodes, nodeId);
@@ -293,7 +283,7 @@ class Canvas extends React.Component {
         this.stopLinks(linkId, rootId, particleId, true);
       }, link.lag);
     });
-  };
+  }
 
   detectCollisions() {
     if (!this.props.streams.length || !this.props.nodes.length) {
@@ -317,7 +307,7 @@ class Canvas extends React.Component {
         });
       });
     });
-  };
+  }
 
   dummyFlow() {
     if (this.props && this.props.transport && this.props.transport.playing) {
@@ -362,10 +352,10 @@ class Canvas extends React.Component {
     }
 
     if (this.now > this.lastFpsUpdate + 1000) { // update every second
-        this.fpsCount = 0.25 * this.framesThisSecond + (1 - 0.25) * this.fps; // compute the new FPS
- 
-        this.lastFpsUpdate = this.now;
-        this.framesThisSecond = 0;
+      this.fpsCount = 0.25 * this.framesThisSecond + (1 - 0.25) * this.fps; // compute the new FPS
+
+      this.lastFpsUpdate = this.now;
+      this.framesThisSecond = 0;
     }
     this.framesThisSecond++;
 
@@ -503,9 +493,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addSynthNode: bindActionCreators(addSynthNode, dispatch),
     addMidiNode: bindActionCreators(addMidiNode, dispatch),
-    addAudioNode: bindActionCreators(addAudioNode, dispatch),
     selectNode: bindActionCreators(selectNode, dispatch),
     cloneNode: bindActionCreators(cloneNode, dispatch),
     deselectNodes: bindActionCreators(deselectNodes, dispatch),
