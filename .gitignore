@@ -8,7 +8,6 @@
 
 # production
 /build
-/Q-darwin-x64
 
 # misc
 .DS_Store

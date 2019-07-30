@@ -6,16 +6,22 @@ class MIDIContext {
   }
 
   initialize() {
-    if (navigator.requestMIDIAccess) {
-      this.context = navigator.requestMIDIAccess({sysex: false});
-      return this.context.then((ctx) => {
-        let newOutputs = [];
-        for (let output of ctx.outputs.values()) {
-          newOutputs.push(output);
-        }
-        this.outputs = newOutputs;
-      });
+    if (this.context) {
+      return Promise.resolve();
     }
+
+    if (!navigator.requestMIDIAccess) {
+      return Promise.reject('MIDIAccess is not supported.');
+    }
+
+    this.context = navigator.requestMIDIAccess({sysex: true});
+    return this.context.then((ctx) => {
+      let newOutputs = [];
+      for (let output of ctx.outputs.values()) {
+        newOutputs.push(output);
+      }
+      this.outputs = newOutputs;
+    });
   }
 }
 

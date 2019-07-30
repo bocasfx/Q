@@ -17,20 +17,20 @@ let initialState = {
     link: false,
     unlink: false,
     grab: true,
-    clone: false
+    clone: false,
   },
   nodes: [],
   streams: [],
   selection: {
-    objType: 'nodes'
+    objType: 'nodes',
   },
   transport: {
     playing: false,
-    fpsCount: 0
+    fpsCount: 0,
   },
   midi: {
-    destinations: []
-  }
+    destinations: [],
+  },
 };
 
 export default initialState;

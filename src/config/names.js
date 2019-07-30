@@ -223,7 +223,7 @@ let names = {
     'worried',
     'wrong',
     'zany',
-    'zealous'
+    'zealous',
   ],
   nouns: [
     'frogs',
@@ -451,7 +451,7 @@ let names = {
     'planes',
     'form',
     'hose',
-    'quicksand'
+    'quicksand',
   ],
   blues: [
     'Baby Tate',
@@ -612,7 +612,7 @@ let names = {
     'Watermelon Slim',
     'Whistlin\' Alex Moore',
     'Moses "Whispering" Smith',
-    'Paul "Wine" Jones'
+    'Paul "Wine" Jones',
   ],
   weird: [
     'Abaya',
@@ -1000,8 +1000,8 @@ let names = {
     'Zoolatry',
     'Zopissa',
     'Zorro',
-    'Zyrian'
-  ]
+    'Zyrian',
+  ],
 };
 
 const generate = (blues = false, weird = false) => {
@@ -1025,5 +1025,5 @@ const generate = (blues = false, weird = false) => {
 };
 
 export default {
-  generate
+  generate,
 };

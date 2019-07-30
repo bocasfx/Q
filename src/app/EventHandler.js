@@ -1,25 +1,7 @@
 import serializer from '../app/Serializer';
 import hydrator from './Hydrator';
 import store from '../app/Store';
-
-let electron = null;
-let dialog = null;
-let fs = null;
-
-if (window.require) {
-  electron = window.require('electron');
-  fs = window.require('fs');
-  dialog = electron.remote.dialog;
-}
-
-const filters = {
-  filters: [
-    {
-      name: 'text',
-      extensions: ['q'],
-    },
-  ],
-};
+import fs from 'fs';
 
 class EventHandler {
   initialize() {
@@ -61,13 +43,13 @@ class EventHandler {
         case 'S':
           event.stopPropagation();
           event.returnValue = false;
-          this.serializeProject();
+          this.saveContent();
           return;
 
         // Open
         case 'o':
         case 'O':
-          return this.hydrateProject();
+          return this.loadContent();
 
         // Grab
         case 'g':
@@ -118,30 +100,6 @@ class EventHandler {
         height: window.innerHeight,
       });
     };
-  }
-
-  serializeProject() {
-    if (!dialog) {
-      this.saveContent();
-      return;
-    }
-
-    dialog.showSaveDialog(filters, fileName => {
-      this.saveContent('file', fileName);
-    });
-  }
-
-  hydrateProject() {
-    if (!dialog) {
-      this.loadContent();
-      return;
-    }
-
-    dialog.showOpenDialog(filters, fileNames => {
-      if (fileNames && fileNames.length) {
-        this.loadContent('file', fileNames[0]);
-      }
-    });
   }
 
   newProject() {
@@ -210,6 +168,4 @@ class EventHandler {
   }
 }
 
-let handler = new EventHandler();
-
-export default handler;
+export default new EventHandler();

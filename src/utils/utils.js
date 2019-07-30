@@ -78,7 +78,7 @@ export const toPolar = (x, y) => {
   }
   return {
     radius: r,
-    angle: theta
+    angle: theta,
   };
 };
 

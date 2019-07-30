@@ -94,3 +94,10 @@ input[type="radio"]:checked:after {
   align-items: center;
   margin-bottom: 20px;
 }
+
+.unsupported-browser {
+  width: 800px;
+  margin: 160px auto;
+  text-align: center;
+  font-size: 2em;
+}

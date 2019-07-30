@@ -6,7 +6,7 @@ class Serializer {
     return (({ id, type, name, position, selected, note, velocity, octave, channel, disabled, links, parentIds, lag, probability }) => {
       return {
         topLevel: { id, type, name, position, selected, note, velocity, octave, channel, disabled, links, parentIds, lag, probability },
-        inner: {}
+        inner: {},
       };
     })(node);
   }
@@ -15,7 +15,7 @@ class Serializer {
     return(({id, type, variety, name, position, radius, selected, disabled, speed, count}) => {
       return {
         topLevel: {id, type, variety, name, position, radius, selected, disabled, speed, count},
-        inner: {}
+        inner: {},
       };
     })(stream);
   }
@@ -24,7 +24,7 @@ class Serializer {
     return(({id, type, variety, name, position, from, to, selected, disabled, speed, count, distance, length, particleOffset}) => {
       return {
         topLevel: {id, type, variety, name, position, from, to, selected, disabled, speed, count, distance, length, particleOffset},
-        inner: {}
+        inner: {},
       };
     })(stream);
   }
@@ -33,7 +33,7 @@ class Serializer {
     return (({id, variety, count, position, queue, easing, pathIndex, path}) => {
       return {
         topLevel: {id, variety, count, position, queue, easing, pathIndex, path, creating: false},
-        inner: {}
+        inner: {},
       };
     })(stream);
   }

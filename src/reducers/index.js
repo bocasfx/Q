@@ -15,7 +15,7 @@ const reducers = combineReducers({
   selection,
   transport,
   midi,
-  app
+  app,
 });
 
 const mainReducer = (state = initialState, action) => {

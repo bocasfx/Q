@@ -108,17 +108,12 @@ const cloneNode = (state, id) => {
       clonedNode.lag = node.lag;
       clonedNode.links = [];
       clonedNode.name = node.name;
-      clonedNode.pan = node.pan;
       clonedNode.particleQueue = [];
       clonedNode.position = [node.position[0] + 25, node.position[1] - 25];
       clonedNode.probability = node.probability;
       clonedNode.selected = node.selected;
-      clonedNode.volume = node.volume;
       clonedNode._disabled = node._disabled;
-      clonedNode.attack = node.attack;
       clonedNode.disabled = node.disabled;
-      clonedNode.release = node.release;
-      clonedNode.sendFXGain = node.sendFXGain;
       clonedNode.name = node.name + ' (clone)';
       clonedNode.id = uuidv1();
       
@@ -126,24 +121,6 @@ const cloneNode = (state, id) => {
     }
   });
   return state;
-};
-
-const setNodeAttack = (state, id, value) => {
-  return state.map((node) => {
-    if (node.id === id) {
-      node.attack = value;
-    }
-    return node;
-  });
-};
-
-const setNodeRelease = (state, id, value) => {
-  return state.map((node) => {
-    if (node.id === id) {
-      node.release = value;
-    }
-    return node;
-  });
 };
 
 const setNodeName = (state, id, name) => {
@@ -162,15 +139,6 @@ const setNodeDisabledStatus = (state, id, status) => {
       node.links.forEach((link) => {
         setNodeDisabledStatus(state, link.id, status);
       });
-    }
-    return node;
-  });
-};
-
-const setNodePan = (state, id, pan) => {
-  return state.map((node) => {
-    if (node.id === id) {
-      node.pan = pan;
     }
     return node;
   });
@@ -299,42 +267,6 @@ const setNodeProbability = (state, id, probability) => {
   });
 };
 
-const setNodeSendGain = (state, id, value) => {
-  return state.map((node) => {
-    if (node.id === id) {
-      node.sendFXGain = value;
-    }
-    return node;
-  });
-};
-
-const setNodeNoiseGain = (state, id, value) => {
-  return state.map((node) => {
-    if (node.id === id) {
-      node.noiseGain = value;
-    }
-    return node;
-  });
-};
-
-const setNodeOsc1Gain = (state, id, value) => {
-  return state.map((node) => {
-    if (node.id === id) {
-      node.osc1Gain = value;
-    }
-    return node;
-  });
-};
-
-const setNodeOsc2Gain = (state, id, value) => {
-  return state.map((node) => {
-    if (node.id === id) {
-      node.osc2Gain = value;
-    }
-    return node;
-  });
-};
-
 const setNodeVelocity = (state, id, value) => {
   return state.map((node) => {
     if (node.id === id) {
@@ -446,20 +378,11 @@ export default (state = nodes, action) => {
   case 'CLONE_NODE':
     return cloneNode(state, action.id);
 
-  case 'SET_NODE_ATTACK':
-    return setNodeAttack(state, action.id, action.value);
-
-  case 'SET_NODE_RELEASE':
-    return setNodeRelease(state, action.id, action.value);
-
   case 'SET_NODE_NAME':
     return setNodeName(state, action.id, action.name);
 
   case 'SET_NODE_DISABLED_STATUS':
     return setNodeDisabledStatus(state, action.id, action.status);
-
-  case 'SET_NODE_PAN':
-    return setNodePan(state, action.id, action.pan);
 
   case 'LINK_NODES':
     return linkNodes(state, action.srcId, action.destId);
@@ -496,18 +419,6 @@ export default (state = nodes, action) => {
 
   case 'SET_NODE_PROBABILITY':
     return setNodeProbability(state, action.id, action.probability);
-
-  case 'SET_NODE_SEND_GAIN':
-    return setNodeSendGain(state, action.id, action.value);
-
-  case 'SET_NODE_NOISE_GAIN':
-    return setNodeNoiseGain(state, action.id, action.value);
-
-  case 'SET_NODE_OSC1_GAIN':
-    return setNodeOsc1Gain(state, action.id, action.value);
-
-  case 'SET_NODE_OSC2_GAIN':
-    return setNodeOsc2Gain(state, action.id, action.value);
 
   case 'SET_NODE_VELOCITY':
     return setNodeVelocity(state, action.id, action.value);

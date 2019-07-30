@@ -3,7 +3,7 @@ class Hydrator {
   hydrate(store, payload) {
 
     store.dispatch({
-      type: 'HYDRATION_STARTED'
+      type: 'HYDRATION_STARTED',
     });
 
     store.dispatch({type: 'DELETE_ALL_NODES'});
@@ -12,19 +12,19 @@ class Hydrator {
     if (payload.nodes) {
       store.dispatch({
         type: 'HYDRATE_NODES',
-        payload: payload.nodes
+        payload: payload.nodes,
       });
     }
 
     if (payload.streams) {
       store.dispatch({
         type: 'HYDRATE_STREAMS',
-        payload: payload.streams
+        payload: payload.streams,
       });
     }
 
     store.dispatch({
-      type: 'HYDRATION_COMPLETE'
+      type: 'HYDRATION_COMPLETE',
     });
   }
 }
