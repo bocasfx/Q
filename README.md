@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/604e7488-88e9-4afd-94bc-41671701fe55/deploy-status)](https://app.netlify.com/sites/qseq/deploys)
+
 <p align="center"><img src="./resources/icon/icon.png" width="256px"/></p>
 
 ### <p align="center">Q - Nodular Sequencer</p>
