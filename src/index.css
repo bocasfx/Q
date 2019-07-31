@@ -95,9 +95,19 @@ input[type="radio"]:checked:after {
   margin-bottom: 20px;
 }
 
-.unsupported-browser {
+.error-message {
   width: 800px;
   margin: 160px auto;
+  font-size: 2.5em;
   text-align: center;
-  font-size: 2em;
+}
+
+.error-message img {
+  opacity: 0.05;
+}
+
+.error-message div {
+  margin-top: 48px;
+  /* color: #666; */
+  opacity: 0.5;
 }

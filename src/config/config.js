@@ -5,7 +5,7 @@ export default {
     maxFrequency: 1500,
   },
   transport: {
-    height: 35,
+    height: 55,
   },
   canvas: {
     backgroundColor: 'rgba(0, 0, 0, 0.0)',

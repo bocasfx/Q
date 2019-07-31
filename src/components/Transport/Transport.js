@@ -26,7 +26,7 @@ const mapStateToProps = (state) => {
   return {
     nodes: state.nodes,
     streams: state.streams,
-    transport: state.transport
+    transport: state.transport,
   };
 };
 

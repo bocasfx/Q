@@ -16,7 +16,10 @@ const renderDom = () => {
 
 const renderError = (msg) => {
   render(
-    <div className="unsupported-browser">{msg}</div>,
+    <div className="error-message">
+      <img alt="logo" src="img/logo.png" width="300"/>
+      <div>{msg}</div>
+    </div>,
     document.getElementById('root')
   );
 };
@@ -51,7 +54,7 @@ const initialize = () => {
       }
     })
     .catch(() => {
-      renderError('errr... Use Chrome?');
+      renderError('Unsupported browser.');
     });
 };
 

@@ -62,7 +62,7 @@ class Canvas extends React.Component {
     this.state = {
       mouseDown: false,
       width: props.app.width - config.controlPanel.width - config.menu.width,
-      height: props.app.height - config.transport.height
+      height: props.app.height - config.transport.height,
     };
   }
   
@@ -75,7 +75,7 @@ class Canvas extends React.Component {
   static getDerivedStateFromProps(nextProps) {
     return {
       width: nextProps.app.width - config.controlPanel.width - config.menu.width,
-      height: nextProps.app.height - config.transport.height
+      height: nextProps.app.height - config.transport.height,
     };
   }
 
@@ -457,7 +457,7 @@ class Canvas extends React.Component {
 
     let canvasStyle = {
       cursor: 'crosshair',
-      backgroundPosition: this.backgroundX + 'px ' + this.backgroundY + 'px'
+      backgroundPosition: this.backgroundX + 'px ' + this.backgroundY + 'px',
     };
 
     if (this.props.devices.grab) {
@@ -516,7 +516,7 @@ const mapDispatchToProps = (dispatch) => {
     updateNodePositionByDelta: bindActionCreators(updateNodePositionByDelta, dispatch),
     updateStreamPositionByDelta: bindActionCreators(updateStreamPositionByDelta, dispatch),
     updateFPSCount: bindActionCreators(updateFPSCount, dispatch),
-    deselectStreams: bindActionCreators(deselectStreams, dispatch)
+    deselectStreams: bindActionCreators(deselectStreams, dispatch),
   };
 };
 

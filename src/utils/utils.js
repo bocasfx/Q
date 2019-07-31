@@ -15,7 +15,7 @@ export const getPosition = (event) => {
   let y = event.pageY;
 
   x -= config.menu.width;
-  y -= config.transport.height;
+  y += config.transport.height;
 
   return [x, y];
 };
