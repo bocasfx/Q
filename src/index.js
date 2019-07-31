@@ -14,9 +14,9 @@ const renderDom = () => {
   );
 };
 
-const renderError = () => {
+const renderError = (msg) => {
   render(
-    <div className="unsupported-browser">errr... Use Chrome?</div>,
+    <div className="unsupported-browser">{msg}</div>,
     document.getElementById('root')
   );
 };
@@ -26,12 +26,18 @@ const initialize = () => {
   midiContext
     .initialize()
     .then(() => {
-      renderDom();
 
       if (localStorage.QState) {
         let payload = JSON.parse(localStorage.QState);
         hydrator.hydrate(store, payload);
       }
+
+      if (!midiContext.outputs.length) {
+        renderError('No MIDI devices were found.');
+        return;
+      }
+
+      renderDom();
 
       for (let entry of midiContext.outputs.entries()) {
         for (let destination of entry) {
@@ -45,7 +51,7 @@ const initialize = () => {
       }
     })
     .catch(() => {
-      renderError();
+      renderError('errr... Use Chrome?');
     });
 };
 
