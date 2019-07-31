@@ -7,12 +7,11 @@ import { getSelectedElements } from '../../utils/utils';
 import PropTypes from 'prop-types';
 
 class EditorPanel extends React.Component {
-
   static propTypes = {
     nodes: PropTypes.array,
     streams: PropTypes.array,
     selection: PropTypes.object,
-  }
+  };
   constructor(props) {
     super(props);
     this.renderObject = this.renderObject.bind(this);
@@ -39,24 +38,21 @@ class EditorPanel extends React.Component {
   }
 
   renderObject() {
-    return this.props.selection.objType === 'streams' ? this.renderStream() : this.renderNode(); 
+    return this.props.selection.objType === 'streams' ? this.renderStream() : this.renderNode();
   }
 
   renderStream() {
-    
     if (!this.stream) {
       return null;
     }
-    return (
-      <StreamPanel stream={this.stream}/>
-    );
+    return <StreamPanel stream={this.stream} />;
   }
 
   renderNode() {
     if (!this.node) {
       return null;
     }
-    return <NodePanel node={this.node}/>;
+    return <NodePanel node={this.node} />;
   }
 
   onScroll(event) {
@@ -66,7 +62,7 @@ class EditorPanel extends React.Component {
   }
 
   onKeyPress(event) {
-    if(event.keyCode === 0) {
+    if (event.keyCode === 0) {
       event.preventDefault();
     }
   }
@@ -87,16 +83,20 @@ class EditorPanel extends React.Component {
     panelClass += this.state.scrolling ? ' editor-panel-inset' : '';
 
     return (
-      <div className={panelClass} style={style} onScroll={this.onScroll} onKeyPress={this.onKeyPress} tabIndex="1">
-        <div className="editor-panel-inner">
-          {this.renderObject()}
-        </div>
+      <div
+        className={panelClass}
+        style={style}
+        onScroll={this.onScroll}
+        onKeyPress={this.onKeyPress}
+        tabIndex="1"
+      >
+        <div className="editor-panel-inner">{this.renderObject()}</div>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     nodes: state.nodes,
     streams: state.streams,

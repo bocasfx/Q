@@ -2,10 +2,23 @@ import React from 'react';
 import './Canvas.css';
 import config from '../../config/config';
 import { connect } from 'react-redux';
-import { addFreehandStream, addCircularStream, addLinearStream, updateStreamPositionByDelta, deselectStreams } from '../../actions/Streams';
+import {
+  addFreehandStream,
+  addCircularStream,
+  addLinearStream,
+  updateStreamPositionByDelta,
+  deselectStreams,
+} from '../../actions/Streams';
 import { updateFPSCount } from '../../actions/Transport';
 import { bindActionCreators } from 'redux';
-import { calculateDistance, getPosition, calculateNodeBorderDistance, timestamp, getNodeById, getNodesWithinDistance } from '../../utils/utils';
+import {
+  calculateDistance,
+  getPosition,
+  calculateNodeBorderDistance,
+  timestamp,
+  getNodeById,
+  getNodesWithinDistance,
+} from '../../utils/utils';
 import PropTypes from 'prop-types';
 import {
   addMidiNode,
@@ -19,10 +32,10 @@ import {
   playNode,
   stopNode,
   updateSelectedNodePositionByDelta,
-  updateNodePositionByDelta } from '../../actions/Nodes';
+  updateNodePositionByDelta,
+} from '../../actions/Nodes';
 
 class Canvas extends React.Component {
-
   static propTypes = {
     app: PropTypes.object,
     devices: PropTypes.object,
@@ -48,7 +61,7 @@ class Canvas extends React.Component {
     stopNode: PropTypes.func,
     enqueueParticle: PropTypes.func,
     dequeueParticle: PropTypes.func,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -92,7 +105,7 @@ class Canvas extends React.Component {
       height: props.app.height - config.transport.height,
     };
   }
-  
+
   componentDidMount() {
     this.canvasContext = this.canvasRef.current.getContext('2d');
     this.draw();
@@ -108,7 +121,7 @@ class Canvas extends React.Component {
 
   onMouseDown(event) {
     event.preventDefault();
-    this.setState({mouseDown: true});
+    this.setState({ mouseDown: true });
 
     let position = getPosition(event);
     this.canvasPosition = position;
@@ -144,7 +157,11 @@ class Canvas extends React.Component {
     if (!this.state.mouseDown) {
       return;
     }
-    if (this.props.devices.streams || this.props.devices.circularStreams || this.props.devices.linearStreams) {
+    if (
+      this.props.devices.streams ||
+      this.props.devices.circularStreams ||
+      this.props.devices.linearStreams
+    ) {
       let streams = this.props.streams;
       if (!streams.length) {
         return;
@@ -181,8 +198,12 @@ class Canvas extends React.Component {
   }
 
   onMouseUpOrLeaveHandler(event) {
-    this.setState({mouseDown: false});
-    if (this.props.devices.streams || this.props.devices.circularStreams || this.props.devices.linearStreams) {
+    this.setState({ mouseDown: false });
+    if (
+      this.props.devices.streams ||
+      this.props.devices.circularStreams ||
+      this.props.devices.linearStreams
+    ) {
       let streams = this.props.streams;
       let stream = streams[streams.length - 1];
       stream.onMouseUp(event);
@@ -201,7 +222,7 @@ class Canvas extends React.Component {
 
   getSelectedNodeCount() {
     let selectedCount = 0;
-    this.props.nodes.forEach((node) => {
+    this.props.nodes.forEach(node => {
       if (node.selected) {
         selectedCount++;
       }
@@ -249,7 +270,7 @@ class Canvas extends React.Component {
   }
 
   cloneNode(position) {
-    this.props.nodes.forEach((node) => {
+    this.props.nodes.forEach(node => {
       let distance = calculateDistance(node.position, position);
       if (distance <= config.app.doubleClickDistance) {
         this.props.cloneNode(node.id);
@@ -258,7 +279,7 @@ class Canvas extends React.Component {
   }
 
   initiateNodeLink(position) {
-    this.props.nodes.forEach((node) => {
+    this.props.nodes.forEach(node => {
       let distance = calculateDistance(node.position, position);
       if (distance <= config.app.doubleClickDistance) {
         this.linkSrc = node.id;
@@ -267,7 +288,7 @@ class Canvas extends React.Component {
   }
 
   finalizeNodeLink(position, unlink = false) {
-    this.props.nodes.forEach((node) => {
+    this.props.nodes.forEach(node => {
       let distance = calculateDistance(node.position, position);
       if (distance <= config.app.doubleClickDistance) {
         if (this.linkSrc !== node.id) {
@@ -289,7 +310,7 @@ class Canvas extends React.Component {
     if (checkForRoot && node.id === rootId) {
       return;
     }
-    node.links.forEach((linkId) => {
+    node.links.forEach(linkId => {
       let link = getNodeById(this.props.nodes, linkId);
       setTimeout(() => {
         this.props.playNode(linkId);
@@ -306,7 +327,7 @@ class Canvas extends React.Component {
     if (checkForRoot && node.id === rootId) {
       return;
     }
-    node.links.forEach((linkId) => {
+    node.links.forEach(linkId => {
       let link = getNodeById(this.props.nodes, linkId);
       setTimeout(() => {
         this.props.stopNode(link.id);
@@ -319,9 +340,9 @@ class Canvas extends React.Component {
     if (!this.props.streams.length || !this.props.nodes.length) {
       return;
     }
-    this.props.nodes.forEach((node) => {
-      this.props.streams.forEach((stream) => {
-        stream.particles.forEach((particle) => {
+    this.props.nodes.forEach(node => {
+      this.props.streams.forEach(stream => {
+        stream.particles.forEach(particle => {
           let distance = calculateDistance(node.position, particle.position);
           if (distance <= config.app.collisionDistance) {
             if (!node.isParticleQueued(particle.id)) {
@@ -352,7 +373,7 @@ class Canvas extends React.Component {
     this.dt = this.dt + Math.min(1, (this.now - this.last) / 1000);
     while (this.dt > this.step) {
       this.dt = this.dt - this.step;
-      this.props.streams.forEach((stream) => {
+      this.props.streams.forEach(stream => {
         if (stream.creating) {
           stream.flow();
         }
@@ -370,9 +391,9 @@ class Canvas extends React.Component {
       this.draw();
       this.now = timestamp();
       this.last = this.now;
-      this.props.nodes.forEach((node) => {
-        this.props.streams.forEach((stream) => {
-          stream.particles.forEach((particle) => {
+      this.props.nodes.forEach(node => {
+        this.props.streams.forEach(stream => {
+          stream.particles.forEach(particle => {
             this.stopLinks(node.id, node.id, particle.id, false);
           });
         });
@@ -381,7 +402,8 @@ class Canvas extends React.Component {
       return;
     }
 
-    if (this.now > this.lastFpsUpdate + 1000) { // update every second
+    if (this.now > this.lastFpsUpdate + 1000) {
+      // update every second
       this.fpsCount = 0.25 * this.framesThisSecond + (1 - 0.25) * this.fps; // compute the new FPS
 
       this.lastFpsUpdate = this.now;
@@ -397,7 +419,7 @@ class Canvas extends React.Component {
     while (this.dt > this.step) {
       this.dt = this.dt - this.step;
 
-      this.props.streams.forEach((stream) => {
+      this.props.streams.forEach(stream => {
         stream.flow();
       });
 
@@ -415,23 +437,30 @@ class Canvas extends React.Component {
   }
 
   renderLinks(node) {
-
     this.canvasContext.save();
     this.canvasContext.beginPath();
     this.canvasContext.strokeStyle = config.link.strokeStyle;
     this.canvasContext.lineWidth = config.link.lineWidth;
     this.canvasContext.setLineDash(config.link.lineDash);
 
-    node.links.forEach((linkId) => {
+    node.links.forEach(linkId => {
       let destNode = getNodeById(this.props.nodes, linkId);
 
       let startPoint = calculateNodeBorderDistance(node.position, destNode.position);
       let endPoint = calculateNodeBorderDistance(destNode.position, node.position);
 
       this.canvasContext.moveTo(startPoint[0], startPoint[1]);
-      this.canvasContext.drawImage(this.linkAnchorImg, node.position[0] - 7.5, node.position[1] - 7.5);
+      this.canvasContext.drawImage(
+        this.linkAnchorImg,
+        node.position[0] - 7.5,
+        node.position[1] - 7.5,
+      );
       this.canvasContext.lineTo(endPoint[0], endPoint[1]);
-      this.canvasContext.drawImage(this.linkAnchorImg, destNode.position[0] - 7.5, destNode.position[1] - 7.5);
+      this.canvasContext.drawImage(
+        this.linkAnchorImg,
+        destNode.position[0] - 7.5,
+        destNode.position[1] - 7.5,
+      );
     });
 
     this.canvasContext.stroke();
@@ -445,7 +474,9 @@ class Canvas extends React.Component {
 
     this.canvasContext.save();
     this.canvasContext.beginPath();
-    this.canvasContext.strokeStyle = this.props.devices.link ? config.link.strokeStyle : config.unlink.strokeStyle;
+    this.canvasContext.strokeStyle = this.props.devices.link
+      ? config.link.strokeStyle
+      : config.unlink.strokeStyle;
     this.canvasContext.lineWidth = config.link.lineWidth;
     this.canvasContext.setLineDash(config.link.lineDash);
 
@@ -454,7 +485,11 @@ class Canvas extends React.Component {
     let startPoint = calculateNodeBorderDistance(linkedNode.position, this.linkPosition);
 
     this.canvasContext.moveTo(startPoint[0], startPoint[1]);
-    this.canvasContext.drawImage(this.linkAnchorImg, linkedNode.position[0] - 7, linkedNode.position[1] - 7);
+    this.canvasContext.drawImage(
+      this.linkAnchorImg,
+      linkedNode.position[0] - 7,
+      linkedNode.position[1] - 7,
+    );
     this.canvasContext.lineTo(this.linkPosition[0], this.linkPosition[1]);
     this.canvasContext.stroke();
     this.canvasContext.restore();
@@ -462,19 +497,24 @@ class Canvas extends React.Component {
 
   draw() {
     this.canvasContext.fillStyle = config.canvas.backgroundColor;
-    this.canvasContext.clearRect(0, 0, this.canvasContext.canvas.width, this.canvasContext.canvas.height);
+    this.canvasContext.clearRect(
+      0,
+      0,
+      this.canvasContext.canvas.width,
+      this.canvasContext.canvas.height,
+    );
 
-    this.props.nodes.forEach((node) => {
+    this.props.nodes.forEach(node => {
       this.renderLinks(node);
     });
 
     this.renderLinkHandle();
 
-    this.props.streams.forEach((stream) => {
+    this.props.streams.forEach(stream => {
       stream.render(this.canvasContext);
     });
 
-    this.props.nodes.forEach((node) => {
+    this.props.nodes.forEach(node => {
       node.render(this.canvasContext);
     });
   }
@@ -512,7 +552,7 @@ class Canvas extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { devices, nodes, streams, collisions, transport, app } = state;
   return {
     devices,
@@ -524,7 +564,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     addMidiNode: bindActionCreators(addMidiNode, dispatch),
     selectNode: bindActionCreators(selectNode, dispatch),
@@ -539,7 +579,10 @@ const mapDispatchToProps = (dispatch) => {
     dequeueParticle: bindActionCreators(dequeueParticle, dispatch),
     playNode: bindActionCreators(playNode, dispatch),
     stopNode: bindActionCreators(stopNode, dispatch),
-    updateSelectedNodePositionByDelta: bindActionCreators(updateSelectedNodePositionByDelta, dispatch),
+    updateSelectedNodePositionByDelta: bindActionCreators(
+      updateSelectedNodePositionByDelta,
+      dispatch,
+    ),
     updateNodePositionByDelta: bindActionCreators(updateNodePositionByDelta, dispatch),
     updateStreamPositionByDelta: bindActionCreators(updateStreamPositionByDelta, dispatch),
     updateFPSCount: bindActionCreators(updateFPSCount, dispatch),
@@ -547,4 +590,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Canvas);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Canvas);

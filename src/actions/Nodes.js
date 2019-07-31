@@ -1,4 +1,4 @@
-export const addMidiNode = (position, relay=false, id=null) => {
+export const addMidiNode = (position, relay = false, id = null) => {
   return {
     type: 'ADD_MIDI_NODE',
     position,
@@ -16,7 +16,7 @@ export const setNodeSource = (id, buffer, path) => {
   };
 };
 
-export const deleteNode = (id) => {
+export const deleteNode = id => {
   return {
     type: 'DELETE_NODE',
     id,
@@ -41,7 +41,7 @@ export const unlinkSelectedNodes = () => {
   };
 };
 
-export const selectNode = (id) => {
+export const selectNode = id => {
   return {
     type: 'SELECT_NODE',
     id,
@@ -60,8 +60,7 @@ export const selectAllNodes = () => {
   };
 };
 
-
-export const cloneNode = (id) => {
+export const cloneNode = id => {
   return {
     type: 'CLONE_NODE',
     id,
@@ -100,7 +99,7 @@ export const unlinkNodes = (srcId, destId) => {
   };
 };
 
-export const unlinkNode = (id) => {
+export const unlinkNode = id => {
   return {
     type: 'UNLINK_NODE',
     id,
@@ -129,14 +128,14 @@ export const dequeueParticles = () => {
   };
 };
 
-export const playNode = (id) => {
+export const playNode = id => {
   return {
     type: 'PLAY_NODE',
     id,
   };
 };
 
-export const stopNode = (id) => {
+export const stopNode = id => {
   return {
     type: 'STOP_NODE',
     id,
@@ -219,7 +218,7 @@ export const updateNodePositionByDelta = (dx, dy) => {
   };
 };
 
-export const hydrateNodes = (payload) => {
+export const hydrateNodes = payload => {
   return {
     type: 'HYDRATE_NODES',
     payload,

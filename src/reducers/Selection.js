@@ -7,11 +7,10 @@ const setSelection = (state, objType) => {
 
 export default (state = selection, action) => {
   switch (action.type) {
+    case 'SET_SELECTION':
+      return setSelection(state, action.objType);
 
-  case 'SET_SELECTION':
-    return setSelection(state, action.objType);
-
-  default:
-    return state;
+    default:
+      return state;
   }
 };

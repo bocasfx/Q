@@ -1,7 +1,7 @@
 import initialState from '../config/initial-state';
 const { transport } = initialState;
 
-const toggleTransport = (state) => {
+const toggleTransport = state => {
   let newState = Object.assign({}, state, {});
   newState.playing = !newState.playing;
   return newState;
@@ -15,14 +15,13 @@ const updateFPSCount = (state, count) => {
 
 export default (state = transport, action) => {
   switch (action.type) {
+    case 'TOGGLE_TRANSPORT':
+      return toggleTransport(state);
 
-  case 'TOGGLE_TRANSPORT':
-    return toggleTransport(state);
+    case 'UPDATE_FPS_COUNT':
+      return updateFPSCount(state, action.count);
 
-  case 'UPDATE_FPS_COUNT':
-    return updateFPSCount(state, action.count);
-
-  default:
-    return state;
+    default:
+      return state;
   }
 };

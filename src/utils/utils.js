@@ -10,7 +10,7 @@ export const calculateDistance = (a, b) => {
   return Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2));
 };
 
-export const getPosition = (event) => {
+export const getPosition = event => {
   let x = event.pageX;
   let y = event.pageY;
 
@@ -20,17 +20,19 @@ export const getPosition = (event) => {
   return [x, y];
 };
 
-export const getSelectedElements = (elements) => {
-  let selectedElements = _.filter(elements, (element) => {
+export const getSelectedElements = elements => {
+  let selectedElements = _.filter(elements, element => {
     return element.selected;
   });
-  return _.sortBy(selectedElements, [(element) => { 
-    return element.selectionIdx; 
-  }]);
+  return _.sortBy(selectedElements, [
+    element => {
+      return element.selectionIdx;
+    },
+  ]);
 };
 
 export const getNodeById = (nodes, nodeId) => {
-  return _.find(nodes, (node) => {
+  return _.find(nodes, node => {
     return node.id === nodeId;
   });
 };
@@ -59,18 +61,18 @@ export const calculateNodeBorderDistance = (a, b) => {
   let xb = b[0];
   let yb = b[1];
 
-  let xc = xa - ((d2 * (xa - xb)) / d);
-  let yc = ya - ((d2 * (ya - yb)) / d);
+  let xc = xa - (d2 * (xa - xb)) / d;
+  let yc = ya - (d2 * (ya - yb)) / d;
 
   return [xc, yc];
 };
 
-export const getNodeColor = (type) => {
+export const getNodeColor = type => {
   return config[type].color;
 };
 
 export const toPolar = (x, y) => {
-  let r = Math.sqrt((x * x) + (y * y));
+  let r = Math.sqrt(x * x + y * y);
 
   let theta = Math.atan2(-y, -x);
   if (theta < 0) {
@@ -87,10 +89,12 @@ export const clip = (value, min, max) => {
 };
 
 export const timestamp = () => {
-  return window.performance && window.performance.now ? window.performance.now() : new Date().getTime();
+  return window.performance && window.performance.now
+    ? window.performance.now()
+    : new Date().getTime();
 };
 
-export const buffer2ArrayBuffer = (buffer) => {
+export const buffer2ArrayBuffer = buffer => {
   let arrayBuffer = new ArrayBuffer(buffer.length);
   let view = new Uint8Array(arrayBuffer);
   for (let i = 0; i < buffer.length; ++i) {
@@ -101,7 +105,7 @@ export const buffer2ArrayBuffer = (buffer) => {
 
 export const getNodesWithinDistance = (nodes, position) => {
   let matches = [];
-  nodes.forEach((node) => {
+  nodes.forEach(node => {
     let distance = calculateDistance(node.position, position);
     if (distance <= config.app.doubleClickDistance) {
       matches.push(node);
@@ -111,16 +115,16 @@ export const getNodesWithinDistance = (nodes, position) => {
 };
 
 export const findClosestFrequency = (notes, closestTo) => {
-  let frequencies = notes.map((note) => note.frequency);
+  let frequencies = notes.map(note => note.frequency);
   let closestFreq = Math.max.apply(null, frequencies);
 
-  for(let i = 0; i < frequencies.length; i++) {
+  for (let i = 0; i < frequencies.length; i++) {
     if (frequencies[i] >= closestTo && frequencies[i] < closestFreq) {
       closestFreq = frequencies[i];
     }
   }
 
-  let closest = _.find(notes, (note) => {
+  let closest = _.find(notes, note => {
     return note.frequency === closestFreq;
   });
 

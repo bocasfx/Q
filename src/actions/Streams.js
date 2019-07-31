@@ -22,7 +22,7 @@ export const addLinearStream = (position, event) => {
   };
 };
 
-export const deleteStream = (id) => {
+export const deleteStream = id => {
   return {
     type: 'DELETE_STREAM',
     id,
@@ -41,7 +41,7 @@ export const deleteALLStreamS = () => {
   };
 };
 
-export const selectStream = (id) => {
+export const selectStream = id => {
   return {
     type: 'SELECT_STREAM',
     id,
@@ -96,7 +96,7 @@ export const updateStreamPositionByDelta = (dx, dy) => {
   };
 };
 
-export const hydrateStreams = (payload) => {
+export const hydrateStreams = payload => {
   return {
     type: 'HYDRATE_STREAMS',
     payload,

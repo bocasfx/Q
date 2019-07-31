@@ -23,19 +23,19 @@ const setDirtyStatus = (state, status) => {
 
 export default (state = app, action) => {
   switch (action.type) {
-  case 'HYDRATION_STARTED':
-    return hydrationStarted(state);
+    case 'HYDRATION_STARTED':
+      return hydrationStarted(state);
 
-  case 'HYDRATION_COMPLETE':
-    return hydrationComplete(state);
+    case 'HYDRATION_COMPLETE':
+      return hydrationComplete(state);
 
-  case 'SET_WINDOW_SIZE':
-    return setWindowSize(state, action.width, action.height);
+    case 'SET_WINDOW_SIZE':
+      return setWindowSize(state, action.width, action.height);
 
-  case 'SET_DIRTY_STATUS':
-    return setDirtyStatus(state, action.status);
+    case 'SET_DIRTY_STATUS':
+      return setDirtyStatus(state, action.status);
 
-  default:
-    return state;
+    default:
+      return state;
   }
 };

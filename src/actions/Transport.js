@@ -4,7 +4,7 @@ export const toggleTransport = () => {
   };
 };
 
-export const updateFPSCount = (count) => {
+export const updateFPSCount = count => {
   return {
     type: 'UPDATE_FPS_COUNT',
     count,

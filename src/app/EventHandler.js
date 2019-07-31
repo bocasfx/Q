@@ -9,86 +9,86 @@ class EventHandler {
       if (event.metaKey) {
         if (event.shiftKey) {
           switch (event.key) {
-          // Clear local storage
-          case 'C':
-            return this.clearLocalStorage();
+            // Clear local storage
+            case 'C':
+              return this.clearLocalStorage();
 
-          // Save to local storage
-          case 'S':
-            this.saveContent();
-            alert('Project saved to internal storage.');
+            // Save to local storage
+            case 'S':
+              this.saveContent();
+              alert('Project saved to internal storage.');
+              return;
+
+            // Load local storage
+            case 'O':
+              this.loadContent();
+              return;
+
+            default:
+              return null;
+          }
+        }
+
+        switch (event.key) {
+          // Select All
+          case 'a':
+          case 'A':
+            store.dispatch({ type: 'SET_SELECTION', objType: 'nodes' });
+            store.dispatch({ type: 'DESELECT_STREAMS' });
+            store.dispatch({ type: 'SELECT_ALL_NODES' });
             return;
 
-          // Load local storage
+          // Save
+          case 's':
+          case 'S':
+            event.stopPropagation();
+            event.returnValue = false;
+            this.saveContent();
+            return;
+
+          // Open
+          case 'o':
           case 'O':
-            this.loadContent();
+            return this.loadContent();
+
+          // Grab
+          case 'g':
+          case 'G':
+            return this.toggleDevice('grab');
+
+          // New
+          case 'n':
+          case 'N':
+            return this.newProject();
+
+          default:
+            return null;
+        }
+      } else {
+        switch (event.key) {
+          //Play/Pause
+          case ' ':
+            event.stopPropagation();
+            event.returnValue = false;
+            store.dispatch({
+              type: 'TOGGLE_TRANSPORT',
+            });
+            if (!store.getState().transport.playing) {
+              store.dispatch({ type: 'STOP_NODES' });
+              store.dispatch({ type: 'DEQUEUE_PARTICLES' });
+            }
+            return;
+
+          // Backspace
+          case 'Backspace':
+            store.dispatch({ type: 'STOP_SELECTED_NODES' });
+            store.dispatch({ type: 'UNLINK_SELECTED_NODES' });
+            store.dispatch({ type: 'DELETE_SELECTED_NODES' });
+            store.dispatch({ type: 'DELETE_SELECTED_STREAMS' });
             return;
 
           default:
             return null;
-          }
-        }
-
-        switch (event.key) {
-        // Select All
-        case 'a':
-        case 'A':
-          store.dispatch({ type: 'SET_SELECTION', objType: 'nodes' });
-          store.dispatch({ type: 'DESELECT_STREAMS' });
-          store.dispatch({ type: 'SELECT_ALL_NODES' });
-          return;
-
-        // Save
-        case 's':
-        case 'S':
-          event.stopPropagation();
-          event.returnValue = false;
-          this.saveContent();
-          return;
-
-        // Open
-        case 'o':
-        case 'O':
-          return this.loadContent();
-
-        // Grab
-        case 'g':
-        case 'G':
-          return this.toggleDevice('grab');
-
-        // New
-        case 'n':
-        case 'N':
-          return this.newProject();
-
-        default:
-          return null;
-        }
-      } else {
-        switch (event.key) {
-        //Play/Pause
-        case ' ':
-          event.stopPropagation();
-          event.returnValue = false;
-          store.dispatch({
-            type: 'TOGGLE_TRANSPORT',
-          });
-          if (!store.getState().transport.playing) {
-            store.dispatch({ type: 'STOP_NODES' });
-            store.dispatch({ type: 'DEQUEUE_PARTICLES' });
-          }
-          return;
-
-        // Backspace
-        case 'Backspace':
-          store.dispatch({ type: 'STOP_SELECTED_NODES' });
-          store.dispatch({ type: 'UNLINK_SELECTED_NODES' });
-          store.dispatch({ type: 'DELETE_SELECTED_NODES' });
-          store.dispatch({ type: 'DELETE_SELECTED_STREAMS' });
-          return;
-
-        default:
-          return null;
         }
       }
     };

@@ -52,7 +52,7 @@ export default {
   knob: {
     zeroColor: 'dimgray',
   },
-  
+
   controlPanel: {
     width: 300,
   },

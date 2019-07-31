@@ -6,10 +6,10 @@ import initialState from '../config/initial-state';
 const { streams } = initialState;
 
 const addFreehandStream = (state, position, event) => {
-  let newStream = new FreehandStream({position});
+  let newStream = new FreehandStream({ position });
   newStream.selected = true;
   let streamList = state.splice(0);
-  streamList.forEach((stream) => {
+  streamList.forEach(stream => {
     stream.selected = false;
   });
   streamList.push(newStream);
@@ -18,7 +18,7 @@ const addFreehandStream = (state, position, event) => {
 };
 
 const addCircularStream = (state, position, event) => {
-  let newStream = new CircularStream({position});
+  let newStream = new CircularStream({ position });
   newStream.selected = true;
   let streamList = state.splice(0);
   streamList.push(newStream);
@@ -27,10 +27,10 @@ const addCircularStream = (state, position, event) => {
 };
 
 const addLinearStream = (state, position, event) => {
-  let newStream = new LinearStream({position});
+  let newStream = new LinearStream({ position });
   newStream.selected = true;
   let streamList = state.splice(0);
-  streamList.forEach((stream) => {
+  streamList.forEach(stream => {
     stream.selected = false;
   });
   streamList.push(newStream);
@@ -40,14 +40,14 @@ const addLinearStream = (state, position, event) => {
 
 const deleteStream = (state, id) => {
   let streamList = state.splice(0);
-  return _.remove(streamList, (stream) => {
+  return _.remove(streamList, stream => {
     return stream.id !== id;
   });
 };
 
-const deleteSelectedStreams = (state) => {
+const deleteSelectedStreams = state => {
   let streamList = state.splice(0);
-  return _.remove(streamList, (stream) => {
+  return _.remove(streamList, stream => {
     return !stream.selected;
   });
 };
@@ -57,14 +57,14 @@ const deleteAllStreams = () => {
 };
 
 const selectStream = (state, id) => {
-  return state.map((stream) => {
+  return state.map(stream => {
     stream.selected = stream.id === id;
     return stream;
   });
 };
 
 const setStreamName = (state, id, name) => {
-  return state.map((stream) => {
+  return state.map(stream => {
     if (stream.id === id) {
       stream.name = name;
     }
@@ -73,7 +73,7 @@ const setStreamName = (state, id, name) => {
 };
 
 const setStreamDisabledStatus = (state, id, status) => {
-  return state.map((stream) => {
+  return state.map(stream => {
     if (stream.id === id) {
       stream.disabled = status;
     }
@@ -82,7 +82,7 @@ const setStreamDisabledStatus = (state, id, status) => {
 };
 
 const setStreamSpeed = (state, id, speed) => {
-  return state.map((stream) => {
+  return state.map(stream => {
     if (stream.id === id) {
       stream.speed = speed;
     }
@@ -91,7 +91,7 @@ const setStreamSpeed = (state, id, speed) => {
 };
 
 const setStreamCount = (state, id, count) => {
-  return state.map((stream) => {
+  return state.map(stream => {
     if (stream.id === id) {
       stream.count = count;
     }
@@ -100,7 +100,7 @@ const setStreamCount = (state, id, count) => {
 };
 
 const updateSelectedStreamPositionByDelta = (state, dx, dy) => {
-  return state.map((stream) => {
+  return state.map(stream => {
     if (stream.selected) {
       stream.position = [stream.position[0] + dx, stream.position[1] + dy];
     }
@@ -109,9 +109,9 @@ const updateSelectedStreamPositionByDelta = (state, dx, dy) => {
 };
 
 const updateStreamPositionByDelta = (state, dx, dy) => {
-  return state.map((stream) => {
+  return state.map(stream => {
     stream.position = [stream.position[0] + dx, stream.position[1] + dy];
-    stream.particles = stream.particles.map((particle) => {
+    stream.particles = stream.particles.map(particle => {
       particle.position = [particle.position[0] + dx, particle.position[1] + dy];
       return particle;
     });
@@ -119,27 +119,27 @@ const updateStreamPositionByDelta = (state, dx, dy) => {
   });
 };
 
-const createStream = (stream) => {
+const createStream = stream => {
   switch (stream.topLevel.variety) {
-  case 'circular':
-    return new CircularStream(stream.topLevel);
-  case 'linear':
-    return new LinearStream(stream.topLevel);
-  case 'freehand':
-    return new FreehandStream(stream.topLevel);
-  default:
-    return null;
+    case 'circular':
+      return new CircularStream(stream.topLevel);
+    case 'linear':
+      return new LinearStream(stream.topLevel);
+    case 'freehand':
+      return new FreehandStream(stream.topLevel);
+    default:
+      return null;
   }
 };
 
 const hydrateStreams = (state, payload) => {
-  return payload.map((stream) => {
+  return payload.map(stream => {
     return createStream(stream);
   });
 };
 
-const deselectStreams = (state) => {
-  return state.map((stream) => {
+const deselectStreams = state => {
+  return state.map(stream => {
     stream.selected = false;
     return stream;
   });
@@ -147,53 +147,52 @@ const deselectStreams = (state) => {
 
 export default (state = streams, action) => {
   switch (action.type) {
+    case 'ADD_FREEHAND_STREAM':
+      return addFreehandStream(state, action.position, action.event);
 
-  case 'ADD_FREEHAND_STREAM':
-    return addFreehandStream(state, action.position, action.event);
+    case 'ADD_CIRCULAR_STREAM':
+      return addCircularStream(state, action.position, action.event);
 
-  case 'ADD_CIRCULAR_STREAM':
-    return addCircularStream(state, action.position, action.event);
+    case 'ADD_LINEAR_STREAM':
+      return addLinearStream(state, action.position, action.event);
 
-  case 'ADD_LINEAR_STREAM':
-    return addLinearStream(state, action.position, action.event);
+    case 'DELETE_SELECTED_STREAMS':
+      return deleteSelectedStreams(state);
 
-  case 'DELETE_SELECTED_STREAMS':
-    return deleteSelectedStreams(state);
+    case 'DELETE_STREAM':
+      return deleteStream(state, action.id);
 
-  case 'DELETE_STREAM':
-    return deleteStream(state, action.id);
+    case 'DELETE_ALL_STREAMS':
+      return deleteAllStreams();
 
-  case 'DELETE_ALL_STREAMS':
-    return deleteAllStreams();
+    case 'SELECT_STREAM':
+      return selectStream(state, action.id);
 
-  case 'SELECT_STREAM':
-    return selectStream(state, action.id);
+    case 'SET_STREAM_NAME':
+      return setStreamName(state, action.id, action.name);
 
-  case 'SET_STREAM_NAME':
-    return setStreamName(state, action.id, action.name);
+    case 'SET_STREAM_DISABLED_STATUS':
+      return setStreamDisabledStatus(state, action.id, action.status);
 
-  case 'SET_STREAM_DISABLED_STATUS':
-    return setStreamDisabledStatus(state, action.id, action.status);
+    case 'SET_STREAM_SPEED':
+      return setStreamSpeed(state, action.id, action.speed);
 
-  case 'SET_STREAM_SPEED':
-    return setStreamSpeed(state, action.id, action.speed);
+    case 'SET_STREAM_COUNT':
+      return setStreamCount(state, action.id, action.count);
 
-  case 'SET_STREAM_COUNT':
-    return setStreamCount(state, action.id, action.count);
+    case 'UPDATE_SELECTED_STREAM_POSITION_BY_DELTA':
+      return updateSelectedStreamPositionByDelta(state, action.dx, action.dy);
 
-  case 'UPDATE_SELECTED_STREAM_POSITION_BY_DELTA':
-    return updateSelectedStreamPositionByDelta(state, action.dx, action.dy);
+    case 'UPDATE_STREAM_POSITION_BY_DELTA':
+      return updateStreamPositionByDelta(state, action.dx, action.dy);
 
-  case 'UPDATE_STREAM_POSITION_BY_DELTA':
-    return updateStreamPositionByDelta(state, action.dx, action.dy);
+    case 'HYDRATE_STREAMS':
+      return hydrateStreams(state, action.payload);
 
-  case 'HYDRATE_STREAMS':
-    return hydrateStreams(state, action.payload);
+    case 'DESELECT_STREAMS':
+      return deselectStreams(state, action.payload);
 
-  case 'DESELECT_STREAMS':
-    return deselectStreams(state, action.payload);
-
-  default:
-    return state;
+    default:
+      return state;
   }
 };

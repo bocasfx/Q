@@ -1,4 +1,3 @@
-
 class MIDIContext {
   constructor() {
     this.context = null;
@@ -14,8 +13,8 @@ class MIDIContext {
       return Promise.reject('MIDIAccess is not supported.');
     }
 
-    this.context = navigator.requestMIDIAccess({sysex: true});
-    return this.context.then((ctx) => {
+    this.context = navigator.requestMIDIAccess({ sysex: true });
+    return this.context.then(ctx => {
       let newOutputs = [];
       for (let output of ctx.outputs.values()) {
         newOutputs.push(output);
@@ -25,4 +24,4 @@ class MIDIContext {
   }
 }
 
-export default (new MIDIContext());
+export default new MIDIContext();

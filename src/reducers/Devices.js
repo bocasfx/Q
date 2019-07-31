@@ -3,7 +3,7 @@ const { devices } = initialState;
 
 const toggleDevice = (state, device) => {
   let newState = Object.assign({}, state, {});
-  Object.keys(newState).forEach((key) => {
+  Object.keys(newState).forEach(key => {
     newState[key] = false;
   });
   newState[device] = true;
@@ -12,11 +12,10 @@ const toggleDevice = (state, device) => {
 
 export default (state = devices, action) => {
   switch (action.type) {
+    case 'TOGGLE_DEVICE':
+      return toggleDevice(state, action.device);
 
-  case 'TOGGLE_DEVICE':
-    return toggleDevice(state, action.device);
-
-  default:
-    return state;
+    default:
+      return state;
   }
 };

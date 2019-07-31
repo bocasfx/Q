@@ -13,11 +13,11 @@ import {
   setNodeChannel,
   setNodeOctave,
   stopNode,
-  setNodeMidiOutput } from '../../../actions/Nodes';
+  setNodeMidiOutput,
+} from '../../../actions/Nodes';
 import PropTypes from 'prop-types';
 
 class MidiNodePanel extends React.Component {
-
   static propTypes = {
     nodes: PropTypes.array,
     setNodeVelocity,
@@ -27,7 +27,7 @@ class MidiNodePanel extends React.Component {
     setNodeChannel: PropTypes.func,
     setNodeMidiOutput: PropTypes.func,
     midi: PropTypes.object,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -41,7 +41,7 @@ class MidiNodePanel extends React.Component {
 
     let nodes = getSelectedElements(props.nodes);
     let node = nodes[0];
-    let note = _.find(noteConfig.frequencies, (noteObj) => {
+    let note = _.find(noteConfig.frequencies, noteObj => {
       return noteObj.midi === node.note;
     });
 
@@ -60,7 +60,7 @@ class MidiNodePanel extends React.Component {
     let nodes = getSelectedElements(nextProps.nodes);
     let node = nodes[0];
 
-    let note = _.find(noteConfig.frequencies, (noteObj) => {
+    let note = _.find(noteConfig.frequencies, noteObj => {
       return noteObj.midi === node.note;
     });
 
@@ -76,15 +76,15 @@ class MidiNodePanel extends React.Component {
   }
 
   onVelocityChange(value) {
-    this.state.nodes.forEach((node) => {
+    this.state.nodes.forEach(node => {
       this.props.setNodeVelocity(node.id, value);
     });
   }
 
   onNoteChange(event) {
-    this.state.nodes.forEach((node) => {
-      let note = _.find(noteConfig.frequencies, (noteObj) => {
-        return (noteObj.note === event.target.value && noteObj.octave === this.state.octave);
+    this.state.nodes.forEach(node => {
+      let note = _.find(noteConfig.frequencies, noteObj => {
+        return noteObj.note === event.target.value && noteObj.octave === this.state.octave;
       });
       this.props.stopNode(node.id);
       this.props.setNodeNote(node.id, note.midi);
@@ -92,9 +92,11 @@ class MidiNodePanel extends React.Component {
   }
 
   onOctaveChange(event) {
-    this.state.nodes.forEach((node) => {
-      let note = _.find(noteConfig.frequencies, (noteObj) => {
-        return (noteObj.note === this.state.note && noteObj.octave === parseInt(event.target.value, 10));
+    this.state.nodes.forEach(node => {
+      let note = _.find(noteConfig.frequencies, noteObj => {
+        return (
+          noteObj.note === this.state.note && noteObj.octave === parseInt(event.target.value, 10)
+        );
       });
       this.props.stopNode(node.id);
       this.props.setNodeOctave(node.id, note.octave);
@@ -103,14 +105,14 @@ class MidiNodePanel extends React.Component {
   }
 
   onChannelChange(event) {
-    this.state.nodes.forEach((node) => {
+    this.state.nodes.forEach(node => {
       this.props.stopNode(node.id);
       this.props.setNodeChannel(node.id, parseInt(event.target.value, 10));
     });
   }
 
   onDestinationChange(event) {
-    this.state.nodes.forEach((node) => {
+    this.state.nodes.forEach(node => {
       this.props.stopNode(node.id);
       this.props.setNodeMidiOutput(node.id, event.target.value);
     });
@@ -121,28 +123,44 @@ class MidiNodePanel extends React.Component {
       return null;
     }
     return this.props.midi.destinations.map((destination, idx) => {
-      return <option key={idx} value={destination.id}>{destination.name}</option>;
+      return (
+        <option key={idx} value={destination.id}>
+          {destination.name}
+        </option>
+      );
     });
   }
 
   renderNoteSelect() {
     let notes = [];
     noteConfig.notes.forEach((note, idx) => {
-      notes.push(<option key={idx} value={note}>{note}</option>);
+      notes.push(
+        <option key={idx} value={note}>
+          {note}
+        </option>,
+      );
     });
     return notes;
   }
 
   renderOctaveSelect() {
     return noteConfig.octaves.map((octave, idx) => {
-      return <option key={idx} value={octave}>{octave}</option>;
+      return (
+        <option key={idx} value={octave}>
+          {octave}
+        </option>
+      );
     });
   }
 
   renderChannelSelect() {
     let options = [];
-    for(let i=1; i<=16; i++) {
-      options.push(<option key={i} value={i - 1}>{i}</option>);
+    for (let i = 1; i <= 16; i++) {
+      options.push(
+        <option key={i} value={i - 1}>
+          {i}
+        </option>,
+      );
     }
     return options;
   }
@@ -150,7 +168,7 @@ class MidiNodePanel extends React.Component {
   render() {
     return (
       <div className="midi-node-panel-container" disabled={this.state.disabled}>
-        <NodePanelHeader/>
+        <NodePanelHeader />
         <div className="midi-node-velocity">
           <Knob
             label={'Velocity'}
@@ -160,35 +178,63 @@ class MidiNodePanel extends React.Component {
             onChange={this.onVelocityChange}
             disabled={this.state.disabled}
             type={this.state.type}
-            log={false}/>
+            log={false}
+          />
         </div>
         <div className="row">
           <div className="midi-node-selector">
-            <label htmlFor="midiNote" disabled={this.state.disabled}>Note</label>
-            <select name="midiNote" disabled={this.state.disabled} onChange={this.onNoteChange} value={this.state.note}>
+            <label htmlFor="midiNote" disabled={this.state.disabled}>
+              Note
+            </label>
+            <select
+              name="midiNote"
+              disabled={this.state.disabled}
+              onChange={this.onNoteChange}
+              value={this.state.note}
+            >
               {this.renderNoteSelect()}
             </select>
           </div>
 
           <div className="midi-node-selector">
-            <label htmlFor="midiOctave" disabled={this.state.disabled}>Octave</label>
-            <select name="midiOctave" disabled={this.state.disabled} onChange={this.onOctaveChange} value={this.state.octave}>
+            <label htmlFor="midiOctave" disabled={this.state.disabled}>
+              Octave
+            </label>
+            <select
+              name="midiOctave"
+              disabled={this.state.disabled}
+              onChange={this.onOctaveChange}
+              value={this.state.octave}
+            >
               {this.renderOctaveSelect()}
             </select>
           </div>
         </div>
         <div className="row">
           <div className="midi-node-selector">
-            <label htmlFor="midiChannel" disabled={this.state.disabled}>Channel</label>
-            <select name="midiChannel" disabled={this.state.disabled} onChange={this.onChannelChange} value={this.state.channel}>
+            <label htmlFor="midiChannel" disabled={this.state.disabled}>
+              Channel
+            </label>
+            <select
+              name="midiChannel"
+              disabled={this.state.disabled}
+              onChange={this.onChannelChange}
+              value={this.state.channel}
+            >
               {this.renderChannelSelect()}
             </select>
           </div>
         </div>
         <div className="row midi-node-destination-selector">
           <div>
-            <label htmlFor="midiTest" disabled={this.state.disabled}>Destination</label>
-            <select name="midiTest" disabled={this.state.disabled} onChange={this.onDestinationChange}>
+            <label htmlFor="midiTest" disabled={this.state.disabled}>
+              Destination
+            </label>
+            <select
+              name="midiTest"
+              disabled={this.state.disabled}
+              onChange={this.onDestinationChange}
+            >
               {this.renderMidiDestinationSelect()}
             </select>
           </div>
@@ -198,14 +244,14 @@ class MidiNodePanel extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     nodes: state.nodes,
     midi: state.midi,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     setNodeVelocity: bindActionCreators(setNodeVelocity, dispatch),
     setNodeNote: bindActionCreators(setNodeNote, dispatch),
@@ -216,4 +262,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MidiNodePanel);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(MidiNodePanel);

@@ -6,12 +6,11 @@ import { getNodeColor } from '../../utils/utils';
 import PropTypes from 'prop-types';
 
 class ElementPanelHeader extends React.Component {
-
   static propTypes = {
     onChange: PropTypes.func,
     onToggle: PropTypes.func,
     element: PropTypes.object,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -45,12 +44,14 @@ class ElementPanelHeader extends React.Component {
     toggleClass += this.props.element.disabled ? ' element-panel-header-off' : '';
 
     let color = getNodeColor(this.props.element.type);
-    let style = this.props.element.disabled ? {} : {color: color, textShadow: '0 0 10px ' + color};
+    let style = this.props.element.disabled
+      ? {}
+      : { color: color, textShadow: '0 0 10px ' + color };
 
     return (
       <div className="element-panel-header-container">
         <div className="row-between">
-          <ActivityIndicator item={this.props.element}/>
+          <ActivityIndicator item={this.props.element} />
           <input
             className="element-panel-header-name"
             type="text"
@@ -59,7 +60,8 @@ class ElementPanelHeader extends React.Component {
             onChange={this.onChange}
             disabled={this.props.element.disabled}
             onKeyPress={this.onKeyPress}
-            onKeyDown={this.onKeyDown}/>
+            onKeyDown={this.onKeyDown}
+          />
           <div className={toggleClass} style={style} onClick={this.onToggle}>
             <i className="fa fa-power-off"></i>
           </div>
@@ -69,7 +71,7 @@ class ElementPanelHeader extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     nodes: state.nodes,
     streams: state.streams,
