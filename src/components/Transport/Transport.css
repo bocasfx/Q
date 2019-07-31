@@ -2,21 +2,26 @@
   height: 55px;
   border-bottom: 1px solid dimgray;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   cursor: default;
   width: 100%;
 }
 
+.transport-container img {
+  margin-left: 10px;
+  opacity: 0.3;
+}
+
 .transport-stats {
   display: flex;
   justify-content: flex-start;
-  width: 100%;
 }
 
 .transport-stats div {
   margin-left: 20px;
   color: dimgray;
+  width: auto;
 }
 
 .transport-fps-count {

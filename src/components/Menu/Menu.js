@@ -12,7 +12,7 @@ class Menu extends React.Component {
   static propTypes = {
     toggleDevice: PropTypes.func,
     setSelection: PropTypes.func,
-    devices: PropTypes.array,
+    devices: PropTypes.object,
   }
 
   onClick(device) {

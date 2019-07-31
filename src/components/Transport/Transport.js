@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 class Transport extends React.Component {
-
   static propTypes = {
     nodes: PropTypes.array,
     streams: PropTypes.array,
@@ -17,20 +16,19 @@ class Transport extends React.Component {
     fpsCount = parseFloat(fpsCount).toFixed(2);
     return (
       <div className="transport-container">
+        <img alt="logo" src="img/logo.png" width="35" />
+        <PlayButton />
         <div className="transport-stats">
           <div>Nodes: {this.props.nodes.length}</div>
           <div>Streams: {this.props.streams.length}</div>
-        </div>
-        <PlayButton/>
-        <div className="transport-fps-count">
-          FPS: {fpsCount}
+          <div className="transport-fps-count">FPS: {fpsCount}</div>
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     nodes: state.nodes,
     streams: state.streams,
