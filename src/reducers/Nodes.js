@@ -3,7 +3,7 @@ import _ from 'lodash';
 import initialState from '../config/initial-state';
 import uuidv1 from 'uuid/v1';
 import { getSelectedElements, getNodeById, graphHasLoop } from '../utils/utils';
-import midiContext from '../app/context/MIDIContext';
+import midiContext from '../app/MIDIContext';
 
 const { nodes } = initialState;
 

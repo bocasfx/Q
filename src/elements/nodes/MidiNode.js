@@ -1,5 +1,5 @@
 import Node from './Node';
-import midiContext from '../../app/context/MIDIContext';
+import midiContext from '../../app/MIDIContext';
 
 class MidiNode extends Node {
 

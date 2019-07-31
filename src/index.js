@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import store from './app/Store';
 import './index.css';
-import midiContext from './app/context/MIDIContext';
+import midiContext from './app/MIDIContext';
 import eventHandler from './app/EventHandler';
 import hydrator from './app/Hydrator';
 import App from './App';
