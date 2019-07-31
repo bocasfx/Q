@@ -4,8 +4,17 @@ import './PlayButton.css';
 import { toggleTransport } from '../../actions/Transport';
 import { stopNodes, dequeueParticles } from '../../actions/Nodes';
 import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
 
 class PlayButton extends React.Component {
+
+  static propTypes = {
+    transport: PropTypes.object,
+    stopNodes: PropTypes.func,
+    dequeueParticles: PropTypes.func,
+    toggleTransport: PropTypes.func,
+  }
+
   constructor(props) {
     super(props);
     this.onClick = this.onClick.bind(this);
@@ -32,7 +41,7 @@ class PlayButton extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    transport: state.transport
+    transport: state.transport,
   };
 };
 
@@ -40,7 +49,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     toggleTransport: bindActionCreators(toggleTransport, dispatch),
     stopNodes: bindActionCreators(stopNodes, dispatch),
-    dequeueParticles: bindActionCreators(dequeueParticles, dispatch)
+    dequeueParticles: bindActionCreators(dequeueParticles, dispatch),
   };
 };
 

@@ -3,10 +3,24 @@ import './StreamPanel.css';
 import ElementPanelHeader from '../ElementPanelHeader';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setStreamName, setStreamDisabledStatus, setStreamSpeed, setStreamCount } from '../../../actions/Streams';
+import {
+  setStreamName,
+  setStreamDisabledStatus,
+  setStreamSpeed,
+  setStreamCount,
+} from '../../../actions/Streams';
 import Knob from '../../UI/Knob';
+import PropTypes from 'prop-types';
 
 class StreamPanel extends React.Component {
+  static propTypes = {
+    stream: PropTypes.object,
+    setStreamName: PropTypes.func,
+    setStreamDisabledStatus: PropTypes.func,
+    setStreamSpeed: PropTypes.func,
+    setStreamCount: PropTypes.func,
+  };
+
   constructor(props) {
     super(props);
     this.onChange = this.onChange.bind(this);
@@ -15,7 +29,7 @@ class StreamPanel extends React.Component {
     this.renderSpeedKnob = this.renderSpeedKnob.bind(this);
     this.onCountChange = this.onCountChange.bind(this);
     this.state = {
-      disabled: false
+      disabled: false,
     };
   }
 
@@ -24,7 +38,7 @@ class StreamPanel extends React.Component {
   }
 
   onToggle(disabled) {
-    this.setState({disabled});
+    this.setState({ disabled });
     this.props.setStreamDisabledStatus(this.props.stream.id, disabled);
   }
 
@@ -37,14 +51,17 @@ class StreamPanel extends React.Component {
       return null;
     }
 
-    return <Knob
-            label={'Speed'}
-            value={this.props.stream.speed}
-            min={0}
-            max={20}
-            onChange={this.onSpeedChange}
-            disabled={this.state.disabled}
-            type={this.props.stream.type}/>;
+    return (
+      <Knob
+        label={'Speed'}
+        value={this.props.stream.speed}
+        min={0}
+        max={20}
+        onChange={this.onSpeedChange}
+        disabled={this.state.disabled}
+        type={this.props.stream.type}
+      />
+    );
   }
 
   onCountChange(count) {
@@ -59,7 +76,8 @@ class StreamPanel extends React.Component {
         <ElementPanelHeader
           onChange={this.onChange}
           onToggle={this.onToggle}
-          element={this.props.stream}/>
+          element={this.props.stream}
+        />
         <div className="row">
           {this.renderSpeedKnob()}
           <Knob
@@ -70,20 +88,24 @@ class StreamPanel extends React.Component {
             precision={0}
             onChange={this.onCountChange}
             disabled={this.state.disabled}
-            type={this.props.stream.type}/>
+            type={this.props.stream.type}
+          />
         </div>
       </div>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     setStreamName: bindActionCreators(setStreamName, dispatch),
     setStreamDisabledStatus: bindActionCreators(setStreamDisabledStatus, dispatch),
     setStreamSpeed: bindActionCreators(setStreamSpeed, dispatch),
-    setStreamCount: bindActionCreators(setStreamCount, dispatch)
+    setStreamCount: bindActionCreators(setStreamCount, dispatch),
   };
 };
 
-export default connect(null, mapDispatchToProps)(StreamPanel);
+export default connect(
+  null,
+  mapDispatchToProps,
+)(StreamPanel);

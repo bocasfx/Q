@@ -5,8 +5,16 @@ import { bindActionCreators } from 'redux';
 import { setNodeLag, setNodeProbability } from '../../actions/Nodes';
 import Knob from '../UI/Knob';
 import { getSelectedElements } from '../../utils/utils';
+import PropTypes from 'prop-types';
 
 class NodePanelHeader extends React.Component {
+
+  static propTypes = {
+    nodes: PropTypes.array,
+    setNodeLag: PropTypes.func,
+    setNodeProbability: PropTypes.func,
+  }
+
   constructor(props) {
     super(props);
     this.onLagChange = this.onLagChange.bind(this);
@@ -56,14 +64,14 @@ class NodePanelHeader extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    nodes: state.nodes
+    nodes: state.nodes,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     setNodeLag: bindActionCreators(setNodeLag, dispatch),
-    setNodeProbability: bindActionCreators(setNodeProbability, dispatch)
+    setNodeProbability: bindActionCreators(setNodeProbability, dispatch),
   };
 };
 

@@ -8,7 +8,7 @@ class ControlPanel extends React.Component {
   constructor(props) {
     super(props);
     this.style = {
-      width: config.controlPanel.width
+      width: config.controlPanel.width,
     };
   }
 

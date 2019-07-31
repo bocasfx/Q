@@ -23,6 +23,33 @@ import {
 
 class Canvas extends React.Component {
 
+  static propTypes = {
+    app: PropTypes.object,
+    devices: PropTypes.object,
+    streams: PropTypes.array,
+    nodes: PropTypes.array,
+    transport: PropTypes.object,
+    updateFPSCount: PropTypes.func,
+    onMouseMove: PropTypes.func,
+    deselectStreams: PropTypes.func,
+    addFreehandStream: PropTypes.func,
+    deselectNodes: PropTypes.func,
+    addCircularStream: PropTypes.func,
+    addLinearStream: PropTypes.func,
+    updateSelectedNodePositionByDelta: PropTypes.func,
+    updateNodePositionByDelta: PropTypes.func,
+    updateStreamPositionByDelta: PropTypes.func,
+    addMidiNode: PropTypes.func,
+    selectNode: PropTypes.func,
+    cloneNode: PropTypes.func,
+    unlinkNodes: PropTypes.func,
+    linkNodes: PropTypes.func,
+    playNode: PropTypes.func,
+    stopNode: PropTypes.func,
+    enqueueParticle: PropTypes.func,
+    dequeueParticle: PropTypes.func,
+  }
+
   constructor(props) {
     super(props);
 
@@ -518,33 +545,6 @@ const mapDispatchToProps = (dispatch) => {
     updateFPSCount: bindActionCreators(updateFPSCount, dispatch),
     deselectStreams: bindActionCreators(deselectStreams, dispatch),
   };
-};
-
-Canvas.propTypes = {
-  app: PropTypes.object,
-  devices: PropTypes.object,
-  streams: PropTypes.array,
-  nodes: PropTypes.array,
-  transport: PropTypes.object,
-  updateFPSCount: PropTypes.func,
-  onMouseMove: PropTypes.func,
-  deselectStreams: PropTypes.func,
-  addFreehandStream: PropTypes.func,
-  deselectNodes: PropTypes.func,
-  addCircularStream: PropTypes.func,
-  addLinearStream: PropTypes.func,
-  updateSelectedNodePositionByDelta: PropTypes.func,
-  updateNodePositionByDelta: PropTypes.func,
-  updateStreamPositionByDelta: PropTypes.func,
-  addMidiNode: PropTypes.func,
-  selectNode: PropTypes.func,
-  cloneNode: PropTypes.func,
-  unlinkNodes: PropTypes.func,
-  linkNodes: PropTypes.func,
-  playNode: PropTypes.func,
-  stopNode: PropTypes.func,
-  enqueueParticle: PropTypes.func,
-  dequeueParticle: PropTypes.func,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Canvas);

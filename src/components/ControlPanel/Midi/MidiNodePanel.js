@@ -14,8 +14,20 @@ import {
   setNodeOctave,
   stopNode,
   setNodeMidiOutput } from '../../../actions/Nodes';
+import PropTypes from 'prop-types';
 
 class MidiNodePanel extends React.Component {
+
+  static propTypes = {
+    nodes: PropTypes.array,
+    setNodeVelocity,
+    stopNode: PropTypes.func,
+    setNodeOctave: PropTypes.func,
+    setNodeNote: PropTypes.func,
+    setNodeChannel: PropTypes.func,
+    setNodeMidiOutput: PropTypes.func,
+    midi: PropTypes.object,
+  }
 
   constructor(props) {
     super(props);
@@ -40,7 +52,7 @@ class MidiNodePanel extends React.Component {
       channel: node.channel,
       velocity: node.velocity,
       disabled: node.disabled,
-      type: node.type
+      type: node.type,
     };
   }
 
@@ -59,7 +71,7 @@ class MidiNodePanel extends React.Component {
       channel: node.channel,
       velocity: node.velocity,
       disabled: node.disabled,
-      type: node.type
+      type: node.type,
     });
   }
 
@@ -189,7 +201,7 @@ class MidiNodePanel extends React.Component {
 const mapStateToProps = (state) => {
   return {
     nodes: state.nodes,
-    midi: state.midi
+    midi: state.midi,
   };
 };
 
@@ -200,7 +212,7 @@ const mapDispatchToProps = (dispatch) => {
     setNodeOctave: bindActionCreators(setNodeOctave, dispatch),
     setNodeChannel: bindActionCreators(setNodeChannel, dispatch),
     stopNode: bindActionCreators(stopNode, dispatch),
-    setNodeMidiOutput: bindActionCreators(setNodeMidiOutput, dispatch)
+    setNodeMidiOutput: bindActionCreators(setNodeMidiOutput, dispatch),
   };
 };
 

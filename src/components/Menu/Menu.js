@@ -5,8 +5,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { toggleDevice } from '../../actions/Devices';
 import { setSelection } from '../../actions/Selection';
+import PropTypes from 'prop-types';
 
 class Menu extends React.Component {
+
+  static propTypes = {
+    toggleDevice: PropTypes.func,
+    setSelection: PropTypes.func,
+    devices: PropTypes.array,
+  }
 
   onClick(device) {
     this.props.toggleDevice(device);
@@ -75,14 +82,14 @@ class Menu extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    devices: state.devices
+    devices: state.devices,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     toggleDevice: bindActionCreators(toggleDevice, dispatch),
-    setSelection: bindActionCreators(setSelection, dispatch)
+    setSelection: bindActionCreators(setSelection, dispatch),
   };
 };
 

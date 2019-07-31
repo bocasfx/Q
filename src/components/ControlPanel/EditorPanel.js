@@ -4,8 +4,15 @@ import { connect } from 'react-redux';
 import NodePanel from './NodePanel';
 import StreamPanel from './Stream/StreamPanel';
 import { getSelectedElements } from '../../utils/utils';
+import PropTypes from 'prop-types';
 
 class EditorPanel extends React.Component {
+
+  static propTypes = {
+    nodes: PropTypes.array,
+    streams: PropTypes.array,
+    selection: PropTypes.object,
+  }
   constructor(props) {
     super(props);
     this.renderObject = this.renderObject.bind(this);
@@ -13,7 +20,7 @@ class EditorPanel extends React.Component {
     this.onKeyPress = this.onKeyPress.bind(this);
     this.state = {
       scrolling: false,
-      height: window.innerHeight - 297
+      height: window.innerHeight - 297,
     };
     this.nodes = getSelectedElements(props.nodes);
     this.node = this.nodes[0];
@@ -54,7 +61,7 @@ class EditorPanel extends React.Component {
 
   onScroll(event) {
     this.setState({
-      scrolling: !!event.target.scrollTop
+      scrolling: !!event.target.scrollTop,
     });
   }
 
@@ -66,14 +73,14 @@ class EditorPanel extends React.Component {
 
   updateDimensions() {
     this.setState({
-      height: window.innerHeight - 297
+      height: window.innerHeight - 297,
     });
   }
 
   render() {
     let style = {
       height: this.state.height,
-      maxHeight: this.state.height
+      maxHeight: this.state.height,
     };
 
     let panelClass = 'editor-panel-container';
@@ -93,7 +100,7 @@ const mapStateToProps = (state) => {
   return {
     nodes: state.nodes,
     streams: state.streams,
-    selection: state.selection
+    selection: state.selection,
   };
 };
 

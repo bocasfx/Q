@@ -3,12 +3,20 @@ import './Tabs.css';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setSelection } from '../../../actions/Selection';
+import PropTypes from 'prop-types';
 
 class Tabs extends React.Component {
+
+  static propTypes = {
+    selection: PropTypes.object,
+    children: PropTypes.node,
+    setSelection: PropTypes.func,
+  }
+
   constructor(props) {
     super(props);
     this.state = {
-      selected: 0
+      selected: 0,
     };
 
     this.renderTitles = this.renderTitles.bind(this);
@@ -17,11 +25,11 @@ class Tabs extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.selection.objType === 'streams') {
       this.setState({
-        selected: 1
+        selected: 1,
       });
     } else {
       this.setState({
-        selected: 0
+        selected: 0,
       });
     }
   }
@@ -29,7 +37,7 @@ class Tabs extends React.Component {
   onClick(idx, event) {
     event.preventDefault();
     this.setState({
-      selected: idx
+      selected: idx,
     });
     this.props.setSelection(this.props.children[idx].props.label.toLowerCase());
   }
@@ -63,13 +71,13 @@ class Tabs extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    selection: state.selection
+    selection: state.selection,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setSelection: bindActionCreators(setSelection, dispatch)
+    setSelection: bindActionCreators(setSelection, dispatch),
   };
 };
 

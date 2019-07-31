@@ -2,17 +2,25 @@ import React from 'react';
 import './ActivityIndicator.css';
 import { connect } from 'react-redux';
 import config from '../../config/config';
+import PropTypes from 'prop-types';
 
 const color = {
   midi: config.midi.color,
-  stream: config.stream.color
+  stream: config.stream.color,
 };
 
 class ActivityIndicator extends React.Component {
 
+  static propTypes = {
+    nodes: PropTypes.array,
+    streams: PropTypes.array,
+    transport: PropTypes.object,
+    item: PropTypes.object,
+  }
+
   renderBullet() {
     let style = {
-      color: color[this.props.item.type]
+      color: color[this.props.item.type],
     };
 
     if (this.props.item.type === 'stream') {
@@ -47,7 +55,7 @@ const mapStateToProps = (state) => {
   return {
     nodes: state.nodes,
     streams: state.streams,
-    transport: state.transport
+    transport: state.transport,
   };
 };
 

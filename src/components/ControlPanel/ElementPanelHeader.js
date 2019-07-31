@@ -3,8 +3,16 @@ import { connect } from 'react-redux';
 import ActivityIndicator from '../UI/ActivityIndicator';
 import './ElementPanelHeader.css';
 import { getNodeColor } from '../../utils/utils';
+import PropTypes from 'prop-types';
 
 class ElementPanelHeader extends React.Component {
+
+  static propTypes = {
+    onChange: PropTypes.func,
+    onToggle: PropTypes.func,
+    element: PropTypes.object,
+  }
+
   constructor(props) {
     super(props);
 
@@ -64,7 +72,7 @@ class ElementPanelHeader extends React.Component {
 const mapStateToProps = (state) => {
   return {
     nodes: state.nodes,
-    streams: state.streams
+    streams: state.streams,
   };
 };
 

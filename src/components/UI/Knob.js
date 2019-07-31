@@ -3,17 +3,33 @@ import './Knob.css';
 import { connect } from 'react-redux';
 import { getNodeColor } from '../../utils/utils';
 import config from '../../config/config';
+import PropTypes from 'prop-types';
 
 const _angle = 290;
 
 class Knob extends React.Component {
+
+  static propTypes = {
+    app: PropTypes.object,
+    precision: PropTypes.number,
+    value: PropTypes.number,
+    log: PropTypes.bool,
+    max: PropTypes.number,
+    toFixed: PropTypes.func,
+    disabled: PropTypes.func,
+    onChange: PropTypes.func,
+    mini: PropTypes.bool,
+    type: PropTypes.string,
+    label: PropTypes.string,
+  }
+
   constructor(props) {
     super(props);
     this.state = {
       dragging: false,
       angle: _angle,
       y: null,
-      value: 0
+      value: 0,
     };
 
     this.precision = props.precision !== undefined ? props.precision : 2;
@@ -31,7 +47,7 @@ class Knob extends React.Component {
     let angle = (value * _angle / this.props.max) + _angle;
     this.setState({
       value: parseFloat(value.toFixed(this.precision)),
-      angle
+      angle,
     });
   }
 
@@ -43,7 +59,7 @@ class Knob extends React.Component {
     let angle = (value * _angle / nextProps.max) + _angle;
     this.setState({
       value: parseFloat(value.toFixed(this.precision)),
-      angle
+      angle,
     });
   }
 
@@ -55,7 +71,7 @@ class Knob extends React.Component {
     event.target.requestPointerLock();
     this.setState({
       dragging: true,
-      y: event.pageY
+      y: event.pageY,
     });
     window.onmousemove = this.onMouseMove.bind(this);
     window.onmouseup = this.onMouseUp.bind(this);
@@ -83,7 +99,7 @@ class Knob extends React.Component {
     this.setState({
       angle,
       y: event.pageY,
-      value
+      value,
     });
 
     this.props.onChange(parseFloat(value));
@@ -105,7 +121,7 @@ class Knob extends React.Component {
   render() {
     let dotStyle = {
       transform: 'rotate(' + this.state.angle + 'deg)',
-      color: getNodeColor(this.props.type)
+      color: getNodeColor(this.props.type),
     };
 
     if (this.state.value === 0) {
@@ -131,7 +147,7 @@ class Knob extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    app: state.app
+    app: state.app,
   };
 };
 

@@ -1,7 +1,13 @@
 import React from 'react';
 import './Panel.css';
+import PropTypes from 'prop-types';
 
 class Panel extends React.Component {
+
+  static propTypes = {
+    children: PropTypes.node,
+  }
+
   constructor(props) {
     super(props);
     this.onKeyPress = this.onKeyPress.bind(this);

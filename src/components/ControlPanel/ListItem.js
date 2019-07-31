@@ -2,14 +2,23 @@ import React from 'react';
 import './ListItem.css';
 import ActivityIndicator from '../UI/ActivityIndicator';
 import { getNodeColor } from '../../utils/utils';
+import PropTypes from 'prop-types';
 
 class ListItem extends React.Component {
+
+  static propTypes = {
+    item: PropTypes.object,
+    onClick: PropTypes.func,
+    onToggle: PropTypes.func,
+    onDelete: PropTypes.func,
+  }
+
   constructor(props) {
     super(props);
     this.state = {
       off: {},
       copy: {},
-      trash: {}
+      trash: {},
     };
 
     this.onMouseEnter = this.onMouseEnter.bind(this);
@@ -20,7 +29,7 @@ class ListItem extends React.Component {
     let type = event.target.getAttribute('data-type');
     let newState = {};
     newState[type] = {
-      color: getNodeColor(this.props.item.type)
+      color: getNodeColor(this.props.item.type),
     };
     this.setState(newState);
   }
@@ -28,14 +37,14 @@ class ListItem extends React.Component {
   onMouseLeave() {
     this.setState({
       off: {
-        color: 'darkgray'
+        color: 'darkgray',
       },
       copy: {
-        color: 'darkgray'
+        color: 'darkgray',
       },
       trash: {
-        color: 'darkgray'
-      }
+        color: 'darkgray',
+      },
     });
   }
 

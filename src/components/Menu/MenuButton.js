@@ -1,7 +1,17 @@
 import React from 'react';
 import './MenuButton.css';
+import PropTypes from 'prop-types';
 
 class MenuButton extends React.Component {
+
+  static propTypes = {
+    active: PropTypes.bool,
+    separator: PropTypes.bool,
+    title: PropTypes.string,
+    onClick: PropTypes.func,
+    icon: PropTypes.string,
+  }
+
   render() {
 
     let menuClass = 'menu-button';

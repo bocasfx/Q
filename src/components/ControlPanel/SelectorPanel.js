@@ -7,8 +7,26 @@ import { deleteStream, selectStream, setStreamDisabledStatus, deselectStreams } 
 import { deleteNode, selectNode, setNodeDisabledStatus, deselectNodes, stopNode, unlinkNode } from '../../actions/Nodes';
 import { setSelection } from '../../actions/Selection';
 import './SelectorPanel.css';
+import PropTypes from 'prop-types';
 
 class SelectorPanel extends React.Component {
+
+  static propTypes = {
+    stopNode: PropTypes.func,
+    deleteStream: PropTypes.func,
+    unlinkNode: PropTypes.func,
+    deleteNode: PropTypes.func,
+    setNodeDisabledStatus: PropTypes.func,
+    setStreamDisabledStatus: PropTypes.func,
+    deselectNodes: PropTypes.func,
+    selectNode: PropTypes.func,
+    setSelection: PropTypes.func,
+    deselectStreams: PropTypes.func,
+    selectStream: PropTypes.func,
+    nodes: PropTypes.array,
+    streams: PropTypes.array,
+  }
+
   constructor(props) {
     super(props);
     this.renderStreams = this.renderStreams.bind(this);
@@ -107,7 +125,7 @@ class SelectorPanel extends React.Component {
 const mapStateToProps = (state) => {
   return {
     streams: state.streams,
-    nodes: state.nodes
+    nodes: state.nodes,
   };
 };
 
@@ -123,7 +141,7 @@ const mapDispatchToProps = (dispatch) => {
     stopNode: bindActionCreators(stopNode, dispatch),
     unlinkNode: bindActionCreators(unlinkNode, dispatch),
     deselectStreams: bindActionCreators(deselectStreams, dispatch),
-    setSelection: bindActionCreators(setSelection, dispatch)
+    setSelection: bindActionCreators(setSelection, dispatch),
   };
 };
 

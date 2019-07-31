@@ -4,8 +4,15 @@ import ElementPanelHeader from './ElementPanelHeader';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setNodeName, setNodeDisabledStatus } from '../../actions/Nodes';
+import PropTypes from 'prop-types';
 
 class NodePanel extends React.Component {
+
+  static propTypes = {
+    setNodeName: PropTypes.func,
+    setNodeDisabledStatus: PropTypes.func,
+    node: PropTypes.object,
+  }
 
   onChange = (name) => {
     this.props.setNodeName(this.props.node.id, name);
@@ -31,7 +38,7 @@ class NodePanel extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     setNodeName: bindActionCreators(setNodeName, dispatch),
-    setNodeDisabledStatus: bindActionCreators(setNodeDisabledStatus, dispatch)
+    setNodeDisabledStatus: bindActionCreators(setNodeDisabledStatus, dispatch),
   };
 };
 
