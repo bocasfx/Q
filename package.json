@@ -1,7 +1,7 @@
 {
   "name": "q",
   "description": "Q - Nodular Sequencer",
-  "version": "0.1.2-beta",
+  "version": "1.0.0-beta",
   "private": true,
   "license": "MIT",
   "author": {

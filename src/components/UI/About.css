@@ -1,0 +1,35 @@
+.about-container {
+  cursor: pointer;
+}
+
+.about-container img {
+  opacity: 0.5;
+  margin-left: 10px;
+}
+
+.about-popup-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #333;
+  z-index: 1;
+}
+
+.about-popup-content {
+  width: 400px;
+  height: 300px;
+  margin: 160px auto;
+  text-align: center;
+}
+
+.about-popup-content div,
+.about-popup-content a {
+  font-size: 1.2em;
+  margin-bottom: 8px;
+  color: #ccc;
+}
+
+.about-popup-content img {
+  display: block;
+  margin: auto auto 32px;
+}

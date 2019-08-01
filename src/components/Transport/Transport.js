@@ -3,6 +3,7 @@ import './Transport.css';
 import PlayButton from './PlayButton';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import About from '../UI/About';
 
 class Transport extends React.Component {
   static propTypes = {
@@ -16,7 +17,7 @@ class Transport extends React.Component {
     fpsCount = parseFloat(fpsCount).toFixed(2);
     return (
       <div className="transport-container">
-        <img alt="logo" src="img/logo-white.png" />
+        <About />
         <PlayButton />
         <div className="transport-stats">
           <div>Nodes: {this.props.nodes.length}</div>

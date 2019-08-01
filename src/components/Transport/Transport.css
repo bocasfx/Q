@@ -8,10 +8,6 @@
   width: 100%;
 }
 
-.transport-container img {
-  margin-left: 10px;
-}
-
 .transport-stats {
   display: flex;
   justify-content: flex-start;
