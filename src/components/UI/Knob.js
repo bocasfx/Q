@@ -16,7 +16,7 @@ class Knob extends React.Component {
     log: PropTypes.bool,
     max: PropTypes.number,
     toFixed: PropTypes.func,
-    disabled: PropTypes.func,
+    disabled: PropTypes.bool,
     onChange: PropTypes.func,
     mini: PropTypes.bool,
     type: PropTypes.string,

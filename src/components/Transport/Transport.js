@@ -16,7 +16,7 @@ class Transport extends React.Component {
     fpsCount = parseFloat(fpsCount).toFixed(2);
     return (
       <div className="transport-container">
-        <img alt="logo" src="img/logo.png" width="35" />
+        <img alt="logo" src="img/logo-white.png" />
         <PlayButton />
         <div className="transport-stats">
           <div>Nodes: {this.props.nodes.length}</div>

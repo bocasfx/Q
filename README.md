@@ -8,8 +8,6 @@
 
 Q is a Nodular Sequencer controlled by the interactions between nodes and particle streams. It was built using <a href="https://facebook.github.io/react/" target="_blank">React</a>.
 
-![Q](./resources/docs/ui.png)
-
 ## Platforms
 
 Q has been tested on Chrome but it should work on any decent browser with MIDI support.

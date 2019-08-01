@@ -20,7 +20,7 @@ import PropTypes from 'prop-types';
 class MidiNodePanel extends React.Component {
   static propTypes = {
     nodes: PropTypes.array,
-    setNodeVelocity,
+    setNodeVelocity: PropTypes.func,
     stopNode: PropTypes.func,
     setNodeOctave: PropTypes.func,
     setNodeNote: PropTypes.func,

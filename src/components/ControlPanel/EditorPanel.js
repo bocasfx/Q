@@ -19,7 +19,7 @@ class EditorPanel extends React.Component {
     this.onKeyPress = this.onKeyPress.bind(this);
     this.state = {
       scrolling: false,
-      height: window.innerHeight - 297,
+      height: window.innerHeight - 307,
     };
     this.nodes = getSelectedElements(props.nodes);
     this.node = this.nodes[0];
@@ -69,7 +69,7 @@ class EditorPanel extends React.Component {
 
   updateDimensions() {
     this.setState({
-      height: window.innerHeight - 297,
+      height: window.innerHeight - 307,
     });
   }
 

@@ -1,5 +1,5 @@
 .control-panel-container {
   /*background-color: rgba(0, 0, 0, 0.3);*/
   border-left: 1px solid dimgray;
-  height: calc(100% - 35px);
+  height: calc(100% - 55px);
 }
