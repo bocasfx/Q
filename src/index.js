@@ -17,8 +17,8 @@ const renderDom = () => {
 const renderError = (msg) => {
   render(
     <div className="error-message">
-      <img alt="logo" src="img/logo.png" width="300"/>
-      <div>{msg}</div>
+      <img alt="logo" src="img/logo-white-big.png" />
+      <div>Error: {msg}</div>
     </div>,
     document.getElementById('root')
   );

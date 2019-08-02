@@ -13,6 +13,7 @@
   left: 0;
   background-color: #333;
   z-index: 1;
+  background-image: url(../../assets/backgrounds/concrete_wall.png);
 }
 
 .about-popup-content {

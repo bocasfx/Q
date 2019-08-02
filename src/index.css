@@ -98,7 +98,6 @@ input[type="radio"]:checked:after {
 .error-message {
   width: 800px;
   margin: 160px auto;
-  font-size: 2.5em;
   text-align: center;
 }
 
@@ -109,4 +108,6 @@ input[type="radio"]:checked:after {
 .error-message div {
   margin-top: 48px;
   opacity: 0.5;
+  color: #ccc;
+  font-size: 1.7em;
 }

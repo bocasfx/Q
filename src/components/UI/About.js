@@ -13,6 +13,15 @@ class About extends React.Component {
     });
   }
 
+  formatVersion = () => {
+    let formattedVersion = version.split('-');
+    if (formattedVersion.length === 1) {
+      return version;
+    }
+
+    return `${formattedVersion[0]} (${formattedVersion[1]})`;
+  }
+
   renderPopup = () => {
     const width = window.innerWidth;
     const height = window.innerHeight;
@@ -20,12 +29,13 @@ class About extends React.Component {
       width,
       height,
     };
+
     return (
       <div className="about-popup-container" style={style} onClick={this.onClick}>
         <div className="about-popup-content">
           <img alt="logo" src="img/logo-white-big.png" />
           <h1>Q - Nodular sequencer</h1>
-          <div>Version: {version}</div>
+          <div>Version: {this.formatVersion()}</div>
           <div>License: Creative Commons (BY-NC-SA 4.0)</div>
           <a target="_blank" rel="noopener noreferrer" href='https://github.com/bocasfx/Q'>Github</a>
         </div>
