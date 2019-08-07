@@ -5,6 +5,10 @@ import { toggleTransport } from '../../actions/Transport';
 import { stopNodes, dequeueParticles } from '../../actions/Nodes';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
+import midiContext from '../../app/MIDIContext';
+
+const PLAY = [0xF0, 0x7F, 0x7F, 0x06, 0x02, 0xF7];
+const STOP = [0xF0, 0x7F, 0x7F, 0x06, 0x01, 0xF7];
 
 class PlayButton extends React.Component {
 
@@ -18,12 +22,17 @@ class PlayButton extends React.Component {
   constructor(props) {
     super(props);
     this.onClick = this.onClick.bind(this);
+    this.midiOut = midiContext.outputs[0];
   }
 
   onClick() {
-    if (this.props.transport.playing) {
+    const { playing } = this.props.transport;
+    if (playing) {
       this.props.stopNodes();
       this.props.dequeueParticles();
+      this.midiOut.send(STOP);
+    } else {
+      this.midiOut.send(PLAY);
     }
     this.props.toggleTransport();
   }
